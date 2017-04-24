@@ -1,0 +1,155 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "eigenvectorcentrality",
+  "function_version": "1.1",
+  "function_type": "graph",
+  "short_description": "Algorithm to calculate eigenvector centrality.",
+  "long_description": "Eigenvector centrality is a method to calculate the centrality (relative importance) of each node in a graph. Katz centrality, Bonacich centrality and Eigenvector centrality are supported in this function.",
+  "input_tables": [
+    {
+      "requiredInputKind": [
+        "PartitionByKey"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "name": "vertices",
+      "isRequired": true,
+      "description": "The input table contains vertices in the graph. ",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "rName": "vertices",
+      "useInR": true
+    },
+    {
+      "requiredInputKind": [
+        "PartitionByKey"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "name": "edges",
+      "isRequired": true,
+      "description": "The input table contains edges in the graph. ",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "rName": "edges",
+      "useInR": true
+    }
+  ],
+  "argument_clauses": [
+    {
+      "targetTable": "edges",
+      "checkDuplicate": true,
+      "allowPadding": true,
+      "name": "TargetKey",
+      "isRequired": true,
+      "description": "The names of the target key columns in the edges table. The number of attributes and their types should correspond to those of the vertex_key SQL clause. ",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "target.key",
+      "useInR": true
+    },
+    {
+      "targetTable": "edges",
+      "checkDuplicate": true,
+      "allowedTypeGroups": [
+        "NUMERIC"
+      ],
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "EdgeWeight",
+      "isRequired": false,
+      "description": "The name of the weight column in the edges table of a weighted graph. The weight is a positive non-zero value. The default is the graph is regarded as an unweighted graph.  Input columns must contain numeric SQL types.",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "edge.weight",
+      "useInR": true
+    },
+    {
+      "permittedValues": [
+        "katz",
+        "bonacich",
+        "eigenvector"
+      ],
+      "defaultValue": "eigenvector",
+      "isOutputColumn": false,
+      "name": "Family",
+      "isRequired": false,
+      "description": "The name of the centrality algorithm.  The permitted input values are [katz, bonacich, eigenvector]. The default value is eigenvector.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "family",
+      "useInR": true
+    },
+    {
+      "defaultValue": 0.85,
+      "allowNaN": false,
+      "name": "Alpha",
+      "isRequired": false,
+      "description": "The alpha value for Katz and Bonacich centrality.  The default value is 0.85.",
+      "datatype": "DOUBLE",
+      "allowsLists": false,
+      "rName": "alpha",
+      "useInR": true
+    },
+    {
+      "allowNaN": false,
+      "name": "Beta",
+      "isRequired": false,
+      "description": "The beta value for Katz and Bonacich centrality. Default value is 1 for Katz centrality, 0 for Bonacich centrality. ",
+      "datatype": "DOUBLE",
+      "allowsLists": false,
+      "rName": "beta",
+      "useInR": true
+    },
+    {
+      "defaultValue": true,
+      "name": "Directed",
+      "isRequired": false,
+      "description": "Whether the graph is directed.  The default value is true.",
+      "datatype": "BOOLEAN",
+      "allowsLists": false,
+      "rName": "directed",
+      "useInR": true
+    },
+    {
+      "defaultValue": 20,
+      "lowerBound": 0,
+      "lowerBoundType": "EXCLUSIVE",
+      "allowNaN": false,
+      "name": "MaxIterNum",
+      "isRequired": false,
+      "description": "The maximum iteration number for which the algorithm runs.  The input value must be greater than 0. The default value is 20.",
+      "datatype": "INTEGER",
+      "allowsLists": false,
+      "rName": "max.iter.num",
+      "useInR": true
+    },
+    {
+      "defaultValue": 0.001,
+      "lowerBound": 0,
+      "lowerBoundType": "EXCLUSIVE",
+      "allowNaN": false,
+      "name": "Threshold",
+      "isRequired": false,
+      "description": "The threshold value specifying the convergence criteria. This value is the difference of between bk+1 and bk.  The input value must be greater than 0.0. The default value is 0.001.",
+      "datatype": "DOUBLE",
+      "allowsLists": false,
+      "rName": "threshold",
+      "useInR": true
+    },
+    {
+      "targetTable": "vertices",
+      "checkDuplicate": true,
+      "allowPadding": true,
+      "name": "Accumulate",
+      "isRequired": false,
+      "description": "Columns from the input table to be passed through from input to output.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "accumulate",
+      "useInR": true
+    }
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "Sample",
+  "function_version": "1.2",
+  "function_type": "non-driver",
+  "short_description": "Samples rows from an input table.",
+  "long_description": "Sampling function that does simple and stratified no-replacement sampling. ",
+  "input_tables": [
+    {
+      "requiredInputKind": [
+        "PartitionByAny",
+        "PartitionByKey"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "isRequired": true,
+      "description": "The table containing the data to be sampled.",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "useInR": true
+    },
+    {
+      "requiredInputKind": [
+        "Dimension"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "name": "summary",
+      "isRequired": false,
+      "description": "The summary input contains the stratum count information.",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "rName": "summary",
+      "useInR": true
+    }
+  ],
+  "argument_clauses": [
+    {
+      "lowerBound": 0,
+      "upperBound": 1,
+      "lowerBoundType": "INCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
+      "allowPadding": true,
+      "name": "SampleFraction",
+      "isRequired": false,
+      "description": "One or more sample fractions to use in the sampling of data. Each input value must be no less than 0.0 and no greater than 1.0.",
+      "datatype": "DOUBLE",
+      "allowsLists": true,
+      "rName": "sample.fraction",
+      "useInR": true
+    },
+    {
+      "allowPadding": true,
+      "name": "ApproxSampleSize",
+      "alternateNames": [
+        "ApproximateSampleSize"
+      ],
+      "isRequired": false,
+      "description": "The sample function internally maps the size to sample fractions, which are then used for generating the sample data. As a result, the size of the sample is approximate, not exact.",
+      "datatype": "INTEGER",
+      "allowsLists": true,
+      "rName": "approx.sample.size",
+      "useInR": true
+    },
+    {
+      "checkDuplicate": true,
+      "allowedTypeGroups": [
+        "GROUPTYPE"
+      ],
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "StratumColumn",
+      "alternateNames": [
+        "ConditionOnColumn"
+      ],
+      "isRequired": false,
+      "description": "Input columns cannot contain doubles or floats.",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "stratum.column",
+      "useInR": true
+    },
+    {
+      "isOutputColumn": false,
+      "allowPadding": true,
+      "name": "Strata",
+      "alternateNames": [
+        "ConditionOn"
+      ],
+      "isRequired": false,
+      "description": "",
+      "datatype": "STRING",
+      "allowsLists": true,
+      "rName": "strata",
+      "useInR": true
+    },
+    {
+      "allowNaN": false,
+      "name": "Seed",
+      "isRequired": false,
+      "description": "Specifies the random seed used to initialize the algorithm.",
+      "datatype": "LONG",
+      "allowsLists": false,
+      "rName": "seed",
+      "useInR": true
+    }
+  ]
+}

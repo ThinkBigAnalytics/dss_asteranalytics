@@ -1,0 +1,54 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "ScaleMap",
+  "function_version": "1.2",
+  "function_type": "non-driver",
+  "short_description": "This function gathers the statistic of the input.",
+  "long_description": "This function gathers the statistic of the input.  It collects min, max, count, sum and squaresum.",
+  "input_tables": [
+    {
+      "isOrdered": false,
+      "partitionByOne": false,
+      "isRequired": true,
+      "description": "The input dataset for scale function.",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "useInR": true
+    }
+  ],
+  "argument_clauses": [
+    {
+      "checkDuplicate": true,
+      "allowedTypeGroups": [
+        "NUMERIC"
+      ],
+      "allowPadding": true,
+      "name": "InputColumns",
+      "isRequired": true,
+      "description": "The data columns that contain the attribute values of the samples in the input table. These columns must contain numeric values between -1e308 and 1e308. The input can be list of columns or ranges or a mixture. Format example: 'col1','[4:21]','[25:53]','col73'. Input columns must contain numeric SQL types.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "input.columns",
+      "useInR": true
+    },
+    {
+      "permittedValues": [
+        "KEEP",
+        "OMIT",
+        "ZERO",
+        "LOCATION"
+      ],
+      "defaultValue": "KEEP",
+      "isOutputColumn": false,
+      "name": "MissValue",
+      "isRequired": false,
+      "description": "Specify how miss values(null) are processed in Scale. The permitted input values are [KEEP, OMIT, ZERO, LOCATION]. The default value is KEEP.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "miss.value",
+      "useInR": true
+    }
+  ]
+}

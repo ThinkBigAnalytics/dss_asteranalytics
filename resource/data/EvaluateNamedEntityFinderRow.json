@@ -1,0 +1,22 @@
+{"json_schema_major_version":"1","json_schema_minor_version":"1",
+  "json_content_version":"1","function_name":
+  "EvaluateNamedEntityFinderRow","function_version":"1.3","function_type":
+  "non-driver","short_description":
+  "Implements the name finder row evaluation SQL/MR function.",
+  "long_description":
+  "Implements the name finder row evaluation SQL/MR function.",
+  "input_tables":[{"requiredInputKind":["PartitionByAny"],"isOrdered":
+      false,"partitionByOne":false,"isRequired":true,"description":
+      "The input table should contain a text column which contains input text.",
+      "datatype":"TABLE_ALIAS","allowsLists":false,"useInR":true}],
+  "argument_clauses":[{"checkDuplicate":true,"allowedTypeGroups":["STRING"],
+      "requiredLength":1,"allowPadding":true,"name":"TextColumn","alternateNames":["TEXT_COLUMN"],
+      "isRequired":true,"description":
+      "The input table column whose contents will be scanned. Only one column is permitted. Input columns must contain string SQL types.",
+      "datatype":"COLUMNS","allowsLists":false,"rName":"text.column",
+      "useInR":true},{"isOutputColumn":false,"name":"Model","isRequired":
+      true,"description":
+      "The model data file that will be evaluated. Only one model is permitted.",
+      "datatype":"STRING","allowsLists":false,"rName":"model","useInR":
+      true}]}
+

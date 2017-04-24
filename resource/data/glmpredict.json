@@ -1,0 +1,31 @@
+{"json_schema_major_version":"1","json_schema_minor_version":"1",
+  "json_content_version":"1","function_name":"glmpredict","function_version":
+  "1.5","function_type":"non-driver","short_description":
+  "This function gives score according to generalized linear model.",
+  "long_description":
+  "This function gives score according to generalized linear model.",
+  "input_tables":[{"requiredInputKind":["PartitionByAny"],"isOrdered":
+      false,"partitionByOne":false,"isRequired":true,"description":
+      "Specifies the table containing the input data.","datatype":
+      "TABLE_ALIAS","allowsLists":false,"useInR":true}],"argument_clauses":[{
+      "isOutputTable":false,"name":"ModelTable","isRequired":true,
+      "description":
+      "Specifies the model table from glm for the prediction","datatype":
+      "TABLE_NAME","allowsLists":false,"rName":"model.table","useInR":true},{
+      "checkDuplicate":false,"allowPadding":true,"name":"Accumulate",
+      "isRequired":false,"description":
+      "Specifies a comma-separated list of the names of the columns in the input table",
+      "datatype":"COLUMNS","allowsLists":true,"rName":"accumulate","useInR":
+      true},{"permittedValues":["LOGISTIC","BINOMIAL","POISSON","GAUSSIAN",
+        "GAMMA","INVERSE_GAUSSIAN","NEGATIVE_BINOMIAL"],"defaultValue":
+      "BINOMIAL","isOutputColumn":false,"name":"Family","isRequired":true,
+      "description":
+      "Specifies the glm family and the default value is 'BINOMIAL' The permitted input values are [LOGISTIC, BINOMIAL, POISSON, GAUSSIAN, GAMMA, INVERSE_GAUSSIAN, NEGATIVE_BINOMIAL]. The default value is BINOMIAL.",
+      "datatype":"STRING","allowsLists":false,"rName":"family","useInR":
+      true},{"permittedValues":["CANONICAL","IDENTITY","INVERSE","LOG",
+        "COMPLEMENTARY_LOG_LOG","SQUARE_ROOT","INVERSE_MU_SQUARED","LOGIT",
+        "PROBIT","CAUCHIT"],"defaultValue":"CANONICAL","isOutputColumn":
+      false,"name":"Link","isRequired":false,"description":
+      "Specifies the canonical link function and the default value is 'CANONICAL' The permitted input values are [CANONICAL, IDENTITY, INVERSE, LOG, COMPLEMENTARY_LOG_LOG, SQUARE_ROOT, INVERSE_MU_SQUARED, LOGIT, PROBIT, CAUCHIT]. The default value is CANONICAL.",
+      "datatype":"STRING","allowsLists":false,"rName":"link","useInR":true}]}
+

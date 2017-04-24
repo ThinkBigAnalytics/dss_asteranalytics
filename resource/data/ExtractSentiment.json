@@ -1,0 +1,144 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "ExtractSentiment",
+  "function_version": "3.1",
+  "function_type": "non-driver",
+  "short_description": "Sentiment extraction SQL/MR function.",
+  "long_description": "Extract setiment of each text column.The sentiment analysis level can be document and sentence.",
+  "input_tables": [
+    {
+      "requiredInputKind": [
+        "PartitionByAny"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "isRequired": true,
+      "description": "The table defining the input text.",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "useInR": true
+    },
+    {
+      "requiredInputKind": [
+        "Dimension"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "name": "dict",
+      "isRequired": false,
+      "description": "The table defining the dictionary.",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "rName": "dict",
+      "useInR": true
+    }
+  ],
+  "argument_clauses": [
+    {
+      "checkDuplicate": true,
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "TextColumn",
+      "alternateNames": [
+        "Text_Column"
+      ],
+      "isRequired": true,
+      "description": "Name of the column whose contents will be scanned.",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "text.column",
+      "useInR": true
+    },
+    {
+      "checkDuplicate": true,
+      "allowPadding": true,
+      "name": "Accumulate",
+      "isRequired": false,
+      "description": "Columns from the input table to be passed through from input to output.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "accumulate",
+      "useInR": true
+    },
+    {
+      "permittedValues": [
+        "en",
+        "zh_CN",
+        "zh_TW"
+      ],
+      "defaultValue": "en",
+      "isOutputColumn": false,
+      "name": "Language",
+      "isRequired": false,
+      "description": "The language of the input text. Currently supported languages are 'en' (English), 'zh_CN' (Simple Chinese), and 'zh_TW' (Traditional Chinese). The permitted input values are [en, zh_CN, zh_TW]. The default value is en.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "language",
+      "useInR": true
+    },
+    {
+      "isOutputColumn": false,
+      "name": "Model",
+      "isRequired": false,
+      "description": "One or more model pairs. Format: '<model_type>[:model_file]'. Supported models include DICTIONARY and CLASSIFICATION.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "model",
+      "useInR": true
+    },
+    {
+      "permittedValues": [
+        "DOCUMENT",
+        "SENTENCE"
+      ],
+      "defaultValue": "DOCUMENT",
+      "isOutputColumn": false,
+      "name": "Level",
+      "isRequired": false,
+      "description": "The level of analysis to be performed: document or sentence. The permitted input values are [DOCUMENT, SENTENCE]. The default value is DOCUMENT.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "level",
+      "useInR": true
+    },
+    {
+      "permittedValues": [
+        "NEGATIVE_RECALL",
+        "NEGATIVE_PRECISION",
+        "POSITIVE_RECALL",
+        "POSITIVE_PRECISION",
+        "NONE"
+      ],
+      "defaultValue": "NONE",
+      "isOutputColumn": false,
+      "name": "HighPriority",
+      "alternateNames": [
+        "High_Priority"
+      ],
+      "isRequired": false,
+      "description": "Sets the policy for sentiment analysis by designating the factor '{NEGATIVE_RECALL | NEGATIVE_PRECISION | POSITIVE_RECALL | POSITIVE_PRECISION | NONE}' that has the highest priority when calculating results. The permitted input values are [NEGATIVE_RECALL, NEGATIVE_PRECISION, POSITIVE_RECALL, POSITIVE_PRECISION, NONE]. The default value is NONE.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "high.priority",
+      "useInR": true
+    },
+    {
+      "permittedValues": [
+        "POSITIVE",
+        "NEGATIVE",
+        "ALL"
+      ],
+      "defaultValue": "ALL",
+      "isOutputColumn": false,
+      "name": "Filter",
+      "isRequired": false,
+      "description": "Specifies the results '{POSITIVE | NEGATIVE | ALL}'that will be returned. The permitted input values are [POSITIVE, NEGATIVE, ALL]. The default value is ALL.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "filter",
+      "useInR": true
+    }
+  ]
+}

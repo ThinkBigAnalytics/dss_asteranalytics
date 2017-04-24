@@ -1,0 +1,147 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "histogram_map",
+  "function_version": "1.3",
+  "function_type": "non-driver",
+  "short_description": "SQL-MR function used to create histograms",
+  "long_description": "SQL-MR function used to create histograms. If the bins are equi-sized, use BinSize and StartValueto specify the intervals. Otherwise, use Intervals to specify the min and maxof each bin.",
+  "partner_function": "histogram_reduce",
+  "input_tables": [
+    {
+      "requiredInputKind": [
+        "PartitionByAny"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "isRequired": true,
+      "description": "The table containing the input data.",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "useInR": true
+    }
+  ],
+  "argument_clauses": [
+    {
+      "checkDuplicate": true,
+      "allowedTypeGroups": [
+        "NUMERIC"
+      ],
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "ValueColumn",
+      "alternateNames": [
+        "Value_Column"
+      ],
+      "isRequired": true,
+      "description": "The column for which statistics will be computed. Input columns must contain numeric SQL types.",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "value.column",
+      "useInR": true
+    },
+    {
+      "lowerBound": 0,
+      "lowerBoundType": "EXCLUSIVE",
+      "allowNaN": true,
+      "name": "BinSize",
+      "alternateNames": [
+        "Bin_Size"
+      ],
+      "isRequired": false,
+      "description": "For equally sized bins, a double value specifying the width of the bin. Omit this argument if you are not using equally sized bins. The input value must be greater than 0.0.",
+      "datatype": "DOUBLE",
+      "allowsLists": false,
+      "rName": "bin.size",
+      "useInR": true
+    },
+    {
+      "allowNaN": true,
+      "name": "StartValue",
+      "alternateNames": [
+        "Start_Value"
+      ],
+      "isRequired": false,
+      "description": "For equally sized bins, a double value specifying the minimum (starting) value for the first bin.",
+      "datatype": "DOUBLE",
+      "allowsLists": false,
+      "rName": "start.value",
+      "useInR": true
+    },
+    {
+      "isOutputColumn": false,
+      "allowPadding": true,
+      "name": "BinInterval",
+      "alternateNames": [
+        "Intervals"
+      ],
+      "isRequired": false,
+      "description": "If the bins are not equi-distant, BinInterval can be used to specify the minimum and maximum '[<min>:<max>]' of each interval. The bins can be overlapping.",
+      "datatype": "STRING",
+      "allowsLists": true,
+      "rName": "bin.interval",
+      "useInR": true
+    },
+    {
+      "defaultValue": "bin",
+      "isOutputColumn": true,
+      "name": "BinColumn",
+      "alternateNames": [
+        "Bin_Column_Name",
+		"BinColumnName"
+      ],
+      "isRequired": false,
+      "description": "Name of output column that shows which bin one or more subject rows were sorted into. Each bin is identified by its bin number. The default value is bin.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "bin.column",
+      "useInR": true
+    },
+    {
+      "defaultValue": "start_bin",
+      "isOutputColumn": true,
+      "name": "StartColumn",
+      "alternateNames": [
+        "Start_Column_Name",
+		"StartColumnName"
+      ],
+      "isRequired": false,
+      "description": "Name of output column that shows the start (min.) value of this bin. The default value is start_bin.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "start.column",
+      "useInR": true
+    },
+    {
+      "defaultValue": "end_bin",
+      "isOutputColumn": true,
+      "name": "EndColumn",
+      "alternateNames": [
+        "End_Column_Name",
+		"EndColumnName"
+      ],
+      "isRequired": false,
+      "description": "Name of output column that shows the end (max.) value of this bin. The default value is end_bin.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "end.column",
+      "useInR": true
+    },
+    {
+      "defaultValue": "frequency",
+      "isOutputColumn": true,
+      "name": "FrequencyColumn",
+      "alternateNames": [
+        "Frequency_Column_Name",
+		"FrequencyColumnName"
+      ],
+      "isRequired": false,
+      "description": "Name of output column that shows the count (\"local frequency\") of rows thatsorted into this bin on this partition. The default value is frequency.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "frequency.column",
+      "useInR": true
+    }
+  ]
+}

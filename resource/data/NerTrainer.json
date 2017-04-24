@@ -1,0 +1,179 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "NerTrainer",
+  "function_version": "1.1",
+  "function_type": "driver",
+  "short_description": "SQL/MR function to train a ner model.",
+  "long_description": "SQL/MR function to train a ner model.",
+  "input_tables": [
+    {
+      "requiredInputKind": [
+        "PartitionByKey"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "isRequired": true,
+      "description": "The relation that contains the training data.",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "useInR": true
+    }
+  ],
+  "argument_clauses": [
+    {
+      "isOutputColumn": false,
+      "name": "Domain",
+      "isRequired": false,
+      "description": "The address of the Queen. The host parameter is the Aster Database Queen’s IP saddress or hostname.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "Database",
+      "isRequired": false,
+      "description": "The name of the database where the input table is located.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "UserId",
+      "isRequired": false,
+      "description": "The Aster Database user name of the user running this function.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "Password",
+      "isRequired": false,
+      "description": "The Aster Database password of the user.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "SSLSettings",
+      "isRequired": false,
+      "description": "A string that includes all the SSL settings, except the password for the truststore.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "SSLTrustStorePassword",
+      "isRequired": false,
+      "description": "The password for the SSL truststore.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "checkDuplicate": true,
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "TextColumn",
+      "isRequired": true,
+      "description": "The name of the column whose content is analyzed",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "text.column",
+      "useInR": true
+    },
+    {
+      "permittedValues": [
+        "en",
+        "zh_CN",
+        "zh_TW"
+      ],
+      "defaultValue": "en",
+      "isOutputColumn": false,
+      "name": "Language",
+      "isRequired": false,
+      "description": "The language used in the input text (language_type). The supported values are: 'en' | 'zh_CN' | 'zh_TW'. The default is 'en' The permitted input values are [en, zh_CN, zh_TW]. The default value is en.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "language",
+      "useInR": true
+    },
+    {
+      "isOutputColumn": false,
+      "name": "ModelFile",
+      "isRequired": true,
+      "description": "The name of the model file to be generated",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "model.file",
+      "useInR": true
+    },
+    {
+      "defaultValue": 1.0E-4,
+      "allowNaN": false,
+      "name": "Eta",
+      "isRequired": false,
+      "description": "The tolerance of the termination criterion. Defines the differences of the values of the loss function between two sequential epochs. The default value is '0.0001' The default value is 1.0E-4.",
+      "datatype": "DOUBLE",
+      "allowsLists": false,
+      "rName": "eta",
+      "useInR": true
+    },
+    {
+      "defaultValue": 1000,
+      "lowerBound": 0,
+      "lowerBoundType": "EXCLUSIVE",
+      "allowNaN": false,
+      "name": "MaxIterNum",
+      "alternateNames": [
+        "MaxIteration"
+      ],
+      "isRequired": false,
+      "description": "The maximum number of iterations. The default value is '1000' The input value must be greater than 0. The default value is 1000.",
+      "datatype": "INTEGER",
+      "allowsLists": false,
+      "rName": "max.iter.num",
+      "useInR": true
+    },
+    {
+      "defaultValue": 0,
+      "allowNaN": false,
+      "name": "MinOccurNum",
+      "alternateNames": [
+        "minFeatureOccurNum"
+      ],
+      "isRequired": false,
+      "description": "The number of feature occurrences in the text above which a feature is used to construct the model. The default value is '0' The default value is 0.",
+      "datatype": "INTEGER",
+      "allowsLists": false,
+      "rName": "min.occur.num",
+      "useInR": true
+    },
+    {
+      "isOutputColumn": false,
+      "name": "FeatureTemplate",
+      "isRequired": true,
+      "description": "The name of the template file that, when training a CRFs model, tells the function how to generate features",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "feature.template",
+      "useInR": true
+    },
+    {
+      "isOutputColumn": false,
+      "name": "ExtractorJar",
+      "isRequired": false,
+      "description": "The name of the JAR file that contains the Java classes that extract features",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "extractor.jar",
+      "useInR": true
+    }
+  ]
+}

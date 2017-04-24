@@ -1,0 +1,58 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "KMeansPlot",
+  "function_version": "1.2",
+  "function_type": "non-driver",
+  "short_description": "Implements the KMeansPlot SQL-MR function.",
+  "long_description": "KMeansPlot is a SQL-GR for assigning data points to Kmeans clusters.",
+  "input_tables": [
+    {
+      "requiredInputKind": [
+        "PartitionByAny"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "isRequired": true,
+      "description": "Table containing the points on which to cluster the data. If an input row in the input table contains a null value, KMeansPlot sets the corresponding cluster ID in the output to -1.",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "useInR": true
+    },
+    {
+      "requiredInputKind": [
+        "Dimension"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "isRequired": true,
+      "description": "The table which contains the centroids trained, from the kmeans function.",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "useInR": true
+    }
+  ],
+  "argument_clauses": [
+    {
+      "isOutputColumn": false,
+      "name": "CentroidsTable",
+      "isRequired": false,
+      "description": "The table which contains the centroids trained, from the kmeans function. This argument does nothing and is preserved for backward compatability.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "centroids.table",
+      "useInR": true
+    },
+    {
+      "defaultValue": false,
+      "name": "PrintDistance",
+      "isRequired": false,
+      "description": "Specifies whether or not the distance from each observation to its closest centroid should be printed to the output table The default value is false.",
+      "datatype": "BOOLEAN",
+      "allowsLists": false,
+      "rName": "print.distance",
+      "useInR": true
+    }
+  ]
+}

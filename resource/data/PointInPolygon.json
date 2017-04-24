@@ -1,0 +1,98 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "PointInPolygon",
+  "function_version": "1.1",
+  "function_type": "non-driver",
+  "short_description": "This function is adopted to judge whether a given point in the plane lies inside or outside the boundary of a polygon. ",
+  "long_description": "This function takes as input a list of location points and a list of polygons.It will return a list of binary values for every point and polygon combination that indicate whether the point is contained in the polygon.",
+  "input_tables": [
+    {
+      "isOrdered": false,
+      "partitionByOne": false,
+      "name": "source",
+      "isRequired": true,
+      "description": "The input table contains the source geometry information",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "rName": "source",
+      "useInR": true
+    },
+    {
+      "isOrdered": false,
+      "partitionByOne": false,
+      "name": "reference",
+      "isRequired": true,
+      "description": "The input table contains the reference geometry information",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "rName": "reference",
+      "useInR": true
+    }
+  ],
+  "argument_clauses": [
+    {
+      "targetTable": "source",
+      "checkDuplicate": true,
+      "allowPadding": true,
+      "name": "SourceLocationColumn",
+      "isRequired": true,
+      "description": "The name of the columns that contain the point description.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "source.location.column",
+      "useInR": true
+    },
+    {
+      "targetTable": "reference",
+      "checkDuplicate": true,
+      "allowedTypeGroups": [
+        "STRING"
+      ],
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "ReferenceLocationColumn",
+      "isRequired": true,
+      "description": "The column that contains the polygon description. Input columns must contain string SQL types.",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "reference.location.column",
+      "useInR": true
+    },
+    {
+      "targetTable": "reference",
+      "checkDuplicate": true,
+      "allowPadding": true,
+      "name": "ReferenceNameColumns",
+      "isRequired": true,
+      "description": "The columns that contains the polygon name. These columns are passed to the output.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "reference.name.columns",
+      "useInR": true
+    },
+    {
+      "defaultValue": false,
+      "name": "OutputAll",
+      "isRequired": false,
+      "description": "Whether to specify, in the output table, that the point is not in a polygon. The default value is false.",
+      "datatype": "BOOLEAN",
+      "allowsLists": false,
+      "rName": "output.all",
+      "useInR": true
+    },
+    {
+      "targetTable": "source",
+      "checkDuplicate": true,
+      "allowPadding": true,
+      "name": "Accumulate",
+      "isRequired": false,
+      "description": "The columns from the source input table that are passed to the output table.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "accumulate",
+      "useInR": true
+    }
+  ]
+}

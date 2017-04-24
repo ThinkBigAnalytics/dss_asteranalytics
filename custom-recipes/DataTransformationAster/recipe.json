@@ -1,0 +1,70 @@
+// This file is the descriptor for the Custom code recipe TeradataAnalyticsPlugin_compute_output
+{
+    // Meta data for display purposes
+    "meta" : {
+        "label" : "Data Transformation",
+        "author" : "Me",
+        "tags" : ["myrecipe", "dev"]
+    },
+
+    "kind" : "PYTHON",
+
+    // Inputs and outputs are defined by roles. In the recipe's I/O tab, the user can associate one
+    // or more dataset to each input and output role.
+
+    // The "arity" field indicates whether the user can associate several datasets to the role ('NARY')
+    // or at most one ('UNARY'). The "required" field indicates whether the user is allowed to
+    // associate no dataset with the role.
+
+    "inputRoles" : [
+        {
+            "name": "main",
+            "arity": "UNARY",
+            "required": true,
+            "acceptsDataset": true
+        }
+    ],
+
+   
+    "outputRoles" : [
+        {
+            "name": "main",
+            "arity": "UNARY",
+            "required": true,
+            "acceptsDataset": true
+        }
+    ],
+        
+    "params": [
+        {
+            "name": "function",
+            "label" : "Function Name",
+            "type": "COLUMN",
+            "columnRole":"input",
+            "description":"Column storing function name",
+            "mandatory" : true
+        },
+        {
+            "name": "arguments",
+            "label" : "Function Name",
+            "type": "COLUMN",
+            "columnRole":"input",
+            "description":"Column storing function name",
+            "mandatory" : true
+        },
+        {
+            "name": "category",
+            "label": "SQL-MR function category",
+            "type": "STRING",
+            "description": "Category from Aster Analytics Foundation Guide",
+            "mandatory" : true,
+            "defaultValue": "Data Transformation"
+        }
+    ],
+
+    "readable" : true,
+    "writable" : false,
+    "paramsTemplate": "html/TextAnalysis.html",
+    "paramsModule" : "teradata.module",
+    "paramsPythonSetup" : "python/DataTransformation.py"
+}

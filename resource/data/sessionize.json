@@ -1,0 +1,79 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "sessionize",
+  "function_version": "1.3",
+  "function_type": "non-driver",
+  "short_description": "Creates sessions for a clickstream data.",
+  "long_description": "Creates sessions for a clickstream data and also detects bots.",
+  "input_tables": [
+    {
+      "requiredInputKind": [
+        "PartitionByKey"
+      ],
+      "isOrdered": true,
+      "partitionByOne": false,
+      "isRequired": true,
+      "description": "",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "useInR": true
+    }
+  ],
+  "argument_clauses": [
+    {
+      "checkDuplicate": true,
+      "allowedTypeGroups": [
+        "TIME",
+        "INTEGER"
+      ],
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "TimeColumn",
+      "isRequired": true,
+      "description": "Specifies the column name containing the time information. If the column is of type INT, BIGINT, or SMALLINT, it is assumed to contain timestamp values in milliseconds. Input columns must contain integer SQL types.",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "time.column",
+      "useInR": true
+    },
+    {
+      "lowerBound": 0,
+      "lowerBoundType": "EXCLUSIVE",
+      "allowNaN": false,
+      "name": "TimeOut",
+      "isRequired": true,
+      "description": "Specifies the maximum number of seconds a user can wait between one pageview and the next, before it the new pageview is considered to be part of a new session. The input value must be greater than 0.0.",
+      "datatype": "DOUBLE",
+      "allowsLists": false,
+      "rName": "time.out",
+      "useInR": true
+    },
+    {
+      "lowerBound": 0,
+      "lowerBoundType": "EXCLUSIVE",
+      "allowNaN": true,
+      "name": "ClickLag",
+      "alternateNames": [
+        "RapidFire"
+      ],
+      "isRequired": false,
+      "description": "Specifies minimum number of seconds that must elapse between clicks in order for this session to be considered a real (human) session. The input value must be greater than 0.0.",
+      "datatype": "DOUBLE",
+      "allowsLists": false,
+      "rName": "click.lag",
+      "useInR": true
+    },
+    {
+      "defaultValue": false,
+      "name": "EmitNull",
+      "isRequired": false,
+      "description": "If true, emits the row with NULL values for sessionid and rapidfire even if the TimeColumn has NULL value. If false, rows with NULL values for TimeColumn would not be emitted. The default value is false.",
+      "datatype": "BOOLEAN",
+      "allowsLists": false,
+      "rName": "emit.null",
+      "useInR": true
+    }
+  ]
+}

@@ -1,0 +1,145 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "path_analyzer",
+  "function_version": "1.3",
+  "function_type": "driver",
+  "short_description": "This function generates the children, parent for a particular node and calcuates its depth and number of visits.",
+  "long_description": "This is a wrapper function, invoked by a 'ON (SELECT 1) PARTITION BY 1' clause. This Function generates the children, parent for a particular node and calcuates its depth and number of visits.",
+  "argument_clauses": [
+    {
+      "isOutputColumn": false,
+      "name": "Domain",
+      "isRequired": false,
+      "description": "The address of the Queen. The host parameter is the Aster Database Queen’s IP saddress or hostname.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "Database",
+      "isRequired": false,
+      "description": "The name of the database where the input table is located.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "UserId",
+      "isRequired": false,
+      "description": "The Aster Database user name of the user running this function.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "Password",
+      "isRequired": false,
+      "description": "The Aster Database password of the user.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "SSLSettings",
+      "isRequired": false,
+      "description": "A string that includes all the SSL settings, except the password for the truststore.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "SSLTrustStorePassword",
+      "isRequired": false,
+      "description": "The password for the SSL truststore.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputTable": false,
+      "name": "InputTable",
+      "isRequired": true,
+      "description": "The name of the table containing the input data.",
+      "datatype": "TABLE_NAME",
+      "allowsLists": false,
+      "rName": "input.table",
+      "useInR": true
+    },
+    {
+      "isOutputTable": true,
+      "name": "OutputTable",
+      "isRequired": true,
+      "description": "The name of the table where the output data should be stored.",
+      "datatype": "TABLE_NAME",
+      "allowsLists": false,
+      "rName": "output.table",
+      "useInR": true
+    },
+    {
+      "targetTable": "InputTable",
+      "checkDuplicate": true,
+      "allowedTypes": [
+        "character varying"
+      ],
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "SeqColumn",
+      "alternateNames": [
+        "Seq"
+      ],
+      "isRequired": true,
+      "description": "Name of the column in the input relation that contains the paths to be analyzed. Input columns can be the following SQL types: character varying.",
+      "datatype": "COLUMN_NAMES",
+      "allowsLists": false,
+      "rName": "seq.column",
+      "useInR": true
+    },
+    {
+      "targetTable": "InputTable",
+      "checkDuplicate": true,
+      "allowedTypeGroups": [
+        "INTEGER"
+      ],
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "CountColumn",
+      "alternateNames": [
+        "Cnt"
+      ],
+      "isRequired": true,
+      "description": "Name of the column containing the count values. Input columns must contain integer SQL types.",
+      "datatype": "COLUMN_NAMES",
+      "allowsLists": false,
+      "rName": "count.column",
+      "useInR": true
+    },
+    {
+      "defaultValue": false,
+      "name": "Hash",
+      "isRequired": false,
+      "description": "Boolean value specifying whether the hash code of the “node” column should be included in the output. The default value is false.",
+      "datatype": "BOOLEAN",
+      "allowsLists": false,
+      "rName": "hash",
+      "useInR": true
+    },
+    {
+      "defaultValue": ",",
+      "isOutputColumn": false,
+      "name": "Delimiter",
+      "isRequired": false,
+      "description": "Single-character delimiter used in the path string. The default value is ,.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "delimiter",
+      "useInR": true
+    }
+  ]
+}

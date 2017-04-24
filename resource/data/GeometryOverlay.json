@@ -1,0 +1,130 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "GeometryOverlay",
+  "function_version": "1.1",
+  "function_type": "non-driver",
+  "short_description": "This function is used to find the result of overlaying two geometries.",
+  "long_description": "This function is used to find the result of overlaying two geometries. Overlay operations include intersection, difference, union, and symmetric difference. It can be used to perform operations to prepare sets of geometries for use with LocationPointInGeometry.  geospatial from AFS, parse the format and output them into database relations.",
+  "input_tables": [
+    {
+      "isOrdered": false,
+      "partitionByOne": false,
+      "name": "source",
+      "isRequired": true,
+      "description": "The input table contains the source geometry information",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "rName": "source",
+      "useInR": true
+    },
+    {
+      "isOrdered": false,
+      "partitionByOne": false,
+      "name": "reference",
+      "isRequired": true,
+      "description": "The input table contains the reference geometry information",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "rName": "reference",
+      "useInR": true
+    }
+  ],
+  "argument_clauses": [
+    {
+      "targetTable": "source",
+      "checkDuplicate": true,
+      "allowedTypeGroups": [
+        "STRING"
+      ],
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "SourceLocationColumn",
+      "isRequired": true,
+      "description": "The name of the column in the source table that contains the geometry object description. Input columns must contain string SQL types.",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "source.location.column",
+      "useInR": true
+    },
+    {
+      "targetTable": "reference",
+      "checkDuplicate": true,
+      "allowedTypeGroups": [
+        "STRING"
+      ],
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "ReferenceLocationColumn",
+      "isRequired": false,
+      "description": "The name of the column in the reference table that contains the geometry object description. Input columns must contain string SQL types.",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "reference.location.column",
+      "useInR": true
+    },
+    {
+      "targetTable": "reference",
+      "checkDuplicate": true,
+      "allowPadding": true,
+      "name": "ReferenceNameColumns",
+      "isRequired": false,
+      "description": "The name of the columns in the reference table that specify the name of the geometry object.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "reference.name.columns",
+      "useInR": true
+    },
+    {
+      "permittedValues": [
+        "union",
+        "intersection",
+        "difference",
+        "symdifference",
+        "buffer",
+        "convexhull"
+      ],
+      "isOutputColumn": false,
+      "name": "BoundaryOperator",
+      "isRequired": true,
+      "description": "The geometry overlay operator to apply. The permitted input values are [union, intersection, difference, symdifference, buffer, convexhull].",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "boundary.operator",
+      "useInR": true
+    },
+    {
+      "defaultValue": false,
+      "name": "OutputAll",
+      "isRequired": false,
+      "description": "A boolean value that specifies whether the result of non-intersection geometries is included in the output. The default value is false.",
+      "datatype": "BOOLEAN",
+      "allowsLists": false,
+      "rName": "output.all",
+      "useInR": true
+    },
+    {
+      "allowNaN": false,
+      "name": "Distance",
+      "isRequired": false,
+      "description": "The distance required by the BUFFER operator.",
+      "datatype": "DOUBLE",
+      "allowsLists": false,
+      "rName": "distance",
+      "useInR": true
+    },
+    {
+      "targetTable": "source",
+      "checkDuplicate": true,
+      "allowPadding": true,
+      "name": "Accumulate",
+      "isRequired": false,
+      "description": "The columns in the source table to be passed to the output. ",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "accumulate",
+      "useInR": true
+    }
+  ]
+}

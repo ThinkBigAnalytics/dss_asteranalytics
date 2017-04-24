@@ -1,0 +1,112 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "texttagging",
+  "function_version": "1.3",
+  "function_type": "non-driver",
+  "short_description": "Tag the documents based on the rules defined by user.",
+  "long_description": "Tag the documents based on the rules defined by user. The rule definitions should be input by either ON clause or Rules argument. The rule table should follow the schema: tablename(tagname varchar, definition varchar). Five text operators are supported: equal(columnname,str), contain(columnname,str,lower,upper), dist(columnname,str1,str2,lower,upper), dict(columnname,dictionaryname,lower,upper), and superdist(columnname,str1,str2,NW/NR/PARA/SENT,str3,NW/NR/PARA/SENT). These operators can be connected by logic operators: and, or, not.",
+  "input_tables": [
+    {
+      "requiredInputKind": [
+        "PartitionByAny"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "isRequired": true,
+      "description": "The input table that contains the texts.",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "useInR": true
+    },
+    {
+      "requiredInputKind": [
+        "Dimension"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "name": "rules",
+      "isRequired": false,
+      "description": "The input table that contains the rules.",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "rName": "rules",
+      "useInR": true
+    }
+  ],
+  "argument_clauses": [
+    {
+      "isOutputColumn": false,
+      "allowPadding": true,
+      "name": "Rules",
+      "isRequired": false,
+      "description": "If you do not specify a rules table, use this argument to specify the tagging rules. Must specify either rules table or rules argument.",
+      "datatype": "STRING",
+      "allowsLists": true,
+      "rName": "rules",
+      "useInR": true
+    },
+    {
+      "permittedValues": [
+        "en",
+        "zh_CN",
+        "zh_TW"
+      ],
+      "defaultValue": "en",
+      "isOutputColumn": false,
+      "name": "Language",
+      "isRequired": false,
+      "description": "The language of the input text. If USETOKENIZER is set to 'true', this function uses the value of this argument to create the word tokenizer. The permitted input values are [en, zh_CN, zh_TW]. The default value is en.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "language",
+      "useInR": true
+    },
+    {
+      "defaultValue": false,
+      "name": "Tokenize",
+      "alternateNames": [
+        "UseTokenizer"
+      ],
+      "isRequired": false,
+      "description": "Specifies whether to perform word segmentation if RULES are defined. If true the text string parameter in a RULES rule definition is tokenized and the input data is also tokenized before evaluating the rule. This argument is dependent on the LANGUAGE argument. The default value is false.",
+      "datatype": "BOOLEAN",
+      "allowsLists": false,
+      "rName": "tokenize",
+      "useInR": true
+    },
+    {
+      "defaultValue": false,
+      "name": "OutputbyTag",
+      "isRequired": false,
+      "description": "If 'true', each matched tag produces a tuple in the output when one document matches multiple tags. If 'false', one tuple in the output stands for one document and the matched tags are combined with the delimiter and shown in the 'tag' column. The default value is false.",
+      "datatype": "BOOLEAN",
+      "allowsLists": false,
+      "rName": "outputby.tag",
+      "useInR": true
+    },
+    {
+      "defaultValue": ",",
+      "isOutputColumn": false,
+      "name": "TagDelimiter",
+      "isRequired": false,
+      "description": "The delimiter that separates multiple tag values in the output. Note that TAGDELIMITER can be defined only if the OUTPUTBYTAG argument is set to 'false'. The default value is ,.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "tag.delimiter",
+      "useInR": true
+    },
+    {
+      "checkDuplicate": true,
+      "allowPadding": true,
+      "name": "Accumulate",
+      "isRequired": false,
+      "description": "Columns from the input table to be passed through from input to output.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "accumulate",
+      "useInR": true
+    }
+  ]
+}

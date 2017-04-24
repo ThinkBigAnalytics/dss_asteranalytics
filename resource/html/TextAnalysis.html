@@ -1,0 +1,74 @@
+<link href="/plugins/Aster/resource/css/surface_styles.css" rel="stylesheet" type="text/css">
+<link href="/plugins/Aster/resource/css/aster-ui.css" rel="stylesheet" type="text/css">
+<div style="background-color: #f4f4f4;">
+<header class="container">
+    <h1 class="m--1 g--8">Teradata Aster</h1>
+</header>
+
+    <div ng-controller="TeradataController" style="margin-top:10px;margin-bottom:10px;margin-left:10px;margin-right:10px;">
+        <div class = "card">
+        <div class="control-group field-row">
+            <label class="control-label">Function Name</label>
+            <div>
+                <!-- uncomment select with ng-init to set default -->
+                <!--<select ng-init="somethingHere = choices[1]" ng-model="config.function" ng-options="choice.name for choice in choices track by choice.name"/>-->
+                <select ng-model="config.function" ng-options="choice.name for choice in choices track by choice.name"/>
+            </div>
+        </div>
+        
+        <div class="control-group field-row" ng-if="config.function">
+            <label class="control-label">Description</label>
+            <div class="controls" style="width:55%;">
+                {{config.function.description}}
+            </div>
+        </div>    
+        </div>
+        
+        <div class="control-group" ng-if="config.function">
+            
+            <!--============================
+              -- GENERAL ASTER ARGUMENTS   
+              --============================-->
+            <div class="card g--5 nudge--right" style="float:left; min-height:400px; max-height:400px;">
+                <legend class="section_label">General Aster Arguments</legend>
+                <hr>
+                <div ng-repeat="item in config.function.asterarguments" ng-model="config.function.asterarguments">
+                    <div class="param">
+                        <input type="text" required="" placeholder="{{item.label}}" ng-model="item.value" title="{{item.desc}}">
+                    </div>
+                </div> 
+                <hr ng-show="config.function.partitionInputKind.indexOf('PartitionByKey') != -1 || config.function.isOrdered">
+                <legend class="section_label" ng-show="config.function.partitionInputKind.indexOf('PartitionByKey') != -1 || config.function.isOrdered">SQL-MR arguments</legend>
+                <div class="param" ng-show="config.function.partitionInputKind.indexOf('PartitionByKey') != -1">
+                        <input type="text" required="" placeholder="Partition By" ng-model="config.function.partitionAttributes" title="Partition Key">
+                </div>
+                <div class="param" ng-show="config.function.isOrdered">
+                        <input type="text" required="" placeholder="Order By" ng-model="config.function.orderByColumn" title="Order by Column">
+                </div>
+            </div>                             
+            <!--============================
+              -- FUNCTION ARGUMENTS   
+              --============================-->
+            <!--<div class="g--1" style="float:left;"></div>-->
+            <div class="card g--6 nudge--left" style="float:left; min-height:400px; max-height:400px; overflow:auto;">
+                <legend class="section_label">{{config.function.name}} Arguments</legend>
+                <hr>
+                <div ng-repeat="item in config.function.arguments" ng-model="config.function.arguments">
+                    <div class="param" ng-switch="item.isRequired">           
+                        <div ng-switch="item.datatype">
+                            <input ng-switch-default type="text" ng-model="item.value" title="{{ item.desc }}" required="" placeholder="{{item.name}}"/>
+                            <!--
+                            <select ng-switch-when="BOOLEAN" ng-model="item.value" title="{{ item.desc }}">
+                                <option value="true">true</option>
+                                <option value="false">false</option>
+                            </select>
+                            -->
+                        </div>
+                    </div>
+                </div>         
+            </div>
+            
+        </div>
+       
+    </div>
+</div>

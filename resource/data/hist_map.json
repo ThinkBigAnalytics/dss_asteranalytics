@@ -1,0 +1,170 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "hist_map",
+  "function_version": "1.2",
+  "function_type": "non-driver",
+  "short_description": "SQL-MR function used to create histograms",
+  "long_description": "SQL-MR function used to create histograms. If the bins are equi-sized, use BinSize and StartValue to specify the intervals. Otherwise, use Intervals to specify the min and max of each bin.",
+  "input_tables": [
+    {
+      "requiredInputKind": [
+        "PartitionByAny"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "isRequired": true,
+      "description": "The table containing the input data.",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "useInR": true
+    },
+    {
+      "requiredInputKind": [
+        "Dimension"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "name": "bin_breaks",
+      "isRequired": false,
+      "description": "A table containing the boundary points between bins.",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "rName": "bin.breaks",
+      "useInR": true
+    },
+    {
+      "requiredInputKind": [
+        "Dimension"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "name": "data_stat",
+      "isRequired": false,
+      "description": "The output of the hist_prep function containing statistics used to calculate bin breaks.",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "rName": "data.stat",
+      "useInR": true
+    }
+  ],
+  "argument_clauses": [
+    {
+      "permittedValues": [
+        "left",
+        "right"
+      ],
+      "defaultValue": "left",
+      "isOutputColumn": false,
+      "name": "Inclusion",
+      "isRequired": false,
+      "description": "Indicates whether points on bin boundaries should be grouped to the bin on the left or the bin on the right. The permitted input values are [left, right]. The default value is left.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "inclusion",
+      "useInR": true
+    },
+    {
+      "checkDuplicate": true,
+      "allowedTypeGroups": [
+        "NUMERIC"
+      ],
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "ValueColumn",
+      "alternateNames": [
+        "Value_Column"
+      ],
+      "isRequired": true,
+      "description": "The column for which statistics will be computed. Input columns must contain numeric SQL types.",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "value.column",
+      "useInR": true
+    },
+    {
+      "targetTable": "bin_breaks",
+      "checkDuplicate": true,
+      "allowedTypeGroups": [
+        "NUMERIC"
+      ],
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "BinRange",
+      "alternateNames": [
+        "Breaks_Column",
+		"BreaksColumn"
+      ],
+      "isRequired": false,
+      "description": "The column in the bin_breaks table containing the boundary values. Input columns must contain numeric SQL types.",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "bin.range",
+      "useInR": true
+    },
+    {
+      "isOutputColumn": false,
+      "name": "BinStrategy",
+      "alternateNames": [
+        "Bin_Select",
+		"BinSelect"
+      ],
+      "isRequired": false,
+      "description": "Specifies either the algorithm to be used for selecting bin boundaries or the approximate number of bins to be found. The permitted values are STURGES, SCOTT, or a positive integer.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "bin.strategy",
+      "useInR": true
+    },
+    {
+      "allowNaN": false,
+      "name": "StartValue",
+      "isRequired": false,
+      "description": "The smallest value to be used in binning.",
+      "datatype": "DOUBLE",
+      "allowsLists": false,
+      "rName": "start.value",
+      "useInR": true
+    },
+    {
+      "allowNaN": false,
+      "name": "EndValue",
+      "isRequired": false,
+      "description": "The largest value to be used in binning.",
+      "datatype": "DOUBLE",
+      "allowsLists": false,
+      "rName": "end.value",
+      "useInR": true
+    },
+    {
+      "lowerBound": 0,
+      "lowerBoundType": "EXCLUSIVE",
+      "allowNaN": false,
+      "name": "BinSize",
+      "isRequired": false,
+      "description": "For equally sized bins, a double value specifying the width of the bin. Omit this argument if you are not using equally sized bins. The input value must be greater than 0.0.",
+      "datatype": "DOUBLE",
+      "allowsLists": false,
+      "rName": "bin.size",
+      "useInR": true
+    },
+    {
+      "checkDuplicate": true,
+      "allowedTypeGroups": [
+        "GROUPTYPE"
+      ],
+      "allowPadding": true,
+      "name": "GroupColumns",
+      "alternateNames": [
+        "Group_Columns"
+      ],
+      "isRequired": false,
+      "description": "Specifies a column used to group values for binning. Input columns cannot contain doubles or floats.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "group.columns",
+      "useInR": true
+    }
+  ]
+}

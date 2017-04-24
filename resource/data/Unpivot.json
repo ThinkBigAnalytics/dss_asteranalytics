@@ -1,0 +1,96 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "Unpivot",
+  "function_version": "1.2",
+  "function_type": "non-driver",
+  "short_description": "This function is used to unpivot a range of columns into an atribute column and a value column.",
+  "long_description": "This function is used to unpivot a range of columns into an atribute column and a value column.",
+  "input_tables": [
+    {
+      "requiredInputKind": [
+        "PartitionByAny"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "isRequired": true,
+      "description": "The table containing the data to be pivoted.",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "useInR": true
+    }
+  ],
+  "argument_clauses": [
+    {
+      "checkDuplicate": false,
+      "allowPadding": true,
+      "name": "Unpivot",
+      "alternateNames": [
+        "ColsToUnpivot",
+        "ColsToUnpivotRange"
+      ],
+      "isRequired": true,
+      "description": "The column containing the pivot keys.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "unpivot",
+      "useInR": true
+    },
+    {
+      "checkDuplicate": true,
+      "allowPadding": true,
+      "name": "Accumulate",
+      "alternateNames": [
+        "ColsToAccumulate"
+      ],
+      "isRequired": true,
+      "description": "Columns from the input table to be passed through from input to output.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "accumulate",
+      "useInR": true
+    },
+    {
+      "defaultValue": false,
+      "name": "InputTypes",
+      "alternateNames": [
+        "KeepInputColumnTypes"
+      ],
+      "isRequired": false,
+      "description": "Indicates whether to keep the types of the input columns. The default value is false.",
+      "datatype": "BOOLEAN",
+      "allowsLists": false,
+      "rName": "input.types",
+      "useInR": true
+    },
+    {
+      "defaultValue": "attribute",
+      "isOutputColumn": false,
+      "name": "AttributeColumn",
+      "alternateNames": [
+        "AttributeColumnName"
+      ],
+      "isRequired": false,
+      "description": "Sets the name of the unpivoted attribute column. The default value is attribute.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "attribute.column",
+      "useInR": true
+    },
+    {
+      "defaultValue": "value",
+      "isOutputColumn": false,
+      "name": "ValueColumn",
+      "alternateNames": [
+        "ValueColumnName"
+      ],
+      "isRequired": false,
+      "description": "Sets the name of the unpivoted attribute column. The default value is value.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "value.column",
+      "useInR": true
+    }
+  ]
+}

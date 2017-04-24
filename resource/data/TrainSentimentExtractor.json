@@ -1,0 +1,140 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "TrainSentimentExtractor",
+  "function_version": "2.1",
+  "function_type": "driver",
+  "short_description": "SQL/MR function to train the model used in sentiment extraction.",
+  "long_description": "SQL/MR function to train model used in sentiment extraction. At present, maximum extropy model is supported.",
+  "argument_clauses": [
+    {
+      "isOutputColumn": false,
+      "name": "Domain",
+      "isRequired": false,
+      "description": "The address of the Queen. The host parameter is the Aster Database Queen’s IP saddress or hostname.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "Database",
+      "isRequired": false,
+      "description": "The name of the database where the input table is located.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "UserId",
+      "isRequired": false,
+      "description": "The Aster Database user name of the user running this function.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "Password",
+      "isRequired": false,
+      "description": "The Aster Database password of the user.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "SSLSettings",
+      "isRequired": false,
+      "description": "A string that includes all the SSL settings, except the password for the truststore.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "SSLTrustStorePassword",
+      "isRequired": false,
+      "description": "The password for the SSL truststore.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputTable": false,
+      "name": "InputTable",
+      "alternateNames": [
+        "Input_Table"
+      ],
+      "isRequired": true,
+      "description": "The name of the table containing the training data.",
+      "datatype": "TABLE_NAME",
+      "allowsLists": false,
+      "rName": "input.table",
+      "useInR": true
+    },
+    {
+      "targetTable": "InputTable",
+      "checkDuplicate": true,
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "TextColumn",
+      "alternateNames": [
+        "Text_Column"
+      ],
+      "isRequired": true,
+      "description": "The name of the column whose content will be scanned.",
+      "datatype": "COLUMN_NAMES",
+      "allowsLists": false,
+      "rName": "text.column",
+      "useInR": true
+    },
+    {
+      "targetTable": "InputTable",
+      "checkDuplicate": true,
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "SentimentColumn",
+      "alternateNames": [
+        "Sentiment_Column"
+      ],
+      "isRequired": true,
+      "description": "The name of the column with sentiment values.",
+      "datatype": "COLUMN_NAMES",
+      "allowsLists": false,
+      "rName": "sentiment.column",
+      "useInR": true
+    },
+    {
+      "isOutputColumn": false,
+      "name": "ModelFile",
+      "alternateNames": [
+        "Model_File"
+      ],
+      "isRequired": true,
+      "description": "The name of the data model file to be generated.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "model.file",
+      "useInR": true
+    },
+    {
+      "permittedValues": [
+        "en",
+        "zh_CN",
+        "zh_TW"
+      ],
+      "defaultValue": "en",
+      "isOutputColumn": false,
+      "name": "Language",
+      "isRequired": false,
+      "description": "The language in which to perform sentiment analysis. Supported values are: 'en' (English), 'zh_CN' (Simple Chinese), 'zh_TW' (Traditional Chinese). The permitted input values are [en, zh_CN, zh_TW]. The default value is en.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "language",
+      "useInR": true
+    }
+  ]
+}

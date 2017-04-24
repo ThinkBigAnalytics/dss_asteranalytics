@@ -1,0 +1,113 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "CoxPH",
+  "function_version": "1.0",
+  "function_type": "driver",
+  "short_description": "Cox Proportitional Hazard Model function",
+  "long_description": "Cox Proportitional Hazard Model function. ",
+  "driver_arguments": {
+    "domain": "",
+    "database": "",
+    "userid": "",
+    "password": "",
+    "SSLsettings": "",
+    "SSLtruststorepassword": ""
+  },
+  "argument_clauses": [
+    {
+      "name": "inputtable",
+      "isRequired": true,
+      "description": "The inputtable is a required argument clause.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "inputtable",
+      "useInR": true
+    },
+    {
+      "name": "coefficient_table",
+      "isRequired": true,
+      "description": "The coefficient_table is a required argument clause.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "coefficient.table",
+      "useInR": true
+    },
+    {
+      "name": "linear_predictor_table",
+      "isRequired": true,
+      "description": "The linear_predictor_table is a required argument clause.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "linear.predictor.table",
+      "useInR": true
+    },
+    {
+      "defaultValue": 10,
+      "lowerBound": 1,
+      "lowerBoundType": "INCLUSIVE",
+      "allowNaN": false,
+      "name": "MaxIterNum",
+      "isRequired": false,
+      "description": "The maximum number of iterations should be greater than 0. The input value must be no less than 1. The default value is 10.",
+      "datatype": "INTEGER",
+      "allowsLists": false,
+      "rName": "max.iter.num",
+      "useInR": true
+    },
+    {
+      "defaultValue": 1.0E-9,
+      "lowerBound": 0.0,
+      "upperBound": 1.0,
+      "lowerBoundType": "EXCLUSIVE",
+      "upperBoundType": "EXCLUSIVE",
+      "allowNaN": false,
+      "name": "Threshold",
+      "isRequired": false,
+      "description": "The threshold value should be between 0 and 1.0, exclusive. The input value must be greater than 0.0 and less than 1.0. The default value is 1.0E-9.",
+      "datatype": "DOUBLE",
+      "allowsLists": false,
+      "rName": "threshold",
+      "useInR": true
+    },
+    {
+      "name": "event_column",
+      "isRequired": true,
+      "description": "The event_column is a required argument clause.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "event.column",
+      "useInR": true
+    },
+    {
+      "name": "time_interval_column",
+      "isRequired": true,
+      "description": "The time_interval_column is a required argument clause.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "time.interval.column",
+      "useInR": true
+    },
+    {
+      "allowPadding": true,
+      "name": "feature_columns",
+      "isRequired": true,
+      "description": "",
+      "datatype": "STRING",
+      "allowsLists": true,
+      "rName": "feature.columns",
+      "useInR": true
+    },
+    {
+      "allowPadding": true,
+      "name": "accumulate",
+      "isRequired": false,
+      "description": "",
+      "datatype": "STRING",
+      "allowsLists": true,
+      "rName": "accumulate",
+      "useInR": true
+    }
+  ]
+}

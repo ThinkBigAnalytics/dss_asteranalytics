@@ -1,0 +1,43 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "Pca_Reduce",
+  "function_version": "1.2",
+  "function_type": "non-driver",
+  "short_description": "Computes the principal components of an input matrix.",
+  "long_description": "Computes the principal components of an input matrix.",
+  "function_operation": "reduce",
+  "partner_function": "Pca_Map",
+  "expected_partition_column": "1",
+  "input_tables": [
+    {
+      "requiredInputKind": [
+        "PartitionByKey"
+      ],
+      "isOrdered": false,
+      "partitionByOne": true,
+      "name": "InputTable",
+      "isRequired": true,
+      "description": "The tables contains the attributes that the PCA algorithm will analyze.",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "rName": "input.table",
+      "useInR": true
+    }
+  ],
+  "argument_clauses": [
+    {
+      "lowerBound": 1,
+      "lowerBoundType": "INCLUSIVE",
+      "allowNaN": false,
+      "name": "Components",
+      "isRequired": false,
+      "description": "The number of principal components that PCA will output. The input value must be no less than 1.",
+      "datatype": "INTEGER",
+      "allowsLists": false,
+      "rName": "components",
+      "useInR": true
+    }
+  ]
+}

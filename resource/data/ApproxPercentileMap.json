@@ -1,0 +1,73 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "ApproxPercentileMap",
+  "function_version": "1.1",
+  "function_type": "non-driver",
+  "short_description": "Outputs a summary of approximate percentiles on values of a column and grouped by one or more columns.",
+  "long_description": "Outputs a summary of approximate percentiles on values given by a column and grouped by one or more columns. The rank of each output value is guaranteed to be within <N * relative_error / 100> of the rank of the corresponding percentile, where <N> is the number of summarized values.",
+  "input_tables": [
+    {
+      "isOrdered": false,
+      "partitionByOne": false,
+      "name": "InputTable",
+      "isRequired": true,
+      "description": "Specifies the table containing the input data.",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "rName": "input.table",
+      "useInR": true
+    }
+  ],
+  "argument_clauses": [
+    {
+      "targetTable": "InputTable",
+      "checkDuplicate": true,
+      "allowPadding": true,
+      "name": "TargetColumn",
+      "alternateNames": [
+        "Target_Column"
+      ],
+      "isRequired": true,
+      "description": "Specifies the column for which we want to compute the quantile summary. ",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "target.column",
+      "useInR": true
+    },
+    {
+      "defaultValue": 1,
+      "lowerBound": 0.01,
+      "upperBound": 50,
+      "lowerBoundType": "INCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
+      "allowNaN": false,
+      "name": "ErrorRate",
+      "alternateNames": [
+        "Error"
+      ],
+      "isRequired": false,
+      "description": "Specifies the acceptable error rate, expressed using decimal representation. The input value must be no less than 0.01 and no greater than 50.0. The default value is 1.0.",
+      "datatype": "DOUBLE",
+      "allowsLists": false,
+      "rName": "error.rate",
+      "useInR": true
+    },
+    {
+      "targetTable": "InputTable",
+      "checkDuplicate": true,
+      "allowPadding": true,
+      "name": "GroupColumns",
+      "alternateNames": [
+        "Group_Columns"
+      ],
+      "isRequired": false,
+      "description": "Specifies the columns to group the data by. ",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "group.columns",
+      "useInR": true
+    }
+  ]
+}

@@ -1,0 +1,175 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "Burst",
+  "function_version": "1.0",
+  "function_type": "non-driver",
+  "short_description": "It is used to split the time series into multiple contiguous intervals of given length.",
+  "long_description": "It is used to split the time series into multiple contiguous intervals of given length.Time_table acts as an option if more specific time slots needed. The function achieves functionalities according to different combination of argument clauses.",
+  "input_tables": [
+    {
+      "requiredInputKind": [
+        "PartitionByKey"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "name": "input_table",
+      "isRequired": true,
+      "description": "",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "rName": "input.table",
+      "useInR": true
+    },
+    {
+      "requiredInputKind": [
+        "PartitionByKey"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "name": "time_table",
+      "isRequired": false,
+      "description": "",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "rName": "time.table",
+      "useInR": true
+    }
+  ],
+  "argument_clauses": [
+    {
+      "targetTable": "input_table",
+      "checkDuplicate": true,
+      "allowPadding": true,
+      "name": "TimeColumn",
+	  "alternateNames":["Time_Column"],
+      "isRequired": true,
+      "description": "Specifies the names of the input_table columns that contain the start and end times of the time interval to be burst.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "time.column",
+      "useInR": true
+    },
+    {
+      "lowerBound": 0.0,
+      "lowerBoundType": "EXCLUSIVE",
+      "allowNaN": false,
+      "name": "TimeInterval",
+	  "alternateNames":["Time_Interval"],
+      "isRequired": false,
+      "description": "Specifies the length of each burst time interval. This value must be an INTEGER. The input value must be greater than 0. The input value must be greater than 0.0.",
+      "datatype": "DOUBLE",
+      "allowsLists": false,
+      "rName": "time.interval",
+      "useInR": true
+    },
+    {
+      "targetTable": "input_table",
+      "checkDuplicate": true,
+      "allowPadding": true,
+      "name": "ValueColumns",
+	  "alternateNames":["Value_Columns"],
+      "isRequired": true,
+      "description": "Specifies the names of input_table columns to copy to the output table.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "value.columns",
+      "useInR": true
+    },
+    {
+      "isOutputColumn": false,
+      "name": "TimeDataType",
+	  "alternateNames":["Time_Data_Type"],
+      "isRequired": false,
+      "description": "Specifies the data type of the output columns that correspond to the input table columns that Time_Column specifies (start_time_column and end_time_column",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "time.data.type",
+      "useInR": true
+    },
+    {
+      "isOutputColumn": false,
+      "allowPadding": true,
+      "name": "ValueDataType",
+	  "alternateNames":["Value_Data_Type"],
+      "isRequired": false,
+      "description": "Specifies the data types of the output columns that correspond to the input table columns that Value_Columns specifies.",
+      "datatype": "STRING",
+      "allowsLists": true,
+      "rName": "value.data.type",
+      "useInR": true
+    },
+    {
+      "isOutputColumn": false,
+      "name": "StartTime",
+	  "alternateNames":["Start_Time"],
+      "isRequired": false,
+      "description": "Specifies the start time for the time interval to be burst. The default value is start_time_column.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "start.time",
+      "useInR": true
+    },
+    {
+      "isOutputColumn": false,
+      "name": "EndTime",
+	  "alternateNames":["End_Time"],
+      "isRequired": false,
+      "description": "Specifies the end time for the time interval to be burst. The default value is end_time_column.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "end.time",
+      "useInR": true
+    },
+    {
+      "lowerBound": 0,
+      "lowerBoundType": "EXCLUSIVE",
+      "allowNaN": false,
+      "name": "NumPoints",
+	  "alternateNames":["Num_Points"],
+      "isRequired": false,
+      "description": "Specifies the number of data points in each burst time interval. This value must be an INTEGER. The input value must be greater than 0. The input value must be greater than 0.",
+      "datatype": "INTEGER",
+      "allowsLists": false,
+      "rName": "num.points",
+      "useInR": true
+    },
+    {
+      "isOutputColumn": false,
+      "allowPadding": true,
+      "name": "ValuesBeforeFirst",
+	  "alternateNames":["Values_Before_First"],
+      "isRequired": false,
+      "description": "Specifies the values to use if start_time is before start_time_column. Each of these values must have the same data type as its corresponding value_column. Values of data type VARCHAR are case-insensitive.",
+      "datatype": "STRING",
+      "allowsLists": true,
+      "rName": "values.before.first",
+      "useInR": true
+    },
+    {
+      "isOutputColumn": false,
+      "allowPadding": true,
+      "name": "ValuesAfterLast",
+	  "alternateNames":["Values_After_Last"],
+      "isRequired": false,
+      "description": "Specifies the values to use if end_time is after end_time_column. Each of these values must have the same data type as its corresponding value_column. Values of data type VARCHAR are case-insensitive.",
+      "datatype": "STRING",
+      "allowsLists": true,
+      "rName": "values.after.last",
+      "useInR": true
+    },
+    {
+      "targetTable": "input_table",
+      "checkDuplicate": true,
+      "allowPadding": true,
+      "name": "Accumulate",
+      "isRequired": false,
+      "description": "Specifies the names of input_table columns (other than those specified by Time_Column and Value_Columns) to copy to the output table.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "accumulate",
+      "useInR": true
+    }
+  ]
+}

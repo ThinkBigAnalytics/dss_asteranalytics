@@ -1,0 +1,92 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "apache_log_parser",
+  "function_version": "2.3",
+  "function_type": "non-driver",
+  "short_description": "Parse Apache web server logs.",
+  "long_description": "Parse Apache web server logs,  extracting log items in accordance with given format string.",
+  "input_tables": [
+    {
+      "requiredInputKind": [
+        "PartitionByAny"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "isRequired": true,
+      "description": "",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "useInR": true
+    }
+  ],
+  "argument_clauses": [
+    {
+      "checkDuplicate": true,
+      "allowedTypeGroups": [
+        "STRING"
+      ],
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "TargetColumn",
+      "alternateNames": [
+        "Log_Column",
+		"LogColumn"
+      ],
+      "isRequired": true,
+      "description": "Name of the column whose contents will be parsed. Input columns must contain string SQL types.",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "target.column",
+      "useInR": true
+    },
+    {
+      "defaultValue": "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\"",
+      "isOutputColumn": false,
+      "name": "LogFormat",
+	  "alternateNames": [
+        "Log_Format"
+      ],
+      "isRequired": false,
+      "description": "The Apache Log Format string is used to generate the server access logs. This format string can be found in the apache server configuration file. The default value is %h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\".",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "log.format",
+      "useInR": true
+    },
+    {
+      "defaultValue": [
+        ".png",
+        ".xml",
+        ".js"
+      ],
+      "isOutputColumn": false,
+      "allowPadding": true,
+      "name": "ExcludeFiles",
+      "alternateNames": [
+        "Exclude_Files"
+      ],
+      "isRequired": false,
+      "description": "Comma separated file suffixes to exclude. The default value is [.png, .xml, .js].",
+      "datatype": "STRING",
+      "allowsLists": true,
+      "rName": "exclude.files",
+      "useInR": true
+    },
+    {
+      "defaultValue": false,
+      "name": "SearchInfoFlag",
+      "alternateNames": [
+        "Return_Search_Info",
+		"ReturnSearchInfo"
+      ],
+      "isRequired": false,
+      "description": "A true or false value that specifies whether to return search information. If 'true', the search engine and the search terms, if existing, are extracted into two output columns. Three search engines are supported for identifying search activities: Google, Bing, and Yahoo. More complete parsing capabilities are provided for Google. The default value is false.",
+      "datatype": "BOOLEAN",
+      "allowsLists": false,
+      "rName": "search.info.flag",
+      "useInR": true
+    }
+  ]
+}

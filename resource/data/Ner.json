@@ -1,0 +1,121 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "Ner",
+  "function_version": "1.1",
+  "function_type": "non-driver",
+  "short_description": "Named Entity Recognition SQL/MR function.",
+  "long_description": "Named Entity Recognition SQL/MR function.",
+  "input_tables": [
+    {
+      "requiredInputKind": [
+        "PartitionByAny"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "isRequired": true,
+      "description": "The relation from which extract named entities",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "useInR": true
+    },
+    {
+      "requiredInputKind": [
+        "Dimension"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "name": "rules",
+      "isRequired": false,
+      "description": "The relation that contains the regex rules",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "rName": "rules",
+      "useInR": true
+    },
+    {
+      "requiredInputKind": [
+        "Dimension"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "name": "dict",
+      "isRequired": false,
+      "description": "The relation that contains the dictionary for named entities",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "rName": "dict",
+      "useInR": true
+    }
+  ],
+  "argument_clauses": [
+    {
+      "checkDuplicate": true,
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "TextColumn",
+      "isRequired": true,
+      "description": "The name of the column whose content is analyzed",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "text.column",
+      "useInR": true
+    },
+    {
+      "permittedValues": [
+        "en",
+        "zh_CN",
+        "zh_TW"
+      ],
+      "defaultValue": "en",
+      "isOutputColumn": false,
+      "name": "Language",
+      "isRequired": false,
+      "description": "The language used in the input text (language_type). The supported values are: 'en' | 'zh_CN' | 'zh_TW'. The default is 'en' The permitted input values are [en, zh_CN, zh_TW]. The default value is en.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "language",
+      "useInR": true
+    },
+    {
+      "isOutputColumn": false,
+      "allowPadding": true,
+      "name": "Models",
+      "isRequired": false,
+      "description": "The CRFs model file that is used by the function to find named entities",
+      "datatype": "STRING",
+      "allowsLists": true,
+      "rName": "models",
+      "useInR": true
+    },
+    {
+      "checkDuplicate": true,
+      "allowPadding": true,
+      "name": "Accumulate",
+      "isRequired": false,
+      "description": "Columns from the input table to be passed through from input to output.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "accumulate",
+      "useInR": true
+    },
+    {
+      "lowerBound": 0,
+      "upperBound": 10,
+      "lowerBoundType": "EXCLUSIVE",
+      "upperBoundType": "EXCLUSIVE",
+      "allowNaN": false,
+      "name": "ShowEntityContext",
+      "alternateNames": [
+        "ShowContext"
+      ],
+      "isRequired": false,
+      "description": "Whether to output the context information for named entities If the argument is set to a position number n, the preceding n words, the entity itself, and following n words are emitted. The default is no context information is output The input value must be greater than 0 and less than 10.",
+      "datatype": "INTEGER",
+      "allowsLists": false,
+      "rName": "show.entity.context",
+      "useInR": true
+    }
+  ]
+}
