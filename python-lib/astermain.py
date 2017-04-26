@@ -33,7 +33,7 @@ def asterDo():
     
     # input dataset
     inputconnectioninfo = connectioninfo(project,
-                                         main_input_name if dss_function.get("hasInputTable", True) else ".")
+                                         main_input_name)
     inputTable = inputtableinfo(inputconnectioninfo, dss_function)
     # output dataset
     outputconnectioninfo = connectioninfo(project, main_output_name)

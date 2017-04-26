@@ -36,15 +36,24 @@ def do(payload, config, plugin_config, inputs):
                 d["hasInputTable"] = True
                 partitionKeys=[]
                 input_tab_lst = f['input_tables']
+                required_input = []
                 for input_tab in input_tab_lst:
+                    required_input_dict = {}
                     if 'requiredInputKind' in input_tab.keys():
                         partitionByKey = input_tab['requiredInputKind'][0]
                         if 'partitionByOne' in input_tab.keys() and input_tab['partitionByOne']:
-                            partitionByKey = "PartitionByOne"    
+                            partitionByKey = "PartitionByOne"
                         partitionKeys.append(partitionByKey)
+                        required_input_dict['kind'] = partitionByKey
                     if 'isOrdered' in input_tab.keys() and input_tab['isOrdered']:
                         d["isOrdered"] = input_tab['isOrdered']
+                        required_input_dict['isOrdered'] = True
+                    if 'name' in input_tab.keys():
+                        required_input_dict['name'] = input_tab['name']
+                        required_input_dict['value'] = ""
+                        required_input.append(required_input_dict)
                 d["partitionInputKind"]=partitionKeys
+                d["required_input"] = required_input
             if 'argument_clauses' in keys:
                 a = []
                 arg_lst = f['argument_clauses']
@@ -53,8 +62,7 @@ def do(payload, config, plugin_config, inputs):
                     if 'alternateNames' in argument.keys():
                         arg["name"]=argument['alternateNames'][0].upper()
                     elif 'name' in argument.keys():
-                        arg["name"]=argument['name'].upper()
-                        
+                        arg["name"]=argument['name'].upper()  
                     if 'isRequired' in argument.keys():
                         arg["isRequired"]=argument['isRequired']
                     if 'description' in argument.keys():
@@ -66,7 +74,8 @@ def do(payload, config, plugin_config, inputs):
                         
                     a.append(arg)
                 d["arguments"]=a
-            
+            if 'cascaded_functions' in keys:
+                d["cascaded_functions"] = f['cascaded_functions']
             aster_arg_list = []
             for argument in aster_args:
                 aster_arg = {"name":"","label":"","desc":"","value":""}

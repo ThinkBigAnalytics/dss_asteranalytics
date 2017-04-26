@@ -5,11 +5,13 @@ class inputtableinfo(tableinfo.tableinfo):
         super(inputtableinfo, self).__init__(connectioninfo)
         self.__partitionKey = self.__getPartitionKeyFromFunctionDef(dss_function)
         self.__orderKey = self.__getOrderByKeyFromFunctionDef(dss_function)
+        self.__dssfunction = dss_function
         
     @property
     def tablename(self):
-        return """(SELECT 1)""" if not self._tablename else ".".join([self._schemaname,
-                                                                       self._tablename])
+        return ".".join([self._schemaname,
+                         self._tablename]) if self.__dssfunction.get("hasInputTable",
+                                                              True) else """(SELECT 1)""" 
         
     @property
     def partitionKey(self):

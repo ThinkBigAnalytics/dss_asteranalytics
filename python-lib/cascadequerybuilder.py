@@ -42,6 +42,6 @@ def getAsterQuery(dss_function, inputTable, outputTable):
         COMMIT;
         END TRANSACTION;""".format(outputTableName=outputTable.tablename,
                                    output_table_type=outputTable.tableType,
-                                   distributeBy="DISTRIBUTE BY HASH({})".format(outputTable.hashKey) if "FACT" == outputTable.tableType else "",
+                                   distributeBy=" DISTRIBUTE BY HASH({})".format(outputTable.hashKey) if "FACT" == outputTable.tableType else "",
                                    inputInfo=inputInfo)
     return query
