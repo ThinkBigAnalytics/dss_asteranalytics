@@ -1,5 +1,6 @@
 #main-container {
     overflow: hidden !important;
+    min-height: 50vh !important;
 }
 
 .recipe-settings-section1 {
@@ -157,4 +158,10 @@ input:focus {
     top: 30% !important;
     left: 50% !important;
     width: 36% !important;
+}
+
+
+
+div.selectize-control {
+    max-width: 30% !important;
 }

@@ -79,8 +79,9 @@ def do(payload, config, plugin_config, inputs):
     # Get input table metadata.
     input_table_name = inputs[0]['fullName'].split('.')[1]
     input_dataset =  dataiku.Dataset(input_table_name)
+    schema = input_dataset.read_schema()
     
     return {
         'choices' : choices,
-        'schema': input_dataset.read_schema()
+        'schema': schema
     }

@@ -26,6 +26,7 @@ output = []
 FUNCTION_NAME_COL = get_recipe_config().get('function', None)
 ar = []
 for argument in FUNCTION_NAME_COL["arguments"]:
+    print(argument)
     if argument["value"]:
         arguments_list += "         " + argument["name"].upper() + "('" + argument["value"] + "')\n"
 partitionInputKind = FUNCTION_NAME_COL["partitionInputKind"]
@@ -88,6 +89,9 @@ hash_column = aster_args["hashKey"]
 schema = aster_args["schema"]
 outputTableName = '.'.join([schema, main_output_name.split('.')[1]])
 distributeBy = ""
+
+if output_table_type is None or output_table_type == '':
+    output_table_type = 'DIMENSION'
 
 if output_table_type == "FACT":
     distributeBy += """ DISTRIBUTE BY HASH({})
