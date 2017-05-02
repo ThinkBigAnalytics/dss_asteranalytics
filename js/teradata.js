@@ -1,32 +1,23 @@
-var app = angular.module('teradata.module', []);
+const app = angular.module('teradata.module', []);
+app.controller('TeradataController', function ($scope) {
 
-app.controller('TeradataController', function($scope) {
-    var updateChoices = function() {
-        // the parameter to callPythonDo() is passed to the do() method as the payload
-        // the return value of the do() method comes back as the data parameter of the fist function()
-        $scope.callPythonDo({}).then(function(data) {
-            // success
-            $scope.choices = data.choices;
-        }, function(data) {
-            // failure
-            $scope.choices = [];
-        });
-    };
-    
-    updateChoices();
+  $scope.callPythonDo({}).then(
+    data => $scope.choices = data.choices,
+    data => $scope.choices = []
+  );
 
-    //$scope.$watch('function', updateChoices);
-    $scope.items = updateChoices
-    
-    $scope.checkResult = {};
-    $scope.check = function() {
-        var hasAuthentication = function(config) {
-            return config.function;
-        };
-        $scope.checkResult = {
-            hasAuthentication : hasAuthentication($scope.config)
-        };
-    };
-    $scope.check();
- 
+  setTimeout(() => {
+
+    const $a = $('.mainPane > div:first > div:first > div.recipe-settings-section2 > a');
+    $a.text('Learn more about Teradata Aster');
+    $a.css('color', 'orange');
+    $a.parent().css('text-align', 'center');
+    $a.attr('target', '_blank');
+
+    // $('#main-container > div > div:nth-child(1) > div > select')[0].value = '';
+    $('.dss-page,#main-container').css('display', 'block');
+    $('#main-container').tooltip();
+
+  });
+
 });
