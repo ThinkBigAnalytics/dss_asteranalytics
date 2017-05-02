@@ -8,18 +8,8 @@ app.controller('TeradataController', function ($scope) {
       $scope.schema = data.schema;
       console.log(data);
 
-      // setTimeout(() => {
-      //   const $elem = $('#main-container select:first')
-      //   $elem.selectize({
-      //     dropdownParent: 'body'
-      //   })
-      //   $elem[0].selectize.on('change', e => {
-      //     setTimeout(() => $('#main-container select:not(.selectized)').selectize({
-      //       dropdownParent: 'body'
-      //     }), 100)
-      //   })
-      // });
-
+      $('select:first').change(() => $('#tabs').tabs());
+      $('select:first, select:first > option').css('text-transform', 'capitalize');
     },
     data => {
       $scope.choices = [];
@@ -39,8 +29,6 @@ app.controller('TeradataController', function ($scope) {
     $('#main-container > div > div:nth-child(1) > div > select')[0].value = '';
     $('.dss-page,#main-container').css('display', 'block');
     $('#main-container').tooltip();
-
-    console.log('updated')
 
   });
 

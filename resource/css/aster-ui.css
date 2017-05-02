@@ -160,8 +160,10 @@ input:focus {
     width: 36% !important;
 }
 
+.ui-tabs {
+    font-family: 'SourceSansPro' !important;
+}
 
-
-div.selectize-control {
-    max-width: 30% !important;
+.ui-tabs table {
+    margin-bottom: 0;
 }
