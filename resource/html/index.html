@@ -8,10 +8,7 @@
     <div class="control-group">
       <label class="control-label">Function Name</label>
       <div class="controls">
-        <select 
-          ng-model="config.function" 
-          ng-options="choice.name for choice in choices track by choice.name"
-        >
+        <select ng-model="config.function" ng-options="choice.name for choice in choices track by choice.name">
           <option value="" disabled selected>Select an Aster function...</option>
         </select>
       </div>
