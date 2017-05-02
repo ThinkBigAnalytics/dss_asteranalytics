@@ -89,6 +89,9 @@ schema = aster_args["schema"]
 outputTableName = '.'.join([schema, main_output_name.split('.')[1]])
 distributeBy = ""
 
+if output_table_type is None or output_table_type == '':
+    output_table_type = 'DIMENSION'
+
 if output_table_type == "FACT":
     distributeBy += """ DISTRIBUTE BY HASH({})
              """.format(hash_column)

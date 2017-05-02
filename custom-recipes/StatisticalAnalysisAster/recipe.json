@@ -56,7 +56,7 @@
 
     "readable" : true,
     "writable" : false,
-    "paramsTemplate": "html/StatisticalAnalysis.html",
+    "paramsTemplate": "html/index.html",
     "paramsModule" : "teradata.module",
     "paramsPythonSetup" : "python/StatisticalAnalysis.py"
 }

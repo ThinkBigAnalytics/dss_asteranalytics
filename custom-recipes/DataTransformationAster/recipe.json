@@ -64,7 +64,7 @@
 
     "readable" : true,
     "writable" : false,
-    "paramsTemplate": "html/TextAnalysis.html",
+    "paramsTemplate": "html/index.html",
     "paramsModule" : "teradata.module",
     "paramsPythonSetup" : "python/DataTransformation.py"
 }
