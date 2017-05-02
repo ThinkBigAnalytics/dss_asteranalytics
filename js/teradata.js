@@ -4,10 +4,12 @@ app.controller('TeradataController', function ($scope) {
   $scope.callPythonDo({}).then(
     data => {
       $scope.choices = data.choices;
+      $scope.schema = data.schema;
       console.log(data);
     },
     data => {
       $scope.choices = [];
+      $scope.schema = [];
       console.log(data);
     }
   );

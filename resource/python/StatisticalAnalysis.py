@@ -76,22 +76,11 @@ def do(payload, config, plugin_config, inputs):
         except ValueError, e:
             logging.info("file is not valid json");
 
-    # Get input table metadata safely.
-
+    # Get input table metadata.
     input_table_name = inputs[0]['fullName'].split('.')[1]
     input_dataset =  dataiku.Dataset(input_table_name)
-
-    error = None
-    schema = None
-
-    try:
-        schema = input_dataset.read_schema()
-    except Exception as e:
-        error = e
     
     return {
         'choices' : choices,
-        'sql': input_table_name,
-        'error': error,
-        'schema': schema
+        'schema': input_dataset.read_schema()
     }
