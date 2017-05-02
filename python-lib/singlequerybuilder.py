@@ -12,6 +12,10 @@ def getAsterQuery(dss_function, inputTable, outputTable):
                 multipleinputs += """ON {input_table} AS {input_name} {kind}\n""".format( input_table=requiredinput['value'],
                                                                                           input_name=requiredinput['name'],
                                                                                           kind=requiredinput['kind'])
+    
+    if outputTable.tableType is None or outputTable.tableType == '':
+        outputTable.tableType = 'DIMENSION'
+    
     query = """BEGIN TRANSACTION;
                DROP TABLE IF EXISTS {};
                CREATE {} TABLE {}{}

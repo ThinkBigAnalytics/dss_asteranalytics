@@ -9,6 +9,10 @@ class outputtableinfo(tableinfo.tableinfo):
     def tableType(self):
         return self.__asterArgs.get("outputType", "")
     
+    @tableType.setter
+    def tableType(self,value):
+        self.__asterArgs["outputType"] = value
+    
     @property
     def hashKey(self):
         return self.__asterArgs.get("hashKey", "")
