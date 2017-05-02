@@ -1,3 +1,4 @@
+import dataiku
 from dataiku import os
 import json
 import os
@@ -74,4 +75,23 @@ def do(payload, config, plugin_config, inputs):
             choices.append(d);
         except ValueError, e:
             logging.info("file is not valid json");
-    return {'choices' : choices}
+
+    # Get input table metadata safely.
+
+    input_table_name = inputs[0]['fullName'].split('.')[1]
+    input_dataset =  dataiku.Dataset(input_table_name)
+
+    error = None
+    schema = None
+
+    try:
+        schema = input_dataset.read_schema()
+    except Exception as e:
+        error = e
+    
+    return {
+        'choices' : choices,
+        'sql': input_table_name,
+        'error': error,
+        'schema': schema
+    }
