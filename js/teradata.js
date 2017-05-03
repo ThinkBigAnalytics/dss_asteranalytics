@@ -29,6 +29,7 @@ app.controller('TeradataController', function ($scope) {
     $('#main-container > div > div:nth-child(1) > div > select')[0].value = '';
     $('.dss-page,#main-container').css('display', 'block');
     $('#main-container').tooltip();
+    $('#tabs').tabs()
 
   });
 
