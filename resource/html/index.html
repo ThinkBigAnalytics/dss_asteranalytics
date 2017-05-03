@@ -64,7 +64,7 @@
               <tr ng-if="config.function.partitionInputKind.indexOf('PartitionByKey') !== -1">
                 <td>PARTITION BY Column</td>
                 <td>
-                  <select ng-disabled="config.function.partitionByAny" multiple ng-model="config.function.partitionAttributes">
+                  <select ng-disabled="config.function.partitionByAny" multiple size="8" ng-model="config.function.partitionAttributes">
                     <option ng-repeat="column in schema" value="{{ column.name }}">{{ column.name }} ({{ column.type }})</option>
                   </select>
                 </td>
