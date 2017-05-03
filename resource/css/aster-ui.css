@@ -167,3 +167,7 @@ input:focus {
 .ui-tabs table {
     margin-bottom: 0;
 }
+
+select[multiple] {
+    overflow: auto;
+}

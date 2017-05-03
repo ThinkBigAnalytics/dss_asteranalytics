@@ -104,7 +104,7 @@
                     <option ng-repeat="column in schema" value="{{ column.name }}">{{ column.name }} ({{ column.type }})</option>
                   </select>
 
-                  <select multiple data-ng-attr-size="{{schema.length}}"
+                  <select multiple size="8"
                     ng-if="item.datatype == 'COLUMNS' && item.allowsLists" ng-model="item.value" 
                     data-toggle="tooltip" title="{{ item.desc }}" data-placement="right">
                     <option ng-repeat="column in schema" value="{{ column.name }}">{{ column.name }} ({{ column.type }})</option>
