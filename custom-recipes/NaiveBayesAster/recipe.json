@@ -51,6 +51,14 @@
             "columnRole":"input",
             "description":"Column storing function name",
             "mandatory" : true
+        },
+        {
+            "name": "category",
+            "label": "SQL-MR function category",
+            "type": "STRING",
+            "description": "Category from Aster Analytics Foundation Guide",
+            "mandatory" : true,
+            "defaultValue": "Naive Bayes"
         }
     ],
 
@@ -58,5 +66,5 @@
     "writable" : false,
     "paramsTemplate": "html/index.html",
     "paramsModule" : "teradata.module",
-    "paramsPythonSetup" : "python/NaiveBayes.py"
+    "paramsPythonSetup" : "python/DataTransformation.py"
 }
