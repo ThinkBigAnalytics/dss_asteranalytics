@@ -59,7 +59,7 @@
                 <td>
                   <select ng-model="config.function.partitionAttributes">
                 <option value="" selected>--No Selection--</option>
-                <option value="ANY">ANY</option>
+                <option value="ANY" ng-if="config.function.partitionInputKind.indexOf('PartitionByAny') !== -1">ANY</option>
                 <option ng-repeat="column in schema" value="{{ column.name }}">{{ column.name }} ({{ column.type }})</option>
               </select>
                 </td>
