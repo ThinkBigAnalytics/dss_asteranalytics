@@ -9,6 +9,9 @@ def getJoinedArgumentsString(cargumentslist):
     carguments = ""
     for argument in cargumentslist:
         if argument['value']:
-            cargvalues = ", ".join([re.sub(r"^'|'$", '', s) if (argument["datatype"].upper() == "SQLEXPR") else (s if (s[:1] == "'" and s[-1:] == "'") else ("'" + s + "'")) for s in re.split(regex, argument["value"])]) if argument.get("allowsLists", False) else ("'" + argument["value"] + "'")
+            if "COLUMNS" == argument["datatype"].upper() and argument.get("allowsLists", False):
+                cargvalues = ", ".join("'" + astercolumn + "'" for astercolumn in argument["value"])
+            else:
+                cargvalues = ", ".join([re.sub(r"^'|'$", '', s) if (argument["datatype"].upper() == "SQLEXPR") else (s if (s[:1] == "'" and s[-1:] == "'") else ("'" + s + "'")) for s in re.split(regex, argument["value"])]) if argument.get("allowsLists", False) else ("'" + argument["value"] + "'")
             carguments += "         " + argument["name"].upper() + "(" + cargvalues + ")\n"
     return carguments
