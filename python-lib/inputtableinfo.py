@@ -31,7 +31,7 @@ class inputtableinfo(tableinfo.tableinfo):
         elif "PartitionByAny" in partitionInputKind:
             partitionKeys = "ANY"
         elif "PartitionByKey" in partitionInputKind:
-            partitionKeys = dss_function["partitionAttributes"]
+            partitionKeys = ", ".join(dss_function["partitionAttributes"])
         elif "PartitionByOne" in partitionInputKind:
             partitionKeys = "1"
         return partitionKeys
