@@ -72,6 +72,8 @@ def do(payload, config, plugin_config, inputs):
                         arg["datatype"]=argument['datatype']
                     if 'allowsLists' in argument.keys():
                         arg["allowsLists"]=argument['allowsLists']
+                    if 'targetTable' in argument.keys():
+                        arg["targetTable"] = argument['targetTable']
                         
                     a.append(arg)
                 d["arguments"]=a
