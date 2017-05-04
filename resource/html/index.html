@@ -44,6 +44,13 @@
 
             <tbody>
 
+			  <tr ng-repeat="item in config.function.required_input" ng-model="config.function.required_input">
+			      <td style="text-transform: capitalize">{{ item.name.split('_').join(' ') | lowercase }}</td>
+			      <td>
+			          <input type="text" ng-model="item.value" data-toggle="tooltip" title="{{ item.desc }}"
+                    data-placement="right" />
+			  	  </td>
+			  </tr>
               <tr ng-if="config.function.isOrdered">
                 <td>ORDER BY Column</td>
                 <td>

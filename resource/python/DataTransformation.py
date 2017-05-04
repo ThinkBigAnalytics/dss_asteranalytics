@@ -49,7 +49,7 @@ def do(payload, config, plugin_config, inputs):
                     if 'isOrdered' in input_tab.keys() and input_tab['isOrdered']:
                         d["isOrdered"] = input_tab['isOrdered']
                         required_input_dict['isOrdered'] = True
-                    if 'name' in input_tab.keys():
+                    if 'name' in input_tab.keys() and 'requiredInputKind' in input_tab.keys() and 'DIMENSION' == input_tab['requiredInputKind'][0].upper():
                         required_input_dict['name'] = input_tab['name']
                         required_input_dict['value'] = ""
                         required_input.append(required_input_dict)
