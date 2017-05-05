@@ -75,10 +75,16 @@
                 <td>
                   <input type="text" ng-model="item.value" ng-if="item.datatype != 'COLUMNS'" data-toggle="tooltip" title="{{ item.desc }}"
                     data-placement="right" />
-                  <select ng-if="item.datatype == 'COLUMNS'" ng-model="item.value" data-toggle="tooltip" title="{{ item.desc }}" data-placement="right">
-                <option value="" selected>--No Selection--</option>
-                <option ng-repeat="column in schema" value="{{ column.name }}">{{ column.name }} ({{ column.type }})</option>
-              </select>
+                  <select ng-if="item.datatype == 'COLUMNS' && !item.allowsLists" ng-model="item.value" data-toggle="tooltip" title="{{ item.desc }}" data-placement="right">
+                    <option value="" selected>--No Selection--</option>
+                    <option ng-repeat="column in schema" value="{{ column.name }}">{{ column.name }} ({{ column.type }})</option>
+                  </select>
+
+                  <select multiple size="8"
+                    ng-if="item.datatype == 'COLUMNS' && item.allowsLists" ng-model="item.value" 
+                    data-toggle="tooltip" title="{{ item.desc }}" data-placement="right">
+                    <option ng-repeat="column in schema" value="{{ column.name }}">{{ column.name }} ({{ column.type }})</option>
+                  </select>
                 </td>
               </tr>
             </tbody>
