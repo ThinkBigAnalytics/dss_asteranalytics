@@ -88,6 +88,14 @@
                   </select>
                 </td>
               </tr>
+
+              <tr ng-repeat="item in config.function.required_input" ng-model="config.function.required_input">
+                <td style="text-transform: capitalize">{{ item.name.split('_').join(' ') | lowercase }} ({{item.kind}})</td>
+                <td>
+                  <input type="text" ng-model="item.value"/>
+                </td>
+              </tr>
+
             </tbody>
           </table>
 
