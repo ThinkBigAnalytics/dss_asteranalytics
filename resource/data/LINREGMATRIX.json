@@ -1,0 +1,21 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "linregmatrix",
+  "function_version": "1.1",
+  "function_type": "non-driver",
+  "short_description": "Outputs linear-regression matrix corresponding to the input samples.",
+  "long_description": "Outputs linear-regression matrix corresponding to the input samples. The <n+2> column of the matrix corresponds to the right-hand side of the model.",
+  "input_tables": [
+    {
+      "isOrdered": false,
+      "partitionByOne": false,
+      "isRequired": true,
+      "description": "",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "useInR": true
+    }
+  ]
+}
