@@ -1,0 +1,103 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "ConfusionMatrixPlot",
+  "function_version": "1.1",
+  "function_type": "driver",
+  "short_description": "Plot a real confusion matrix table",
+  "long_description": "Plot the output of ConfusionMatrix a real table with fmeasure value.",
+  "input_tables": [
+    {
+      "requiredInputKind": [
+        "PartitionByKey"
+      ],
+      "isOrdered": false,
+      "partitionByOne": true,
+      "isRequired": true,
+      "description": "The output table of ConfusionMatrix function",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "useInR": true
+    }
+  ],
+  "argument_clauses": [
+    {
+      "isOutputColumn": false,
+      "name": "Domain",
+      "isRequired": false,
+      "description": "The address of the Queen. The host parameter is the Aster Database Queen’s IP saddress or hostname.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "Database",
+      "isRequired": false,
+      "description": "The name of the database where the input table is located.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "UserId",
+      "isRequired": false,
+      "description": "The Aster Database user name of the user running this function.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "Password",
+      "isRequired": false,
+      "description": "The Aster Database password of the user.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "SSLSettings",
+      "isRequired": false,
+      "description": "A string that includes all the SSL settings, except the password for the truststore.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "SSLTrustStorePassword",
+      "isRequired": false,
+      "description": "The password for the SSL truststore.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "defaultValue": 1.0,
+      "lowerBound": 0.0,
+      "lowerBoundType": "EXCLUSIVE",
+      "allowNaN": false,
+      "name": "Beta",
+      "isRequired": false,
+      "description": "The function uses this value to calculate the f-measure value. A non-negative real value (default is 1.0) The input value must be greater than 0.0. The default value is 1.0.",
+      "datatype": "DOUBLE",
+      "allowsLists": false,
+      "rName": "beta",
+      "useInR": true
+    },
+    {
+      "isOutputTable": true,
+      "name": "OutputTable",
+      "isRequired": true,
+      "description": "The name of the table containing the output of this function",
+      "datatype": "TABLE_NAME",
+      "allowsLists": false,
+      "rName": "output.table",
+      "useInR": true
+    }
+  ]
+}

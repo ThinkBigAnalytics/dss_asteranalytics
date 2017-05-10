@@ -1,0 +1,260 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "LdaTrainer",
+  "function_version": "1.1",
+  "function_type": "driver",
+  "short_description": "This function estimates the word allocation according to given set.",
+  "long_description": "This function is used to estimate the word allocation for each topic and topic distribution for each document according to a specified training set.",
+  "argument_clauses": [
+    {
+      "isOutputColumn": false,
+      "name": "Domain",
+      "isRequired": false,
+      "description": "The address of the Queen. The host parameter is the Aster Database Queen’s IP saddress or hostname.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "Database",
+      "isRequired": false,
+      "description": "The name of the database where the input table is located.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "UserId",
+      "isRequired": false,
+      "description": "The Aster Database user name of the user running this function.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "Password",
+      "isRequired": false,
+      "description": "The Aster Database password of the user.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "SSLSettings",
+      "isRequired": false,
+      "description": "A string that includes all the SSL settings, except the password for the truststore.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "SSLTrustStorePassword",
+      "isRequired": false,
+      "description": "The password for the SSL truststore.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "lowerBound": 2,
+      "upperBound": 1000,
+      "lowerBoundType": "INCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
+      "allowNaN": false,
+      "name": "TopicNum",
+      "alternateNames": [
+        "TopicNumber"
+      ],
+      "isRequired": true,
+      "description": "Indicates the number of topics for all the documents in the input table. The input value must be no less than 2 and no greater than 1000.",
+      "datatype": "INTEGER",
+      "allowsLists": false,
+      "rName": "topic.num",
+      "useInR": true
+    },
+    {
+      "defaultValue": 0.1,
+      "lowerBound": 0.0,
+      "lowerBoundType": "EXCLUSIVE",
+      "allowNaN": false,
+      "name": "Alpha",
+      "isRequired": false,
+      "description": "Hyper parameter for the model. It is a prior smooth parameter for the topic distribution over documents. When alpha is smaller, each document tends to associate with less topics. The input value must be greater than 0.0. The default value is 0.1.",
+      "datatype": "DOUBLE",
+      "allowsLists": false,
+      "rName": "alpha",
+      "useInR": true
+    },
+    {
+      "defaultValue": 0.1,
+      "lowerBound": 0.0,
+      "lowerBoundType": "EXCLUSIVE",
+      "allowNaN": false,
+      "name": "Eta",
+      "isRequired": false,
+      "description": "Hyper parameter of the model. It is a prior smooth parameter for the word distribution over topics. When eta is smaller, each topic tends to associate with less words. The input value must be greater than 0.0. The default value is 0.1.",
+      "datatype": "DOUBLE",
+      "allowsLists": false,
+      "rName": "eta",
+      "useInR": true
+    },
+    {
+      "defaultValue": 50,
+      "lowerBound": 0,
+      "lowerBoundType": "EXCLUSIVE",
+      "allowNaN": false,
+      "name": "MaxIterate",
+      "isRequired": false,
+      "description": "Specifies the maximum number of iteration to be performed, if the model is not converged during the training.  The input value must be greater than 0. The default value is 50.",
+      "datatype": "INTEGER",
+      "allowsLists": false,
+      "rName": "max.iterate",
+      "useInR": true
+    },
+    {
+      "defaultValue": 1.0E-4,
+      "lowerBound": 0.0,
+      "upperBound": 1.0,
+      "lowerBoundType": "EXCLUSIVE",
+      "upperBoundType": "EXCLUSIVE",
+      "allowNaN": false,
+      "name": "ConvergenceDelta",
+      "isRequired": false,
+      "description": "Specifies the convergence delta of log perplexity during the training. The input value must be greater than 0.0 and less than 1.0. The default value is 1.0E-4.",
+      "datatype": "DOUBLE",
+      "allowsLists": false,
+      "rName": "convergence.delta",
+      "useInR": true
+    },
+    {
+      "allowNaN": false,
+      "name": "Seed",
+      "isRequired": false,
+      "description": "Specifies the seed used in initializing the model. If the same seed argument is provided, the function should generate exact the same model for a given input table.",
+      "datatype": "LONG",
+      "allowsLists": false,
+      "rName": "seed",
+      "useInR": true
+    },
+    {
+      "isOutputTable": false,
+      "name": "InputTable",
+      "isRequired": true,
+      "description": "The name for the input relation. It should be a table or a view. Each row of the relation consists of document id, the word and optional the word count.",
+      "datatype": "TABLE_NAME",
+      "allowsLists": false,
+      "rName": "input.table",
+      "useInR": true
+    },
+    {
+      "isOutputTable": true,
+      "name": "ModelTable",
+      "isRequired": true,
+      "description": "The name of the output table for the relation between the topics and words. This table must not exist.",
+      "datatype": "TABLE_NAME",
+      "allowsLists": false,
+      "rName": "model.table",
+      "useInR": true
+    },
+    {
+      "isOutputTable": true,
+      "name": "OutputTable",
+      "isRequired": false,
+      "description": "The name of the output table for the topic distribution of each document in the inputtable. This table must not exist. If not specified, the topic distribution are not outputted.",
+      "datatype": "TABLE_NAME",
+      "allowsLists": false,
+      "rName": "output.table",
+      "useInR": true
+    },
+    {
+      "targetTable": "InputTable",
+      "checkDuplicate": true,
+      "allowedTypes": [
+        "numeric",
+        "uuid",
+        "bytea"
+      ],
+      "allowedTypeGroups": [
+        "STRING",
+        "INTEGER"
+      ],
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "DocIdColumn",
+      "isRequired": true,
+      "description": "The column identify different documents. Input columns must contain integer SQL types. Input columns must contain string SQL types. Input columns can be the following SQL types: [numeric, uuid, bytea].",
+      "datatype": "COLUMN_NAMES",
+      "allowsLists": false,
+      "rName": "doc.id.column",
+      "useInR": true
+    },
+    {
+      "targetTable": "InputTable",
+      "checkDuplicate": true,
+      "allowedTypeGroups": [
+        "STRING",
+        "INTEGER"
+      ],
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "WordColumn",
+      "isRequired": true,
+      "description": "The column contains the words. Input columns must contain integer SQL types. Input columns must contain string SQL types.",
+      "datatype": "COLUMN_NAMES",
+      "allowsLists": false,
+      "rName": "word.column",
+      "useInR": true
+    },
+    {
+      "targetTable": "InputTable",
+      "checkDuplicate": true,
+      "allowedTypeGroups": [
+        "NUMERIC"
+      ],
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "CountColumn",
+      "isRequired": false,
+      "description": " The column contains the count of corresponding word in the row. If specified, it should be of type numeric. If not specified, each row will be associated with a count value 1. Input columns must contain numeric SQL types.",
+      "datatype": "COLUMN_NAMES",
+      "allowsLists": false,
+      "rName": "count.column",
+      "useInR": true
+    },
+    {
+      "defaultValue": "all",
+      "isOutputColumn": false,
+      "name": "OutputTopicNum",
+      "alternateNames": [
+        "OutputTopicNumber"
+      ],
+      "isRequired": false,
+      "description": "Specifies how many top weighted topics will be output for each document. It is a positive integer number or per-defined string \"all\". If \"all\" is given, all the topics and corresponding weight will be outputted for each input document.  The default value is all.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "output.topic.num",
+      "useInR": true
+    },
+    {
+      "defaultValue": "none",
+      "isOutputColumn": false,
+      "name": "OutputTopicWordNum",
+      "alternateNames": [
+        "OutputTopicWordNumber"
+      ],
+      "isRequired": false,
+      "description": "Specifies how many top topic words should be outputted in the output table accompany with the corresponding topic id. It is a positive integer number or per-defined string \"all\", \"none\". If \"none\" is given, none of the topic words will be outputted. If \"all\" is given, the function will emit all related topic words corresponding to each outputted topicid. The default value is none.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "output.topic.word.num",
+      "useInR": true
+    }
+  ]
+}

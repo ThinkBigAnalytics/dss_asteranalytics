@@ -1,0 +1,219 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "minhash",
+  "function_version": "1.1",
+  "function_type": "driver",
+  "short_description": "This function clusters the users according to their Jaccard similarity measure.",
+  "long_description": "This function clusters the users according to their Jaccard similarity measure.",
+  "argument_clauses": [
+    {
+      "isOutputColumn": false,
+      "name": "Domain",
+      "isRequired": false,
+      "description": "The address of the Queen. The host parameter is the Aster Database Queen’s IP saddress or hostname.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "Database",
+      "isRequired": false,
+      "description": "The name of the database where the input table is located.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "UserId",
+      "isRequired": false,
+      "description": "The Aster Database user name of the user running this function.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "Password",
+      "isRequired": false,
+      "description": "The Aster Database password of the user.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "SSLSettings",
+      "isRequired": false,
+      "description": "A string that includes all the SSL settings, except the password for the truststore.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "SSLTrustStorePassword",
+      "isRequired": false,
+      "description": "The password for the SSL truststore.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputTable": false,
+      "name": "InputTable",
+      "isRequired": true,
+      "description": "The name of the input table. Typically it has a 'user' column and an 'items' column.",
+      "datatype": "TABLE_NAME",
+      "allowsLists": false,
+      "rName": "input.table",
+      "useInR": true
+    },
+    {
+      "isOutputTable": true,
+      "name": "OutputTable",
+      "isRequired": true,
+      "description": "The name of the output table. This table is used to store the results.",
+      "datatype": "TABLE_NAME",
+      "allowsLists": false,
+      "rName": "output.table",
+      "useInR": true
+    },
+    {
+      "targetTable": "InputTable",
+      "checkDuplicate": true,
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "IdColumn",
+      "isRequired": true,
+      "description": "The name of the input column whose values you want to hash into the same cluster.",
+      "datatype": "COLUMN_NAMES",
+      "allowsLists": false,
+      "rName": "id.column",
+      "useInR": true
+    },
+    {
+      "targetTable": "InputTable",
+      "checkDuplicate": true,
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "ItemsColumn",
+      "isRequired": true,
+      "description": "The name of the input column whose values are used for hashing.",
+      "datatype": "COLUMN_NAMES",
+      "allowsLists": false,
+      "rName": "items.column",
+      "useInR": true
+    },
+    {
+      "isOutputTable": false,
+      "name": "SeedTable",
+      "isRequired": false,
+      "description": "The name of the seed table whose seeds will be used for hashing. To specify this argument, the table must already exist in the database. This table is usually created from a previous run of the minhash function as specified in the 'SaveSeedTo' argument.",
+      "datatype": "TABLE_NAME",
+      "allowsLists": false,
+      "rName": "seed.table",
+      "useInR": true
+    },
+    {
+      "isOutputTable": true,
+      "name": "SaveSeedTo",
+      "isRequired": false,
+      "description": "The name of the table where the seeds are to be saved. You can specify this table name to save the randomly generated seeds from the current minhash run.",
+      "datatype": "TABLE_NAME",
+      "allowsLists": false,
+      "rName": "save.seed.to",
+      "useInR": true
+    },
+    {
+      "lowerBound": 0,
+      "upperBound": 1.0E7,
+      "lowerBoundType": "EXCLUSIVE",
+      "upperBoundType": "EXCLUSIVE",
+      "allowNaN": false,
+      "name": "HashNum",
+      "alternateNames": [
+        "NumHashFunctions"
+      ],
+      "isRequired": true,
+      "description": "The calculation of the Jaccard metric (a measure of similarity between various items or user ids based upon the list of users or items, respectively, associated with them in the transaction data) involves hashing the entire list with several hash functions to calculate the minimum hash value over the list for each function. The number of hash functions to generate often determines the number of clusters generated as well as the size of the clusters generated. To find very weak similarities or relationships between various users or items, a large number of hash functions must be used. The input value must be greater than 0 and less than 10000000.",
+      "datatype": "INTEGER",
+      "allowsLists": false,
+      "rName": "hash.num",
+      "useInR": true
+    },
+    {
+      "lowerBound": 0,
+      "lowerBoundType": "EXCLUSIVE",
+      "allowNaN": false,
+      "name": "KeyGroups",
+      "isRequired": true,
+      "description": "The number of hash functions divided by the number of key groups must be an integer. A unique cluster id is generated by concatenating KeyGroups hashcodes together. A larger number of keygroups lessens the probability of collisions (hashing into the same bucket) and stunts the growth of clusters. The input value must be greater than 0.",
+      "datatype": "INTEGER",
+      "allowsLists": false,
+      "rName": "key.groups",
+      "useInR": true
+    },
+    {
+      "permittedValues": [
+        "bigint",
+        "integer",
+        "hex",
+        "string"
+      ],
+      "defaultValue": "integer",
+      "isOutputColumn": false,
+      "name": "InputFormat",
+      "alternateNames": [
+        "Hash_Input_Type",
+		"HashInputType"
+      ],
+      "isRequired": false,
+      "description": "The input format for the list of associated items or users to be hashed. The permitted input values are [bigint, integer, hex, string]. The default value is integer.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "input.format",
+      "useInR": true
+    },
+    {
+      "defaultValue": 3,
+      "lowerBound": 0,
+      "lowerBoundType": "EXCLUSIVE",
+      "allowNaN": false,
+      "name": "MinClusterSize",
+      "isRequired": false,
+      "description": "Specifies the minimum number of items or users that may be considered to constitute a cluster. The input value must be greater than 0. The default value is 3.",
+      "datatype": "INTEGER",
+      "allowsLists": false,
+      "rName": "min.cluster.size",
+      "useInR": true
+    },
+    {
+      "defaultValue": 5,
+      "lowerBound": 0,
+      "lowerBoundType": "EXCLUSIVE",
+      "allowNaN": false,
+      "name": "MaxClusterSize",
+      "isRequired": false,
+      "description": "Specifies the maximum size of the clusters that are under consideration. The input value must be greater than 0. The default value is 5.",
+      "datatype": "INTEGER",
+      "allowsLists": false,
+      "rName": "max.cluster.size",
+      "useInR": true
+    },
+    {
+      "defaultValue": " ",
+      "isOutputColumn": false,
+      "name": "Delimiter",
+      "isRequired": false,
+      "description": "Specifies the delimiter used to concatenate customer ids in the final output. The default value is  .",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "delimiter",
+      "useInR": true
+    }
+  ]
+}

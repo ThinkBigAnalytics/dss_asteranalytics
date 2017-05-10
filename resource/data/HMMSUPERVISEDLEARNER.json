@@ -1,0 +1,157 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "HMMSupervisedLearner",
+  "function_version": "1.3",
+  "function_type": "driver",
+  "short_description": "Given observation sequences O and state sequences, find the model theta = (A, B, Pi) that maximizes P(O | theta).",
+  "long_description": "Given observation sequences O and state sequences, find the model theta = (A, B, Pi) that maximizes P(O | theta). ",
+  "input_tables": [
+    {
+      "requiredInputKind": [
+        "PartitionByKey"
+      ],
+      "isOrdered": true,
+      "partitionByOne": false,
+      "name": "vertices",
+      "isRequired": true,
+      "description": "vertex table",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "rName": "vertices",
+      "useInR": true
+    }
+  ],
+  "argument_clauses": [
+    {
+      "isOutputColumn": false,
+      "name": "Domain",
+      "isRequired": false,
+      "description": "The address of the Queen. The host parameter is the Aster Database Queen’s IP saddress or hostname.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "Database",
+      "isRequired": false,
+      "description": "The name of the database where the input table is located.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "UserId",
+      "isRequired": false,
+      "description": "The Aster Database user name of the user running this function.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "Password",
+      "isRequired": false,
+      "description": "The Aster Database password of the user.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "SSLSettings",
+      "isRequired": false,
+      "description": "A string that includes all the SSL settings, except the password for the truststore.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "SSLTrustStorePassword",
+      "isRequired": false,
+      "description": "The password for the SSL truststore.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "StateKey",
+      "isRequired": true,
+      "description": "",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "state.key",
+      "useInR": true
+    },
+    {
+      "isOutputColumn": false,
+      "name": "ModelKey",
+      "isRequired": false,
+      "description": "",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "model.key",
+      "useInR": true
+    },
+    {
+      "isOutputColumn": false,
+      "name": "SequenceKey",
+      "isRequired": true,
+      "description": "",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "sequence.key",
+      "useInR": true
+    },
+    {
+      "isOutputColumn": false,
+      "name": "ObservedKey",
+      "isRequired": true,
+      "description": "",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "observed.key",
+      "useInR": true
+    },
+    {
+      "lowerBound": 1,
+      "lowerBoundType": "INCLUSIVE",
+      "allowNaN": false,
+      "name": "BatchSize",
+      "isRequired": false,
+      "description": "The batch size must be a positive value greater than 1, inclusive. The input value must be no less than 1.",
+      "datatype": "INTEGER",
+      "allowsLists": false,
+      "rName": "batch.size",
+      "useInR": true
+    },
+    {
+      "targetTable": "vertices",
+      "checkDuplicate": true,
+      "allowPadding": true,
+      "name": "SkipKey",
+      "isRequired": false,
+      "description": "Skip the row or not",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "skip.key",
+      "useInR": true
+    },
+    {
+      "isOutputColumn": true,
+      "allowPadding": true,
+      "name": "OutputTables",
+      "isRequired": false,
+      "description": "",
+      "datatype": "STRING",
+      "allowsLists": true,
+      "rName": "output.tables",
+      "useInR": true
+    }
+  ]
+}

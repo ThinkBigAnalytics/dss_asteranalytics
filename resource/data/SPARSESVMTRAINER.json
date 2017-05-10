@@ -1,0 +1,257 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "SparseSvmTrainer",
+  "function_version": "1.1",
+  "function_type": "driver",
+  "short_description": "This function trains a SVM model according to the training set iteratively. ",
+  "long_description": "This function is used to train a SVM model for sparse input data.  The training is a iterative process controlled by the paramters.  We may choose project the attributes to a hash space or explictly record all  the attributes as a list during the training.",
+  "argument_clauses": [
+    {
+      "isOutputColumn": false,
+      "name": "Domain",
+      "isRequired": false,
+      "description": "The address of the Queen. The host parameter is the Aster Database Queen’s IP saddress or hostname.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "Database",
+      "isRequired": false,
+      "description": "The name of the database where the input table is located.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "UserId",
+      "isRequired": false,
+      "description": "The Aster Database user name of the user running this function.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "Password",
+      "isRequired": false,
+      "description": "The Aster Database password of the user.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "SSLSettings",
+      "isRequired": false,
+      "description": "A string that includes all the SSL settings, except the password for the truststore.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "SSLTrustStorePassword",
+      "isRequired": false,
+      "description": "The password for the SSL truststore.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "targetTable": "InputTable",
+      "checkDuplicate": true,
+      "allowedTypes": [
+        "numeric",
+        "uuid",
+        "bytea"
+      ],
+      "allowedTypeGroups": [
+        "STRING",
+        "INTEGER"
+      ],
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "SampleIdColumn",
+      "isRequired": true,
+      "description": "This column identifies different samples in input table. Input columns must contain integer SQL types. Input columns must contain string SQL types. Input columns can be the following SQL types: [numeric, uuid, bytea].",
+      "datatype": "COLUMN_NAMES",
+      "allowsLists": false,
+      "rName": "sample.id.column",
+      "useInR": true
+    },
+    {
+      "targetTable": "InputTable",
+      "checkDuplicate": true,
+      "allowedTypeGroups": [
+        "STRING",
+        "INTEGER"
+      ],
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "AttributeColumn",
+      "isRequired": true,
+      "description": "Specifies the column contains the attributes. Input columns must contain integer SQL types. Input columns must contain string SQL types.",
+      "datatype": "COLUMN_NAMES",
+      "allowsLists": false,
+      "rName": "attribute.column",
+      "useInR": true
+    },
+    {
+      "targetTable": "InputTable",
+      "checkDuplicate": true,
+      "allowedTypeGroups": [
+        "NUMERIC"
+      ],
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "ValueColumn",
+      "isRequired": false,
+      "description": "Specifies the column contains the value of corresponding attribute in the row. If not specified, each row will be associated with a count value 1. Input columns must contain numeric SQL types.",
+      "datatype": "COLUMN_NAMES",
+      "allowsLists": false,
+      "rName": "value.column",
+      "useInR": true
+    },
+    {
+      "isOutputTable": false,
+      "name": "InputTable",
+      "isRequired": true,
+      "description": "The name for the input relation. Each row of the relation consists of sample id and corresponding label, the attribute and optional the attribute value. ",
+      "datatype": "TABLE_NAME",
+      "allowsLists": false,
+      "rName": "input.table",
+      "useInR": true
+    },
+    {
+      "isOutputTable": true,
+      "name": "ModelTable",
+      "isRequired": true,
+      "description": "The name of the output table for the model after training.",
+      "datatype": "TABLE_NAME",
+      "allowsLists": false,
+      "rName": "model.table",
+      "useInR": true
+    },
+    {
+      "targetTable": "InputTable",
+      "checkDuplicate": true,
+      "allowedTypeGroups": [
+        "STRING",
+        "INTEGER"
+      ],
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "LabelColumn",
+      "isRequired": true,
+      "description": "Specifies the column identifies the class of corresponding sample. Input columns must contain integer SQL types. Input columns must contain string SQL types.",
+      "datatype": "COLUMN_NAMES",
+      "allowsLists": false,
+      "rName": "label.column",
+      "useInR": true
+    },
+    {
+      "defaultValue": 1,
+      "lowerBound": 0,
+      "lowerBoundType": "EXCLUSIVE",
+      "allowNaN": false,
+      "name": "Cost",
+      "isRequired": false,
+      "description": "It represents the regular parameter C in SVM loss function. The input value must be greater than 0.0. The default value is 1.0.",
+      "datatype": "DOUBLE",
+      "allowsLists": false,
+      "rName": "cost",
+      "useInR": true
+    },
+    {
+      "defaultValue": 0,
+      "lowerBound": 0,
+      "lowerBoundType": "INCLUSIVE",
+      "allowNaN": false,
+      "name": "Bias",
+      "isRequired": false,
+      "description": "If it is greater than zero, each sample x in the training set will be extended to [x, bias]. The input value must be no less than 0.0. The default value is 0.0.",
+      "datatype": "DOUBLE",
+      "allowsLists": false,
+      "rName": "bias",
+      "useInR": true
+    },
+    {
+      "defaultValue": false,
+      "name": "Hash",
+      "alternateNames": [
+        "UseHash"
+      ],
+      "isRequired": false,
+      "description": "A boolean value specifies whether to use hash projection on attributes. Hash projection is commonly used to accelerate the processing speed. However, it may decrease the accuracy slightly. For the dataset has a very large feature number that can not fit into the memory, the argument must be set to true in order to make the function work.  The default value is false.",
+      "datatype": "BOOLEAN",
+      "allowsLists": false,
+      "rName": "hash",
+      "useInR": true
+    },
+    {
+      "defaultValue": 0,
+      "lowerBound": 0,
+      "lowerBoundType": "EXCLUSIVE",
+      "allowNaN": false,
+      "name": "HashBuckets",
+      "isRequired": false,
+      "description": "Only valid if usehash is true. It is a positive integer specifies the buckets number used in hash projection. In most of the case, the function can decide suitable hash bucket numbers according to the scale of input dataset. However, If the input dataset has a very large feature number, user may have to specify the argument explicitly to accelerate the training. The input value must be greater than 0. The default value is 0.",
+      "datatype": "INTEGER",
+      "allowsLists": false,
+      "rName": "hash.buckets",
+      "useInR": true
+    },
+    {
+      "isOutputColumn": false,
+      "name": "ClassWeights",
+      "isRequired": false,
+      "description": "Specifies the weights for different classes. It should be of the format \"classlabel m:weightm, classlabel n:weight n\". If weight for a class is given, the cost parameter for this class will become weight*cost. A weight larger than 1 often increases the accuracy of corresponding class, however, it may hurt the global accuracy. Each class doesn't appear in the argument will be associated with a weight 1 automatically.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "class.weights",
+      "useInR": true
+    },
+    {
+      "defaultValue": 100,
+      "lowerBound": 0,
+      "lowerBoundType": "EXCLUSIVE",
+      "allowNaN": false,
+      "name": "MaxStep",
+      "isRequired": false,
+      "description": "A positive integer value specifies the maximum epochs of the training process. One step means that each sample is seen once by the trainer. The input value must be greater than 0. The default value is 100.",
+      "datatype": "INTEGER",
+      "allowsLists": false,
+      "rName": "max.step",
+      "useInR": true
+    },
+    {
+      "defaultValue": 0.01,
+      "lowerBound": 0,
+      "lowerBoundType": "EXCLUSIVE",
+      "allowNaN": false,
+      "name": "Epsilon",
+      "isRequired": false,
+      "description": "The tolerance of termination criterion. Defines the differences of the values of loss function between two sequential epochs. The input value must be greater than 0.0. The default value is 0.01.",
+      "datatype": "DOUBLE",
+      "allowsLists": false,
+      "rName": "epsilon",
+      "useInR": true
+    },
+    {
+      "defaultValue": 0,
+      "allowNaN": false,
+      "name": "Seed",
+      "isRequired": false,
+      "description": "A long integer value used to generate random orders for the training set. If it is specified, the same model should be generated in a given database with the same arguments.  The default value is 0.",
+      "datatype": "LONG",
+      "allowsLists": false,
+      "rName": "seed",
+      "useInR": true
+    }
+  ]
+}

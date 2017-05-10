@@ -1,0 +1,263 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "forest_drive",
+  "function_version": "1.5",
+  "function_type": "driver",
+  "short_description": "This function trains a random forest tree model.",
+  "long_description": "This function builds an ensemble of decision trees for predictive modeling, based on the CART algorithm.",
+  "argument_clauses": [
+    {
+      "isOutputColumn": false,
+      "name": "Domain",
+      "isRequired": false,
+      "description": "The address of the Queen. The host parameter is the Aster Database Queen’s IP saddress or hostname.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "Database",
+      "isRequired": false,
+      "description": "The name of the database where the input table is located.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "UserId",
+      "isRequired": false,
+      "description": "The Aster Database user name of the user running this function.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "Password",
+      "isRequired": false,
+      "description": "The Aster Database password of the user.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "SSLSettings",
+      "isRequired": false,
+      "description": "A string that includes all the SSL settings, except the password for the truststore.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "SSLTrustStorePassword",
+      "isRequired": false,
+      "description": "The password for the SSL truststore.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputTable": false,
+      "name": "InputTable",
+      "isRequired": true,
+      "description": "Specifies the table containing the input data.",
+      "datatype": "TABLE_NAME",
+      "allowsLists": false,
+      "rName": "input.table",
+      "useInR": true
+    },
+    {
+      "isOutputTable": true,
+      "name": "OutputTable",
+      "isRequired": true,
+      "description": "Specifies the output table.",
+      "datatype": "TABLE_NAME",
+      "allowsLists": false,
+      "rName": "output.table",
+      "useInR": true
+    },
+    {
+      "isOutputTable": true,
+      "defaultValue": "default_dt_monitor_table",
+      "name": "MonitorTable",
+      "isRequired": false,
+      "description": "Specifies the monitor table.",
+      "datatype": "TABLE_NAME",
+      "allowsLists": false,
+      "rName": "monitor.table",
+      "useInR": true
+    },
+    {
+      "isOutputColumn": false,
+      "name": "ResponseColumn",
+      "alternateNames": [
+        "Response"
+      ],
+      "isRequired": false,
+      "description": "Specifies the name of the column that contains the response variable",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "response.column",
+      "useInR": true
+    },
+    {
+      "isOutputColumn": false,
+      "allowPadding": true,
+      "name": "NumericInputs",
+      "isRequired": false,
+      "description": "Specifies the names of the columns that contain the numeric predictor variables",
+      "datatype": "STRING",
+      "allowsLists": true,
+      "rName": "numeric.inputs",
+      "useInR": true
+    },
+    {
+      "isOutputColumn": false,
+      "allowPadding": true,
+      "name": "CategoricalInputs",
+      "isRequired": false,
+      "description": "Specifies the names of the columns that contain the categorical predictor variables",
+      "datatype": "STRING",
+      "allowsLists": true,
+      "rName": "categorical.inputs",
+      "useInR": true
+    },
+    {
+      "isOutputColumn": false,
+      "name": "TreeType",
+      "isRequired": false,
+      "description": "Specifies whether the analysis is a regression or a multiclass classification",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "tree.type",
+      "useInR": true
+    },
+    {
+      "lowerBound": 1,
+      "lowerBoundType": "INCLUSIVE",
+      "allowNaN": false,
+      "name": "NumTrees",
+      "isRequired": false,
+      "description": "Specifies the number of trees to grow in the forest model The input value must be no less than 1.",
+      "datatype": "INTEGER",
+      "allowsLists": false,
+      "rName": "num.trees",
+      "useInR": true
+    },
+    {
+      "lowerBound": 1,
+      "lowerBoundType": "INCLUSIVE",
+      "allowNaN": false,
+      "name": "TreeSize",
+      "isRequired": false,
+      "description": "Specifies the number of rows that each tree uses as its input data set The input value must be no less than 1.",
+      "datatype": "INTEGER",
+      "allowsLists": false,
+      "rName": "tree.size",
+      "useInR": true
+    },
+    {
+      "defaultValue": 1,
+      "lowerBound": 1,
+      "lowerBoundType": "INCLUSIVE",
+      "allowNaN": false,
+      "name": "MinNodeSize",
+      "isRequired": false,
+      "description": "Specifies the number of rows that each tree uses as its input data set The input value must be no less than 1. The default value is 1.",
+      "datatype": "INTEGER",
+      "allowsLists": false,
+      "rName": "min.node.size",
+      "useInR": true
+    },
+    {
+      "defaultValue": 0,
+      "lowerBound": 0,
+      "lowerBoundType": "INCLUSIVE",
+      "allowNaN": false,
+      "name": "Variance",
+      "isRequired": false,
+      "description": "Specifies a decision tree stopping criterion The input value must be no less than 0.0. The default value is 0.0.",
+      "datatype": "DOUBLE",
+      "allowsLists": false,
+      "rName": "variance",
+      "useInR": true
+    },
+    {
+      "defaultValue": 10,
+      "lowerBound": 1,
+      "lowerBoundType": "INCLUSIVE",
+      "allowNaN": false,
+      "name": "MaxDepth",
+      "isRequired": false,
+      "description": "Specifies the number of rows that each tree uses as its input data set The input value must be no less than 1. The default value is 10.",
+      "datatype": "INTEGER",
+      "allowsLists": false,
+      "rName": "max.depth",
+      "useInR": true
+    },
+    {
+      "defaultValue": 0,
+      "lowerBound": 0,
+      "lowerBoundType": "INCLUSIVE",
+      "allowNaN": false,
+      "name": "NumSurrogates",
+      "isRequired": false,
+      "description": "Specifies the number of rows that each tree uses as its input data set The input value must be no less than 0. The default value is 0.",
+      "datatype": "INTEGER",
+      "allowsLists": false,
+      "rName": "num.surrogates",
+      "useInR": true
+    },
+    {
+      "defaultValue": 20,
+      "lowerBound": 0,
+      "lowerBoundType": "EXCLUSIVE",
+      "allowNaN": false,
+      "name": "MaxNumCategoricalValues",
+      "isRequired": false,
+      "description": "Specifies max number of categories in one variable The input value must be greater than 0. The default value is 20.",
+      "datatype": "INTEGER",
+      "allowsLists": false,
+      "rName": "max.num.categorical.values",
+      "useInR": true
+    },
+    {
+      "defaultValue": true,
+      "name": "DropMonitorTable",
+      "isRequired": false,
+      "description": "Specifies whether to drop monitor table or not The default value is true.",
+      "datatype": "BOOLEAN",
+      "allowsLists": false,
+      "rName": "drop.monitor.table",
+      "useInR": true
+    },
+    {
+      "lowerBound": 1,
+      "lowerBoundType": "INCLUSIVE",
+      "allowNaN": false,
+      "name": "Mtry",
+      "isRequired": false,
+      "description": "The input value must be no less than 1.",
+      "datatype": "INTEGER",
+      "allowsLists": false,
+      "rName": "mtry",
+      "useInR": true
+    },
+    {
+      "allowNaN": false,
+      "name": "MtrySeed",
+      "isRequired": false,
+      "description": "",
+      "datatype": "LONG",
+      "allowsLists": false,
+      "rName": "mtry.seed",
+      "useInR": true
+    }
+  ]
+}

@@ -1,0 +1,212 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "vectordistance",
+  "function_version": "1.1",
+  "function_type": "non-driver",
+  "short_description": "This function takes the sparse vector input and output distance between target and reference vectors with defined measurent ",
+  "long_description": "This function calculate the distance from target vector to each reference vector. User can specify desired measurements in MEASURE argument.",
+  "input_tables": [
+    {
+      "requiredInputKind": [
+        "PartitionByKey"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "name": "target",
+      "isRequired": true,
+      "description": "A table that specifies target vectors",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "rName": "target",
+      "useInR": true
+    },
+    {
+      "requiredInputKind": [
+        "Dimension"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "name": "ref",
+      "isRequired": true,
+      "description": "A table that specifies reference vectors",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "rName": "ref",
+      "useInR": true
+    }
+  ],
+  "argument_clauses": [
+    {
+      "targetTable": "target",
+      "checkDuplicate": true,
+      "allowPadding": true,
+      "name": "TargetIdColumns",
+      "isRequired": true,
+      "description": "The columns that make up the ID of a target vector",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "target.id.columns",
+      "useInR": true
+    },
+    {
+      "targetTable": "target",
+      "checkDuplicate": false,
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "TargetFeatureColumn",
+      "isRequired": true,
+      "description": "The name of the column that specifies the target vector feature name",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "target.feature.column",
+      "useInR": true
+    },
+    {
+      "targetTable": "target",
+      "checkDuplicate": false,
+      "allowedTypeGroups": [
+        "NUMERIC"
+      ],
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "TargetValueColumn",
+      "isRequired": false,
+      "description": "The value of the target vector feature Input columns must contain numeric SQL types.",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "target.value.column",
+      "useInR": true
+    },
+    {
+      "targetTable": "ref",
+      "checkDuplicate": true,
+      "allowPadding": true,
+      "name": "RefIdColumns",
+      "isRequired": false,
+      "description": "The columns that make up the ID of a reference vector (the vector ID can consist of multiple columns). If not specified, the ID columns are the same as the ID columns in the target table",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "ref.id.columns",
+      "useInR": true
+    },
+    {
+      "targetTable": "ref",
+      "checkDuplicate": false,
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "RefFeatureColumn",
+      "isRequired": false,
+      "description": "The name of the column that specifies the feature name for the reference vector. If not specified, the name of the feature column is the same as the name of the feature column in the target table.",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "ref.feature.column",
+      "useInR": true
+    },
+    {
+      "targetTable": "ref",
+      "checkDuplicate": false,
+      "allowedTypeGroups": [
+        "NUMERIC"
+      ],
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "RefValueColumn",
+      "isRequired": false,
+      "description": "The value of the reference vector feature. If not specified, the name of the value column is the same as the name of the value column in the target table Input columns must contain numeric SQL types.",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "ref.value.column",
+      "useInR": true
+    },
+    {
+      "defaultValue": "positiveinfinity",
+      "isOutputColumn": false,
+      "name": "ReplaceInvalid",
+      "alternateNames": [
+        "InvalidReturnValue"
+      ],
+      "isRequired": false,
+      "description": "The value returned when the calculation encounters an infinite value and empty vectors The default value is positiveinfinity.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "replace.invalid",
+      "useInR": true
+    },
+    {
+      "permittedValues": [
+        "small",
+        "large"
+      ],
+      "defaultValue": "small",
+      "isOutputColumn": false,
+      "name": "RefTableSize",
+      "isRequired": false,
+      "description": "By specifying reference table as \"SMALL\", the function can process faster than using \"LARGE\". If the reference table is very large that can not fit into memory, user should specify the table as \"LARGE\" so that the function can provide the final result with workaround The permitted input values are [small, large]. The default value is small.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "ref.table.size",
+      "useInR": true
+    },
+    {
+      "permittedValues": [
+        "COSINE",
+        "EUCLIDEAN",
+        "MANHATTAN",
+        "BINARY"
+      ],
+      "defaultValue": [
+        "cosine"
+      ],
+      "isOutputColumn": false,
+      "allowPadding": true,
+      "name": "DistanceMeasure",
+      "alternateNames": [
+        "Measure"
+      ],
+      "isRequired": false,
+      "description": "The types of distance measures The permitted input values are [COSINE, EUCLIDEAN, MANHATTAN, BINARY]. The default value is cosine.",
+      "datatype": "STRING",
+      "allowsLists": true,
+      "rName": "distance.measure",
+      "useInR": true
+    },
+    {
+      "allowPadding": true,
+      "name": "MaxDistance",
+      "alternateNames": [
+        "Threshold"
+      ],
+      "isRequired": false,
+      "description": "The maximum distance between returned vectors",
+      "datatype": "DOUBLE",
+      "allowsLists": true,
+      "rName": "max.distance",
+      "useInR": true
+    },
+    {
+      "defaultValue": true,
+      "name": "IgnoreMismatch",
+      "isRequired": false,
+      "description": "Whether to drop or compensate mismatch dimensions The default value is true.",
+      "datatype": "BOOLEAN",
+      "allowsLists": false,
+      "rName": "ignore.mismatch",
+      "useInR": true
+    },
+    {
+      "defaultValue": 2147483647,
+      "lowerBound": 1,
+      "lowerBoundType": "INCLUSIVE",
+      "allowNaN": false,
+      "name": "TopK",
+      "isRequired": false,
+      "description": "For each target vector and for each measurement, the maximum K reference vectors that are the closest to the target vectors The input value must be no less than 1. The default value is 2147483647.",
+      "datatype": "INTEGER",
+      "allowsLists": false,
+      "rName": "top.k",
+      "useInR": true
+    }
+  ]
+}

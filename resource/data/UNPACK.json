@@ -1,0 +1,134 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "Unpack",
+  "function_version": "1.2",
+  "function_type": "non-driver",
+  "short_description": "Utility for unpacking data that has been put into a single column.",
+  "long_description": "Takes a single column with packed data and transforms it into a table with multiple columns, as specified by the user's parameters.",
+  "input_tables": [
+    {
+      "requiredInputKind": [
+        "PartitionByAny"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "isRequired": true,
+      "description": "The table containing the input attributes.",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "useInR": true
+    }
+  ],
+  "argument_clauses": [
+    {
+      "checkDuplicate": true,
+      "allowedTypeGroups": [
+        "STRING"
+      ],
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "InputColumn",
+      "alternateNames": [
+        "Data_Column",
+		"DataColumn"
+      ],
+      "isRequired": true,
+      "description": "Name of the input column that contains the packed data to be unpacked. Input columns must contain string SQL types.",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "input.column",
+      "useInR": true
+    },
+    {
+      "isOutputColumn": true,
+      "allowPadding": true,
+      "name": "OutputColumns",
+      "alternateNames": [
+        "Column_Names",
+		"ColumnNames"
+      ],
+      "isRequired": true,
+      "description": "Names to be given to the output columns. These are the columns that will be unpacked. You must list them in the order in which the virtual columns appear in your InputColumn.",
+      "datatype": "STRING",
+      "allowsLists": true,
+      "rName": "output.columns",
+      "useInR": true
+    },
+    {
+      "isOutputColumn": false,
+      "matchLengthOfArgument": "OutputColumns",
+      "allowPadding": true,
+      "name": "OutputDataTypes",
+      "alternateNames": [
+        "Column_Types",
+		"ColumnTypes"
+      ],
+      "isRequired": true,
+      "description": "The datatypes of the unpacked output columns, in the same order as the OutputColumns. The input list must contain the same number of values as the 'OutputColumns' argument clause.",
+      "datatype": "STRING",
+      "allowsLists": true,
+      "rName": "output.data.types",
+      "useInR": true
+    },
+    {
+      "defaultValue": ",",
+      "isOutputColumn": false,
+      "name": "Delimiter",
+      "alternateNames": [
+        "Column_Delimiter",
+		"ColumnDelimiter"
+      ],
+      "isRequired": false,
+      "description": "The string that separates each virtual column from the next in the packed data. If the column delimiter is a pipe character (that is, '|' ), you need to double escape it (that is, '\\|' ). The default value is ,.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "delimiter",
+      "useInR": true
+    },
+    {
+      "defaultValue": "(.*)",
+      "isOutputColumn": false,
+      "name": "Regex",
+      "alternateNames": [
+        "Data_Pattern",
+		"DataPattern"
+      ],
+      "isRequired": false,
+      "description": "This is a regular expression that tells the Unpack function which part the packed data is the actual data value. The default value is (.*).",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "regex",
+      "useInR": true
+    },
+    {
+      "allowNaN": false,
+      "name": "RegexSet",
+      "alternateNames": [
+        "Data_Group",
+		"DataGroup"
+      ],
+      "isRequired": false,
+      "description": "An integer counter value that specifies which data group in your Regex represents the actual data value in the virtual column.",
+      "datatype": "INTEGER",
+      "allowsLists": false,
+      "rName": "regex.set",
+      "useInR": true
+    },
+    {
+      "defaultValue": false,
+      "name": "Exception",
+      "alternateNames": [
+        "Ignore_Bad_Rows",
+		"IgnoreBadRows"
+      ],
+      "isRequired": false,
+      "description": "A true or false value that specifies whether the function will fail upon encountering a row with bad data (if 'false'), or ignore the bad row and proceed to the next row (if 'true'). The default value is false.",
+      "datatype": "BOOLEAN",
+      "allowsLists": false,
+      "rName": "exception",
+      "useInR": true
+    }
+  ]
+}

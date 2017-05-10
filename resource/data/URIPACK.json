@@ -1,0 +1,134 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "URIPack",
+  "function_version": "1.1",
+  "function_type": "non-driver",
+  "short_description": "SQL/MR function for combining URI components into a single encoded URI.",
+  "long_description": "URIPACK can reassemble URI split into their constituent parks using URIUNPACK. Values included in the columns in the argument QUERIES are converted to a query string of the form '?query1=value1&query2=value2'. If the optional arguments SCHEME_COLUMN, HOST_COLUMN, PATH_COLUMN, and FRAGMENT_COLUMN are included, the output URI will be of the form 'scheme://host/path?querystring#fragment'.",
+  "input_tables": [
+    {
+      "isOrdered": false,
+      "partitionByOne": false,
+      "isRequired": true,
+      "description": "The table containing the URIs to be packed.",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "useInR": true
+    }
+  ],
+  "argument_clauses": [
+    {
+      "checkDuplicate": true,
+      "allowedTypeGroups": [
+        "STRING"
+      ],
+      "allowPadding": true,
+      "name": "Queries",
+      "isRequired": false,
+      "description": "The query parameters (for example, par1 and par2) to include in the URIs. Query parameters not listed in this argument are ignored by the function Input columns must contain string SQL types.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "queries",
+      "useInR": true
+    },
+    {
+      "checkDuplicate": true,
+      "allowedTypeGroups": [
+        "STRING"
+      ],
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "SchemeColumn",
+      "alternateNames": [
+        "Scheme_Column"
+      ],
+      "isRequired": false,
+      "description": "The name of the column that contains the hierarchical URI scheme (top level of the URI naming structure, for example, HTML Input columns must contain string SQL types.",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "scheme.column",
+      "useInR": true
+    },
+    {
+      "checkDuplicate": true,
+      "allowedTypeGroups": [
+        "STRING"
+      ],
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "HostColumn",
+      "alternateNames": [
+        "Host_Column"
+      ],
+      "isRequired": false,
+      "description": "The name of the column that contains the hierarchical URI host Input columns must contain string SQL types.",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "host.column",
+      "useInR": true
+    },
+    {
+      "checkDuplicate": true,
+      "allowedTypeGroups": [
+        "STRING"
+      ],
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "PathColumn",
+      "alternateNames": [
+        "Path_Column"
+      ],
+      "isRequired": false,
+      "description": "The name of the column that contains the hierarchical URI path Input columns must contain string SQL types.",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "path.column",
+      "useInR": true
+    },
+    {
+      "checkDuplicate": true,
+      "allowedTypeGroups": [
+        "STRING"
+      ],
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "FragmentColumn",
+      "alternateNames": [
+        "Fragment_Column"
+      ],
+      "isRequired": false,
+      "description": "The name of the column that contains the hierarchical URI fragment Input columns must contain string SQL types.",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "fragment.column",
+      "useInR": true
+    },
+    {
+      "defaultValue": [
+        "null"
+      ],
+      "isOutputColumn": false,
+      "allowPadding": true,
+      "name": "IgnoreValues",
+      "isRequired": false,
+      "description": "A list of input strings that the function will treat as null values The default value is null.",
+      "datatype": "STRING",
+      "allowsLists": true,
+      "rName": "ignore.values",
+      "useInR": true
+    },
+    {
+      "checkDuplicate": true,
+      "allowPadding": true,
+      "name": "Accumulate",
+      "isRequired": false,
+      "description": "Columns from the input table to be passed through from input to output.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "accumulate",
+      "useInR": true
+    }
+  ]
+}

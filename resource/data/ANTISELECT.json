@@ -1,0 +1,37 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "antiselect",
+  "function_version": "1.1",
+  "function_type": "non-driver",
+  "short_description": "Outputs columns except for excluded ones.",
+  "long_description": "Outputs columns from input table or inputselect query and removes columns in exclude list.",
+  "input_tables": [
+    {
+      "requiredInputKind": [
+        "PartitionByAny"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "isRequired": true,
+      "description": "",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "useInR": true
+    }
+  ],
+  "argument_clauses": [
+    {
+      "checkDuplicate": false,
+      "allowPadding": true,
+      "name": "Exclude",
+      "isRequired": true,
+      "description": "Specifies the list of the columns that will not be returned.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "exclude",
+      "useInR": true
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "LRTest",
+  "function_version": "1.1",
+  "function_type": "non-driver",
+  "short_description": "This function computes the likelihood ratio test for two models on the same input data.",
+  "long_description": "This function computes the likelihood ratio test for two models on the same input data.",
+  "input_tables": [
+    {
+      "requiredInputKind": [
+        "PartitionByKey"
+      ],
+      "isOrdered": false,
+      "partitionByOne": true,
+      "name": "model1",
+      "isRequired": true,
+      "description": "The table containing the first model to compare.",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "rName": "model1",
+      "useInR": true
+    },
+    {
+      "requiredInputKind": [
+        "PartitionByKey"
+      ],
+      "isOrdered": false,
+      "partitionByOne": true,
+      "name": "model2",
+      "isRequired": true,
+      "description": "The table containing the second model to compare.",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "rName": "model2",
+      "useInR": true
+    }
+  ],
+  "argument_clauses": [
+    {
+      "targetTable": "model1",
+      "checkDuplicate": true,
+      "allowPadding": true,
+      "name": "Statistic",
+      "isRequired": false,
+      "description": "The name of the column that contains the name of the statistic. The default value is 'predictor'.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "statistic",
+      "useInR": true
+    },
+    {
+      "targetTable": "model1",
+      "checkDuplicate": true,
+      "allowPadding": true,
+      "name": "LogLik",
+      "isRequired": false,
+      "description": "The name of the column that contains the log-likelihood value of the model. The default value is 'estimate'.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "log.lik",
+      "useInR": true
+    },
+    {
+      "targetTable": "model1",
+      "checkDuplicate": true,
+      "allowPadding": true,
+      "name": "ObsNum",
+      "alternateNames": [
+        "NumObservation"
+      ],
+      "isRequired": false,
+      "description": "The name of the column that contains the number of observations. The default value is 'std_err'.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "obs.num",
+      "useInR": true
+    },
+    {
+      "targetTable": "model1",
+      "checkDuplicate": true,
+      "allowPadding": true,
+      "name": "ParamNum",
+      "alternateNames": [
+        "NumParameter"
+      ],
+      "isRequired": false,
+      "description": "The name of the column that contains the number of parameters (excluding the intercept). The default value is 'z_score'.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "param.num",
+      "useInR": true
+    }
+  ]
+}

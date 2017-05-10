@@ -1,0 +1,131 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "naiveBayesPredict",
+  "function_version": "1.4",
+  "function_type": "driver",
+  "short_description": "Score rows of data with a Naive Bayes classifier",
+  "long_description": "Score rows of data with a Naive Bayes classifier",
+  "input_tables": [
+    {
+      "requiredInputKind": [
+        "PartitionByAny"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "isRequired": true,
+      "description": "This table defining the input test data.",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "useInR": true
+    }
+  ],
+  "argument_clauses": [
+    {
+      "isOutputColumn": false,
+      "name": "Domain",
+      "isRequired": false,
+      "description": "The address of the Queen. The host parameter is the Aster Database Queen’s IP saddress or hostname.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "Database",
+      "isRequired": false,
+      "description": "The name of the database where the input table is located.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "UserId",
+      "isRequired": false,
+      "description": "The Aster Database user name of the user running this function.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "Password",
+      "isRequired": false,
+      "description": "The Aster Database password of the user.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "SSLSettings",
+      "isRequired": false,
+      "description": "A string that includes all the SSL settings, except the password for the truststore.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "SSLTrustStorePassword",
+      "isRequired": false,
+      "description": "The password for the SSL truststore.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputTable": false,
+      "name": "Model",
+      "isRequired": true,
+      "description": "model table",
+      "datatype": "TABLE_NAME",
+      "allowsLists": false,
+      "rName": "model",
+      "useInR": true
+    },
+    {
+      "checkDuplicate": true,
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "IdCol",
+      "isRequired": true,
+      "description": "id column uniquely identifying test input data",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "id.col",
+      "useInR": true
+    },
+    {
+      "checkDuplicate": false,
+      "allowedTypeGroups": [
+        "INTEGER",
+        "STRING"
+      ],
+      "allowPadding": true,
+      "name": "CategoricalInputs",
+      "isRequired": false,
+      "description": "categorical column list or column range Input columns must contain integer SQL types. Input columns must contain string SQL types.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "categorical.inputs",
+      "useInR": true
+    },
+    {
+      "checkDuplicate": false,
+      "allowedTypeGroups": [
+        "NUMERIC"
+      ],
+      "allowPadding": true,
+      "name": "NumericInputs",
+      "isRequired": false,
+      "description": "numerical column list or column range Input columns must contain numeric SQL types.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "numeric.inputs",
+      "useInR": true
+    }
+  ]
+}

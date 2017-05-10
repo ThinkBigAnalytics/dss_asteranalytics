@@ -1,0 +1,53 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "TextClassifierEvaluator",
+  "function_version": "1.2",
+  "function_type": "non-driver",
+  "short_description": "Evaluate the text classification SQL/MR function",
+  "long_description": "Evaluate the text classification SQL/MR function",
+  "input_tables": [
+    {
+      "requiredInputKind": [
+        "PartitionByKey"
+      ],
+      "isOrdered": false,
+      "partitionByOne": true,
+      "isRequired": true,
+      "description": "The relation that contains the output of a classifier",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "useInR": true
+    }
+  ],
+  "argument_clauses": [
+    {
+      "checkDuplicate": true,
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "ObsColumn",
+      "alternateNames": [
+        "ExpectColumn"
+      ],
+      "isRequired": true,
+      "description": "The input table column with the expected category",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "obs.column",
+      "useInR": true
+    },
+    {
+      "checkDuplicate": true,
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "PredictColumn",
+      "isRequired": true,
+      "description": "The input table column with the result category. This is the category assigned by the prediction function TextClassifier",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "predict.column",
+      "useInR": true
+    }
+  ]
+}

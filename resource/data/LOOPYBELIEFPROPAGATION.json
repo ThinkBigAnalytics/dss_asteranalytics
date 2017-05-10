@@ -1,0 +1,132 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "LoopyBeliefPropagation",
+  "function_version": "1.0",
+  "function_type": "non-driver",
+  "short_description": "This function predicts the labels for unobserved nodes based on the lables of observed nodes.",
+  "long_description": "This function predicts the labels for unobserved nodes based on the labels of observed nodes. It works on a binary labeled graph. Some nodes have labels, while labels for other nodes are missing.",
+  "input_tables": [
+    {
+      "requiredInputKind": [
+        "PartitionByKey"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "name": "edges",
+      "isRequired": true,
+      "description": "",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "rName": "edges",
+      "useInR": true
+    },
+    {
+      "requiredInputKind": [
+        "PartitionByKey"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "name": "vertices",
+      "isRequired": true,
+      "description": "",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "rName": "vertices",
+      "useInR": true
+    },
+    {
+      "requiredInputKind": [
+        "PartitionByKey"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "name": "observation",
+      "isRequired": false,
+      "description": "",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "rName": "observation",
+      "useInR": true
+    }
+  ],
+  "argument_clauses": [
+    {
+      "targetTable": "edges",
+      "checkDuplicate": true,
+      "allowPadding": true,
+      "name": "TargetKey",
+      "isRequired": false,
+      "description": "The column names that make up the key of target nodes in the edges table",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "target.key",
+      "useInR": true
+    },
+    {
+      "targetTable": "observation",
+      "checkDuplicate": true,
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "ObservationColumn",
+      "isRequired": false,
+      "description": "The 'observation' column in the observation table",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "observation.column",
+      "useInR": true
+    },
+    {
+      "targetTable": "edges",
+      "checkDuplicate": true,
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "EdgeWeight",
+      "isRequired": false,
+      "description": "The name of the column that specifies the weight of the edge. The weight is a positive non-zero value. Edges with zero or negative weights are ignored when constructing the graph.",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "edge.weight",
+      "useInR": true
+    },
+    {
+      "targetTable": "vertices",
+      "checkDuplicate": true,
+      "allowPadding": true,
+      "name": "Accumulate",
+      "isRequired": false,
+      "description": "The columns from the vertices table to pass to the output",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "accumulate",
+      "useInR": true
+    },
+    {
+      "defaultValue": 20,
+      "lowerBound": 0,
+      "lowerBoundType": "EXCLUSIVE",
+      "allowNaN": false,
+      "name": "MaxIterNum",
+      "isRequired": false,
+      "description": "The maximum iteration number that the algorithm runs for. The default is '20' The input value must be greater than 0. The default value is 20.",
+      "datatype": "INTEGER",
+      "allowsLists": false,
+      "rName": "max.iter.num",
+      "useInR": true
+    },
+    {
+      "defaultValue": 1.0E-4,
+      "lowerBound": 0,
+      "lowerBoundType": "EXCLUSIVE",
+      "allowNaN": false,
+      "name": "Threshold",
+      "isRequired": false,
+      "description": "The threshold value specifying the convergence criteria. Default is '0.0001' The input value must be greater than 0.0. The default value is 1.0E-4.",
+      "datatype": "DOUBLE",
+      "allowsLists": false,
+      "rName": "threshold",
+      "useInR": true
+    }
+  ]
+}

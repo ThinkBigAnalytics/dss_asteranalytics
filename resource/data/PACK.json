@@ -1,0 +1,83 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "Pack",
+  "function_version": "1.2",
+  "function_type": "non-driver",
+  "short_description": "Packs data across several columns into a single data column.",
+  "long_description": "Reverse of the unpack function.  Packs data across several columns into a single data column.",
+  "input_tables": [
+    {
+      "requiredInputKind": [
+        "PartitionByAny"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "isRequired": true,
+      "description": "The table containing the input attributes.",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "useInR": true
+    }
+  ],
+  "argument_clauses": [
+    {
+      "checkDuplicate": false,
+      "allowPadding": true,
+      "name": "InputColumns",
+      "alternateNames": [
+        "Column_Names",
+		"ColumnNames"
+      ],
+      "isRequired": false,
+      "description": "Names of the input columns to be packed. The name of each input column that you pack becomes its virtual column name. Columns that are present in the input but not listed in InputColumns are passed through to the output as regular columns. If you do not include a ColumnNames clause, all input columns are packed, and no columns are passed through as-is.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "input.columns",
+      "useInR": true
+    },
+    {
+      "defaultValue": ",",
+      "isOutputColumn": false,
+      "name": "Delimiter",
+      "alternateNames": [
+        "Column_Delimiter",
+		"ColumnDelimiter"
+      ],
+      "isRequired": false,
+      "description": "Character string that will be used to delimit each packed data value (and virtual column name if present) from the next. If the column delimiter is a pipe character (that is, '|' ), you need to double escape it (that is, '\\|' ). The default value is ,.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "delimiter",
+      "useInR": true
+    },
+    {
+      "defaultValue": true,
+      "name": "IncludeColumnName",
+      "alternateNames": [
+        "Include_Column_Name"
+      ],
+      "isRequired": false,
+      "description": "A true or false value that specifies whether or not to pre-pend each packed value with its virtual column name. The default value is true.",
+      "datatype": "BOOLEAN",
+      "allowsLists": false,
+      "rName": "include.column.name",
+      "useInR": true
+    },
+    {
+      "isOutputColumn": true,
+      "name": "OutputColumn",
+      "alternateNames": [
+        "Packed_Column_Name",
+		"PackedColumnName"
+      ],
+      "isRequired": true,
+      "description": "Name of the output column that will hold the packed data.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "output.column",
+      "useInR": true
+    }
+  ]
+}

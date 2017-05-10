@@ -1,0 +1,123 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "DistnmatchMultipleinput",
+  "function_version": "1.1",
+  "function_type": "non-driver",
+  "short_description": "This function tests the hypothesis that the sample is drawn from the reference distribution.",
+  "long_description": "This function tests the hypothesis that the sample is drawn from the reference distribution. It carries out up to four tests simultaneously: Anderson-Darling test, Kolmogorov-Smirnov test, Cramer-von Mises criterion, and Pearson's Chi-squared test. It computes the intermediate results and passes them to the reduce function.",
+  "input_tables": [
+    {
+      "requiredInputKind": [
+        "PartitionByAny",
+        "PartitionByKey"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "name": "input",
+      "isRequired": true,
+      "description": "",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "rName": "input",
+      "useInR": true
+    },
+    {
+      "requiredInputKind": [
+        "PartitionByKey",
+        "Dimension"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "name": "groupstats",
+      "isRequired": true,
+      "description": "",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "rName": "groupstats",
+      "useInR": true
+    }
+  ],
+  "argument_clauses": [
+    {
+      "targetTable": "input",
+      "checkDuplicate": true,
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "ValueColumn",
+      "isRequired": true,
+      "description": "Column containing the data",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "value.column",
+      "useInR": true
+    },
+    {
+      "isOutputColumn": false,
+      "allowPadding": true,
+      "name": "Tests",
+      "isRequired": false,
+      "description": "A list of tests the user wants to perform. Supported tests are 'KS' (Kolmogorov- Smirnov test), 'CvM' (Cramer-von Mises criterion), 'AD' (Anderson-Darling test),'CHISQ' (Pearson's Chi-squared test)",
+      "datatype": "STRING",
+      "allowsLists": true,
+      "rName": "tests",
+      "useInR": true
+    },
+    {
+      "isOutputColumn": false,
+      "allowPadding": true,
+      "name": "Distributions",
+      "isRequired": false,
+      "description": "A list of reference distributions (must be continuous distributions) to test the data against",
+      "datatype": "STRING",
+      "allowsLists": true,
+      "rName": "distributions",
+      "useInR": true
+    },
+    {
+      "targetTable": "input",
+      "checkDuplicate": true,
+      "allowPadding": true,
+      "name": "GroupByColumns",
+      "alternateNames": [
+        "GROUPINGCOLUMNS"
+      ],
+      "isRequired": false,
+      "description": "The column containing the group identifications over which the test will run",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "group.by.columns",
+      "useInR": true
+    },
+    {
+      "defaultValue": 50,
+      "lowerBound": 0,
+      "lowerBoundType": "EXCLUSIVE",
+      "allowNaN": false,
+      "name": "MinGroupSize",
+      "isRequired": false,
+      "description": "The minimum size of a group. Default value is 50. The input value must be greater than 0. The default value is 50.",
+      "datatype": "INTEGER",
+      "allowsLists": false,
+      "rName": "min.group.size",
+      "useInR": true
+    },
+    {
+      "defaultValue": 10,
+      "lowerBound": 0,
+      "lowerBoundType": "EXCLUSIVE",
+      "allowNaN": false,
+      "name": "NumCell",
+      "alternateNames": [
+        "CELLSIZE"
+      ],
+      "isRequired": false,
+      "description": "The number of cells that you want to discretize the continuous distribution. The default value is 10 The input value must be greater than 0. The default value is 10.",
+      "datatype": "INTEGER",
+      "allowsLists": false,
+      "rName": "num.cell",
+      "useInR": true
+    }
+  ]
+}

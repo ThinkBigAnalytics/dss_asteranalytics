@@ -1,0 +1,112 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "path_summarizer",
+  "function_version": "1.2",
+  "function_type": "non-driver",
+  "short_description": "This function is used to sum counts on each branch in a path",
+  "long_description": "This function takes as input data from the output of pathM and is used to sum counts to each branch in a path as well as exit paths.",
+  "input_tables": [
+    {
+      "requiredInputKind": [
+        "PartitionByKey"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "isRequired": true,
+      "description": "The name of the table containing the input data.",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "useInR": true
+    }
+  ],
+  "argument_clauses": [
+    {
+      "checkDuplicate": true,
+      "allowedTypes": [
+        "character varying"
+      ],
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "SeqColumn",
+      "alternateNames": [
+        "Seq"
+      ],
+      "isRequired": true,
+      "description": "Name of the column containing the path of the current node. Input columns can be the following SQL types: character varying.",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "seq.column",
+      "useInR": true
+    },
+    {
+      "checkDuplicate": true,
+      "allowedTypes": [
+        "character varying"
+      ],
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "PrefixColumn",
+      "alternateNames": [
+        "Prefix"
+      ],
+      "isRequired": true,
+      "description": "Name of the column containing the prefix of a given node. Input columns can be the following SQL types: character varying.",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "prefix.column",
+      "useInR": true
+    },
+    {
+      "isOutputColumn": true,
+      "allowPadding": true,
+      "name": "PartitionNames",
+      "isRequired": true,
+      "description": "Names for the columns specified in the PARTITION BY clause. The number of names specified in this argument must match the number of columns in the PARTITION BY clause.",
+      "datatype": "STRING",
+      "allowsLists": true,
+      "rName": "partition.names",
+      "useInR": true
+    },
+    {
+      "checkDuplicate": true,
+      "allowedTypeGroups": [
+        "INTEGER"
+      ],
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "CountColumn",
+      "alternateNames": [
+        "Cnt"
+      ],
+      "isRequired": false,
+      "description": "Name of the column containing the count values. Input columns must contain integer SQL types.",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "count.column",
+      "useInR": true
+    },
+    {
+      "defaultValue": false,
+      "name": "Hash",
+      "isRequired": false,
+      "description": "Boolean value specifying whether the hash code of the “node” column should be included in the output. The default value is false.",
+      "datatype": "BOOLEAN",
+      "allowsLists": false,
+      "rName": "hash",
+      "useInR": true
+    },
+    {
+      "defaultValue": ",",
+      "isOutputColumn": false,
+      "name": "Delimiter",
+      "isRequired": false,
+      "description": "Single-character delimiter used in the path string. The default value is ,.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "delimiter",
+      "useInR": true
+    }
+  ]
+}

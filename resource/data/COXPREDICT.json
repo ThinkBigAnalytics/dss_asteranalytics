@@ -1,0 +1,115 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "CoxPredict",
+  "function_version": "1.1",
+  "function_type": "non-driver",
+  "short_description": "This function calculates relative hazard ratio from given new predictors, referneces and cox proportional model",
+  "long_description": "This function calculates relative hazard ratio from given new predictors, referneces and cox proportional model",
+  "input_tables": [
+    {
+      "requiredInputKind": [
+        "Dimension"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "name": "cox_coef_model",
+      "isRequired": true,
+      "description": "This table defining the feature coefficients.",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "rName": "cox.coef.model",
+      "useInR": true
+    },
+    {
+      "requiredInputKind": [
+        "PartitionByKey"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "name": "predicts",
+      "isRequired": true,
+      "description": "This table defining new feature values or unit changes for prediction.",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "rName": "predicts",
+      "useInR": true
+    },
+    {
+      "requiredInputKind": [
+        "PartitionByKey"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "name": "refs",
+      "isRequired": false,
+      "description": "This table defining reference feature values.",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "rName": "refs",
+      "useInR": true
+    }
+  ],
+  "argument_clauses": [
+    {
+      "isOutputColumn": false,
+      "allowPadding": true,
+      "name": "PredictFeatureNames",
+      "isRequired": true,
+      "description": "Feature name list which match feature names in cox coefficient table.",
+      "datatype": "STRING",
+      "allowsLists": true,
+      "rName": "predict.feature.names",
+      "useInR": true
+    },
+    {
+      "targetTable": "predicts",
+      "checkDuplicate": true,
+      "allowPadding": true,
+      "name": "PredictFeatureColumns",
+      "isRequired": false,
+      "description": "Feature column list which contain new prediction values for prediction.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "predict.feature.columns",
+      "useInR": true
+    },
+    {
+      "targetTable": "predicts",
+      "checkDuplicate": true,
+      "allowPadding": true,
+      "name": "PredictFeatureUnitsColumns",
+      "isRequired": false,
+      "description": "Feature unit column list which contain new feature unit changes for prediction.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "predict.feature.units.columns",
+      "useInR": true
+    },
+    {
+      "targetTable": "refs",
+      "checkDuplicate": true,
+      "allowPadding": true,
+      "name": "RefFeatureColumns",
+      "isRequired": false,
+      "description": "Feature column list which contain referenced feature values.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "ref.feature.columns",
+      "useInR": true
+    },
+    {
+      "targetTable": "predicts",
+      "checkDuplicate": true,
+      "allowPadding": true,
+      "name": "Accumulate",
+      "isRequired": false,
+      "description": "Columns from the input table to be passed through from input to output.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "accumulate",
+      "useInR": true
+    }
+  ]
+}

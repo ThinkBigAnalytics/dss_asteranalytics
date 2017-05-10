@@ -1,0 +1,38 @@
+{"json_schema_major_version":"1","json_schema_minor_version":"1",
+  "json_content_version":"1","function_name":"FindNamedEntityArgs",
+  "function_version":"1.2","function_type":"non-driver","short_description":
+  "Implements the name finder SQL/MR function.","long_description":
+  "Implements the name finder SQL/MR function.","input_tables":[{
+      "requiredInputKind":["PartitionByAny"],"isOrdered":false,
+      "partitionByOne":false,"isRequired":true,"description":
+      "The input table containing text column to find","datatype":
+      "TABLE_ALIAS","allowsLists":false,"useInR":true},{"requiredInputKind":[
+        "Dimension"],"isOrdered":false,"partitionByOne":false,"name":
+      "ConfigureTable","isRequired":false,"description":
+      "The configure table","datatype":"TABLE_ALIAS","allowsLists":false,
+      "rName":"configure.table","useInR":true}],"argument_clauses":[{
+      "checkDuplicate":true,"allowedTypeGroups":["STRING"],"allowPadding":
+      true,"name":"TextColumn","alternateNames":["TEXT_COLUMN"],"isRequired":true,"description":
+      "The input table column whose contents will be scanned. Only one column is permitted Input columns must contain string SQL types.",
+      "datatype":"COLUMNS","allowsLists":true,"rName":"text.column","useInR":
+      true},{"isOutputColumn":false,"allowPadding":true,"name":"Model",
+      "isRequired":true,"description":
+      "List of model items. Format: '<entity_type>:<model_type>:<model_filename>', '<entity_type>:<model_type>:<model_filename>'",
+      "datatype":"STRING","allowsLists":true,"rName":"model","useInR":true},{
+      "defaultValue":0,"lowerBound":0,"lowerBoundType":"INCLUSIVE",
+      "allowNaN":false,"name":"ShowEntityContext","alternateNames":[
+        "SHOW_CONTEXT","ShowContext"],"isRequired":false,"description":
+      "An integer position number on whether to output the position information for each name entity. The default is no information is generated The input value must be no less than 0. The default value is 0.",
+      "datatype":"INTEGER","allowsLists":false,"rName":
+      "show.entity.context","useInR":true},{"defaultValue":"ENTITY",
+      "isOutputColumn":true,"name":"EntityColumn","alternateNames":["ENTITY_COLUMN"],"isRequired":false,
+      "description":
+      "The output column name containing entity names. The default column name is 'entity' The default value is ENTITY.",
+      "datatype":"STRING","allowsLists":false,"rName":"entity.column",
+      "useInR":true},{"checkDuplicate":true,"allowPadding":true,"name":
+      "Accumulate","alternateNames":["OUTPUT_COLUMNS","OutputColumns"],"isRequired":false,
+      "description":
+      "Columns from the input table to be passed through from input to output.",
+      "datatype":"COLUMNS","allowsLists":true,"rName":"accumulate","useInR":
+      true}]}
+

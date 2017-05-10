@@ -1,0 +1,97 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "textmorph",
+  "function_version": "1.2",
+  "function_type": "non-driver",
+  "short_description": "Output the baseform (lemma) of the input words/phrases.",
+  "long_description": "Output the baseform (lemma) of the input words/phrases. The input should contain one word/phrase per tuple in WordColumn. The output schema is (morph varchar, pos varchar).",
+  "input_tables": [
+    {
+      "isOrdered": false,
+      "partitionByOne": false,
+      "isRequired": true,
+      "description": "The input table that contains the input words/phrases. ",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "useInR": true
+    }
+  ],
+  "argument_clauses": [
+    {
+      "checkDuplicate": true,
+      "allowedTypes": [
+        "bytea"
+      ],
+      "allowedTypeGroups": [
+        "STRING"
+      ],
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "WordColumn",
+      "isRequired": true,
+      "description": "The input table column that contains the input text. The input should contain one word/phrase per tuple in the column. Input columns must contain string SQL types. Input columns can be the following SQL types: bytea.",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "word.column",
+      "useInR": true
+    },
+    {
+      "checkDuplicate": true,
+      "allowedTypes": [
+        "bytea"
+      ],
+      "allowedTypeGroups": [
+        "STRING"
+      ],
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "POSTagColumn",
+      "isRequired": false,
+      "description": "The input table column that contains the PosTagger's output tags. Input columns must contain string SQL types. Input columns can be the following SQL types: bytea.",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "p.o.s.tag.column",
+      "useInR": true
+    },
+    {
+      "defaultValue": true,
+      "name": "SingleOutput",
+      "isRequired": false,
+      "description": "If 'true' output only one Part-of-Speech (PoS) result for each input word. If 'false' output all possible morph results. The default value is true.",
+      "datatype": "BOOLEAN",
+      "allowsLists": false,
+      "rName": "single.output",
+      "useInR": true
+    },
+    {
+      "permittedValues": [
+        "NOUN",
+        "VERB",
+        "ADJ",
+        "ADV"
+      ],
+      "isOutputColumn": false,
+      "allowPadding": true,
+      "name": "POS",
+      "isRequired": false,
+      "description": "Comma-separated list of the parts-of-speech to be outputted. The permitted input values are [NOUN, VERB, ADJ, ADV].",
+      "datatype": "STRING",
+      "allowsLists": true,
+      "rName": "p.o.s",
+      "useInR": true
+    },
+    {
+      "checkDuplicate": true,
+      "allowPadding": true,
+      "name": "Accumulate",
+      "isRequired": false,
+      "description": "Columns from the input table to be passed through from input to output.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "accumulate",
+      "useInR": true
+    }
+  ]
+}

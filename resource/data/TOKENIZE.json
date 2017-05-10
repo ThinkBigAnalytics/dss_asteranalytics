@@ -1,0 +1,16 @@
+{"json_schema_major_version":"1","json_schema_minor_version":"1",
+  "json_content_version":"1","function_name":"Tokenize","function_version":
+  "1.1","function_type":"non-driver","short_description":
+  "Tokenizes textual values, according to an optional regular expression pattern.",
+  "long_description":
+  "Tokenizes textual values, according to an optional regular expression pattern.",
+  "input_tables":[{"requiredInputKind":["PartitionByAny"],"isOrdered":
+      false,"partitionByOne":false,"isRequired":true,"description":
+      "The relation that contains the text to be tokenized.","datatype":
+      "TABLE_ALIAS","allowsLists":false,"useInR":true}],"argument_clauses":[{
+      "defaultValue":"[ \t\f\r\n]+","isOutputColumn":false,"name":
+      "Delimiter","isRequired":false,"description":
+      "Regular expression of character or string used to split words. The default value is '[\t\b\f\r]+' The default value is [ \t\f\r\n]+.",
+      "datatype":"STRING","allowsLists":false,"rName":"delimiter","useInR":
+      true}]}
+

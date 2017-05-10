@@ -1,0 +1,109 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "Pivot",
+  "function_version": "1.0",
+  "function_type": "non-driver",
+  "short_description": "This function takes a table as input, and converts rows to columns.",
+  "long_description": "This function takes a table as input and converts rows to columns based on a column which has certain key values in it",
+  "input_tables": [
+    {
+      "requiredInputKind": [
+        "PartitionByKey"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "isRequired": true,
+      "description": "The table containing the data to be pivoted.",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "useInR": true
+    }
+  ],
+  "argument_clauses": [
+    {
+      "checkDuplicate": true,
+      "allowPadding": true,
+      "name": "PartitionColumns",
+      "alternateNames": [
+        "Partitions"
+      ],
+      "isRequired": true,
+      "description": "This should be the same as the columns after the 'PARTITION BY' clause, but can be in different order.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "partition.columns",
+      "useInR": true
+    },
+    {
+      "defaultValue": -1,
+      "lowerBound": 1,
+      "lowerBoundType": "INCLUSIVE",
+      "allowNaN": false,
+      "name": "NumberOfRows",
+      "alternateNames": [
+        "Rows"
+      ],
+      "isRequired": false,
+      "description": "The 'ROWS' argument specifies the maximum number of rows in all of the partitions. If the number of rows in a partition is smaller than this argument, then NULLs will be added; while if it is larger, the rest of the rows are omitted. The input value must be no less than 1. The default value is -1.",
+      "datatype": "INTEGER",
+      "allowsLists": false,
+      "rName": "number.of.rows",
+      "useInR": true
+    },
+    {
+      "checkDuplicate": true,
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "PivotColumn",
+      "alternateNames": [
+        "Pivot_Column"
+      ],
+      "isRequired": false,
+      "description": "The column containing the pivot keys.",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "pivot.column",
+      "useInR": true
+    },
+    {
+      "isOutputColumn": false,
+      "allowPadding": true,
+      "name": "PivotKeys",
+      "alternateNames": [
+        "Pivot_Keys"
+      ],
+      "isRequired": false,
+      "description": "The values of the pivot keys.",
+      "datatype": "STRING",
+      "allowsLists": true,
+      "rName": "pivot.keys",
+      "useInR": true
+    },
+    {
+      "checkDuplicate": true,
+      "allowPadding": true,
+      "name": "TargetColumns",
+      "alternateNames": [
+        "Metrics"
+      ],
+      "isRequired": true,
+      "description": "The columns that contain the values you want to pivot.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "target.columns",
+      "useInR": true
+    },
+    {
+      "defaultValue": false,
+      "name": "NumericPivotKey",
+      "isRequired": false,
+      "description": "indicates whether the pivot key values are numeric values. The default value is false.",
+      "datatype": "BOOLEAN",
+      "allowsLists": false,
+      "rName": "numeric.pivot.key",
+      "useInR": true
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "hist_reduce",
+  "function_version": "1.2",
+  "function_type": "non-driver",
+  "short_description": "The reduce function of histogram.",
+  "long_description": "This is the reduce function that aggregates the results outputted by the map function from vworkers. ",
+  "input_tables": [
+    {
+      "requiredInputKind": [
+        "PartitionByKey"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "isRequired": true,
+      "description": "The table containing the input data.",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "useInR": true
+    }
+  ]
+}

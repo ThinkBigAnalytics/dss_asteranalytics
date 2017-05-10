@@ -1,0 +1,282 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "fpgrowth",
+  "function_version": "1.1",
+  "function_type": "driver",
+  "short_description": "This function generates combinations of frequent baskets",
+  "long_description": "This function is used for identifying the associations in two item-set. For every combination, this function generates the score, support, confidence, lift, conviction, leverage, coverage, chi_square and z-score associated with the combination",
+  "argument_clauses": [
+    {
+      "isOutputColumn": false,
+      "name": "Domain",
+      "isRequired": false,
+      "description": "The address of the Queen. The host parameter is the Aster Database Queen’s IP saddress or hostname.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "Database",
+      "isRequired": false,
+      "description": "The name of the database where the input table is located.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "UserId",
+      "isRequired": false,
+      "description": "The Aster Database user name of the user running this function.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "Password",
+      "isRequired": false,
+      "description": "The Aster Database password of the user.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "SSLSettings",
+      "isRequired": false,
+      "description": "A string that includes all the SSL settings, except the password for the truststore.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "SSLTrustStorePassword",
+      "isRequired": false,
+      "description": "The password for the SSL truststore.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputTable": false,
+      "name": "InputTable",
+      "isRequired": true,
+      "description": "Specifies the name of the table that contains the data set",
+      "datatype": "TABLE_NAME",
+      "allowsLists": false,
+      "rName": "input.table",
+      "useInR": true
+    },
+    {
+      "isOutputTable": true,
+      "name": "OutputPatternTable",
+      "isRequired": false,
+      "description": "Required if PatternsOrRules is 'patterns' or 'both'; otherwise, not allowed. Specifies the name of the table where the function outputs the patterns",
+      "datatype": "TABLE_NAME",
+      "allowsLists": false,
+      "rName": "output.pattern.table",
+      "useInR": true
+    },
+    {
+      "isOutputTable": true,
+      "name": "OutputRuleTable",
+      "isRequired": false,
+      "description": "Required if PatternsOrRules is 'rules' or 'both'; otherwise, not allowed. Specifies the name of the table where the function outputs the rules.",
+      "datatype": "TABLE_NAME",
+      "allowsLists": false,
+      "rName": "output.rule.table",
+      "useInR": true
+    },
+    {
+      "targetTable": "InputTable",
+      "checkDuplicate": true,
+      "allowPadding": true,
+      "name": "TranItemColumns",
+      "isRequired": true,
+      "description": "Specifies the names of the columns that contain transaction items to analyze.",
+      "datatype": "COLUMN_NAMES",
+      "allowsLists": true,
+      "rName": "tran.item.columns",
+      "useInR": true
+    },
+    {
+      "targetTable": "InputTable",
+      "checkDuplicate": true,
+      "allowPadding": true,
+      "name": "TranIdColumns",
+      "isRequired": true,
+      "description": "Specifies the names of the columns that contain identifiers for the transaction items.",
+      "datatype": "COLUMN_NAMES",
+      "allowsLists": true,
+      "rName": "tran.id.columns",
+      "useInR": true
+    },
+    {
+      "permittedValues": [
+        "both",
+        "patterns",
+        "rules"
+      ],
+      "defaultValue": "both",
+      "isOutputColumn": false,
+      "name": "PatternsOrRules",
+      "isRequired": false,
+      "description": "Specifies whether the function outputs patterns, rules, or both. An example of a pattern is {onions, potatoes, hamburger}. The permitted input values are [both, patterns, rules]. The default value is both.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "patterns.or.rules",
+      "useInR": true
+    },
+    {
+      "targetTable": "InputTable",
+      "checkDuplicate": true,
+      "allowPadding": true,
+      "name": "GroupByColumns",
+      "isRequired": false,
+      "description": "Specifies the names of columns that define the partitions into which the function groups the input data and calculates output for it. At least one column must be usable as a distribution key. If you omit this argument, then the function considers all input data to be in a single partition.",
+      "datatype": "COLUMN_NAMES",
+      "allowsLists": true,
+      "rName": "group.by.columns",
+      "useInR": true
+    },
+    {
+      "defaultValue": false,
+      "name": "DropTable",
+      "isRequired": false,
+      "description": "Specifies whether the function drops and then creates output_pattern_table or output_rule_table if it exists ('true') or issues an error message ('false'). The default value is false.",
+      "datatype": "BOOLEAN",
+      "allowsLists": false,
+      "rName": "drop.table",
+      "useInR": true
+    },
+    {
+      "permittedValues": [
+        "low",
+        "medium",
+        "high",
+        "nocompress"
+      ],
+      "defaultValue": "nocompress",
+      "isOutputColumn": false,
+      "name": "Compress",
+      "isRequired": false,
+      "description": "Specifies the compression level the output tables. The permitted input values are [low, medium, high, nocompress]. The default value is nocompress.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "compress",
+      "useInR": true
+    },
+    {
+      "defaultValue": 4,
+      "lowerBound": 1,
+      "lowerBoundType": "INCLUSIVE",
+      "allowNaN": false,
+      "name": "GroupSize",
+      "isRequired": false,
+      "description": "Specifies the number of transaction items to be assigned to each worker. The input value must be no less than 1. The default value is 4.",
+      "datatype": "INTEGER",
+      "allowsLists": false,
+      "rName": "group.size",
+      "useInR": true
+    },
+    {
+      "defaultValue": 0.05,
+      "lowerBound": 0,
+      "upperBound": 1,
+      "lowerBoundType": "INCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
+      "allowNaN": false,
+      "name": "MinSupport",
+      "isRequired": false,
+      "description": "Specifies the minimum support value of returned patterns The input value must be no less than 0.0 and no greater than 1.0. The default value is 0.05.",
+      "datatype": "DOUBLE",
+      "allowsLists": false,
+      "rName": "min.support",
+      "useInR": true
+    },
+    {
+      "defaultValue": 0.8,
+      "lowerBound": 0,
+      "upperBound": 1,
+      "lowerBoundType": "INCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
+      "allowNaN": false,
+      "name": "MinConfidence",
+      "isRequired": false,
+      "description": "Specifies the minimum confidence value of returned patterns The input value must be no less than 0.0 and no greater than 1.0. The default value is 0.8.",
+      "datatype": "DOUBLE",
+      "allowsLists": false,
+      "rName": "min.confidence",
+      "useInR": true
+    },
+    {
+      "defaultValue": "10",
+      "isOutputColumn": false,
+      "name": "MaxPatternLength",
+      "isRequired": false,
+      "description": "Specifies the maximum length of returned patterns The default value is 10.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "max.pattern.length",
+      "useInR": true
+    },
+    {
+      "defaultValue": "1-INFINITE",
+      "isOutputColumn": false,
+      "name": "AntecedentCountRange",
+      "isRequired": false,
+      "description": "Specifies the range for na, the number of items in the antecedent. The default value is 1-INFINITE.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "antecedent.count.range",
+      "useInR": true
+    },
+    {
+      "defaultValue": "1-1",
+      "isOutputColumn": false,
+      "name": "ConsequenceCountRange",
+      "isRequired": false,
+      "description": "Specifies the range for nc, the number of items in the consequence. The default value is 1-1.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "consequence.count.range",
+      "useInR": true
+    },
+    {
+      "defaultValue": ",",
+      "isOutputColumn": false,
+      "name": "Delimiter",
+      "isRequired": false,
+      "description": "Specifies the delimiter that separates items in the output. The default value is ,.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "delimiter",
+      "useInR": true
+    },
+    {
+      "isOutputColumn": true,
+      "name": "PatternDistributionKeyColumn",
+      "isRequired": false,
+      "description": "Specifies the name of the column to use as the distribution key for output_pattern_table.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "pattern.distribution.key.column",
+      "useInR": true
+    },
+    {
+      "isOutputColumn": true,
+      "name": "RuleDistributionKeyColumn",
+      "isRequired": false,
+      "description": "Specifies the name of the column to use as the distribution key for output_rule_table.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "rule.distribution.key.column",
+      "useInR": true
+    }
+  ]
+}
