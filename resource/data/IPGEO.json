@@ -1,0 +1,68 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "IpGeo",
+  "function_version": "2.1",
+  "function_type": "non-driver",
+  "short_description": "SQL/MR function to convert ip address to geolocation information.",
+  "long_description": "SQL/MR function to convert ip address to geolocation information.",
+  "input_tables": [
+    {
+      "isOrdered": false,
+      "partitionByOne": false,
+      "isRequired": true,
+      "description": "The input table contains the ip addresses.",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "useInR": true
+    }
+  ],
+  "argument_clauses": [
+    {
+      "checkDuplicate": true,
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "IpAddressColumn",
+      "isRequired": true,
+      "description": "The input table column whose content is a IP address.",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "ip.address.column",
+      "useInR": true
+    },
+    {
+      "isOutputColumn": false,
+      "requiredLength": 2,
+      "allowPadding": false,
+      "name": "Converter",
+      "isRequired": false,
+      "description": "The JAR filename and the name of the class that converts the IP address to location information. The input list must contain 2 values.",
+      "datatype": "STRING",
+      "allowsLists": true,
+      "rName": "converter",
+      "useInR": true
+    },
+    {
+      "isOutputColumn": false,
+      "name": "IpDatabaseLocation",
+      "isRequired": false,
+      "description": "The location of the IP database that matches IP addresses to locations.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "ip.database.location",
+      "useInR": true
+    },
+    {
+      "checkDuplicate": true,
+      "allowPadding": true,
+      "name": "Accumulate",
+      "isRequired": false,
+      "description": "Columns from the input table to be passed through from input to output.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "accumulate",
+      "useInR": true
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "tf",
+  "function_version": "1.1",
+  "function_type": "non-driver",
+  "short_description": "SQL/MR function for Term Frequency",
+  "long_description": "Compute the term frequency. The input table should be of schema (docid datatype, term varchar) or (docid datatype, term varchar, count int). Four values are supported in 'FORMULA': bool, log, augment, normal. They are corresponding to four kinds of term frequency: boolean frequency, logarithmically scaled frequency, augmented frequency, and normalized frequency. Default value is normal. ",
+  "input_tables": [
+    {
+      "requiredInputKind": [
+        "PartitionByKey"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "isRequired": true,
+      "description": "The input table that contains the document id and the term.",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "useInR": true
+    }
+  ],
+  "argument_clauses": [
+    {
+      "permittedValues": [
+        "bool",
+        "log",
+        "augment",
+        "normal"
+      ],
+      "defaultValue": "normal",
+      "isOutputColumn": false,
+      "name": "Formula",
+      "isRequired": false,
+      "description": "The formula to compute the 'TF' value.  The permitted input values are [bool, log, augment, normal]. The default value is normal.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "formula",
+      "useInR": true
+    }
+  ]
+}

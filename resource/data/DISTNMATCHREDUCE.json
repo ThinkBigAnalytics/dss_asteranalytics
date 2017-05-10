@@ -1,0 +1,39 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "DistnmatchReduce",
+  "function_version": "1.1",
+  "function_type": "non-driver",
+  "short_description": "This function tests the hypothesis that thesample is drawn from the reference distribution.",
+  "long_description": "This function tests the hypothesis that the sample is drawn from the reference distribution. It carries out up to four tests simultaneously: Anderson-Darling test, Kolmogorov-Smirnov test, Cramer-von Mises criterion, and Pearson's Chi-squared test. It gathers the intermediate results from the map function and computes the final statistics and p-values.",
+  "input_tables": [
+    {
+      "requiredInputKind": [
+        "PartitionByKey"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "isRequired": true,
+      "description": "The table is the output DistnmatchMultipleinput",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "useInR": true
+    }
+  ],
+  "argument_clauses": [
+    {
+      "defaultValue": 1,
+      "lowerBound": 0,
+      "lowerBoundType": "EXCLUSIVE",
+      "allowNaN": false,
+      "name": "Top",
+      "isRequired": false,
+      "description": "The number of the top matching distributions you want the function to output. Default value is 1 The input value must be greater than 0. The default value is 1.",
+      "datatype": "INTEGER",
+      "allowsLists": false,
+      "rName": "top",
+      "useInR": true
+    }
+  ]
+}

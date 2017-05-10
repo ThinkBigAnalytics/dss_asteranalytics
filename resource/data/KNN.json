@@ -1,0 +1,76 @@
+{"json_schema_major_version":"1","json_schema_minor_version":"1",
+  "json_content_version":"1","function_name":"Knn","function_version":
+  "1.3","function_type":"driver","short_description":
+  "This function uses K nearest neighbors alogrithm to classify the test points according to training points",
+  "long_description":
+  "This function uses K nearest neighbors alogrithm to classify the test points according to training points",
+  "argument_clauses":[{"isOutputColumn":false,"name":"Domain","isRequired":
+      false,"description":
+      "The address of the Queen. The host parameter is the Aster Database Queen’s IP saddress or hostname.",
+      "datatype":"DRIVER","allowsLists":false,"useInR":false},{
+      "isOutputColumn":false,"name":"Database","isRequired":false,
+      "description":
+      "The name of the database where the input table is located.",
+      "datatype":"DRIVER","allowsLists":false,"useInR":false},{
+      "isOutputColumn":false,"name":"UserId","isRequired":false,
+      "description":
+      "The Aster Database user name of the user running this function.",
+      "datatype":"DRIVER","allowsLists":false,"useInR":false},{
+      "isOutputColumn":false,"name":"Password","isRequired":false,
+      "description":"The Aster Database password of the user.","datatype":
+      "DRIVER","allowsLists":false,"useInR":false},{"isOutputColumn":false,
+      "name":"SSLSettings","isRequired":false,"description":
+      "A string that includes all the SSL settings, except the password for the truststore.",
+      "datatype":"DRIVER","allowsLists":false,"useInR":false},{
+      "isOutputColumn":false,"name":"SSLTrustStorePassword","isRequired":
+      false,"description":"The password for the SSL truststore.","datatype":
+      "DRIVER","allowsLists":false,"useInR":false},{"allowNaN":false,"name":
+      "PartitionBlockSize","alternateNames":["PARTITION_BLOCK_SIZE"],"isRequired":false,"description":
+      "Defines partition block size","datatype":"INTEGER","allowsLists":
+      false,"rName":"partition.block.size","useInR":true},{"defaultValue":
+      false,"name":"ForceMapreduce","alternateNames":["FORCE_MAPREDUCE"],"isRequired":false,"description":
+      "Determines whether to partition the training data. The default is false The default value is false.",
+      "datatype":"BOOLEAN","allowsLists":false,"rName":"force.mapreduce",
+      "useInR":true},{"lowerBound":0,"lowerBoundType":"EXCLUSIVE","allowNaN":
+      false,"name":"K","alternateNames":["NumberK"],"isRequired":true,
+      "description":
+      "The number of nearest neighbors (k) to use for classifying the test data The input value must be greater than 0.",
+      "datatype":"INTEGER","allowsLists":false,"rName":"k","useInR":true},{
+      "isOutputTable":false,"name":"TrainingTable","alternateNames":["TRAINING_TABLE"],"isRequired":true,
+      "description":
+      "This table holds the training data. Each record in the table represents a classified data object",
+      "datatype":"TABLE_NAME","allowsLists":false,"rName":"training.table",
+      "useInR":true},{"isOutputTable":false,"name":"TestTable","alternateNames":["TEST_TABLE"],"isRequired":
+      true,"description":
+      "This table holds the test data that needs to be classified by the kNN algorithm. Each record represents a test data object",
+      "datatype":"TABLE_NAME","allowsLists":false,"rName":"test.table",
+      "useInR":true},{"targetTable":"TrainingTable","checkDuplicate":true,
+      "requiredLength":1,"allowPadding":true,"name":"ResponseColumn",
+      "isRequired":true,"description":
+      "This column provides the class label or classification of data objects in the training table",
+      "datatype":"COLUMN_NAMES","allowsLists":false,"rName":
+      "response.column","useInR":true},{"targetTable":"TestTable",
+      "checkDuplicate":true,"requiredLength":1,"allowPadding":true,"name":
+      "IdColumn","alternateNames":["TEST_POINT_KEY","TestPointKey"],"isRequired":true,
+      "description":
+      "The column in the testing table that uniquely identifies an object",
+      "datatype":"COLUMN_NAMES","allowsLists":false,"rName":"id.column",
+      "useInR":true},{"isOutputColumn":false,"allowPadding":true,"name":
+      "DistanceFeatures","alternateNames":["DISTANCE_FEATURES"],"isRequired":true,"description":
+      "The columns in the training table that this function uses to compute the distance between a test object and the training objects. These columns must also be included in the testing table",
+      "datatype":"STRING","allowsLists":true,"rName":"distance.features",
+      "useInR":true},{"isOutputColumn":false,"allowPadding":true,"name":
+      "CustomizedDistance","alternateNames":["CUSTOMIZED_DISTANCE"],"isRequired":false,"description":
+      "Defines a custom distance function ('jar_name', 'distance_class_name'). The default is Euclidean distance",
+      "datatype":"STRING","allowsLists":true,"rName":"customized.distance",
+      "useInR":true},{"defaultValue":0,"lowerBound":0,"lowerBoundType":
+      "INCLUSIVE","allowNaN":false,"name":"VotingWeight","alternateNames":["VOTING_WEIGHT"],"isRequired":
+      false,"description":
+      "The voting weight of the distance, which must be non- negative integer. The default value is '0' The input value must be no less than 0.0. The default value is 0.0.",
+      "datatype":"DOUBLE","allowsLists":false,"rName":"voting.weight",
+      "useInR":true},{"isOutputTable":true,"name":"OutputTable","alternateNames":["OUTPUT_TABLE"],"isRequired":
+      false,"description":
+      "The name of the output table. The default is output is sent to the console",
+      "datatype":"TABLE_NAME","allowsLists":false,"rName":"output.table",
+      "useInR":true}]}
+

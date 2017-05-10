@@ -1,0 +1,169 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "NaiveBayesTextClassifierPredict",
+  "function_version": "1.1",
+  "function_type": "non-driver",
+  "short_description": "Predict document categories by a trained naive Bayes text classifier model.",
+  "long_description": "Predict document categories by a trained naive Bayes text classifier model.",
+  "input_tables": [
+    {
+      "requiredInputKind": [
+        "PartitionByKey"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "name": "predicts",
+      "isRequired": true,
+      "description": "The table defining the token table for prediction.",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "rName": "predicts",
+      "useInR": true
+    },
+    {
+      "requiredInputKind": [
+        "Dimension"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "name": "model",
+      "isRequired": true,
+      "description": "The table defining table classification model.",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "rName": "model",
+      "useInR": true
+    }
+  ],
+  "argument_clauses": [
+    {
+      "targetTable": "predicts",
+      "checkDuplicate": true,
+      "allowedTypeGroups": [
+        "STRING"
+      ],
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "InputTokenColumn",
+      "alternateNames": [
+        "Token_Column",
+		"TokenColumn"
+      ],
+      "isRequired": true,
+      "description": "Specify the token column in token table which contains the tokens for modeling. Input columns must contain string SQL types.",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "input.token.column",
+      "useInR": true
+    },
+    {
+      "targetTable": "predicts",
+      "checkDuplicate": true,
+      "allowedTypeGroups": [
+        "STRING",
+        "INTEGER"
+      ],
+      "allowPadding": true,
+      "name": "DocIdColumns",
+	  "alternateNames": [
+        "Doc_ID_Columns"
+      ],
+      "isRequired": true,
+      "description": "Specify the document identifier columns in token table. Required only when model type is Bernoulli. Input columns must contain integer SQL types. Input columns must contain string SQL types.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "doc.id.columns",
+      "useInR": true
+    },
+    {
+      "permittedValues": [
+        "MULTINOMIAL",
+        "BERNOULLI"
+      ],
+      "defaultValue": "MULTINOMIAL",
+      "isOutputColumn": false,
+      "name": "ModelType",
+	  "alternateNames": [
+        "Model_Type"
+      ],	  
+      "isRequired": false,
+      "description": "Specify the text classifier type. The permitted input values are [MULTINOMIAL, BERNOULLI]. The default value is MULTINOMIAL.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "model.type",
+      "useInR": true
+    },
+    {
+      "lowerBound": 0,
+      "lowerBoundType": "EXCLUSIVE",
+      "allowNaN": false,
+      "name": "TopK",
+      "isRequired": false,
+      "description": "Specify the top k most likely prediction categories to output with their log likelihood values. Default will output all prediction categories. The input value must be greater than 0.",
+      "datatype": "INTEGER",
+      "allowsLists": false,
+      "rName": "top.k",
+      "useInR": true
+    },
+    {
+      "targetTable": "model",
+      "checkDuplicate": true,
+      "allowedTypeGroups": [
+        "STRING"
+      ],
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "ModelTokenColumn",
+	  "alternateNames": [
+        "Model_Token_Column"
+      ],	  
+      "isRequired": false,
+      "description": "Specify the name of the column in model table that contains the tokens. The default value is the first column. Input columns must contain string SQL types.",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "model.token.column",
+      "useInR": true
+    },
+    {
+      "targetTable": "model",
+      "checkDuplicate": true,
+      "allowedTypeGroups": [
+        "STRING"
+      ],
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "ModelCategoryColumn",
+	  "alternateNames": [
+        "Model_Category_Column"
+      ],	  
+      "isRequired": false,
+      "description": "Specify the name of the column in model table that contains the prediction categories. The default value is the second column. Input columns must contain string SQL types.",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "model.category.column",
+      "useInR": true
+    },
+    {
+      "targetTable": "model",
+      "checkDuplicate": true,
+      "allowedTypeGroups": [
+        "STRING",
+        "NUMERIC"
+      ],
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "ModelProbColumn",
+	  "alternateNames": [
+        "Model_Prob_Column"
+      ],	  
+      "isRequired": false,
+      "description": "Specify the name of the column in model table that contains the token statistics. The default value is the third column. Input columns must contain numeric SQL types. Input columns must contain string SQL types.",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "model.prob.column",
+      "useInR": true
+    }
+  ]
+}

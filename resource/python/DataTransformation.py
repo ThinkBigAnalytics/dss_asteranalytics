@@ -19,7 +19,6 @@ def do(payload, config, plugin_config, inputs):
             aster_args = json.loads(open('%s/%s' % (os.getenv("DKU_CUSTOM_RESOURCE_FOLDER"), "asterarguments.json")).read())
             f = json.loads(open('%s/data/%s' % (os.getenv("DKU_CUSTOM_RESOURCE_FOLDER"), fle)).read())
             d = {"name":"",
-                 "description":"",
                  "arguments":"",
                  "asterarguments":"",
                  "partitionInputKind":"None",
@@ -31,8 +30,6 @@ def do(payload, config, plugin_config, inputs):
             keys = f.keys()
             if 'function_name' in keys:
                 d["name"]=f['function_name'].upper()
-            if 'long_description' in keys:
-                d["description"]=f['long_description']
             if 'input_tables' in keys:
                 d["hasInputTable"] = True
                 partitionKeys=[]
@@ -59,15 +56,13 @@ def do(payload, config, plugin_config, inputs):
                 a = []
                 arg_lst = f['argument_clauses']
                 for argument in arg_lst:
-                    arg = {"name":"","isRequired":"","desc":"","value":"", "datatype": "", "allowsLists":True}
+                    arg = {"name":"","isRequired":"","value":"", "datatype": "", "allowsLists":True}
                     if 'alternateNames' in argument.keys():
                         arg["name"]=argument['alternateNames'][0].upper()
                     elif 'name' in argument.keys():
                         arg["name"]=argument['name'].upper()  
                     if 'isRequired' in argument.keys():
                         arg["isRequired"]=argument['isRequired']
-                    if 'description' in argument.keys():
-                        arg["desc"]=argument['description']
                     if 'datatype' in argument.keys():
                         arg["datatype"]=argument['datatype']
                     if 'allowsLists' in argument.keys():
@@ -81,10 +76,9 @@ def do(payload, config, plugin_config, inputs):
                 d["cascaded_functions"] = f['cascaded_functions']
             aster_arg_list = []
             for argument in aster_args:
-                aster_arg = {"name":"","label":"","desc":"","value":""}
+                aster_arg = {"name":"","label":"","value":""}
                 aster_arg["name"] = argument["name"]
                 aster_arg["label"] = argument["label"]                
-                aster_arg["desc"] = argument["desc"]
                 aster_arg_list.append(aster_arg)
             d["asterarguments"] = aster_arg_list
             

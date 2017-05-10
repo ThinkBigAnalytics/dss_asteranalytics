@@ -1,0 +1,99 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "URIUnpack",
+  "function_version": "1.1",
+  "function_type": "non-driver",
+  "short_description": "SQL/MR function for combining URI components into a single encoded URI.",
+  "long_description": "Given a column of URIs, split each URI into its constituent parts: scheme (e.g., http), host (e.g., www.teradata.com), path (e.g., /dir/file), query parameters and query values (?param=value), and fragments (#fragment). The input table should contain a column URI_COLUMN of valid URIs - malformed URIs in this column will produce no output. The output table contains columns for each ofthe query parameters included in the argument QUERIES,each of the URI components included in the argument OUTPUT, and each of the input columns in the argument ACCUMULATE. If a URI does not contain any of the query parameters listed in QUERIES, it will not be output unless PRINT_NULL_QUERIES is set to true. The string 'null' is written to the output table for URI components that do not exist. Unpacked URIs can be reassembled using the function URIPACK.",
+  "input_tables": [
+    {
+      "isOrdered": false,
+      "partitionByOne": false,
+      "isRequired": true,
+      "description": "The table containing the URIs to be unpacked.",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "useInR": true
+    }
+  ],
+  "argument_clauses": [
+    {
+      "checkDuplicate": true,
+      "allowedTypeGroups": [
+        "STRING"
+      ],
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "URIColumn",
+      "alternateNames": [
+        "URI_Column"
+      ],
+      "isRequired": true,
+      "description": "The input table column that contains the hierarchical URIs to be decoded Input columns must contain string SQL types.",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "uri.column",
+      "useInR": true
+    },
+    {
+      "isOutputColumn": false,
+      "allowPadding": true,
+      "name": "Queries",
+      "isRequired": false,
+      "description": "The query parameters (for example, par1 and par2) to be extracted from the hierarchical URIs",
+      "datatype": "STRING",
+      "allowsLists": true,
+      "rName": "queries",
+      "useInR": true
+    },
+    {
+      "permittedValues": [
+        "SCHEME",
+        "HOST",
+        "PATH",
+        "FRAGMENT"
+      ],
+      "defaultValue": [
+        "scheme",
+        "host",
+        "path",
+        "fragment"
+      ],
+      "isOutputColumn": false,
+      "allowPadding": true,
+      "name": "Output",
+      "isRequired": false,
+      "description": "The permitted input values are [SCHEME, HOST, PATH, FRAGMENT]. The default value is [scheme, host, path, fragment].",
+      "datatype": "STRING",
+      "allowsLists": true,
+      "rName": "output",
+      "useInR": true
+    },
+    {
+      "defaultValue": true,
+      "name": "PrintNullQueries",
+      "alternateNames": [
+        "Print_Null_Queries"
+      ],
+      "isRequired": false,
+      "description": "If 'true' URIs that doe not contain any of the query parameters are added to the output table. The default value is true.",
+      "datatype": "BOOLEAN",
+      "allowsLists": false,
+      "rName": "print.null.queries",
+      "useInR": true
+    },
+    {
+      "checkDuplicate": true,
+      "allowPadding": true,
+      "name": "Accumulate",
+      "isRequired": false,
+      "description": "Columns from the input table to be passed through from input to output.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "accumulate",
+      "useInR": true
+    }
+  ]
+}

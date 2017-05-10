@@ -1,0 +1,88 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "emavg",
+  "function_version": "1.2",
+  "function_type": "non-driver",
+  "short_description": "Computes Exponential Moving Averages",
+  "long_description": "The exponential moving average computes the average over a number of points in a time series but applies a weighting to older values",
+  "input_tables": [
+    {
+      "requiredInputKind": [
+        "PartitionByKey"
+      ],
+      "isOrdered": true,
+      "partitionByOne": false,
+      "isRequired": true,
+      "description": "Input table.",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "useInR": true
+    }
+  ],
+  "argument_clauses": [
+    {
+      "defaultValue": 0.1,
+      "lowerBound": 0,
+      "upperBound": 1,
+      "lowerBoundType": "INCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
+      "allowNaN": true,
+      "name": "Alpha",
+      "isRequired": false,
+      "description": "Specifies the damping factor, which is the degree of weighting decrease. The input value must be no less than 0.0 and no greater than 1.0. The default value is 0.1.",
+      "datatype": "DOUBLE",
+      "allowsLists": false,
+      "rName": "alpha",
+      "useInR": true
+    },
+    {
+      "defaultValue": 2,
+      "lowerBound": 1,
+      "lowerBoundType": "INCLUSIVE",
+      "allowNaN": false,
+      "name": "StartRows",
+      "alternateNames": [
+        "Start_Rows"
+      ],
+      "isRequired": false,
+      "description": "Specifies the lag, expressed in rows, after which exponential moving average will start to be calculated. The input value must be no less than 1. The default value is 2.",
+      "datatype": "INTEGER",
+      "allowsLists": false,
+      "rName": "start.rows",
+      "useInR": true
+    },
+    {
+      "defaultValue": false,
+      "name": "IncludeFirst",
+      "alternateNames": [
+        "Return_All",
+		"ReturnAll"
+      ],
+      "isRequired": false,
+      "description": "Specifies whether the first START_ROWS rows should be included in the output or not. The default value is false.",
+      "datatype": "BOOLEAN",
+      "allowsLists": false,
+      "rName": "include.first",
+      "useInR": true
+    },
+    {
+      "checkDuplicate": true,
+      "allowedTypeGroups": [
+        "NUMERIC"
+      ],
+      "allowPadding": true,
+      "name": "TargetColumns",
+      "alternateNames": [
+        "Columns"
+      ],
+      "isRequired": false,
+      "description": "Name of the column name for which the exponential moving average will be calculated. Input columns must contain numeric SQL types.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "target.columns",
+      "useInR": true
+    }
+  ]
+}

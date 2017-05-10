@@ -1,0 +1,56 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "murmurhash",
+  "function_version": "1.1",
+  "function_type": "non-driver",
+  "short_description": "Implements the MurmurHash SQL/MR function.",
+  "long_description": "MurmurHash is a non-cryptographic hash function suitable for general hash-based lookup. The function output the hashed value of each cell in the input columns. ",
+  "input_tables": [
+    {
+      "isOrdered": false,
+      "partitionByOne": false,
+      "isRequired": true,
+      "description": "The input table that contains the data.",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "useInR": true
+    }
+  ],
+  "argument_clauses": [
+    {
+      "checkDuplicate": true,
+      "allowPadding": true,
+      "name": "InputColumns",
+      "isRequired": true,
+      "description": "A list of columns in the input table for which to calculate hash values. This can be an individual column, a list of column names or a range of columns by position number.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "input.columns",
+      "useInR": true
+    },
+    {
+      "defaultValue": 32,
+      "allowNaN": false,
+      "name": "HashBit",
+      "isRequired": false,
+      "description": "The output hash bit. Two values are allowed '32' and '64'. The default value is 32.",
+      "datatype": "INTEGER",
+      "allowsLists": false,
+      "rName": "hash.bit",
+      "useInR": true
+    },
+    {
+      "checkDuplicate": true,
+      "allowPadding": true,
+      "name": "Accumulate",
+      "isRequired": false,
+      "description": "Columns from the input table to be passed through from input to output.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "accumulate",
+      "useInR": true
+    }
+  ]
+}

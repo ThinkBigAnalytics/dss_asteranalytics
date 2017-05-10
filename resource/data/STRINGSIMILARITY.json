@@ -1,0 +1,58 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "StringSimilarity",
+  "function_version": "1.1",
+  "function_type": "non-driver",
+  "short_description": "SQL/MR function to compare 2 strings.",
+  "long_description": "SQL/MR function to compare 2 strings.",
+  "input_tables": [
+    {
+      "requiredInputKind": [
+        "PartitionByAny"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "isRequired": true,
+      "description": "The relation that contains the string pairs to be compared.",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "useInR": true
+    }
+  ],
+  "argument_clauses": [
+    {
+      "allowPadding": true,
+      "name": "Casesensitive",
+      "isRequired": false,
+      "description": "Specifies whether string comparison is case-sensitive. The default value is 'false'.",
+      "datatype": "BOOLEAN",
+      "allowsLists": true,
+      "rName": "casesensitive",
+      "useInR": true
+    },
+    {
+      "isOutputColumn": false,
+      "allowPadding": true,
+      "name": "ComparisonColumnPairs",
+      "isRequired": true,
+      "description": "Specifies pairs of input table columns that contain strings to be compared (column1 and column2), how to compare them (comparison_type), and (optionally) a constant and the name of the output column for their similarity (output_column). The similarity is a value in the range [0, 1].",
+      "datatype": "STRING",
+      "allowsLists": true,
+      "rName": "comparison.column.pairs",
+      "useInR": true
+    },
+    {
+      "checkDuplicate": true,
+      "allowPadding": true,
+      "name": "Accumulate",
+      "isRequired": false,
+      "description": "Columns from the input table to be passed through from input to output.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "accumulate",
+      "useInR": true
+    }
+  ]
+}

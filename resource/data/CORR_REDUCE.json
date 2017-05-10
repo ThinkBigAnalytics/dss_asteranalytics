@@ -1,0 +1,24 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "corr_reduce",
+  "function_version": "1.4",
+  "function_type": "non-driver",
+  "short_description": "This Function calculates the correlation.",
+  "long_description": "This function is used as part of the correlation. corr_reduce is not intended to be used separetly, it is always used with corr_map.",
+  "input_tables": [
+    {
+      "requiredInputKind": [
+        "PartitionByKey"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "isRequired": true,
+      "description": "The input table that is the output of corr_map. ",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "useInR": true
+    }
+  ]
+}

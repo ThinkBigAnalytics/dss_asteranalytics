@@ -1,0 +1,123 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "pagerank",
+  "function_version": "1.1",
+  "function_type": "graph",
+  "short_description": "Computes the page rank for all pages in a web graph.",
+  "long_description": "Computes the page rank for all pages in a web graph represented by two database tables. The assumption is that the function is provided input as follows: TABLE vertices (vertex keys, ...) TABLE edges (source vertex keys, target vertex keys, edge weight, ...). The function only supports edge weights. If EdgeWeight is not specified, PageRank takes the input as unweighted.",
+  "input_tables": [
+    {
+      "requiredInputKind": [
+        "PartitionByKey"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "name": "vertices",
+      "isRequired": true,
+      "description": "The input table contains vertices in the graph. ",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "rName": "vertices",
+      "useInR": true
+    },
+    {
+      "requiredInputKind": [
+        "PartitionByKey"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "name": "edges",
+      "isRequired": true,
+      "description": "The input table contains edges in the graph. ",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "rName": "edges",
+      "useInR": true
+    }
+  ],
+  "argument_clauses": [
+    {
+      "targetTable": "edges",
+      "checkDuplicate": true,
+      "allowPadding": true,
+      "name": "TargetKey",
+      "isRequired": true,
+      "description": "The names of the target key columns in the edges table. The number of attributes and their types should correspond to those of the vertex_key SQL clause. ",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "target.key",
+      "useInR": true
+    },
+    {
+      "targetTable": "edges",
+      "checkDuplicate": true,
+      "allowedTypeGroups": [
+        "NUMERIC"
+      ],
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "EdgeWeight",
+      "isRequired": false,
+      "description": "The name of the weight column in the edges table of a weighted graph. The weight is a positive non-zero value. The default is the graph is regarded as an unweighted graph.  Input columns must contain numeric SQL types.",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "edge.weight",
+      "useInR": true
+    },
+    {
+      "defaultValue": 0.85,
+      "lowerBound": 0,
+      "upperBound": 1,
+      "lowerBoundType": "INCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
+      "allowNaN": false,
+      "name": "DampFactor",
+      "isRequired": false,
+      "description": "A value between 0 and 1 to be used in the pagerank formula. The input value must be no less than 0.0 and no greater than 1.0. The default value is 0.85.",
+      "datatype": "DOUBLE",
+      "allowsLists": false,
+      "rName": "damp.factor",
+      "useInR": true
+    },
+    {
+      "defaultValue": 20,
+      "lowerBound": 0,
+      "lowerBoundType": "EXCLUSIVE",
+      "allowNaN": false,
+      "name": "MaxIterNum",
+      "isRequired": false,
+      "description": "The maximum iteration number for which the algorithm runs.  The input value must be greater than 0. The default value is 20.",
+      "datatype": "INTEGER",
+      "allowsLists": false,
+      "rName": "max.iter.num",
+      "useInR": true
+    },
+    {
+      "defaultValue": 1.0E-4,
+      "lowerBound": 0,
+      "lowerBoundType": "EXCLUSIVE",
+      "allowNaN": false,
+      "name": "Threshold",
+      "isRequired": false,
+      "description": "The threshold value specifying the convergence criteria. The input value must be greater than 0.0. The default value is 1.0E-4.",
+      "datatype": "DOUBLE",
+      "allowsLists": false,
+      "rName": "threshold",
+      "useInR": true
+    },
+    {
+      "targetTable": "vertices",
+      "checkDuplicate": true,
+      "allowPadding": true,
+      "name": "Accumulate",
+      "isRequired": false,
+      "description": "Columns from the input table to be passed through from input to output.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "accumulate",
+      "useInR": true
+    }
+  ]
+}

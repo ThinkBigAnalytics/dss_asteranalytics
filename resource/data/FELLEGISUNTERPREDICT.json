@@ -1,0 +1,51 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "FellegiSunterPredict",
+  "function_version": "1.1",
+  "function_type": "non-driver",
+  "short_description": "SQL/MR function to predict if two objects are match or un-match using a Fellegi-Sunter model",
+  "long_description": "SQL/MR function to predict if two objects are match or un-match using a Fellegi-Sunter model",
+  "input_tables": [
+    {
+      "requiredInputKind": [
+        "PartitionByAny"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "isRequired": true,
+      "description": "The relation that contains the object pairs to be compared.",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "useInR": true
+    },
+    {
+      "requiredInputKind": [
+        "Dimension"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "name": "model",
+      "isRequired": true,
+      "description": "The relation that contains the model learned by FellegiSunterTrainer.",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "rName": "model",
+      "useInR": true
+    }
+  ],
+  "argument_clauses": [
+    {
+      "checkDuplicate": true,
+      "allowPadding": true,
+      "name": "Accumulate",
+      "isRequired": false,
+      "description": "Columns from the input table to be passed through from input to output.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "accumulate",
+      "useInR": true
+    }
+  ]
+}

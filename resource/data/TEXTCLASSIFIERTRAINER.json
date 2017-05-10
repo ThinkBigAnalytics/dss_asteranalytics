@@ -1,0 +1,162 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "TextClassifierTrainer",
+  "function_version": "1.4",
+  "function_type": "driver",
+  "short_description": "SQL/MR function for training a text classifier",
+  "long_description": "SQL/MR function for training a text classification model. Current implementation supports maximum entropy model and KNN model",
+  "argument_clauses": [
+    {
+      "isOutputColumn": false,
+      "name": "Domain",
+      "isRequired": false,
+      "description": "The address of the Queen. The host parameter is the Aster Database Queen’s IP saddress or hostname.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "Database",
+      "isRequired": false,
+      "description": "The name of the database where the input table is located.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "UserId",
+      "isRequired": false,
+      "description": "The Aster Database user name of the user running this function.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "Password",
+      "isRequired": false,
+      "description": "The Aster Database password of the user.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "SSLSettings",
+      "isRequired": false,
+      "description": "A string that includes all the SSL settings, except the password for the truststore.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputColumn": false,
+      "name": "SSLTrustStorePassword",
+      "isRequired": false,
+      "description": "The password for the SSL truststore.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "isOutputTable": false,
+      "name": "InputTable",
+      "isRequired": true,
+      "description": "The table or view that holds the documents to use for training the model",
+      "datatype": "TABLE_NAME",
+      "allowsLists": false,
+      "rName": "input.table",
+      "useInR": true
+    },
+    {
+      "targetTable": "InputTable",
+      "checkDuplicate": true,
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "TextColumn",
+      "isRequired": true,
+      "description": "The input table column whose content will be scanned",
+      "datatype": "COLUMN_NAMES",
+      "allowsLists": false,
+      "rName": "text.column",
+      "useInR": true
+    },
+    {
+      "targetTable": "InputTable",
+      "checkDuplicate": true,
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "CategoryColumn",
+      "isRequired": true,
+      "description": "The input table column that contains the category of the training documents",
+      "datatype": "COLUMN_NAMES",
+      "allowsLists": false,
+      "rName": "category.column",
+      "useInR": true
+    },
+    {
+      "permittedValues": [
+        "maxEnt",
+        "knn"
+      ],
+      "defaultValue": "maxEnt",
+      "isOutputColumn": false,
+      "name": "ClassifierType",
+      "isRequired": true,
+      "description": "One of '{ MaxEnt | KNN }' classifier type The permitted input values are [maxEnt, knn]. The default value is maxEnt.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "classifier.type",
+      "useInR": true
+    },
+    {
+      "isOutputColumn": false,
+      "allowPadding": true,
+      "name": "ClassifierParameters",
+      "isRequired": false,
+      "description": "If the CLASSIFIERTYPE is KNN, the 'compress' parameter can be specified. Range 0..1 . The default is not specified",
+      "datatype": "STRING",
+      "allowsLists": true,
+      "rName": "classifier.parameters",
+      "useInR": true
+    },
+    {
+      "isOutputColumn": false,
+      "allowPadding": true,
+      "name": "NlpParameters",
+      "isRequired": false,
+      "description": "Used to pass in the parameters for pre-processing. Format: 'name:value','name:value',...",
+      "datatype": "STRING",
+      "allowsLists": true,
+      "rName": "nlp.parameters",
+      "useInR": true
+    },
+    {
+      "isOutputColumn": false,
+      "name": "ModelFile",
+      "isRequired": true,
+      "description": "The name of the model file to be generated",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "model.file",
+      "useInR": true
+    },
+    {
+      "isOutputColumn": false,
+      "name": "FeatureSelectionMethod",
+      "alternateNames": [
+        "FeatureSelection"
+      ],
+      "isRequired": false,
+      "description": "Specifies the feature selection method to use. This version of the function supports DF selector (document Frequency). Format: 'DF:[<min_value>:<max_value>], where min_value, max_value are values in the range 0..1 or 'minValue', 'maxValue'",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "feature.selection.method",
+      "useInR": true
+    }
+  ]
+}
