@@ -2,13 +2,14 @@
 <link rel="stylesheet" href="/plugins/AsterAnalytics/resource/css/jquery-ui.css">
 <div id="main-container">
 
-  <div ng-controller="TeradataController">
+  <div ng-controller="TeradataController" data-ng-init="getFunctionMetadata(config.function.name)">
 
     <div class="control-group">
       <label class="control-label">Function Name</label>
       <div class="controls">
         <select ng-model="config.function" 
-          ng-options="choice.name.split('_').join(' ').toLowerCase() for choice in choices track by choice.name">
+          ng-options="choice.name.split('_').join(' ').toLowerCase() for choice in choices track by choice.name"
+          ng-change="getFunctionMetadata(config.function.name)>
           <option value="" disabled selected>Select an Aster function...</option>
         </select>
       </div>
@@ -17,7 +18,7 @@
     <div class="control-group" ng-if="config.function">
       <label class="control-label">Description</label>
       <div class="controls" style="max-width: 30%;">
-        {{config.function.description}}
+        {{ getFunctionDescription() }}
       </div>
     </div>
 
@@ -74,18 +75,18 @@
               <tr ng-repeat="item in config.function.arguments" ng-model="config.function.arguments" ng-if="item.isRequired">
                 <td style="text-transform: capitalize">{{ item.name.split('_').join(' ') | lowercase }}</td>
                 <td>
-                  <input type="text" ng-model="item.value" ng-if="item.datatype != 'COLUMNS'" data-toggle="tooltip" data-container="body" title="{{ item.desc }}"
+                  <input type="text" ng-model="item.value" ng-if="item.datatype != 'COLUMNS'" data-toggle="tooltip" data-container="body" title="{{ getArgumentDescription(config.function.name, item.name) }}"
                     data-placement="right" />
 
                   <select ng-if="item.datatype == 'COLUMNS' && !item.allowsLists" ng-model="item.value" data-toggle="tooltip" 
-                  data-container="body" title="{{ item.desc }}" data-placement="right"
+                  data-container="body" title="{{ getArgumentDescription(config.function.name, item.name) }}" data-placement="right"
                   ng-options="column.name as column.name + ' (' + column.type + ')' for column in schema">
                     <option value="" selected>--No Selection--</option>
                   </select>
 
                   <select multiple size="8"
                     ng-if="item.datatype == 'COLUMNS' && item.allowsLists" ng-model="item.value" 
-                    data-toggle="tooltip" title="{{ item.desc }}" data-placement="right" data-container="body"
+                    data-toggle="tooltip" title="{{ getArgumentDescription(config.function.name, item.name) }}" data-placement="right" data-container="body"
                     ng-options="column.name as column.name + ' (' + column.type + ')' for column in schema">
                     <option value="" selected>--No Selection--</option>
                   </select>
@@ -119,18 +120,18 @@
               <tr ng-repeat="item in config.function.arguments" ng-model="config.function.arguments" ng-if="!item.isRequired">
                 <td style="text-transform: capitalize">{{ item.name.split('_').join(' ') | lowercase }}</td>
                 <td>
-                  <input type="text" ng-model="item.value" ng-if="item.datatype != 'COLUMNS'" data-toggle="tooltip" data-container="body" title="{{ item.desc }}"
+                  <input type="text" ng-model="item.value" ng-if="item.datatype != 'COLUMNS'" data-toggle="tooltip" data-container="body" title="{{ getArgumentDescription(config.function.name, item.name) }}"
                     data-placement="right" />
 
                   <select ng-if="item.datatype == 'COLUMNS' && !item.allowsLists" ng-model="item.value" 
-                  data-toggle="tooltip" data-container="body" title="{{ item.desc }}" data-placement="right"
+                  data-toggle="tooltip" data-container="body" title="{{ getArgumentDescription(config.function.name, item.name) }}" data-placement="right"
                   ng-options="column.name as column.name + ' (' + column.type + ')' for column in schema">
                     <option value="" selected>--No Selection--</option>
                   </select>
 
                   <select multiple size="8"
                     ng-if="item.datatype == 'COLUMNS' && item.allowsLists" ng-model="item.value" 
-                    data-toggle="tooltip" title="{{ item.desc }}" data-placement="right" data-container=body
+                    data-toggle="tooltip" title="{{ getArgumentDescription(config.function.name, item.name) }}" data-placement="right" data-container=body
                     ng-options="column.name as column.name + ' (' + column.type + ')' for column in schema">
                     <option value="" selected>--No Selection--</option>
                   </select>
@@ -149,3 +150,4 @@
 
   </div>
 </div>
+
