@@ -9,7 +9,7 @@
       <div class="controls">
         <select ng-model="config.function" 
           ng-options="choice.name.split('_').join(' ').toLowerCase() for choice in choices track by choice.name"
-          ng-change="getFunctionMetadata(config.function.name)>
+          ng-change="getFunctionMetadata(config.function.name)">
           <option value="" disabled selected>Select an Aster function...</option>
         </select>
       </div>
@@ -92,11 +92,12 @@
                   </select>
                 </td>
               </tr>
-
-              <tr ng-repeat="item in config.function.required_input" ng-model="config.function.required_input">
+              <tr ng-repeat="item in config.function.required_input" ng-model="config.function.required_input" ng-if="item.hasOwnProperty('name') && item.isRequired">
                 <td style="text-transform: capitalize">{{ item.name.split('_').join(' ') | lowercase }} ({{item.kind}})</td>
                 <td>
-                  <input type="text" ng-model="item.value"/>
+                  <select ng-model="item.value" ng-options="t.fullName.split('.')[1] for t in inputs">
+                      <option value="" disabled selected>--No Selection--</option>
+                  </select>
                 </td>
               </tr>
 
@@ -134,6 +135,14 @@
                     data-toggle="tooltip" title="{{ getArgumentDescription(config.function.name, item.name) }}" data-placement="right" data-container=body
                     ng-options="column.name as column.name + ' (' + column.type + ')' for column in schema">
                     <option value="" selected>--No Selection--</option>
+                  </select>
+                </td>
+              </tr>
+              <tr ng-repeat="item in config.function.required_input" ng-model="config.function.required_input" ng-if="item.hasOwnProperty('name') && !item.isRequired">
+                <td style="text-transform: capitalize">{{ item.name.split('_').join(' ') | lowercase }} ({{item.kind}})</td>
+                <td>
+                  <select ng-model="item.value" ng-options="inputtable.fullName.split('.')[1] for inputtable in inputs">
+                      <option value="" selected>--No Selection--</option>
                   </select>
                 </td>
               </tr>

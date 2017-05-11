@@ -56,6 +56,7 @@ app.controller('TeradataController', function ($scope) {
     data => {
       $scope.choices = data.choices;
       $scope.schema = data.schema;
+      $scope.inputs = data.inputs;
       console.log(data);
       console.log(window.location.pathname);
       
@@ -67,6 +68,7 @@ app.controller('TeradataController', function ($scope) {
     data => {
       $scope.choices = [];
       $scope.schema = [];
+      $scope.inputs = [];
       console.log(data);
     }
     

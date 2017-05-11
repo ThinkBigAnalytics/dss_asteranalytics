@@ -36,20 +36,22 @@ def do(payload, config, plugin_config, inputs):
                 input_tab_lst = f['input_tables']
                 required_input = []
                 for input_tab in input_tab_lst:
-                    required_input_dict = {}
+                    required_input_dict = {"isRequired": True, "partitionAttributes":"", "orderByColumn": False}
+                    if 'isRequired' in input_tab.keys():
+                        required_input_dict['isRequired'] = input_tab['isRequired']
                     if 'requiredInputKind' in input_tab.keys():
                         partitionByKey = input_tab['requiredInputKind'][0]
                         if 'partitionByOne' in input_tab.keys() and input_tab['partitionByOne']:
                             partitionByKey = "PartitionByOne"
                         partitionKeys.append(partitionByKey)
                         required_input_dict['kind'] = partitionByKey
-                    if 'isOrdered' in input_tab.keys() and input_tab['isOrdered']:
+                    if 'isOrdered' in input_tab.keys():
                         d["isOrdered"] = input_tab['isOrdered']
                         required_input_dict['isOrdered'] = True
-                    if 'name' in input_tab.keys() and 'requiredInputKind' in input_tab.keys() and 'DIMENSION' == input_tab['requiredInputKind'][0].upper():
+                    if 'name' in input_tab.keys():
                         required_input_dict['name'] = input_tab['name']
                         required_input_dict['value'] = ""
-                        required_input.append(required_input_dict)
+                    required_input.append(required_input_dict)
                 d["partitionInputKind"]=partitionKeys
                 d["required_input"] = required_input
             if 'argument_clauses' in keys:
@@ -91,4 +93,4 @@ def do(payload, config, plugin_config, inputs):
     input_dataset =  dataiku.Dataset(input_table_name)
     schema = input_dataset.read_schema()
 
-    return {'choices' : choices, 'schema': schema}
+    return {'choices' : choices, 'schema': schema, 'inputs': inputs}
