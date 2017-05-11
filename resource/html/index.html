@@ -7,8 +7,7 @@
     <div class="control-group">
       <label class="control-label">Function Name</label>
       <div class="controls">
-        <select ng-model="config.function" 
-          ng-options="choice.name.split('_').join(' ').toLowerCase() for choice in choices track by choice.name"
+        <select ng-model="config.function" ng-options="choice.name.split('_').join(' ').toLowerCase() for choice in choices track by choice.name"
           ng-change="getFunctionMetadata(config.function.name)">
           <option value="" disabled selected>Select an Aster function...</option>
         </select>
@@ -48,8 +47,7 @@
               <tr ng-if="config.function.isOrdered">
                 <td>ORDER BY Column</td>
                 <td>
-                  <select ng-model="config.function.orderByColumn"
-                  ng-options="column.name as column.name + ' (' + column.type + ')' for column in schema">
+                  <select ng-model="config.function.orderByColumn" ng-options="column.name as column.name + ' (' + column.type + ')' for column in schema">
                     <option value="" selected>--No Selection--</option>
                   </select>
                 </td>
@@ -61,12 +59,13 @@
                   <input type="checkbox" ng-model="config.function.partitionByAny"></input>
                 </td>
               </tr>
-              
+
               <tr ng-if="config.function.partitionInputKind.indexOf('PartitionByKey') !== -1">
                 <td>PARTITION BY Column</td>
                 <td>
-                  <select ng-disabled="config.function.partitionByAny" multiple size="8" ng-model="config.function.partitionAttributes"
-                  ng-options="column.name as column.name + ' (' + column.type + ')' for column in schema">
+                  <select ng-disabled="config.function.partitionByAny" multiple size="8" ng-model="config.function.partitionAttributes" ng-options="column.name as column.name + ' (' + column.type + ')' for column in schema"
+                    data-html="true" title="<b>(Ctrl+Click to multi-select)</b>" data-toggle="tooltip" data-container="body"
+                    data-placement="right">
                     <option value="" selected>--No Selection--</option>
                   </select>
                 </td>
@@ -75,19 +74,20 @@
               <tr ng-repeat="item in config.function.arguments" ng-model="config.function.arguments" ng-if="item.isRequired">
                 <td style="text-transform: capitalize">{{ item.name.split('_').join(' ') | lowercase }}</td>
                 <td>
-                  <input type="text" ng-model="item.value" ng-if="item.datatype != 'COLUMNS'" data-toggle="tooltip" data-container="body" title="{{ getArgumentDescription(config.function.name, item.name) }}"
+                  <input type="text" ng-model="item.value" ng-if="item.datatype == 'STRING'" data-toggle="tooltip" data-container="body" title="{{ getArgumentDescription(config.function.name, item.name) }}"
                     data-placement="right" />
 
-                  <select ng-if="item.datatype == 'COLUMNS' && !item.allowsLists" ng-model="item.value" data-toggle="tooltip" 
-                  data-container="body" title="{{ getArgumentDescription(config.function.name, item.name) }}" data-placement="right"
-                  ng-options="column.name as column.name + ' (' + column.type + ')' for column in schema">
+                  <input type="checkbox" ng-model="item.value" ng-if="item.datatype == 'BOOLEAN'" data-toggle="tooltip" data-container="body"
+                    title="{{ getArgumentDescription(config.function.name, item.name) }}" data-placement="right" />
+
+                  <select ng-if="item.datatype == 'COLUMNS' && !item.allowsLists" ng-model="item.value" data-toggle="tooltip" data-container="body"
+                    title="{{ getArgumentDescription(config.function.name, item.name) }}" data-placement="right" ng-options="column.name as column.name + ' (' + column.type + ')' for column in schema">
                     <option value="" selected>--No Selection--</option>
                   </select>
 
-                  <select multiple size="8"
-                    ng-if="item.datatype == 'COLUMNS' && item.allowsLists" ng-model="item.value" 
-                    data-toggle="tooltip" title="{{ getArgumentDescription(config.function.name, item.name) }}" data-placement="right" data-container="body"
-                    ng-options="column.name as column.name + ' (' + column.type + ')' for column in schema">
+                  <select multiple size="8" ng-if="item.datatype == 'COLUMNS' && item.allowsLists" ng-model="item.value" data-toggle="tooltip"
+                    data-html="true" title="{{ getArgumentDescription(config.function.name, item.name) }}<br><br><b>(Ctrl+Click to multi-select)</b>"
+                    data-placement="right" data-container="body" ng-options="column.name as column.name + ' (' + column.type + ')' for column in schema">
                     <option value="" selected>--No Selection--</option>
                   </select>
                 </td>
@@ -107,7 +107,7 @@
         </div>
 
         <div id="tabs-optional">
-          
+
           <table class="table table-condensed table-hover">
 
             <thead>
@@ -121,19 +121,20 @@
               <tr ng-repeat="item in config.function.arguments" ng-model="config.function.arguments" ng-if="!item.isRequired">
                 <td style="text-transform: capitalize">{{ item.name.split('_').join(' ') | lowercase }}</td>
                 <td>
-                  <input type="text" ng-model="item.value" ng-if="item.datatype != 'COLUMNS'" data-toggle="tooltip" data-container="body" title="{{ getArgumentDescription(config.function.name, item.name) }}"
+                  <input type="text" ng-model="item.value" ng-if="item.datatype == 'STRING'" data-toggle="tooltip" data-container="body" title="{{ getArgumentDescription(config.function.name, item.name) }}"
                     data-placement="right" />
 
-                  <select ng-if="item.datatype == 'COLUMNS' && !item.allowsLists" ng-model="item.value" 
-                  data-toggle="tooltip" data-container="body" title="{{ getArgumentDescription(config.function.name, item.name) }}" data-placement="right"
-                  ng-options="column.name as column.name + ' (' + column.type + ')' for column in schema">
+                  <input type="checkbox" ng-model="item.value" ng-if="item.datatype == 'BOOLEAN'" data-toggle="tooltip" data-container="body"
+                    title="{{ getArgumentDescription(config.function.name, item.name) }}" data-placement="right" />
+
+                  <select ng-if="item.datatype == 'COLUMNS' && !item.allowsLists" ng-model="item.value" data-toggle="tooltip" data-container="body"
+                    title="{{ getArgumentDescription(config.function.name, item.name) }}" data-placement="right" ng-options="column.name as column.name + ' (' + column.type + ')' for column in schema">
                     <option value="" selected>--No Selection--</option>
                   </select>
 
-                  <select multiple size="8"
-                    ng-if="item.datatype == 'COLUMNS' && item.allowsLists" ng-model="item.value" 
-                    data-toggle="tooltip" title="{{ getArgumentDescription(config.function.name, item.name) }}" data-placement="right" data-container=body
-                    ng-options="column.name as column.name + ' (' + column.type + ')' for column in schema">
+                  <select multiple size="8" ng-if="item.datatype == 'COLUMNS' && item.allowsLists" ng-model="item.value" data-toggle="tooltip"
+                    data-html="true" title="{{ getArgumentDescription(config.function.name, item.name) }}<br><br><b>(Ctrl+Click to multi-select)</b>"
+                    data-placement="right" data-container=body ng-options="column.name as column.name + ' (' + column.type + ')' for column in schema">
                     <option value="" selected>--No Selection--</option>
                   </select>
                 </td>
@@ -159,4 +160,3 @@
 
   </div>
 </div>
-

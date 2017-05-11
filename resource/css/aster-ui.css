@@ -1,3 +1,5 @@
+
+
 #main-container {
     overflow: hidden !important;
     min-height: 50vh !important;
@@ -31,6 +33,11 @@
 .dss-page {
     background: url(/plugins/AsterAnalytics/resource/img/chart2.jpg) !important;
 }
+
+/*#tabs-required input, #tabs-required select,
+#tabs-optional input, #tabs-optional select {
+    zoom: 90%;
+}*/
 
 .custom-code-recipe-title {
     text-align: center !important;
