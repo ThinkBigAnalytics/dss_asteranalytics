@@ -95,9 +95,15 @@
               <tr ng-repeat="item in config.function.required_input" ng-model="config.function.required_input" ng-if="item.hasOwnProperty('name') && item.isRequired">
                 <td style="text-transform: capitalize">{{ item.name.split('_').join(' ') | lowercase }} ({{item.kind}})</td>
                 <td>
-                  <select ng-model="item.value" ng-options="t.fullName.split('.')[1] for t in inputs">
-                      <option value="" disabled selected>--No Selection--</option>
+                  <select ng-model="item.value" ng-options="t.fullName.split('.')[1] as t.fullName.split('.')[1] for t in inputs">
+                      <option value="" selected>--No Selection--</option>
                   </select>
+                </td>
+                <td ng-show="'PartitionByKey' == item.kind">
+                	<input type="text" ng-model="item.partitionAttributes"/>
+                </td>
+                <td ng-show="item.isOrdered">
+                	<input type="text" ng-model="item.orderByColumn"/>
                 </td>
               </tr>
 
@@ -142,7 +148,7 @@
               <tr ng-repeat="item in config.function.required_input" ng-model="config.function.required_input" ng-if="item.hasOwnProperty('name') && !item.isRequired">
                 <td style="text-transform: capitalize">{{ item.name.split('_').join(' ') | lowercase }} ({{item.kind}})</td>
                 <td>
-                  <select ng-model="item.value" ng-options="inputtable.fullName.split('.')[1] for inputtable in inputs">
+                  <select ng-model="item.value" ng-options="inputtable.fullName.split('.')[1] as inputtable.fullName.split('.')[1] for inputtable in inputs">
                       <option value="" selected>--No Selection--</option>
                   </select>
                 </td>
