@@ -36,7 +36,7 @@ def do(payload, config, plugin_config, inputs):
                 input_tab_lst = f['input_tables']
                 required_input = []
                 for input_tab in input_tab_lst:
-                    required_input_dict = {"isRequired": True, "partitionAttributes":"", "orderByColumn": False}
+                    required_input_dict = {"isRequired": True, "partitionAttributes":"", "orderByColumn": ""}
                     if 'isRequired' in input_tab.keys():
                         required_input_dict['isRequired'] = input_tab['isRequired']
                     if 'requiredInputKind' in input_tab.keys():
@@ -47,7 +47,7 @@ def do(payload, config, plugin_config, inputs):
                         required_input_dict['kind'] = partitionByKey
                     if 'isOrdered' in input_tab.keys():
                         d["isOrdered"] = input_tab['isOrdered']
-                        required_input_dict['isOrdered'] = True
+                        required_input_dict['isOrdered'] = input_tab['isOrdered']
                     if 'name' in input_tab.keys():
                         required_input_dict['name'] = input_tab['name']
                         required_input_dict['value'] = ""
