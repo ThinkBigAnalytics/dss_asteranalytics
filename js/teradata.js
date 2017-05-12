@@ -1,6 +1,22 @@
 const app = angular.module('teradata.module', []);
 
-app.controller('TeradataController', function ($scope) {
+function fixTooltips($timeout) {
+
+  $timeout(() => $('.tagsinput').each((i,x) => {
+    const title = $(x).prev().data('original-title') + '<br><br><b>(Press ENTER to add to list)</b>'
+    $(x)
+      .attr('data-toggle', 'tooltip')
+      .attr('data-container', 'body')
+      .attr('data-placement', 'right')
+      .attr('data-html', 'true')
+      .attr('data-title', title)
+      .attr('data-original-title', title)
+      .tooltip()
+  }))
+  
+}
+
+app.controller('TeradataController', function ($scope, $timeout) {
 
   let functionMetadata;
 
@@ -54,10 +70,17 @@ app.controller('TeradataController', function ($scope) {
       $scope.choices = data.choices;
       $scope.schema = data.schema;
       $scope.inputs = data.inputs;
+      $scope.items = [];
       console.log(data);
 
       $('select:first').change(() => {
-        $('#tabs').tabs('destroy').tabs()
+        $timeout(() => {
+          $('#tabs').tabs('destroy').tabs();
+          setTimeout(() => {
+            $('input.teradata-tags').tagsInput();
+            fixTooltips($timeout);
+          }, 500);
+        });
       });
 
       $('select:first, select:first > option').css('text-transform', 'capitalize');
@@ -87,7 +110,7 @@ app.controller('TeradataController', function ($scope) {
     return $scope.config.function.arguments.filter(x => !x.isRequired).length > 0
   }
 
-  setTimeout(() => {
+  $timeout(() => {
 
     const $a = $('.mainPane > div:first > div:first > div.recipe-settings-section2 > a');
     $a.text('Learn more about Teradata Aster');
@@ -98,7 +121,11 @@ app.controller('TeradataController', function ($scope) {
     $('#main-container > div > div:nth-child(1) > div > select')[0].value = '';
     $('.dss-page,#main-container').css('display', 'block');
     $('#main-container').tooltip();
-    $('#tabs').tabs()
+    $('#tabs').tabs();
+    setTimeout(() => {
+      $('input.teradata-tags').tagsInput();
+      fixTooltips($timeout);
+    }, 500);
 
   });
 

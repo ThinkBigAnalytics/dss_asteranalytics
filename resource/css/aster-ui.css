@@ -183,3 +183,13 @@ input[type="checkbox"] {
     margin-top: 0 !important;
     margin-left: 1px !important;
 }
+
+div.tagsinput span.tag {
+    background: lightgrey !important;
+    color: black !important;
+    border: none !important;
+}
+
+div.tagsinput span.tag a {
+    color: black !important;
+}
