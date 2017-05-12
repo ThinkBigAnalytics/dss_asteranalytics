@@ -77,7 +77,10 @@ app.controller('TeradataController', function ($scope, $timeout) {
         $timeout(() => {
           $('#tabs').tabs('destroy').tabs();
           setTimeout(() => {
-            $('input.teradata-tags').tagsInput({ 'onChange': x => $(x).trigger('change') });
+            $('input.teradata-tags').tagsInput({ 
+              'onChange': x => $(x).trigger('change'),
+              'defaultText': 'add param',
+            });
             fixTooltips($timeout);
           }, 500);
         });
@@ -123,7 +126,10 @@ app.controller('TeradataController', function ($scope, $timeout) {
     $('#main-container').tooltip();
     $('#tabs').tabs();
     setTimeout(() => {
-      $('input.teradata-tags').tagsInput({ 'onChange': x => $(x).trigger('change') });
+      $('input.teradata-tags').tagsInput({ 
+        'onChange': x => $(x).trigger('change'),
+        'defaultText': 'add param',
+      });
       fixTooltips($timeout);
     }, 500);
 
