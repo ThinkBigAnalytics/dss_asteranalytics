@@ -48,6 +48,12 @@ app.controller('TeradataController', function ($scope) {
 
     return description;
   };
+  
+  // temporary code to not show partition and order by fields when there are no unaliased input dataset
+  $scope.shouldShowPartitionOrderFields = function(requiredInputsList)
+  { 
+	  return 0 != requiredInputsList.filter(n => !n.hasOwnProperty('name')).length;
+  }
 
   $scope.callPythonDo({}).then(
     data => {

@@ -46,8 +46,7 @@
             </thead>
 
             <tbody>
-
-              <tr ng-if="config.function.isOrdered">
+              <tr ng-if="config.function.isOrdered && shouldShowPartitionOrderFields(config.function.required_input)">
                 <td>ORDER BY Column</td>
                 <td>
                   <select ng-model="config.function.orderByColumn" ng-options="column.name as column.name + ' (' + column.type + ')' for column in schema">
@@ -56,14 +55,14 @@
                 </td>
               </tr>
 
-              <tr ng-if="config.function.partitionInputKind.indexOf('PartitionByAny') !== -1 && config.function.partitionInputKind.length > 1">
+              <tr ng-if="shouldShowPartitionOrderFields(config.function.required_input) && config.function.partitionInputKind.indexOf('PartitionByAny') !== -1 && config.function.partitionInputKind.length > 1">
                 <td>PARTITION BY ANY</td>
                 <td>
                   <input type="checkbox" ng-model="config.function.partitionByAny"></input>
                 </td>
               </tr>
 
-              <tr ng-if="config.function.partitionInputKind.indexOf('PartitionByKey') !== -1">
+              <tr ng-if="shouldShowPartitionOrderFields(config.function.required_input) && config.function.partitionInputKind.indexOf('PartitionByKey') !== -1">
                 <td>PARTITION BY Column</td>
                 <td>
                   <select ng-disabled="config.function.partitionByAny" multiple size="8" ng-model="config.function.partitionAttributes" ng-options="column.name as column.name + ' (' + column.type + ')' for column in schema"
@@ -73,6 +72,7 @@
                   </select>
                 </td>
               </tr>
+              
 
               <tr ng-repeat="item in config.function.arguments" ng-model="config.function.arguments" ng-if="item.isRequired">
                 <td style="text-transform: capitalize">{{ item.name.split('_').join(' ') | lowercase }}</td>
