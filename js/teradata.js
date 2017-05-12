@@ -2,7 +2,7 @@ const app = angular.module('teradata.module', []);
 
 function fixTooltips($timeout) {
 
-  $timeout(() => $('.tagsinput').each((i,x) => {
+  $timeout(() => $('.tagsinput').each((i, x) => {
     const title = $(x).prev().data('original-title') + '<br><br><b>(Press ENTER to add to list)</b>'
     $(x)
       .attr('data-toggle', 'tooltip')
@@ -13,7 +13,7 @@ function fixTooltips($timeout) {
       .attr('data-original-title', title)
       .tooltip()
   }))
-  
+
 }
 
 app.controller('TeradataController', function ($scope, $timeout) {
@@ -64,34 +64,33 @@ app.controller('TeradataController', function ($scope, $timeout) {
 
     return description;
   };
-  
+
   // temporary code to not show partition and order by fields when there are no unaliased input dataset
-  $scope.shouldShowPartitionOrderFields = function(requiredInputsList)
-  { 
-	  return 0 != requiredInputsList.filter(n => !n.hasOwnProperty('name')).length;
+  $scope.shouldShowPartitionOrderFields = function (requiredInputsList) {
+    return 0 != requiredInputsList.filter(n => !n.hasOwnProperty('name')).length;
   }
-  
-  $scope.getSchema = function(functionArgument, requiredInputsList)
-  {
-	  if ('targetTable' in functionArgument)
-	  {
-		  let targetTableAlias = functionArgument.targetTable;
-		  
-		  let inputslist = requiredInputsList.filter(n => targetTableAlias === n.name);
-		  if (0 < inputslist.length) {
-	
-			  let targetTableName = inputslist[0].value;
-			  if (!targetTableName)
-			  {
-				  return [];
-			  }
-			  if (targetTableName && targetTableName in $scope.inputschemas) {
-	
-				  return $scope.inputschemas[targetTableName];
-			  }
-		  }
-	  }  
-	  return $scope.schema;
+
+  $scope.getSchema = function (functionArgument, requiredInputsList) {
+
+    requiredInputsList = requiredInputsList || [];
+
+    if ('targetTable' in functionArgument) {
+      let targetTableAlias = functionArgument.targetTable;
+
+      let inputslist = requiredInputsList.filter(n => targetTableAlias === n.name);
+      if (0 < inputslist.length) {
+
+        let targetTableName = inputslist[0].value;
+        if (!targetTableName) {
+          return [];
+        }
+        if (targetTableName && targetTableName in $scope.inputschemas) {
+
+          return $scope.inputschemas[targetTableName];
+        }
+      }
+    }
+    return $scope.schema;
   }
 
   $scope.callPythonDo({}).then(
@@ -104,12 +103,13 @@ app.controller('TeradataController', function ($scope, $timeout) {
 
       $('select:first').change(() => {
         $timeout(() => {
-          try { $('#tabs').tabs('destroy') } 
-          catch(e) {}
+          try {
+            $('#tabs').tabs('destroy')
+          } catch (e) {}
 
           $('#tabs').tabs();
           setTimeout(() => {
-            $('input.teradata-tags').tagsInput({ 
+            $('input.teradata-tags').tagsInput({
               'onChange': x => $(x).trigger('change'),
               'defaultText': 'add param',
             });
@@ -130,7 +130,7 @@ app.controller('TeradataController', function ($scope, $timeout) {
 
   );
 
-  $scope.hasRequiredArguments = function() {
+  $scope.hasRequiredArguments = function () {
     if (!$scope.config.function.arguments || !$scope.config.function.arguments.length) {
       return false
     }
@@ -138,7 +138,7 @@ app.controller('TeradataController', function ($scope, $timeout) {
     return $scope.config.function.arguments.filter(x => x.isRequired).length > 0
   }
 
-  $scope.hasOptionalArguments = function() {
+  $scope.hasOptionalArguments = function () {
     if (!$scope.config.function.arguments || !$scope.config.function.arguments.length) {
       return false
     }
@@ -159,7 +159,7 @@ app.controller('TeradataController', function ($scope, $timeout) {
     $('#main-container').tooltip();
     $('#tabs').tabs();
     setTimeout(() => {
-      $('input.teradata-tags').tagsInput({ 
+      $('input.teradata-tags').tagsInput({
         'onChange': x => $(x).trigger('change'),
         'defaultText': 'add param',
       });
