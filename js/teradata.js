@@ -64,18 +64,50 @@ app.controller('TeradataController', function ($scope, $timeout) {
 
     return description;
   };
+  
+  // temporary code to not show partition and order by fields when there are no unaliased input dataset
+  $scope.shouldShowPartitionOrderFields = function(requiredInputsList)
+  { 
+	  return 0 != requiredInputsList.filter(n => !n.hasOwnProperty('name')).length;
+  }
+  
+  $scope.getSchema = function(functionArgument, requiredInputsList)
+  {
+	  if ('targetTable' in functionArgument)
+	  {
+		  let targetTableAlias = functionArgument.targetTable;
+		  
+		  let inputslist = requiredInputsList.filter(n => targetTableAlias === n.name);
+		  if (0 < inputslist.length) {
+	
+			  let targetTableName = inputslist[0].value;
+			  if (!targetTableName)
+			  {
+				  return [];
+			  }
+			  if (targetTableName && targetTableName in $scope.inputschemas) {
+	
+				  return $scope.inputschemas[targetTableName];
+			  }
+		  }
+	  }  
+	  return $scope.schema;
+  }
 
   $scope.callPythonDo({}).then(
     data => {
       $scope.choices = data.choices;
       $scope.schema = data.schema;
       $scope.inputs = data.inputs;
-      $scope.items = [];
+      $scope.inputschemas = data.inputschemas;
       console.log(data);
 
       $('select:first').change(() => {
         $timeout(() => {
-          $('#tabs').tabs('destroy').tabs();
+          try { $('#tabs').tabs('destroy') } 
+          catch(e) {}
+
+          $('#tabs').tabs();
           setTimeout(() => {
             $('input.teradata-tags').tagsInput({ 
               'onChange': x => $(x).trigger('change'),
@@ -92,6 +124,7 @@ app.controller('TeradataController', function ($scope, $timeout) {
       $scope.choices = [];
       $scope.schema = [];
       $scope.inputs = [];
+      $scope.inputschemas;
       console.log(data);
     }
 
