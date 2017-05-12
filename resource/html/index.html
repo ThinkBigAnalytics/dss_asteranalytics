@@ -86,13 +86,13 @@
                     title="{{ getArgumentDescription(config.function.name, item.name) }}" data-placement="right" />
 
                   <select ng-if="(item.datatype == 'COLUMN_NAMES' || item.datatype == 'COLUMNS') && !item.allowsLists" ng-model="item.value" data-toggle="tooltip" data-container="body"
-                    title="{{ getArgumentDescription(config.function.name, item.name) }}" data-placement="right" ng-options="column.name as column.name + ' (' + column.type + ')' for column in schema">
+                    title="{{ getArgumentDescription(config.function.name, item.name) }}" data-placement="right" ng-options="column.name as column.name + ' (' + column.type + ')' for column in getSchema(item, config.function.required_input)">
                     <option value="" selected>--No Selection--</option>
                   </select>
 
                   <select multiple size="8" ng-if="(item.datatype == 'COLUMN_NAMES' || item.datatype == 'COLUMNS') && item.allowsLists" ng-model="item.value" data-toggle="tooltip"
                     data-html="true" title="{{ getArgumentDescription(config.function.name, item.name) }}<br><br><b>(Ctrl+Click to multi-select)</b>"
-                    data-placement="right" data-container="body" ng-options="column.name as column.name + ' (' + column.type + ')' for column in schema">
+                    data-placement="right" data-container="body" ng-options="column.name as column.name + ' (' + column.type + ')' for column in getSchema(item, config.function.required_input)">
                     <option value="" selected>--No Selection--</option>
                   </select>
 

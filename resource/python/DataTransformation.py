@@ -89,8 +89,16 @@ def do(payload, config, plugin_config, inputs):
             logging.info("file is not valid json");
 
     # Get input table metadata.
+    
     input_table_name = inputs[0]['fullName'].split('.')[1]
     input_dataset =  dataiku.Dataset(input_table_name)
     schema = input_dataset.read_schema()
+    
+    inputschemas = {}
+    for inputdataset in inputs:
+        inputtablename = inputdataset['fullName'].split('.')[1]
+        inputdataset = dataiku.Dataset(inputtablename)
+        inputschemas[inputtablename] = inputdataset.read_schema()
+        
 
-    return {'choices' : choices, 'schema': schema, 'inputs': inputs}
+    return {'choices' : choices, 'schema': schema, 'inputs': inputs, 'inputschemas': inputschemas}

@@ -54,12 +54,36 @@ app.controller('TeradataController', function ($scope) {
   { 
 	  return 0 != requiredInputsList.filter(n => !n.hasOwnProperty('name')).length;
   }
+  
+  $scope.getSchema = function(functionArgument, requiredInputsList)
+  {
+	  if ('targetTable' in functionArgument)
+	  {
+		  let targetTableAlias = functionArgument.targetTable;
+		  
+		  let inputslist = requiredInputsList.filter(n => targetTableAlias === n.name);
+		  if (0 < inputslist.length) {
+	
+			  let targetTableName = inputslist[0].value;
+			  if (!targetTableName)
+			  {
+				  return [];
+			  }
+			  if (targetTableName && targetTableName in $scope.inputschemas) {
+	
+				  return $scope.inputschemas[targetTableName];
+			  }
+		  }
+	  }  
+	  return $scope.schema;
+  }
 
   $scope.callPythonDo({}).then(
     data => {
       $scope.choices = data.choices;
       $scope.schema = data.schema;
       $scope.inputs = data.inputs;
+      $scope.inputschemas = data.inputschemas;
       console.log(data);
 
       $('select:first').change(() => $('#tabs').tabs());
@@ -69,6 +93,7 @@ app.controller('TeradataController', function ($scope) {
       $scope.choices = [];
       $scope.schema = [];
       $scope.inputs = [];
+      $scope.inputschemas;
       console.log(data);
     }
 
