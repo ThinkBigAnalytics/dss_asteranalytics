@@ -10,7 +10,7 @@ def getCascadedFunctionsQuery(dss_function, inputTables, outputTable):
     return cascadequery.getAsterQuery(dss_function, inputTables[0], outputTable)
 
 def getSingleFunctionsQuery(dss_function, inputTables, outputTable):
-    return singlequery.getAsterQuery(dss_function, inputTables[0], outputTable)
+    return singlequery.getAsterQuery(dss_function, inputTables, outputTable)
 
 def getFunctionsQuery(dss_function, inputTables, outputTable):
     query = ""

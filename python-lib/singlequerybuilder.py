@@ -2,18 +2,16 @@ from sets import Set
 # -*- coding: utf-8 -*-
 import asterqueryutility as queryutility
 
-def getAsterQuery(dss_function, inputTable, outputTable):
+def getAsterQuery(dss_function, inputTables, outputTable):
     # query
     multipleinputs = ""
-    if 'required_input' in dss_function.keys():
-        print('required input unfiltered')
-        print(dss_function['required_input'])
-        requiredinputs = [x for x in dss_function['required_input'] if 'name' in x.keys() and x['value']]
-        print('requiredinputs========================================')
-        print(requiredinputs)
+    if 'required_input' in dss_function:
+        requiredinputs = [x for x in dss_function['required_input'] if 'name' in x and 'value' in x and x['value']]
+        inputTable = inputTables[0]
         asterschema = inputTable.tablename.split('.')[0]
         for requiredinput in requiredinputs:
-            if 'value' in requiredinput.keys() and requiredinput["value"]:
+            if 'value' in requiredinput and requiredinput["value"]:
+                aliasedinputtableschema = next(x.schemaname for x in inputTables if x.tablenamewithoutschema == requiredinput['value'])
                 inputkind = requiredinput['kind']
                 partitionKeys = ""
                 if 'Dimension' == inputkind:
@@ -30,7 +28,7 @@ def getAsterQuery(dss_function, inputTable, outputTable):
                 orderKeys = ""
                 if requiredinput['isOrdered'] and requiredinput['orderByColumn']:
                     orderKeys = "ORDER BY " + requiredinput['orderByColumn']
-                multipleinputs += """ON {schema}.{input_table} AS {input_name} {partitionKeys} {orderKeys}\n""".format(schema=asterschema,
+                multipleinputs += """ON {schema}.{input_table} AS {input_name} {partitionKeys} {orderKeys}\n""".format(schema=aliasedinputtableschema,
                                                                                                                        input_table=requiredinput['value'],
                                                                                                                        input_name=requiredinput['name'],
                                                                                                                        partitionKeys=partitionKeys,
@@ -58,9 +56,9 @@ def getAsterQuery(dss_function, inputTable, outputTable):
                        " DISTRIBUTE BY HASH({})".format(outputTable.hashKey) if "FACT" == outputTable.tableType else "",
                        dss_function["name"],
                        multipleinputs,
-                       "" if (0 == len([x for x in dss_function['required_input'] if 'name' not in x.keys()])) else ('ON ' + inputTable.tablename),
-                       "" if (0 == len([x for x in dss_function['required_input'] if 'name' not in x.keys()])) else ("" if not inputTable.partitionKey else " ".join(["PARTITION BY", inputTable.partitionKey])),
-                       "" if (0 == len([x for x in dss_function['required_input'] if 'name' not in x.keys()])) else ("" if not inputTable.orderKey else " ".join(["ORDER BY", inputTable.orderKey])),
+                       "" if (0 == len([x for x in dss_function['required_input'] if 'name' not in x])) else ('ON ' + inputTable.tablename),
+                       "" if (0 == len([x for x in dss_function['required_input'] if 'name' not in x])) else ("" if not inputTable.partitionKey else " ".join(["PARTITION BY", inputTable.partitionKey])),
+                       "" if (0 == len([x for x in dss_function['required_input'] if 'name' not in x])) else ("" if not inputTable.orderKey else " ".join(["ORDER BY", inputTable.orderKey])),
                        queryutility.getJoinedArgumentsString(dss_function["arguments"]))   
 
        
