@@ -21,6 +21,6 @@ class outputtableinfo(tableinfo.tableinfo):
         # ASTER arguments (schema, output table type, hash key)
         aster_args = {}
         for argument in dss_function["asterarguments"]:
-            aster_args[argument["name"]] = argument["value"] if 'value' in argument.keys() else ""
+            aster_args[argument["name"]] = argument["value"] if 'value' in argument else ""
         return aster_args
     

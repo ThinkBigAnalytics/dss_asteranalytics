@@ -8,7 +8,7 @@ def getJoinedArgumentsString(cargumentslist):
     
     carguments = ""
     for argument in cargumentslist:
-        if 'value' in argument.keys() and argument['value']:
+        if 'value' in argument and argument['value']:
             if "COLUMNS" == argument["datatype"].upper() and argument.get("allowsLists", False):
                 cargvalues = ", ".join("'" + astercolumn + "'" for astercolumn in argument["value"])
             else:
