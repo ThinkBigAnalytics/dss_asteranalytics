@@ -6,18 +6,18 @@ from connectioninfo import *
 from inputtableinfo import *
 from outputtableinfo import *
 
-def getCascadedFunctionsQuery(dss_function, inputTable, outputTable):
-    return cascadequery.getAsterQuery(dss_function, inputTable, outputTable)
+def getCascadedFunctionsQuery(dss_function, inputTables, outputTable):
+    return cascadequery.getAsterQuery(dss_function, inputTables[0], outputTable)
 
-def getSingleFunctionsQuery(dss_function, inputTable, outputTable):
-    return singlequery.getAsterQuery(dss_function, inputTable, outputTable)
+def getSingleFunctionsQuery(dss_function, inputTables, outputTable):
+    return singlequery.getAsterQuery(dss_function, inputTables[0], outputTable)
 
-def getFunctionsQuery(dss_function, inputTable, outputTable):
+def getFunctionsQuery(dss_function, inputTables, outputTable):
     query = ""
     if 'cascaded_functions' in dss_function:
-        query = getCascadedFunctionsQuery(dss_function, inputTable, outputTable)
+        query = getCascadedFunctionsQuery(dss_function, inputTables, outputTable)
     else:
-        query = getSingleFunctionsQuery(dss_function, inputTable, outputTable)
+        query = getSingleFunctionsQuery(dss_function, inputTables, outputTable)
     return query
 
 def getQueryFromDatasetAndFunctionDef(project, inputname, outputname, dss_function):
