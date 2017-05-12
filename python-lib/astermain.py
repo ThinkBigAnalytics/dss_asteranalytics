@@ -38,9 +38,20 @@ def asterDo():
     # output dataset
     outputconnectioninfo = connectioninfo(project, main_output_name)
     outputTable = outputtableinfo(outputconnectioninfo, dss_function)
+
+    # input datasets
+    main_input_names = get_input_names_for_role('main')
+    inputTables = []
+    for inputname in main_input_names:
+        print('inputname')
+        print(inputname)
+        inconnectioninfo = connectioninfo(project,
+                                         inputname)
+        inTable = inputtableinfo(inconnectioninfo, dss_function)
+        inputTables.append(inTable)
         
     # actual query
-    query = getFunctionsQuery(dss_function, inputTable, outputTable)
+    query = getFunctionsQuery(dss_function, inputTables, outputTable)
     executor = SQLExecutor2(dataset=input_dataset)                
     executor.query_to_df(query)
     print(query)
