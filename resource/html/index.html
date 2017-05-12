@@ -82,7 +82,7 @@
                     data-toggle="tooltip" data-container="body" title="{{ getArgumentDescription(config.function.name, item.name) }}"
                     data-placement="right" />
 
-                  <input class="teradata-tags" ng-model="items" type="text"
+                  <input class="teradata-tags" ng-model="item.value" type="text"
                   ng-if="['STRING','DOUBLE','INTEGER','DRIVER'].indexOf(item.datatype) >= 0 && item.allowsLists"
                     data-toggle="tooltip" data-container="body" title="{{ getArgumentDescription(config.function.name, item.name) }}"
                     data-placement="right"></input>
