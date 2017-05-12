@@ -178,3 +178,8 @@ input:focus {
 select[multiple] {
     overflow: auto;
 }
+
+input[type="checkbox"] {
+    margin-top: 0 !important;
+    margin-left: 1px !important;
+}

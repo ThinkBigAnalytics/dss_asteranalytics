@@ -31,7 +31,7 @@
       <div id="tabs">
         <ul>
           <li><a href="#tabs-required">Required Arguments</a></li>
-          <li><a href="#tabs-optional">Optional Arguments</a></li>
+          <li><a href="#tabs-optional" ng-if="hasOptionalArguments()">Optional Arguments</a></li>
         </ul>
 
         <div id="tabs-required">
@@ -125,7 +125,7 @@
 
         </div>
 
-        <div id="tabs-optional">
+        <div id="tabs-optional" ng-if="hasOptionalArguments()">
 
           <table class="table table-condensed table-hover">
 

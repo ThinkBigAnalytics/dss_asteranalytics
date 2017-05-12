@@ -56,7 +56,11 @@ app.controller('TeradataController', function ($scope) {
       $scope.inputs = data.inputs;
       console.log(data);
 
-      $('select:first').change(() => $('#tabs').tabs());
+      $('select:first').change(() => {
+        $('#tabs').tabs('destroy')
+        $('#tabs').tabs()
+      });
+      
       $('select:first, select:first > option').css('text-transform', 'capitalize');
     },
     data => {
@@ -68,7 +72,21 @@ app.controller('TeradataController', function ($scope) {
 
   );
 
+  $scope.hasRequiredArguments = function() {
+    if (!$scope.config.function.arguments || !$scope.config.function.arguments.length) {
+      return false
+    }
 
+    return $scope.config.function.arguments.filter(x => x.isRequired).length > 0
+  }
+
+  $scope.hasOptionalArguments = function() {
+    if (!$scope.config.function.arguments || !$scope.config.function.arguments.length) {
+      return false
+    }
+
+    return $scope.config.function.arguments.filter(x => !x.isRequired).length > 0
+  }
 
   setTimeout(() => {
 
