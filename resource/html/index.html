@@ -78,12 +78,12 @@
                 <td style="text-transform: capitalize">{{ item.name.split('_').join(' ') | lowercase }}</td>
                 <td>
                   <input type="text" ng-model="item.value" 
-                  ng-if="['STRING','DOUBLE','INTEGER','DRIVER'].indexOf(item.datatype) >= 0 && !item.allowsLists"
+                  ng-if="['STRING','DOUBLE','INTEGER','DRIVER','SQLEXPR'].indexOf(item.datatype) >= 0 && !item.allowsLists"
                     data-toggle="tooltip" data-container="body" title="{{ getArgumentDescription(config.function.name, item.name) }}"
                     data-placement="right" />
 
                   <input class="teradata-tags" ng-model="item.value" type="text"
-                  ng-if="['STRING','DOUBLE','INTEGER','DRIVER'].indexOf(item.datatype) >= 0 && item.allowsLists"
+                  ng-if="['STRING','DOUBLE','INTEGER','DRIVER','SQLEXPR'].indexOf(item.datatype) >= 0 && item.allowsLists"
                     data-toggle="tooltip" data-container="body" title="{{ getArgumentDescription(config.function.name, item.name) }}"
                     data-placement="right"></input>
 
@@ -147,12 +147,12 @@
                 <td style="text-transform: capitalize">{{ item.name.split('_').join(' ') | lowercase }}</td>
                 <td>
                   <input type="text" ng-model="item.value" 
-                  ng-if="['STRING','DOUBLE','INTEGER','DRIVER'].indexOf(item.datatype) >= 0 && !item.allowsLists"
+                  ng-if="['STRING','DOUBLE','INTEGER','DRIVER','SQLEXPR'].indexOf(item.datatype) >= 0 && !item.allowsLists"
                     data-toggle="tooltip" data-container="body" title="{{ getArgumentDescription(config.function.name, item.name) }}"
                     data-placement="right" />
 
                   <input class="teradata-tags" ng-model="item.value" type="text"
-                  ng-if="['STRING','DOUBLE','INTEGER','DRIVER'].indexOf(item.datatype) >= 0 && item.allowsLists"
+                  ng-if="['STRING','DOUBLE','INTEGER','DRIVER','SQLEXPR'].indexOf(item.datatype) >= 0 && item.allowsLists"
                     data-toggle="tooltip" data-container="body" title="{{ getArgumentDescription(config.function.name, item.name) }}"
                     data-placement="right"></input>
 
