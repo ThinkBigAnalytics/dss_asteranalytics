@@ -57,10 +57,9 @@ app.controller('TeradataController', function ($scope) {
       console.log(data);
 
       $('select:first').change(() => {
-        $('#tabs').tabs('destroy')
-        $('#tabs').tabs()
+        $('#tabs').tabs('destroy').tabs()
       });
-      
+
       $('select:first, select:first > option').css('text-transform', 'capitalize');
     },
     data => {
