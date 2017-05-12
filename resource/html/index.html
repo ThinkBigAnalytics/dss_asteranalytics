@@ -74,7 +74,7 @@
               <tr ng-repeat="item in config.function.arguments" ng-model="config.function.arguments" ng-if="item.isRequired">
                 <td style="text-transform: capitalize">{{ item.name.split('_').join(' ') | lowercase }}</td>
                 <td>
-                  <input type="text" ng-model="item.value" ng-if="item.datatype == 'STRING' || item.datatype == 'DOUBLE' || item.datatype == 'INTEGER'" data-toggle="tooltip" data-container="body" title="{{ getArgumentDescription(config.function.name, item.name) }}"
+                  <input type="text" ng-model="item.value" ng-if="item.datatype == 'STRING' || item.datatype == 'DOUBLE' || item.datatype == 'INTEGER' || item.datatype == 'DRIVER'" data-toggle="tooltip" data-container="body" title="{{ getArgumentDescription(config.function.name, item.name) }}"
                     data-placement="right" />
 
                   <input type="checkbox" ng-model="item.value" ng-if="item.datatype == 'BOOLEAN'" data-toggle="tooltip" data-container="body"
@@ -121,7 +121,7 @@
               <tr ng-repeat="item in config.function.arguments" ng-model="config.function.arguments" ng-if="!item.isRequired">
                 <td style="text-transform: capitalize">{{ item.name.split('_').join(' ') | lowercase }}</td>
                 <td>
-                  <input type="text" ng-model="item.value" ng-if="item.datatype == 'STRING' || item.datatype == 'DOUBLE' || item.datatype == 'INTEGER'" data-toggle="tooltip" data-container="body" title="{{ getArgumentDescription(config.function.name, item.name) }}"
+                  <input type="text" ng-model="item.value" ng-if="item.datatype == 'STRING' || item.datatype == 'DOUBLE' || item.datatype == 'INTEGER' || item.datatype == 'DRIVER'" data-toggle="tooltip" data-container="body" title="{{ getArgumentDescription(config.function.name, item.name) }}"
                     data-placement="right" />
 
                   <input type="checkbox" ng-model="item.value" ng-if="item.datatype == 'BOOLEAN'" data-toggle="tooltip" data-container="body"
