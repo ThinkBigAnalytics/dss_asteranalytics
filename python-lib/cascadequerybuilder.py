@@ -2,7 +2,7 @@ from sets import Set
 # -*- coding: utf-8 -*-
 import asterqueryutility as queryutility
 
-def getAsterQuery(dss_function, inputTable, outputTable):
+def getAsterQuery(dss_function, inputTables, outputTable):
     
     if outputTable.tableType is None or outputTable.tableType == '':
         outputTable.tableType = 'DIMENSION'
@@ -13,7 +13,8 @@ def getAsterQuery(dss_function, inputTable, outputTable):
     cascadedFunctions = dss_function['cascaded_functions']
     if 0 < len(cascadedFunctions):
         cquery = ""
-        inputInfo = inputTable.tablename 
+        selectedInputTable = inputTables[0] if (0 == len(dss_function['unaliased_inputs']['values'])) else dss_function['unaliased_inputs']['values'][0]
+        inputInfo = next(x.tablename for x in inputTables if x.tablenamewithoutschema == selectedInputTable)
         for fun in cascadedFunctions:
             cpartitionBy = ""
             if 'partitionBy' in fun:

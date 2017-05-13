@@ -7,7 +7,7 @@ from inputtableinfo import *
 from outputtableinfo import *
 
 def getCascadedFunctionsQuery(dss_function, inputTables, outputTable):
-    return cascadequery.getAsterQuery(dss_function, inputTables[0], outputTable)
+    return cascadequery.getAsterQuery(dss_function, inputTables, outputTable)
 
 def getSingleFunctionsQuery(dss_function, inputTables, outputTable):
     return singlequery.getAsterQuery(dss_function, inputTables, outputTable)

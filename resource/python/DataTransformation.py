@@ -29,6 +29,7 @@ def do(payload, config, plugin_config, inputs):
                 }
             keys = f.keys()
             required_input = []
+            unaliased_inputs = {'desc':{}, 'values':[], 'count':0}
             if 'function_name' in keys:
                 d["name"]=f['function_name'].upper()
             if 'input_tables' in keys:
@@ -51,9 +52,14 @@ def do(payload, config, plugin_config, inputs):
                     if 'name' in input_tab.keys():
                         required_input_dict['name'] = input_tab['name']
                         required_input_dict['value'] = ""
-                    required_input.append(required_input_dict)
+                        required_input.append(required_input_dict)
+                    else:
+                        unaliased_inputs[0]['count'] += 1
+                        if len(unaliased_inputs) == 0:
+                            unaliased_inputs['desc'] = required_input_dict
                 d["partitionInputKind"]=partitionKeys
             d["required_input"] = required_input
+            d["unaliased_inputs"] = unaliased_inputs
             if 'argument_clauses' in keys:
                 a = []
                 arg_lst = f['argument_clauses']

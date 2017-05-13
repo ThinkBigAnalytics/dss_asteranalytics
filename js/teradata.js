@@ -66,32 +66,48 @@ app.controller('TeradataController', function ($scope, $timeout) {
   };
 
   // temporary code to not show partition and order by fields when there are no unaliased input dataset
-  $scope.shouldShowPartitionOrderFields = function (requiredInputsList) {
-    requiredInputsList = requiredInputsList || [];
-    return 0 != requiredInputsList.filter(n => !n.hasOwnProperty('name')).length;
+  $scope.shouldShowPartitionOrderFields = function(unaliasedInputsList)
+  { 
+	  return unaliasedInputsList && 0 < unaliasedInputsList.counts;
   }
-
-  $scope.getSchema = function (functionArgument, requiredInputsList) {
-
-    requiredInputsList = requiredInputsList || [];
-
-    if ('targetTable' in functionArgument) {
-      let targetTableAlias = functionArgument.targetTable;
-
-      let inputslist = requiredInputsList.filter(n => targetTableAlias === n.name);
-      if (0 < inputslist.length) {
-
-        let targetTableName = inputslist[0].value;
-        if (!targetTableName) {
-          return [];
-        }
-        if (targetTableName && targetTableName in $scope.inputschemas) {
-
-          return $scope.inputschemas[targetTableName];
-        }
-      }
-    }
-    return $scope.schema;
+  
+  $scope.getSchema = function(functionArgument, aliasedInputsList, unaliasedInputsList, argumentsList)
+  {
+	  let targetTableName = ""
+	  if ('targetTable' in functionArgument)
+	  {
+		  let targetTableAlias = functionArgument.targetTable;
+		  let targetTableName = ""
+		  if ("INPUTTABLE" === targetTableAlias.toUpperCase()) {
+			  if (0 > unaliasedInputsList.count) {
+				  if (unaliasedInputsList.values && 0 == unaliasedInputsList.values.length) {
+					  targetTableName = unaliasedInputsList.values[0];
+				  }
+			  } else {
+				  inputtableargument = (argumentsList || []).filter(arg => "INPUTTABLE" === arg.name.toUpperCase());
+				  if (0 < inputtableargument.length) {
+					  targetTableName = inputtableargument[0].value;
+				  }
+			  }
+		  }
+		  else {
+			  let inputslist = (aliasedInputsList || []).filter(n => targetTableAlias.toUpperCase() === n.name.toUpperCase());
+			  if (0 < inputslist.length) {
+				  targetTableName = inputslist[0].value;
+			  }
+		  } 
+	  }
+	  else if (unaliasedInputsList.values && 0 == unaliasedInputsList.values.length) {
+		  targetTableName = unaliasedInputsList.values[0]
+	  }
+	  if (!targetTableName)
+	  {
+		  return [];
+	  }
+	  if (targetTableName && targetTableName in $scope.inputschemas) {
+		  return $scope.inputschemas[targetTableName];
+	  }
+	  return $scope.schemas;
   }
 
   $scope.callPythonDo({}).then(
