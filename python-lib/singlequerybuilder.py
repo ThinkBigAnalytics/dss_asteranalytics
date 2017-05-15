@@ -1,4 +1,7 @@
-from sets import Set
+try:
+    from sets import Set
+except ImportError:
+    Set = set
 # -*- coding: utf-8 -*-
 import asterqueryutility as queryutility
 
@@ -52,25 +55,24 @@ def getAsterQuery(dss_function, inputTables, outputTable):
                                                                                                           partitionKeys=partitionKeys,
                                                                                                           orderKeys=orderKeys)
     
-    if not multiplealiasedinputs and not multipleunaliasedinputs and 0 == len([x for x in dss_function['arguments'] if ('INPUTTABLE' == x['name'].upper())]):
+    if not multiplealiasedinputs and not multipleunaliasedinputs and 'arguments' in dss_function and 0 == len([x for x in dss_function['arguments'] if ('INPUTTABLE' == x['name'].upper())]):
         onselect = "ON (SELECT 1) PARTITION BY 1"
     
     if outputTable.tableType is None or outputTable.tableType == '':
         outputTable.tableType = 'DIMENSION'
     
     query = """BEGIN TRANSACTION;
-               DROP TABLE IF EXISTS {};
-               CREATE {} TABLE {}{}
-               AS 
-               SELECT *
-               FROM   {}
-                      (
-                     {}
-                     {}   
-                     {}
-               {}
-                      ) 
-            """.format(outputTable.tablename,
+DROP TABLE IF EXISTS {};
+CREATE {} TABLE {}{}
+AS 
+SELECT *
+FROM   {}
+(
+    {}
+    {}
+    {}
+    {}
+)""".format(outputTable.tablename,
                        outputTable.tableType,
                        outputTable.tablename,
                        " DISTRIBUTE BY HASH({})".format(outputTable.hashKey) if "FACT" == outputTable.tableType else "",
@@ -82,8 +84,7 @@ def getAsterQuery(dss_function, inputTables, outputTable):
 
        
     query +=""";
-           COMMIT;
-           END TRANSACTION;
-        """
+COMMIT;
+END TRANSACTION;"""
         
     return query
