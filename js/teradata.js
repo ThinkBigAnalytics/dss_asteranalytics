@@ -68,45 +68,53 @@ app.controller('TeradataController', function ($scope, $timeout) {
   // temporary code to not show partition and order by fields when there are no unaliased input dataset
   $scope.shouldShowPartitionOrderFields = function(unaliasedInputsList)
   { 
-	  return unaliasedInputsList && 0 < unaliasedInputsList.counts;
+	  return unaliasedInputsList && 0 < unaliasedInputsList.count;
   }
   
   $scope.getSchema = function(functionArgument, aliasedInputsList, unaliasedInputsList, argumentsList)
   {
+
 	  let targetTableName = ""
 	  if ('targetTable' in functionArgument)
 	  {
 		  let targetTableAlias = functionArgument.targetTable;
-		  let targetTableName = ""
 		  if ("INPUTTABLE" === targetTableAlias.toUpperCase()) {
 			  if (0 > unaliasedInputsList.count) {
-				  if (unaliasedInputsList.values && 0 == unaliasedInputsList.values.length) {
+				  if (unaliasedInputsList.values && 0 < unaliasedInputsList.values.length) {
 					  targetTableName = unaliasedInputsList.values[0];
 				  }
 			  } else {
-				  inputtableargument = (argumentsList || []).filter(arg => "INPUTTABLE" === arg.name.toUpperCase());
+				  console.log('argument input table');
+				  let inputtableargument = (argumentsList || []).filter(arg => "INPUTTABLE" === arg.name.toUpperCase());
 				  if (0 < inputtableargument.length) {
 					  targetTableName = inputtableargument[0].value;
+					  console.log(inputtableargument);
 				  }
 			  }
 		  }
 		  else {
 			  let inputslist = (aliasedInputsList || []).filter(n => targetTableAlias.toUpperCase() === n.name.toUpperCase());
 			  if (0 < inputslist.length) {
+				  console.log(inputslist[0]);
 				  targetTableName = inputslist[0].value;
 			  }
 		  } 
 	  }
-	  else if (unaliasedInputsList.values && 0 == unaliasedInputsList.values.length) {
+	  else if (unaliasedInputsList.values && 0 < unaliasedInputsList.values.length) {
 		  targetTableName = unaliasedInputsList.values[0]
 	  }
-	  if (!targetTableName)
+ 
+	  if (!targetTableName || !$scope.inputschemas)
 	  {
 		  return [];
 	  }
+
 	  if (targetTableName && targetTableName in $scope.inputschemas) {
+		  console.log('getSchema: ' + functionArgument.name + 'returning from inputschemas');
 		  return $scope.inputschemas[targetTableName];
 	  }
+	  
+	  console.log('returning default');
 	  return $scope.schemas;
   }
 

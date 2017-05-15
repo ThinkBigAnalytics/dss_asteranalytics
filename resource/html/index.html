@@ -107,14 +107,14 @@
 
                   <select ng-if="item.datatype == 'TABLE_NAME'" ng-model="item.value" data-toggle="tooltip" data-container="body"
                     title="{{ getArgumentDescription(config.function.name, item.name) }}" data-placement="right" 
-                    ng-options="t.fullName.split('.')[1] for t in inputs">
+                    ng-options="t.fullName.split('.')[1] as t.fullName.split('.')[1] for t in inputs">
                     <option value="" selected>--No Selection--</option>
                   </select>
                 </td>
               </tr>
 
               <tr ng-if="shouldShowPartitionOrderFields(config.function.unaliased_inputs)">
-                <td>INPUT TABLES</td>
+                <td>UNALIASED INPUT TABLES</td>
                 <td>
                   <select multiple size="8" ng-model="config.function.unaliased_inputs.values"
                     ng-options="t.fullName.split('.')[1] as t.fullName.split('.')[1] for t in inputs">
@@ -182,7 +182,7 @@
                   </select>
 
                   <select ng-if="item.datatype == 'TABLE_NAME'" ng-model="item.value" data-toggle="tooltip" data-container="body" title="{{ getArgumentDescription(config.function.name, item.name) }}"
-                    data-placement="right" ng-options="t.fullName.split('.')[1] for t in inputs">
+                    data-placement="right" ng-options="t.fullName.split('.')[1] as t.fullName.split('.')[1] for t in inputs">
                     <option value="" selected>--No Selection--</option>
                   </select>
                 </td>

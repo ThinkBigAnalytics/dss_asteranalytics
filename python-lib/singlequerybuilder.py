@@ -9,8 +9,7 @@ def getAsterQuery(dss_function, inputTables, outputTable):
     onselect = ""
     inputTable = inputTables[0]
     
-    if 'hasInputTable' in dss_function and dss_function['hasInputTable']:
-        onselect = "ON (SELECT 1)"
+    
     if 'required_input' in dss_function:
         aliasedinputs = [x for x in dss_function['required_input'] if 'name' in x and 'value' in x and x['value']]
         for requiredinput in aliasedinputs:
@@ -44,7 +43,6 @@ def getAsterQuery(dss_function, inputTables, outputTable):
         for requiredinput in unaliasedinputs:
             
             unaliasedtable = next(x for x in inputTables if x.tablenamewithoutschema == requiredinput)
-            inputkind = unaliasedinputsdesc['kind']
             partitionKeys = "" if not unaliasedtable.partitionKey else " ".join(["PARTITION BY", unaliasedtable.partitionKey])
                     
             orderKeys = "" if not unaliasedtable.orderKey else " ".join(["ORDER BY", unaliasedtable.orderKey])
@@ -53,6 +51,9 @@ def getAsterQuery(dss_function, inputTables, outputTable):
                                                                                                           input_table=unaliasedtable.tablenamewithoutschema,
                                                                                                           partitionKeys=partitionKeys,
                                                                                                           orderKeys=orderKeys)
+    
+    if not multiplealiasedinputs and not multipleunaliasedinputs and 0 == len([x for x in dss_function['arguments'] if ('INPUTTABLE' == x['name'].upper())]):
+        onselect = "ON (SELECT 1) PARTITION BY 1"
     
     if outputTable.tableType is None or outputTable.tableType == '':
         outputTable.tableType = 'DIMENSION'

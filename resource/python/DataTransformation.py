@@ -54,7 +54,7 @@ def do(payload, config, plugin_config, inputs):
                         required_input_dict['value'] = ""
                         required_input.append(required_input_dict)
                     else:
-                        unaliased_inputs[0]['count'] += 1
+                        unaliased_inputs['count'] += 1
                         if len(unaliased_inputs) == 0:
                             unaliased_inputs['desc'] = required_input_dict
                 d["partitionInputKind"]=partitionKeys
