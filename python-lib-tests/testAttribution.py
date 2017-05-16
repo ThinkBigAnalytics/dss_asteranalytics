@@ -10,7 +10,6 @@ from testAttributionConfig import *
 from inputtableinfo import *
 from outputtableinfo import *
 from connectioninfo import *
-from xlwings import conversion
 
 class TestAttribution(unittest.TestCase):
     

@@ -43,8 +43,6 @@ def asterDo():
     main_input_names = get_input_names_for_role('main')
     inputTables = []
     for inputname in main_input_names:
-        print('inputname')
-        print(inputname)
         inconnectioninfo = connectioninfo(project,
                                          inputname)
         inTable = inputtableinfo(inconnectioninfo, dss_function)
@@ -54,7 +52,6 @@ def asterDo():
     query = getFunctionsQuery(dss_function, inputTables, outputTable)
     executor = SQLExecutor2(dataset=input_dataset)                
     executor.query_to_df(query)
-    print(query)
     
     # write table schema
     nQuery = """SELECT * FROM {} LIMIT (1);""".format(outputTable.tablename)
