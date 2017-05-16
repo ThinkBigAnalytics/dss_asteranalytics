@@ -70,6 +70,18 @@ app.controller('TeradataController', function ($scope, $timeout) {
   { 
 	  return unaliasedInputsList && 0 < unaliasedInputsList.count;
   }
+
+  
+  $scope.getSchemaOfUnaliasedInputs = function(unaliasedInputsList)
+  {
+	  if (unaliasedInputsList.values && 0 < unaliasedInputsList.values.length) {
+		  let targetTableName = unaliasedInputsList.values[0];
+		  if (targetTableName && $scope.inputschemas && targetTableName in $scope.inputschemas) {
+			  return $scope.inputschemas[targetTableName];
+		  }
+	  }
+	  return []; 
+  }
   
   $scope.getSchema = function(functionArgument, aliasedInputsList, unaliasedInputsList, argumentsList)
   {
@@ -110,11 +122,9 @@ app.controller('TeradataController', function ($scope, $timeout) {
 	  }
 
 	  if (targetTableName && targetTableName in $scope.inputschemas) {
-		  console.log('getSchema: ' + functionArgument.name + 'returning from inputschemas');
 		  return $scope.inputschemas[targetTableName];
 	  }
-	  
-	  console.log('returning default');
+
 	  return $scope.schemas;
   }
 
