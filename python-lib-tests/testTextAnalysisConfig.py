@@ -1,0 +1,55 @@
+'''
+Created on May 15, 2017
+
+@author: dt186022
+'''
+textTokenizerConfig = {"orderByColumn":"",
+                       "partitionAttributes":"",
+                       "unaliased_inputs":{"count":1,"values":["text_chunked"],"desc":{}},
+                       "name":"TEXTTOKENIZER",
+                       "partitionInputKind":["PartitionByAny","Dimension"],
+                       "hasInputTable":True,
+                       "asterarguments":[
+                           {"name":"schema", "value":"", "label":"Schema"},
+                           {"name":"outputType","value":"","label":"Output Table Type"},
+                           {"name":"hashKey","value":"","label":"Hash Key Column"}],
+                       "required_input":[
+                           {"kind":"Dimension","name":"dict","isOrdered":False,"value":"","orderByColumn":"","isRequired":False,"partitionAttributes":""}],
+                       "isOrdered":False,
+                       "arguments":[
+                           {"datatype":"STRING",
+                            "isRequired":False,
+                            "allowsLists":False,
+                            "name":"LANGUAGE",
+                            "value":""},
+                           {"datatype":"COLUMNS",
+                            "isRequired":True,
+                            "allowsLists":False,
+                            "name":"TEXTCOLUMN",
+                            "value":"chunk"},
+                           {"datatype":"STRING",
+                            "isRequired":False,
+                            "allowsLists":False,
+                            "name":"OUTPUTDELIMITER",
+                            "value":""},
+                           {"datatype":"BOOLEAN",
+                            "isRequired":False,
+                            "allowsLists":False,
+                            "name":"OUTPUTBYWORD",
+                            "value":""},
+                           {"datatype":"STRING",
+                            "isRequired":False,
+                            "allowsLists":False,
+                            "name":"USERDICTIONARYFILE",
+                            "value":""},
+                           {"datatype":"STRING",
+                            "isRequired":False,
+                            "allowsLists":False,
+                            "name":"MODEL",
+                            "value":""},
+                           {"datatype":"COLUMNS",
+                            "isRequired":False,
+                            "allowsLists":True,
+                            "name":"ACCUMULATE",
+                            "value":""}
+                        ]}
