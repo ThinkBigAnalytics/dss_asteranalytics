@@ -21,7 +21,7 @@ def do(payload, config, plugin_config, inputs):
             d = {"name":"",
                  "arguments":"",
                  "asterarguments":"",
-                 "partitionInputKind":"None",
+                 "partitionInputKind":[],
                  "partitionAttributes":"",
                  "isOrdered":False,
                  "orderByColumn":"",
@@ -29,12 +29,12 @@ def do(payload, config, plugin_config, inputs):
                 }
             keys = f.keys()
             required_input = []
+            d['partitionInputKind']
             unaliased_inputs = {'desc':{}, 'values':[], 'count':0}
             if 'function_name' in keys:
                 d["name"]=f['function_name'].upper()
             if 'input_tables' in keys:
                 d["hasInputTable"] = True
-                partitionKeys=[]
                 input_tab_lst = f['input_tables']
                 for input_tab in input_tab_lst:
                     required_input_dict = {"isRequired": True, "partitionAttributes":"", "orderByColumn": ""}
@@ -44,10 +44,8 @@ def do(payload, config, plugin_config, inputs):
                         partitionByKey = input_tab['requiredInputKind'][0]
                         if 'partitionByOne' in input_tab.keys() and input_tab['partitionByOne']:
                             partitionByKey = "PartitionByOne"
-                        partitionKeys.append(partitionByKey)
                         required_input_dict['kind'] = partitionByKey
                     if 'isOrdered' in input_tab.keys():
-                        d["isOrdered"] = input_tab['isOrdered']
                         required_input_dict['isOrdered'] = input_tab['isOrdered']
                     if 'name' in input_tab.keys():
                         required_input_dict['name'] = input_tab['name']
@@ -55,9 +53,8 @@ def do(payload, config, plugin_config, inputs):
                         required_input.append(required_input_dict)
                     else:
                         unaliased_inputs['count'] += 1
-                        if len(unaliased_inputs) == 0:
-                            unaliased_inputs['desc'] = required_input_dict
-                d["partitionInputKind"]=partitionKeys
+                        d["isOrdered"] = input_tab['isOrdered'] if 'isOrdered' in input_tab else False
+                        d['partitionInputKind'] = ['PartitionByOne'] if 'partitionByOne' in input_tab.keys() and input_tab['partitionByOne'] else input_tab['requiredInputKind'] if 'requiredInputKind' in input_tab else []
             d["required_input"] = required_input
             d["unaliased_inputs"] = unaliased_inputs
             if 'argument_clauses' in keys:
@@ -89,7 +86,6 @@ def do(payload, config, plugin_config, inputs):
                 aster_arg["label"] = argument["label"]                
                 aster_arg_list.append(aster_arg)
             d["asterarguments"] = aster_arg_list
-            
             choices.append(d);
         except ValueError, e:
             logging.info("file is not valid json");

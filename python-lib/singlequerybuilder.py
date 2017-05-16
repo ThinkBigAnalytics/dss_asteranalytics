@@ -34,26 +34,25 @@ def getAsterQuery(dss_function, inputTables, outputTable):
                 orderKeys = ""
                 if requiredinput['isOrdered'] and requiredinput['orderByColumn']:
                     orderKeys = "ORDER BY " + requiredinput['orderByColumn']
-                multiplealiasedinputs += """ON {schema}.{input_table} AS {input_name} {partitionKeys} {orderKeys}\n""".format(schema=aliasedinputtableschema,
+                multiplealiasedinputs += """ON {schema}.{input_table} AS {input_name} {partitionKeys} {orderKeys}""".format(schema=aliasedinputtableschema,
                                                                                                                        input_table=requiredinput['value'],
                                                                                                                        input_name=requiredinput['name'],
                                                                                                                        partitionKeys=partitionKeys,
-                                                                                                                       orderKeys=orderKeys)
+                                                                                                                       orderKeys=orderKeys).rstrip() + "\n"
     
     if 'unaliased_inputs' in dss_function and 'values' in dss_function['unaliased_inputs'] and len(dss_function['unaliased_inputs']['values']) > 0:
         unaliasedinputs = dss_function['unaliased_inputs']['values']
         unaliasedinputsdesc = dss_function['unaliased_inputs']['desc']
         for requiredinput in unaliasedinputs:
-            
             unaliasedtable = next(x for x in inputTables if x.tablenamewithoutschema == requiredinput)
             partitionKeys = "" if not unaliasedtable.partitionKey else " ".join(["PARTITION BY", unaliasedtable.partitionKey])
                     
             orderKeys = "" if not unaliasedtable.orderKey else " ".join(["ORDER BY", unaliasedtable.orderKey])
 
-            multipleunaliasedinputs += """ON {schema}.{input_table} {partitionKeys} {orderKeys}\n""".format(schema=unaliasedtable.schemaname,
+            multipleunaliasedinputs += """ON {schema}.{input_table} {partitionKeys} {orderKeys}""".format(schema=unaliasedtable.schemaname,
                                                                                                           input_table=unaliasedtable.tablenamewithoutschema,
                                                                                                           partitionKeys=partitionKeys,
-                                                                                                          orderKeys=orderKeys)
+                                                                                                          orderKeys=orderKeys).rstrip() + "\n"
     
     if not multiplealiasedinputs and not multipleunaliasedinputs and 'arguments' in dss_function and 0 == len([x for x in dss_function['arguments'] if ('INPUTTABLE' == x['name'].upper())]):
         onselect = "ON (SELECT 1) PARTITION BY 1"
@@ -68,10 +67,10 @@ AS
 SELECT *
 FROM   {}
 (
-    {}
-    {}
-    {}
-    {}
+{}
+{}
+{}
+{}
 )""".format(outputTable.tablename,
                        outputTable.tableType,
                        outputTable.tablename,
