@@ -5,7 +5,10 @@ except ImportError:
     Set = set
 import re
 
-def getJoinedArgumentsString(cargumentslist):
+def getTableNameFromArgument(argumentValue, inputTables):
+    return next("'" + x.schemaname + '.' + x.tablenamewithoutschema + "'" for x in inputTables if argumentValue == x.tablenamewithoutschema)
+
+def getJoinedArgumentsString(cargumentslist, inputTables=[]):
     
     regex = r",\s*(?=(?:[^']*\'[^']*\')*[^']*$)"
     
@@ -14,6 +17,8 @@ def getJoinedArgumentsString(cargumentslist):
         if 'value' in argument and argument['value']:
             if "COLUMNS" == argument["datatype"].upper() and argument.get("allowsLists", False):
                 cargvalues = ", ".join("'" + astercolumn + "'" for astercolumn in argument["value"])
+            elif 'TABLE_NAME' == argument['datatype'] and not argument.get('allowsLists', False):
+                cargvalues = getTableNameFromArgument(argument.get('value', ""), inputTables)
             else:
                 cargvalues = ", ".join([re.sub(r"^'|'$", '', s) if (argument["datatype"].upper() == "SQLEXPR") else (s if (s[:1] == "'" and s[-1:] == "'") else ("'" + s + "'")) for s in re.split(regex, argument["value"])]) if argument.get("allowsLists", False) else ("'" + argument["value"] + "'")
             carguments += argument["name"].upper() + "(" + cargvalues + ")\n"

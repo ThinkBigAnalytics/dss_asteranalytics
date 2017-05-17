@@ -54,7 +54,7 @@ def getAsterQuery(dss_function, inputTables, outputTable):
                                                                                                           partitionKeys=partitionKeys,
                                                                                                           orderKeys=orderKeys).rstrip() + "\n"
     
-    if not multiplealiasedinputs and not multipleunaliasedinputs and 'arguments' in dss_function and 0 == len([x for x in dss_function['arguments'] if ('INPUTTABLE' == x['name'].upper())]):
+    if not multiplealiasedinputs and not multipleunaliasedinputs:
         onselect = "ON (SELECT 1) PARTITION BY 1"
     
     if outputTable.tableType is None or outputTable.tableType == '':
@@ -79,7 +79,7 @@ FROM   {}
                        onselect,
                        multipleunaliasedinputs,
                        multiplealiasedinputs,
-                       queryutility.getJoinedArgumentsString(dss_function["arguments"]))   
+                       queryutility.getJoinedArgumentsString(dss_function["arguments"], inputTables))   
 
        
     query +=""";
