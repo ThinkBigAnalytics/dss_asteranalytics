@@ -1,8 +1,8 @@
 import tableinfo
 
 class inputtableinfo(tableinfo.tableinfo):
-    def __init__(self, connectioninfo, dss_function):
-        super(inputtableinfo, self).__init__(connectioninfo)
+    def __init__(self, connectioninfo, datasetname, dss_function):
+        super(inputtableinfo, self).__init__(connectioninfo, datasetname)
         self.__partitionKey = self.__getPartitionKeyFromFunctionDef(dss_function)
         self.__orderKey = self.__getOrderByKeyFromFunctionDef(dss_function)
         self.__dssfunction = dss_function

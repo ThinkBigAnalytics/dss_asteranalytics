@@ -30,22 +30,17 @@ def asterDo():
     client = dataiku.api_client()
     projectkey = main_input_name.split('.')[0]
     project = client.get_project(projectkey)
-    
-    # input dataset
-    inputconnectioninfo = connectioninfo(project,
-                                         main_input_name)
-    inputTable = inputtableinfo(inputconnectioninfo, dss_function)
+
     # output dataset
-    outputconnectioninfo = connectioninfo(project, main_output_name)
-    outputTable = outputtableinfo(outputconnectioninfo, dss_function)
+    outputTable = outputtableinfo(output_dataset.get_location_info()['info'], main_output_name,
+                                  dss_function)
 
     # input datasets
     main_input_names = get_input_names_for_role('main')
     inputTables = []
     for inputname in main_input_names:
-        inconnectioninfo = connectioninfo(project,
-                                         inputname)
-        inTable = inputtableinfo(inconnectioninfo, dss_function)
+        inconnectioninfo = dataiku.Dataset(inputname).get_location_info()['info']
+        inTable = inputtableinfo(inconnectioninfo, inputname, dss_function)
         inputTables.append(inTable)
         
     # actual query

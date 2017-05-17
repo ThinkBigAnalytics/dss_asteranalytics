@@ -17,7 +17,7 @@ def getAsterQuery(dss_function, inputTables, outputTable):
     if 0 < len(cascadedFunctions):
         cquery = ""
         selectedInputTable = inputTables[0] if (0 == len(dss_function['unaliased_inputs']['values'])) else dss_function['unaliased_inputs']['values'][0]
-        inputInfo = next(x.tablename for x in inputTables if x.tablenamewithoutschema == selectedInputTable)
+        inputInfo = next(x.tablename for x in inputTables if x.datasetname == selectedInputTable)
         for fun in cascadedFunctions:
             cpartitionBy = ""
             if 'partitionBy' in fun:

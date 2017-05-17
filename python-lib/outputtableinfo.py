@@ -1,8 +1,8 @@
 import tableinfo
 
 class outputtableinfo(tableinfo.tableinfo):
-    def __init__(self, connectioninfo, dss_function):
-        super(outputtableinfo, self).__init__(connectioninfo)
+    def __init__(self, connectioninfo, datasetname, dss_function):
+        super(outputtableinfo, self).__init__(connectioninfo, datasetname)
         self.__asterArgs = self.__getAsterArgsFromFunctionDef(dss_function)
         
     @property

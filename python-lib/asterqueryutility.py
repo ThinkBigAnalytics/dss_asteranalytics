@@ -6,7 +6,7 @@ except ImportError:
 import re
 
 def getTableNameFromArgument(argumentValue, inputTables):
-    return next("'" + x.schemaname + '.' + x.tablenamewithoutschema + "'" for x in inputTables if argumentValue == x.tablenamewithoutschema)
+    return next("'" + x.schemaname + '.' + x.tablenamewithoutschema + "'" for x in inputTables if argumentValue == x.datasetname)
 
 def getJoinedArgumentsString(cargumentslist, inputTables=[]):
     

@@ -14,14 +14,9 @@ from connectioninfo import *
 class TestAttribution(unittest.TestCase):
     
     def createTable(self, config, metadata, mode='input'):
-        functionConnInfo = connectioninfo(None, "")
-        if 'table' in config:
-            functionConnInfo.table = config['table']
-        if 'schema' in config:
-            functionConnInfo.schema = config['schema']
         if 'output' == mode:
-            return outputtableinfo(functionConnInfo, metadata)
-        return inputtableinfo(functionConnInfo, metadata)
+            return outputtableinfo(config, config.get('dataset',""), metadata)
+        return inputtableinfo(config, config.get('table',""),metadata)
 
     def testAttribution(self):
         functionFirstInputTable = self.createTable({'table': 'attribution_sample_table1', 'schema': 'dss'},
