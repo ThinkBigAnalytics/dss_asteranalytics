@@ -96,17 +96,15 @@ app.controller('TeradataController', function ($scope, $timeout) {
 					  targetTableName = unaliasedInputsList.values[0];
 				  }
 			  } else {
-				  let inputtableargument = (argumentsList || []).filter(arg => "INPUTTABLE" === arg.name.toUpperCase());
+				  let inputtableargument = (argumentsList || []).filter(arg => "INPUTTABLE" === arg.name.toUpperCase() || "INPUT_TABLE" === arg.name.toUpperCase());
 				  if (0 < inputtableargument.length) {
 					  targetTableName = inputtableargument[0].value;
-					  console.log(inputtableargument);
 				  }
 			  }
 		  }
 		  else {
 			  let inputslist = (aliasedInputsList || []).filter(n => targetTableAlias.toUpperCase() === n.name.toUpperCase());
 			  if (0 < inputslist.length) {
-				  console.log(inputslist[0]);
 				  targetTableName = inputslist[0].value;
 			  }
 		  } 
