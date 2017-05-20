@@ -17,9 +17,9 @@ def getJoinedArgumentsString(cargumentslist, inputTables=[]):
         if 'value' in argument and argument['value']:
             if "COLUMNS" == argument["datatype"].upper() and argument.get("allowsLists", False):
                 cargvalues = ", ".join("'" + astercolumn + "'" for astercolumn in argument["value"])
-            elif 'TABLE_NAME' == argument['datatype'] and not argument.get('allowsLists', False):
+            elif 'TABLE_NAME' == argument['datatype'] and not argument.get('allowsLists', False) and not argument.get('isOutputTable', False):
                 cargvalues = getTableNameFromArgument(argument.get('value', ""), inputTables)
             else:
-                cargvalues = ", ".join([re.sub(r"^'|'$", '', s) if (argument["datatype"].upper() == "SQLEXPR") else (s if (s[:1] == "'" and s[-1:] == "'") else ("'" + s + "'")) for s in re.split(regex, argument["value"])]) if argument.get("allowsLists", False) else ("'" + argument["value"] + "'")
+                cargvalues = ", ".join([re.sub(r"^'|'$", '', s) if (argument["datatype"].upper() == "SQLEXPR") else (s if (s[:1] == "'" and s[-1:] == "'") else ("'" + s + "'")) for s in re.split(regex, argument["value"])]) if argument.get("allowsLists", False) else ("""'{}'""".format(argument.get('value', "")))
             carguments += argument["name"].upper() + "(" + cargvalues + ")\n"
     return carguments

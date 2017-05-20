@@ -125,13 +125,30 @@ app.controller('TeradataController', function ($scope, $timeout) {
 	  return $scope.schemas;
   }
 
+  $scope.isArgumentOutputTable = function(functionArgument) {
+	  if (functionMetadata && functionMetadata.argument_clauses) {
+		  const functionargumententry = functionMetadata.argument_clauses.filter(function (item) {
+			  if ('alternateNames' in item) {
+				  return item.alternateNames
+				  .map(x => x.toUpperCase())
+				  .indexOf(functionArgument.name.toUpperCase()) > -1;
+			  } else {
+				  return item.name.toUpperCase() === functionArgument.name.toUpperCase();
+			  }
+		  });
+	      if (functionargumententry && 0 < functionargumententry.length) {
+		      return functionargumententry[0].isOutputTable;
+		  }
+	  }
+	  return false;
+  }
+
   $scope.callPythonDo({}).then(
     data => {
       $scope.choices = data.choices;
       $scope.schema = data.schema;
       $scope.inputs = data.inputs;
       $scope.inputschemas = data.inputschemas;
-      console.log(data);
 
       $('select:first').change(() => {
         $timeout(() => {
@@ -157,7 +174,6 @@ app.controller('TeradataController', function ($scope, $timeout) {
       $scope.schema = [];
       $scope.inputs = [];
       $scope.inputschemas;
-      console.log(data);
     }
 
   );

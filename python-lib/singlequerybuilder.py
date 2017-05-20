@@ -34,7 +34,7 @@ def getAsterQuery(dss_function, inputTables, outputTable):
                 orderKeys = ""
                 if requiredinput['isOrdered'] and requiredinput['orderByColumn']:
                     orderKeys = "ORDER BY " + requiredinput['orderByColumn']
-                multiplealiasedinputs += """ON {schema}.{input_table} AS {input_name} {partitionKeys} {orderKeys}""".format(schema=aliasedinputtableschema,
+                multiplealiasedinputs += '''ON {schema}.{input_table} AS "{input_name}" {partitionKeys} {orderKeys}'''.format(schema=aliasedinputtableschema,
                                                                                                                        input_table=requiredinput['value'],
                                                                                                                        input_name=requiredinput['name'],
                                                                                                                        partitionKeys=partitionKeys,
@@ -63,7 +63,7 @@ def getAsterQuery(dss_function, inputTables, outputTable):
     query = """BEGIN TRANSACTION;
 DROP TABLE IF EXISTS {};
 CREATE {} TABLE {}{}
-AS 
+AS
 SELECT *
 FROM   {}
 (

@@ -74,7 +74,8 @@ def do(payload, config, plugin_config, inputs):
                         arg["allowsLists"]=argument['allowsLists']
                     if 'targetTable' in argument.keys():
                         arg["targetTable"] = argument['targetTable']
-                        
+                    if 'isOutputTable' in argument and argument['isOutputTable']:
+                        arg["isOutputTable"] = argument['isOutputTable']
                     a.append(arg)
                 d["arguments"]=a
             if 'cascaded_functions' in keys:
@@ -91,7 +92,6 @@ def do(payload, config, plugin_config, inputs):
             logging.info("file is not valid json");
 
     # Get input table metadata.
-    
     input_table_name = inputs[0]['fullName'].split('.')[1]
     input_dataset =  dataiku.Dataset(input_table_name)
     schema = input_dataset.read_schema()
