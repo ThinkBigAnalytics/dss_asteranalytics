@@ -187,11 +187,13 @@ app.controller('TeradataController', function ($scope, $timeout) {
   }
 
   $scope.hasOptionalArguments = function () {
-    if (!$scope.config.function.arguments || !$scope.config.function.arguments.length) {
-      return false
-    }
-
-    return $scope.config.function.arguments.filter(x => !x.isRequired).length > 0
+	  let hasOptionalArgument = $scope.config.function.arguments
+	           && $scope.config.function.arguments.length
+	           && (0 < $scope.config.function.arguments.filter(x => !x.isRequired).length);
+	  let hasOptionalInputTable = $scope.config.function.required_input
+	           && $scope.config.function.required_input.length
+	           && (0 < $scope.config.function.required_input.filter(x => !x.isRequired).length);
+	  return hasOptionalInputTable || hasOptionalArgument;
   }
 
   $timeout(() => {
