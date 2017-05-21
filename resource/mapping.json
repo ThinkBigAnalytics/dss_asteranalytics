@@ -783,5 +783,15 @@
   	"category": "Ensemble",
   	"function_name": "forest_drive",
   	"file_name": "FOREST_DRIVE.json"
+  },
+  {
+  	"category": "Ensemble",
+  	"function_name": "forest_predict",
+  	"file_name": "FOREST_PREDICT.json"
+  },
+  {
+  	"category": "Ensemble",
+  	"function_name": "forest_analyze",
+  	"file_name": "FOREST_ANALYZE.json"
   }
 ]
