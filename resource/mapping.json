@@ -778,5 +778,10 @@
     "category": "Time Series Analysis",
     "function_name": "nPath",
     "file_name": "NPATH.json"
+  },
+  {
+  	"category": "Ensemble",
+  	"function_name": "forest_drive",
+  	"file_name": "FOREST_DRIVE.json"
   }
 ]
