@@ -106,6 +106,11 @@ app.controller('TeradataController', function ($scope, $timeout) {
 			  let inputslist = (aliasedInputsList || []).filter(n => targetTableAlias.toUpperCase() === n.name.toUpperCase());
 			  if (0 < inputslist.length) {
 				  targetTableName = inputslist[0].value;
+			  } else {
+				  let inputtableargument = (argumentsList || []).filter(arg => targetTableAlias.toUpperCase() === arg.name.toUpperCase() || "INPUT_TABLE" === arg.name.toUpperCase());
+				  if (0 < inputtableargument.length) {
+					  targetTableName = inputtableargument[0].value;
+				  }
 			  }
 		  } 
 	  }

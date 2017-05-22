@@ -15,7 +15,10 @@ def getJoinedArgumentsString(cargumentslist, inputTables=[]):
     carguments = ""
     for argument in cargumentslist:
         if 'value' in argument and argument['value']:
-            if "COLUMNS" == argument["datatype"].upper() and argument.get("allowsLists", False):
+            print('argument name: ' + argument['name'])
+            print('argument value: ')
+            print(argument.get('value', ''))
+            if ("COLUMNS" == argument["datatype"].upper() or "COLUMN_NAMES" == argument.get('datatype', '').upper()) and argument.get("allowsLists", False):
                 cargvalues = ", ".join("'" + astercolumn + "'" for astercolumn in argument["value"])
             elif 'TABLE_NAME' == argument['datatype'] and not argument.get('allowsLists', False) and not argument.get('isOutputTable', False):
                 cargvalues = getTableNameFromArgument(argument.get('value', ""), inputTables)
