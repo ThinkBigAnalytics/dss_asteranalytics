@@ -205,17 +205,17 @@
     "file_name": "FMEASURE.json"
   },
   {
-    "category": "Ensemble Methods",
+    "category": "Ensembles",
     "function_name": "Forest_Analyze",
     "file_name": "FOREST_ANALYZE.json"
   },
   {
-    "category": "Ensemble Methods",
+    "category": "Ensemble",
     "function_name": "Forest_Drive",
     "file_name": "FOREST_DRIVE.json"
   },
   {
-    "category": "Ensemble Methods",
+    "category": "Ensemble",
     "function_name": "Forest_Predict",
     "file_name": "FOREST_PREDICT.json"
   },
@@ -620,12 +620,12 @@
     "file_name": "CONFUSIONMATRIX.json"
   },
   {
-    "category": "Ensemble Methods",
+    "category": "Ensemble",
     "function_name": "Single_Tree_Drive",
     "file_name": "SINGLE_TREE_DRIVE.json"
   },
   {
-    "category": "Ensemble Methods",
+    "category": "Ensemble",
     "function_name": "Single_Tree_Predict",
     "file_name": "SINGLE_TREE_PREDICT.json"
   },
@@ -778,20 +778,5 @@
     "category": "Time Series Analysis",
     "function_name": "nPath",
     "file_name": "NPATH.json"
-  },
-  {
-  	"category": "Ensemble",
-  	"function_name": "forest_drive",
-  	"file_name": "FOREST_DRIVE.json"
-  },
-  {
-  	"category": "Ensemble",
-  	"function_name": "forest_predict",
-  	"file_name": "FOREST_PREDICT.json"
-  },
-  {
-  	"category": "Ensemble",
-  	"function_name": "forest_analyze",
-  	"file_name": "FOREST_ANALYZE.json"
   }
 ]
