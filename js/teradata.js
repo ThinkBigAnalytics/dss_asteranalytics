@@ -1,4 +1,11 @@
+$(document).ready(function() {
+  var bootstrapButton = $.fn.button.noConflict()
+  $.fn.bootstrapBtn = bootstrapButton
+})
+
 const app = angular.module('teradata.module', []);
+
+window.APP = app
 
 function fixTooltips($timeout) {
 
@@ -16,7 +23,53 @@ function fixTooltips($timeout) {
 
 }
 
+function dialog(title, content) {
+  $('#dialog').attr('title', title);
+  $('#dialog > p').text(content);
+  $('#dialog').dialog({ modal: true });
+}
+
+let runFunction;
+
+function runThenListen() {
+  runFunction()
+  listenForResults(function() {
+    const title = $('.alert:not(.ng-hide)')[0].className.split(' ')[1].split('-')[1]
+
+    if (!title || title === 'info') {
+      return false
+    }
+
+    const result = $('.alert:not(.ng-hide) > h4').text()
+    const detailsUrl = $('.alert:not(.ng-hide) a[href]').attr('href')
+    $('.alert:not(.ng-hide)').remove()
+
+    dialog(title, result)
+
+    return true
+  })
+}
+
+function enableValidation() {
+  $('.btn-run-main').click(function(e) {
+    // dialog('Technical Issue', 'There was an issue!');
+    runThenListen()
+  })
+}
+
+function listenForResults(f) {
+  const listener = setInterval(function() {
+    if ($('.recipe-editor-job-result').length) {
+      if (f()) {
+        clearInterval(listener)
+      }
+    }
+  }, 100)
+}
+
 app.controller('TeradataController', function ($scope, $timeout) {
+
+  window.SCOPE = $scope;
 
   let functionMetadata;
 
@@ -66,86 +119,79 @@ app.controller('TeradataController', function ($scope, $timeout) {
   };
 
   // temporary code to not show partition and order by fields when there are no unaliased input dataset
-  $scope.shouldShowPartitionOrderFields = function(unaliasedInputsList)
-  { 
-	  return unaliasedInputsList && 0 < unaliasedInputsList.count;
+  $scope.shouldShowPartitionOrderFields = function (unaliasedInputsList) {
+    return unaliasedInputsList && 0 < unaliasedInputsList.count;
   }
 
-  
-  $scope.getSchemaOfUnaliasedInputs = function(unaliasedInputsList)
-  {
-	  if (unaliasedInputsList.values && 0 < unaliasedInputsList.values.length) {
-		  let targetTableName = unaliasedInputsList.values[0];
-		  if (targetTableName && $scope.inputschemas && targetTableName in $scope.inputschemas) {
-			  return $scope.inputschemas[targetTableName];
-		  }
-	  }
-	  return []; 
-  }
-  
-  $scope.getSchema = function(functionArgument, aliasedInputsList, unaliasedInputsList, argumentsList)
-  {
 
-	  let targetTableName = ""
-	  if ('targetTable' in functionArgument)
-	  {
-		  let targetTableAlias = functionArgument.targetTable;
-		  if ("INPUTTABLE" === targetTableAlias.toUpperCase()) {
-			  if (0 > unaliasedInputsList.count) {
-				  if (unaliasedInputsList.values && 0 < unaliasedInputsList.values.length) {
-					  targetTableName = unaliasedInputsList.values[0];
-				  }
-			  } else {
-				  let inputtableargument = (argumentsList || []).filter(arg => "INPUTTABLE" === arg.name.toUpperCase() || "INPUT_TABLE" === arg.name.toUpperCase());
-				  if (0 < inputtableargument.length) {
-					  targetTableName = inputtableargument[0].value;
-				  }
-			  }
-		  }
-		  else {
-			  let inputslist = (aliasedInputsList || []).filter(n => targetTableAlias.toUpperCase() === n.name.toUpperCase());
-			  if (0 < inputslist.length) {
-				  targetTableName = inputslist[0].value;
+  $scope.getSchemaOfUnaliasedInputs = function (unaliasedInputsList) {
+    if (unaliasedInputsList.values && 0 < unaliasedInputsList.values.length) {
+      let targetTableName = unaliasedInputsList.values[0];
+      if (targetTableName && $scope.inputschemas && targetTableName in $scope.inputschemas) {
+        return $scope.inputschemas[targetTableName];
+      }
+    }
+    return [];
+  }
+
+  $scope.getSchema = function (functionArgument, aliasedInputsList, unaliasedInputsList, argumentsList) {
+
+    let targetTableName = ""
+    if ('targetTable' in functionArgument) {
+      let targetTableAlias = functionArgument.targetTable;
+      if ("INPUTTABLE" === targetTableAlias.toUpperCase()) {
+        if (0 > unaliasedInputsList.count) {
+          if (unaliasedInputsList.values && 0 < unaliasedInputsList.values.length) {
+            targetTableName = unaliasedInputsList.values[0];
+          }
+        } else {
+          let inputtableargument = (argumentsList || []).filter(arg => "INPUTTABLE" === arg.name.toUpperCase() || "INPUT_TABLE" === arg.name.toUpperCase());
+          if (0 < inputtableargument.length) {
+            targetTableName = inputtableargument[0].value;
+          }
+        }
+      } else {
+        let inputslist = (aliasedInputsList || []).filter(n => targetTableAlias.toUpperCase() === n.name.toUpperCase());
+        if (0 < inputslist.length) {
+          targetTableName = inputslist[0].value;
 			  } else {
 				  let inputtableargument = (argumentsList || []).filter(arg => targetTableAlias.toUpperCase() === arg.name.toUpperCase() || "INPUT_TABLE" === arg.name.toUpperCase());
 				  if (0 < inputtableargument.length) {
 					  targetTableName = inputtableargument[0].value;
 				  }
-			  }
-		  } 
-	  }
-	  else if (unaliasedInputsList.values && 0 < unaliasedInputsList.values.length) {
-		  targetTableName = unaliasedInputsList.values[0]
-	  }
- 
-	  if (!targetTableName || !$scope.inputschemas)
-	  {
-		  return [];
-	  }
+        }
+      }
+    } else if (unaliasedInputsList.values && 0 < unaliasedInputsList.values.length) {
+      targetTableName = unaliasedInputsList.values[0]
+    }
 
-	  if (targetTableName && targetTableName in $scope.inputschemas) {
-		  return $scope.inputschemas[targetTableName];
-	  }
+    if (!targetTableName || !$scope.inputschemas) {
+      return [];
+    }
 
-	  return $scope.schemas;
+    if (targetTableName && targetTableName in $scope.inputschemas) {
+      return $scope.inputschemas[targetTableName];
+    }
+
+    return $scope.schemas;
   }
 
-  $scope.isArgumentOutputTable = function(functionArgument) {
-	  if (functionMetadata && functionMetadata.argument_clauses) {
-		  const functionargumententry = functionMetadata.argument_clauses.filter(function (item) {
-			  if ('alternateNames' in item) {
-				  return item.alternateNames
-				  .map(x => x.toUpperCase())
-				  .indexOf(functionArgument.name.toUpperCase()) > -1;
-			  } else {
-				  return item.name.toUpperCase() === functionArgument.name.toUpperCase();
-			  }
-		  });
-	      if (functionargumententry && 0 < functionargumententry.length) {
-		      return functionargumententry[0].isOutputTable;
-		  }
-	  }
-	  return false;
+  $scope.isArgumentOutputTable = function (functionArgument) {
+    if (functionMetadata && functionMetadata.argument_clauses) {
+      const functionargumententry = functionMetadata.argument_clauses.filter(function (item) {
+        if ('alternateNames' in item) {
+          return item.alternateNames
+            .map(x => x.toUpperCase())
+            .indexOf(functionArgument.name.toUpperCase()) > -1;
+        } else {
+          return item.name.toUpperCase() === functionArgument.name.toUpperCase();
+        }
+      });
+      if (functionargumententry && 0 < functionargumententry.length) {
+        return functionargumententry[0].isOutputTable;
+      }
+    }
+    return false;
   }
 
   $scope.callPythonDo({}).then(
@@ -192,13 +238,13 @@ app.controller('TeradataController', function ($scope, $timeout) {
   }
 
   $scope.hasOptionalArguments = function () {
-	  let hasOptionalArgument = $scope.config.function.arguments
-	           && $scope.config.function.arguments.length
-	           && (0 < $scope.config.function.arguments.filter(x => !x.isRequired).length);
-	  let hasOptionalInputTable = $scope.config.function.required_input
-	           && $scope.config.function.required_input.length
-	           && (0 < $scope.config.function.required_input.filter(x => !x.isRequired).length);
-	  return hasOptionalInputTable || hasOptionalArgument;
+    let hasOptionalArgument = $scope.config.function.arguments &&
+      $scope.config.function.arguments.length &&
+      (0 < $scope.config.function.arguments.filter(x => !x.isRequired).length);
+    let hasOptionalInputTable = $scope.config.function.required_input &&
+      $scope.config.function.required_input.length &&
+      (0 < $scope.config.function.required_input.filter(x => !x.isRequired).length);
+    return hasOptionalInputTable || hasOptionalArgument;
   }
 
   $timeout(() => {
@@ -220,6 +266,10 @@ app.controller('TeradataController', function ($scope, $timeout) {
       });
       fixTooltips($timeout);
     }, 500);
+
+    runFunction = $._data($('.btn-run-main').get(0), "events").click[0].handler.bind($('.btn-run-main').get(0))
+    $('.btn-run-main').off('click')
+    enableValidation()
 
   });
 

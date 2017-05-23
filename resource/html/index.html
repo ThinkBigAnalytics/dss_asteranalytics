@@ -49,7 +49,7 @@
               <tr ng-if="config.function.isOrdered && shouldShowPartitionOrderFields(config.function.unaliased_inputs)">
                 <td>ORDER BY Column</td>
                 <td>
-                  <select ng-model="config.function.orderByColumn" ng-options="column.name as column.name + ' (' + column.type + ')' for column in getSchemaOfUnaliasedInputs(config.function.unaliased_inputs)">
+                  <select required ng-model="config.function.orderByColumn" ng-options="column.name as column.name + ' (' + column.type + ')' for column in getSchemaOfUnaliasedInputs(config.function.unaliased_inputs)">
                     <option value="" selected>--No Selection--</option>
                   </select>
                 </td>
@@ -65,7 +65,7 @@
               <tr ng-if="shouldShowPartitionOrderFields(config.function.unaliased_inputs) && config.function.partitionInputKind.indexOf('PartitionByKey') !== -1">
                 <td>PARTITION BY Column</td>
                 <td>
-                  <select ng-disabled="config.function.partitionByAny" multiple size="8" ng-model="config.function.partitionAttributes" ng-options="column.name as column.name + ' (' + column.type + ')' for column in getSchemaOfUnaliasedInputs(config.function.unaliased_inputs)"
+                  <select required ng-disabled="config.function.partitionByAny" multiple size="8" ng-model="config.function.partitionAttributes" ng-options="column.name as column.name + ' (' + column.type + ')' for column in getSchemaOfUnaliasedInputs(config.function.unaliased_inputs)"
                     data-html="true" title="<b>(Ctrl+Click to multi-select)</b>" data-toggle="tooltip" data-container="body"
                     data-placement="right">
                     <option value="" selected>--No Selection--</option>
@@ -77,20 +77,20 @@
               <tr ng-repeat="item in config.function.arguments" ng-model="config.function.arguments" ng-if="item.isRequired">
                 <td style="text-transform: capitalize">{{ item.name.split('_').join(' ') | lowercase }}</td>
                 <td>
-                  <input type="text" ng-model="item.value" 
+                  <input required type="text" ng-model="item.value" 
                   ng-if="(['STRING','DOUBLE','INTEGER','DRIVER','SQLEXPR', 'LONG'].indexOf(item.datatype) >= 0 || (item.datatype == 'TABLE_NAME' && isArgumentOutputTable(item))) && !item.allowsLists"
                     data-toggle="tooltip" data-container="body" title="{{ getArgumentDescription(config.function.name, item.name) }}"
                     data-placement="right" />
 
-                  <input class="teradata-tags" ng-model="item.value" type="text"
+                  <input required class="teradata-tags" ng-model="item.value" type="text"
                   ng-if="['STRING','DOUBLE','INTEGER','DRIVER','SQLEXPR', 'LONG'].indexOf(item.datatype) >= 0 && item.allowsLists"
                     data-toggle="tooltip" data-container="body" title="{{ getArgumentDescription(config.function.name, item.name) }}"
                     data-placement="right"></input>
 
-                  <input type="checkbox" ng-model="item.value" ng-if="item.datatype == 'BOOLEAN'" data-toggle="tooltip" data-container="body"
+                  <input required type="checkbox" ng-model="item.value" ng-if="item.datatype == 'BOOLEAN'" data-toggle="tooltip" data-container="body"
                     title="{{ getArgumentDescription(config.function.name, item.name) }}" data-placement="right" />
 
-                  <select ng-if="(item.datatype == 'COLUMN_NAMES' || item.datatype == 'COLUMNS') && !item.allowsLists" ng-model="item.value"
+                  <select required ng-if="(item.datatype == 'COLUMN_NAMES' || item.datatype == 'COLUMNS') && !item.allowsLists" ng-model="item.value"
                     data-toggle="tooltip" 
                     data-container="body" 
                     title="{{ getArgumentDescription(config.function.name, item.name) }}"
@@ -99,13 +99,13 @@
                     <option value="" selected>--No Selection--</option>
                   </select>
 
-                  <select multiple size="8" ng-if="(item.datatype == 'COLUMN_NAMES' || item.datatype == 'COLUMNS') && item.allowsLists" ng-model="item.value"
+                  <select required multiple size="8" ng-if="(item.datatype == 'COLUMN_NAMES' || item.datatype == 'COLUMNS') && item.allowsLists" ng-model="item.value"
                     data-toggle="tooltip" data-html="true" title="{{ getArgumentDescription(config.function.name, item.name) }}<br><br><b>(Ctrl+Click to multi-select)</b>"
                     data-placement="right" data-container="body" ng-options="column.name as column.name + ' (' + column.type + ')' for column in getSchema(item, config.function.required_input, config.function.unaliased_inputs, config.function.arguments)">
                     <option value="" selected>--No Selection--</option>
                   </select>
 
-                  <select ng-if="item.datatype == 'TABLE_NAME' && !isArgumentOutputTable(item)" ng-model="item.value" data-toggle="tooltip" data-container="body"
+                  <select required ng-if="item.datatype == 'TABLE_NAME' && !isArgumentOutputTable(item)" ng-model="item.value" data-toggle="tooltip" data-container="body"
                     title="{{ getArgumentDescription(config.function.name, item.name) }}" data-placement="right" 
                     ng-options="t.fullName.split('.')[1] as t.fullName.split('.')[1] for t in inputs">
                     <option value="" selected>--No Selection--</option>
@@ -114,10 +114,13 @@
               </tr>
 
               <tr ng-if="shouldShowPartitionOrderFields(config.function.unaliased_inputs)">
-                <td>UNALIASED INPUT TABLES</td>
+                <td>Unaliased Input Tables</td>
                 <td>
-                  <select multiple size="8" ng-model="config.function.unaliased_inputs.values"
-                    ng-options="t.fullName.split('.')[1] as t.fullName.split('.')[1] for t in inputs">
+                  <select required multiple size="8" ng-model="config.function.unaliased_inputs.values"
+                    ng-options="t.fullName.split('.')[1] as t.fullName.split('.')[1] for t in inputs"
+                    data-toggle="tooltip" data-container="body" data-placement="right" data-html="true"
+                    title="<b>(Ctrl+Click to multi-select)</b>"
+                    >
                       <option value="" selected>--No Selection--</option>
                   </select>
                 </td>
@@ -126,12 +129,12 @@
               <tr ng-repeat="item in config.function.required_input" ng-model="config.function.required_input" ng-if="item.hasOwnProperty('name') && item.isRequired">
                 <td style="text-transform: capitalize">{{ item.name.split('_').join(' ') | lowercase }} ({{item.kind}})</td>
                 <td>
-                  <select ng-model="item.value" ng-options="t.fullName.split('.')[1] as t.fullName.split('.')[1] for t in inputs">
+                  <select required ng-model="item.value" ng-options="t.fullName.split('.')[1] as t.fullName.split('.')[1] for t in inputs">
                       <option value="" selected>--No Selection--</option>
                   </select>
-                  <input style="margin-left: 4px;"
+                  <input required style="margin-left: 4px;"
                     ng-show="'PartitionByKey' == item.kind" placeholder="partition column" type="text" ng-model="item.partitionAttributes" />
-                  <input style="margin-left: 4px;"
+                  <input required style="margin-left: 4px;"
                     ng-show="item.isOrdered" type="text" ng-model="item.orderByColumn" placeholder="order by column" />
                 </td>
               </tr>
@@ -211,4 +214,9 @@
     </div>
 
   </div>
+
+  <div id="dialog" title="Dialog" style="display: none">
+    <p class="content">Dialog</p>
+  </div>
+
 </div>
