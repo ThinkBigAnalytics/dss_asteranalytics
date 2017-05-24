@@ -164,12 +164,12 @@ input:focus {
     margin: auto !important;
 }*/
 
-.recipe-job-result {
+/*.recipe-job-result {
     position: absolute !important;
     width: 40% !important;
     right: 15% !important;
     top: 25% !important;
-}
+}*/
 
 .ui-tabs {
     font-family: 'SourceSansPro' !important;
@@ -200,4 +200,8 @@ div.tagsinput span.tag a {
 
 .ng-invalid:not(form) {
   border:1px solid #f00;
+}
+
+span.ui-dialog-title::first-letter {
+    text-transform: uppercase !important;
 }
