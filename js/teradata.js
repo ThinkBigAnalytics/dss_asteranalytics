@@ -90,7 +90,7 @@
       },
 
       getSchemaOfUnaliasedInputs: function (unaliasedInputsList) {
-        if (unaliasedInputsList.values && 0 < unaliasedInputsList.values.length) {
+        if (unaliasedInputsList.values && unaliasedInputsList.values.length > 0) {
           let targetTableName = unaliasedInputsList.values[0];
           if (targetTableName && $scope.inputschemas && targetTableName in $scope.inputschemas) {
             return $scope.inputschemas[targetTableName];
@@ -105,29 +105,29 @@
         if ('targetTable' in functionArgument) {
           let targetTableAlias = functionArgument.targetTable;
           if ('INPUTTABLE' === targetTableAlias.toUpperCase()) {
-            if (0 > unaliasedInputsList.count) {
-              if (unaliasedInputsList.values && 0 < unaliasedInputsList.values.length) {
+            if (unaliasedInputsList.count > 0) {
+              if (unaliasedInputsList.values && unaliasedInputsList.values.length > 0) {
                 targetTableName = unaliasedInputsList.values[0];
               }
             } else {
               let inputtableargument = (argumentsList || [])
                 .filter(arg => 'INPUTTABLE' === arg.name.toUpperCase() || 'INPUT_TABLE' === arg.name.toUpperCase());
-              if (0 < inputtableargument.length) {
+              if (inputtableargument.length > 0) {
                 targetTableName = inputtableargument[0].value;
               }
             }
           } else {
             let inputslist = (aliasedInputsList || []).filter(n => targetTableAlias.toUpperCase() === n.name.toUpperCase());
-            if (0 < inputslist.length) {
+            if (inputslist.length > 0) {
               targetTableName = inputslist[0].value;
             } else {
               let inputtableargument = (argumentsList || []).filter(arg => targetTableAlias.toUpperCase() === arg.name.toUpperCase() || 'INPUT_TABLE' === arg.name.toUpperCase());
-              if (0 < inputtableargument.length) {
+              if (inputtableargument.length > 0) {
                 targetTableName = inputtableargument[0].value;
               }
             }
           }
-        } else if (unaliasedInputsList.values && 0 < unaliasedInputsList.values.length) {
+        } else if (unaliasedInputsList.values && unaliasedInputsList.values.length > 0) {
           targetTableName = unaliasedInputsList.values[0]
         }
 
@@ -144,7 +144,7 @@
 
       // temporary code to not show partition and order by fields when there are no unaliased input dataset
       shouldShowPartitionOrderFields: function (unaliasedInputsList) {
-        return unaliasedInputsList && 0 < unaliasedInputsList.count;
+        return unaliasedInputsList && unaliasedInputsList.count > 0;
       },
 
       isArgumentOutputTable: function (functionArgument) {
@@ -158,7 +158,7 @@
               return item.name.toUpperCase() === functionArgument.name.toUpperCase();
             }
           });
-          if (functionargumententry && 0 < functionargumententry.length) {
+          if (functionargumententry && functionargumententry.length > 0) {
             return functionargumententry[0].isOutputTable;
           }
         }
@@ -176,11 +176,11 @@
       hasOptionalArguments: function () {
         let hasOptionalArgument = $scope.config.function.arguments &&
           $scope.config.function.arguments.length &&
-          (0 < $scope.config.function.arguments.filter(x => !x.isRequired).length);
+          ($scope.config.function.arguments.filter(x => !x.isRequired).length > 0);
 
         let hasOptionalInputTable = $scope.config.function.required_input &&
           $scope.config.function.required_input.length &&
-          (0 < $scope.config.function.required_input.filter(x => !x.isRequired).length);
+          ($scope.config.function.required_input.filter(x => !x.isRequired).length > 0);
 
         return hasOptionalInputTable || hasOptionalArgument;
       },
