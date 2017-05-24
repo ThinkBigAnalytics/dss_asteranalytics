@@ -111,7 +111,7 @@
       ],
       "isOutputColumn": false,
       "allowPadding": true,
-      "name": "IgnoreValues",
+      "name": "Ignore_Values",
       "isRequired": false,
       "description": "A list of input strings that the function will treat as null values The default value is null.",
       "datatype": "STRING",
