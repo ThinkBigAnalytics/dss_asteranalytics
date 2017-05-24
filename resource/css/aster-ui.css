@@ -112,6 +112,10 @@ input:focus {
 }
 
 .job-result {
+    display: none !important;
+}
+
+/*.job-result {
     position: fixed !important;
     top: 0 !important;
     left: 50% !important;
@@ -158,14 +162,14 @@ input:focus {
     font-weight: normal !important;
     font-family: monospace !important;
     margin: auto !important;
-}
+}*/
 
-.recipe-job-result {
-    position: fixed !important;
-    top: 30% !important;
-    left: 50% !important;
-    width: 36% !important;
-}
+/*.recipe-job-result {
+    position: absolute !important;
+    width: 40% !important;
+    right: 15% !important;
+    top: 25% !important;
+}*/
 
 .ui-tabs {
     font-family: 'SourceSansPro' !important;
@@ -192,4 +196,12 @@ div.tagsinput span.tag {
 
 div.tagsinput span.tag a {
     color: black !important;
+}
+
+.ng-invalid:not(form) {
+  border:1px solid #f00;
+}
+
+span.ui-dialog-title::first-letter {
+    text-transform: uppercase !important;
 }
