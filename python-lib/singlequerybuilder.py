@@ -60,6 +60,7 @@ def getAsterQuery(dss_function, inputTables, outputTable):
     if outputTable.tableType is None or outputTable.tableType == '':
         outputTable.tableType = 'DIMENSION'
     
+    jsonFunction = queryutility.getJson(dss_function.get('name',''))
     query = """
 CREATE {} TABLE {}{}
 AS
@@ -77,7 +78,7 @@ FROM   {}
                        onselect,
                        multipleunaliasedinputs,
                        multiplealiasedinputs,
-                       queryutility.getJoinedArgumentsString(dss_function["arguments"], inputTables))
+                       queryutility.getJoinedArgumentsString(dss_function["arguments"], queryutility.getArgumentClausesFromJson(jsonFunction), inputTables))
 
     pre_queries = ["BEGIN TRANSACTION;",
                    "DROP TABLE IF EXISTS {outputTablename};".format(outputTablename=outputTable.tablename),

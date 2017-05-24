@@ -30,11 +30,14 @@ def getAsterQuery(dss_function, inputTables, outputTable):
                 if not corderByNode['isSetByUser']:
                     corderBy = "ORDER BY {}".format(corderByNode['key'])
             carguments = ""
+            jsonFunction = queryutility.getJson(fun.get('name',''))
             if 'arguments_clauses' in fun:
                 cargumentslist = [n for n in dss_function['arguments'] if n.get('name',"").upper() in fun['arguments_clauses']]
-                carguments += queryutility.getJoinedArgumentsString(cargumentslist)
+                carguments += queryutility.getJoinedArgumentsString(cargumentslist,
+                                                                    queryutility.getArgumentClausesFromJson(jsonFunction))
             if 'arguments_nonuserdefined' in fun:
-                carguments += queryutility.getJoinedArgumentsString(fun['arguments_nonuserdefined'])        
+                carguments += queryutility.getJoinedArgumentsString(fun['arguments_nonuserdefined'],
+                                                                    queryutility.getArgumentClausesFromJson(jsonFunction))      
             cfunction = fun.get('name',"")
             cquery = """SELECT * FROM {cfunction} (ON {inputInfo} {cpartitionBy} {corderBy} {carguments})""".format(cfunction=cfunction,
                                                                       inputInfo=inputInfo,
