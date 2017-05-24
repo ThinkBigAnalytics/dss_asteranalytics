@@ -193,6 +193,10 @@
                   <select ng-model="item.value" ng-options="inputtable.fullName.split('.')[1] as inputtable.fullName.split('.')[1] for inputtable in inputs">
                       <option value="" selected>--No Selection--</option>
                   </select>
+                  <input style="margin-left: 4px;"
+                    ng-show="'PartitionByKey' == item.kind" placeholder="partition column" type="text" ng-model="item.partitionAttributes" />
+                  <input style="margin-left: 4px;"
+                    ng-show="item.isOrdered" type="text" ng-model="item.orderByColumn" placeholder="order by column" />
                 </td>
               </tr>
             </tbody>
