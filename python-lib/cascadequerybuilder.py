@@ -42,9 +42,7 @@ def getAsterQuery(dss_function, inputTables, outputTable):
                                                                       corderBy=corderBy,
                                                                       carguments=carguments)
             inputInfo = """({cquery})""".format(cquery=cquery)
-        query = """BEGIN TRANSACTION;
-        DROP TABLE IF EXISTS {outputTableName};
-        CREATE {output_table_type} TABLE {outputTableName}{distributeBy}
+        query = """CREATE {output_table_type} TABLE {outputTableName}{distributeBy}
         AS
         {inputInfo};
         COMMIT;
@@ -52,4 +50,9 @@ def getAsterQuery(dss_function, inputTables, outputTable):
                                    output_table_type=outputTable.tableType,
                                    distributeBy=" DISTRIBUTE BY HASH({})".format(outputTable.hashKey) if "FACT" == outputTable.tableType else "",
                                    inputInfo=inputInfo)
-    return query
+        
+        pre_queries = ["BEGIN TRANSACTION;",
+                   "DROP TABLE IF EXISTS {};".format(outputTable.tablename),
+                   query,
+                   "COMMIT;"]
+    return pre_queries

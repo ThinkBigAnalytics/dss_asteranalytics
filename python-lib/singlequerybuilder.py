@@ -60,8 +60,7 @@ def getAsterQuery(dss_function, inputTables, outputTable):
     if outputTable.tableType is None or outputTable.tableType == '':
         outputTable.tableType = 'DIMENSION'
     
-    query = """BEGIN TRANSACTION;
-DROP TABLE IF EXISTS {};
+    query = """
 CREATE {} TABLE {}{}
 AS
 SELECT *
@@ -71,19 +70,18 @@ FROM   {}
 {}
 {}
 {}
-)""".format(outputTable.tablename,
-                       outputTable.tableType,
+);""".format(outputTable.tableType,
                        outputTable.tablename,
                        " DISTRIBUTE BY HASH({})".format(outputTable.hashKey) if "FACT" == outputTable.tableType else "",
                        dss_function["name"],
                        onselect,
                        multipleunaliasedinputs,
                        multiplealiasedinputs,
-                       queryutility.getJoinedArgumentsString(dss_function["arguments"], inputTables))   
+                       queryutility.getJoinedArgumentsString(dss_function["arguments"], inputTables))
 
-       
-    query +=""";
-COMMIT;
-END TRANSACTION;"""
+    pre_queries = ["BEGIN TRANSACTION;",
+                   "DROP TABLE IF EXISTS {outputTablename};".format(outputTablename=outputTable.tablename),
+                   query,
+                   "COMMIT;"]
         
-    return query
+    return pre_queries

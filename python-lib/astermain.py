@@ -45,9 +45,9 @@ def asterDo():
         
     # actual query
     query = getFunctionsQuery(dss_function, inputTables, outputTable)
-    print(query)
+    print(query[2])
     executor = SQLExecutor2(dataset=input_dataset)                
-    executor.query_to_df(query)
+    executor.query_to_df("END TRANSACTION;", pre_queries=query)
     
     # write table schema
     nQuery = """SELECT * FROM {} LIMIT (1);""".format(outputTable.tablename)
