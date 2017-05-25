@@ -765,6 +765,11 @@
     "file_name": "WSRECOMMENDERREDUCE.json"
   },
   {
+    "category": "Association Analysis",
+    "function_name": "WSRecommender",
+    "file_name": "WSRECOMMENDER.json"
+  },
+  {
     "category": "Statistical Analysis",
     "function_name": "ConfusionMatrixPlot",
     "file_name": "CONFUSIONMATRIXPLOT.json"

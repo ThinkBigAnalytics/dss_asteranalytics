@@ -1,0 +1,29 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "2",
+  "json_content_version": "1",
+  "function_name": "WSRecommender",
+  "function_version": "1.1",
+  "function_type": "non-driver",
+  "function_r_name": "aa.recommender",
+  "short_description": "This function is an item-based and collaborative filtering and used to create recommendations for users",
+  "long_description": "This function predicts the rating a user would give to an item by calculating the average of ratings the user has given similar items, weighted by a similarity score between the items.",
+  "input_tables": [
+    {
+      "requiredInputKind": [
+        "PartitionByKey"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "name": "input",
+      "alternateNames": [],
+      "isRequired": true,
+      "rDescription": "Specifies the input table.",
+      "description": "Specifies the input table.",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "useInR": true,
+      "rOrderNum": 0
+    }
+  ]
+}
