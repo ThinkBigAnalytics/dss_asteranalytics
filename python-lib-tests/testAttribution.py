@@ -69,5 +69,5 @@ WINDOW('rows:10&seconds:20')
 );
 COMMIT;
 END TRANSACTION;"""
-        self.assertEqual(actualquery, expectedquery, "Ohno")
+        self.assertEqual('\n'.join(actualquery) + '\nEND TRANSACTION;', expectedquery, "Attribution")
         

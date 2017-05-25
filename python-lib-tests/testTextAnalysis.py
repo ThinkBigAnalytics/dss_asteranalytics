@@ -39,13 +39,13 @@ TEXTCOLUMN('chunk')
 );
 COMMIT;
 END TRANSACTION;"""
-        self.assertEqual(actualquery, expectedquery, "Ohno")
+        self.assertEqual('\n'.join(actualquery) + '\nEND TRANSACTION;', expectedquery, "TextTokenizer")
 
     def testEvaluateNamedEntityFinderPartition(self):
         testInputConnectionConfig = {'table' : 'textclassifier_input', 'schema':'dss'}
         testOuputConnectionConfig = {'table' : 'dss_test'}
         testfunction = dssFunction()
-        testConfig = testfunction.name('EVALUATENAMEDENTITYFINDERPARTITION').unaliased_inputs_count(0).add_unaliased_input('textclassifier_input', 'PartitionByOne').build()
+        testConfig = testfunction.name('EVALUATENAMEDENTITYFINDERPARTITION').unaliased_inputs_count(1).add_unaliased_input('textclassifier_input', 'PartitionByOne').build()
         functionInputTable = inputtableinfo(testInputConnectionConfig, 'textclassifier_input', testConfig)
         functionOutputTable = outputtableinfo(testOuputConnectionConfig, 'dss_test', testConfig)
         actualquery = getFunctionsQuery(testConfig, [functionInputTable], functionOutputTable)
@@ -64,7 +64,8 @@ ON dss.textclassifier_input PARTITION BY 1
 );
 COMMIT;
 END TRANSACTION;"""
-        self.assertEqual(actualquery, expectedquery, 'EvaluateNamedEntityFinderPartition')
+        self.assertEqual('\n'.join(actualquery) + '\nEND TRANSACTION;', expectedquery,
+                         'EvaluateNamedEntityFinderPartition')
 
     # 1 unaliased input, several arguments, 1 output
     def testNertrainer(self):
@@ -91,7 +92,7 @@ FEATURETEMPLATE('template_1.txt')
 );
 COMMIT;
 END TRANSACTION;"""
-        self.assertEqual(actualquery, expectedquery, 'Nertrainer')
+        self.assertEqual('\n'.join(actualquery) + '\nEND TRANSACTION;', expectedquery, 'Nertrainer')
 
     def testNer(self):
         testInputConnectionConfig = {'table' : 'ner_sports_test', 'schema':'dss'}
@@ -121,7 +122,7 @@ SHOWCONTEXT('2')
 );
 COMMIT;
 END TRANSACTION;"""
-        self.assertEqual(actualquery, expectedquery, 'Nerevaluator')
+        self.assertEqual('\n'.join(actualquery) + '\nEND TRANSACTION;', expectedquery, 'Nerevaluator')
 
     def testNerEvaluator(self):
         testInputConnectionConfig = {'table' : 'ner_sports_test', 'schema':'dss'}
@@ -146,4 +147,4 @@ MODEL('ner_model.bin')
 );
 COMMIT;
 END TRANSACTION;"""
-        self.assertEqual(actualquery, expectedquery, 'Nertrainer')
+        self.assertEqual('\n'.join(actualquery) + '\nEND TRANSACTION;', expectedquery, 'Nertrainer')

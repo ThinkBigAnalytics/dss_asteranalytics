@@ -53,6 +53,9 @@ def getAsterQuery(dss_function, inputTables, outputTable):
                                                                                                           input_table=unaliasedtable.tablenamewithoutschema,
                                                                                                           partitionKeys=partitionKeys,
                                                                                                           orderKeys=orderKeys).rstrip() + "\n"
+                                                                                           
+            if 1 == int(dss_function['unaliased_inputs'].get('count', 1)):
+                break
     
     if not multiplealiasedinputs and not multipleunaliasedinputs:
         onselect = "ON (SELECT 1) PARTITION BY 1"
@@ -61,8 +64,7 @@ def getAsterQuery(dss_function, inputTables, outputTable):
         outputTable.tableType = 'DIMENSION'
     
     jsonFunction = queryutility.getJson(dss_function.get('name',''))
-    query = """
-CREATE {} TABLE {}{}
+    query = """CREATE {} TABLE {}{}
 AS
 SELECT *
 FROM   {}

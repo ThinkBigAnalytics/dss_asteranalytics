@@ -5,7 +5,7 @@ except ImportError:
     Set = set
 import re
 import json
-from dataiku.customrecipe import *
+
 
 def getTableNameFromArgument(argumentValue, inputTables):
     return next("'" + x.schemaname + '.' + x.tablenamewithoutschema + "'" for x in inputTables if argumentValue == x.datasetname)
@@ -35,6 +35,10 @@ def getJoinedArgumentsString(cargumentslist, arg_dict, inputTables=[]):
 
 def getArgumentClausesFromJson(f):
     return f.get('argument_clauses',[])
-
-def getJson(function_name):
-    return json.loads(open('%s/data/%s' % (get_recipe_resource(), function_name + '.json')).read())
+try:
+    from dataiku.customrecipe import *
+    def getJson(function_name):
+        return json.loads(open('%s/data/%s' % (get_recipe_resource(), function_name + '.json')).read())
+except ImportError:
+    def getJson(function_name):
+        return json.loads(open('%s/data/%s' % ('../resource', function_name + '.json')).read())
