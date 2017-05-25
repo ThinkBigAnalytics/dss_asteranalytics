@@ -23,6 +23,11 @@
 
     $.extend($scope, {
 
+      /**
+       * Shows a dialog.
+       * 
+       * This is for displaying Aster-side errors.
+       */
       dialog: function (title, content) {
         $('#dialog').attr('title', title);
         $('#dialog > pre').text(content);
@@ -33,6 +38,11 @@
         });
       },
 
+      /**
+       * Shows a dialog.
+       * 
+       * This is for displaying frontend validation errors.
+       */
       validationDialog: function (html) {
         $('#dialog-validation > div').html(html);
         $('#dialog-validation').dialog({
@@ -42,7 +52,9 @@
         });
       },
 
-
+      /**
+       * Gets the static JSON metadata of the given function.
+       */
       getFunctionMetadata: function (selectedFunction) {
 
         if (typeof selectedFunction === 'undefined') {
@@ -60,12 +72,18 @@
 
       },
 
+      /**
+       * Gets the function description from the static JSON metadata.
+       */
       getFunctionDescription: function () {
         return (functionMetadata && 'long_description' in functionMetadata) ?
           functionMetadata.long_description :
           '';
       },
 
+      /**
+       * Gets the description of the given argument from the static JSON metadata.
+       */
       getArgumentDescription: function (selectedFunction, functionArgument) {
         let description = '';
         if (functionMetadata && functionMetadata.argument_clauses) {
@@ -89,6 +107,9 @@
         return description;
       },
 
+      /**
+       * Gets the schema of the unaliased inputs from the static JSON metadata.
+       */
       getSchemaOfUnaliasedInputs: function (unaliasedInputsList) {
         if (unaliasedInputsList.values && unaliasedInputsList.values.length > 0) {
           let targetTableName = unaliasedInputsList.values[0];
@@ -99,6 +120,10 @@
         return [];
       },
 
+      /**
+       * Gets the function schema by joining and processing the metadata from the python backend 
+       * and the static JSON file associated with the function.
+       */
       getSchema: function (functionArgument, aliasedInputsList, unaliasedInputsList, argumentsList) {
 
         let targetTableName = ''
@@ -142,11 +167,19 @@
         return $scope.schemas;
       },
 
-      // temporary code to not show partition and order by fields when there are no unaliased input dataset
+      /**
+       * Checks whether or not we should show the partition order fields.
+       * 
+       * NOTE: Temporary code to not show partition 
+       * and order by fields when there are no unaliased input dataset
+       */
       shouldShowPartitionOrderFields: function (unaliasedInputsList) {
         return unaliasedInputsList && unaliasedInputsList.count > 0;
       },
 
+      /**
+       * Checks whether or not the given argument is an output table or not.
+       */
       isArgumentOutputTable: function (functionArgument) {
         if (functionMetadata && functionMetadata.argument_clauses) {
           const functionargumententry = functionMetadata.argument_clauses.filter(function (item) {
@@ -165,6 +198,9 @@
         return false;
       },
 
+      /**
+       * Checks whether or not required arguments are present in the function metadata.
+       */
       hasRequiredArguments: function () {
         if (!$scope.config.function.arguments || !$scope.config.function.arguments.length) {
           return false
@@ -173,6 +209,9 @@
         return $scope.config.function.arguments.filter(x => x.isRequired).length > 0
       },
 
+      /**
+       * Checks whether or not optional arguments are present in the function metadata.
+       */
       hasOptionalArguments: function () {
         let hasOptionalArgument = $scope.config.function.arguments &&
           $scope.config.function.arguments.length &&
@@ -185,16 +224,30 @@
         return hasOptionalInputTable || hasOptionalArgument;
       },
 
+      /**
+       * A function that listens for job results.
+       * It accepts a callback function f that is executed after the results are received.
+       * The presence or absence of the job results are listened to 
+       * by using a simple setInterval (which checks for results every 50ms).
+       * 
+       * NOTE: This is a hack-ish implementation because we donot know how to listen to the job results properly.
+       * If Dataiku publishes a proper DOM event then we should listen to that event instead.
+       * But, currently, that event is not being published.
+       */
       listenForResults: function (f) {
         const listener = setInterval(() => {
           if ($('.recipe-editor-job-result').length && f()) {
             clearInterval(listener);
             $('.recipe-editor-job-result').remove();
           }
-            
         }, 50)
       },
 
+      /**
+       * Function that validates all the input controls of the recipe.
+       * 
+       * Returns true if valid. If not, it shows an error dialog then returns false.
+       */
       validate: function() {
 
         const invalids = []
@@ -209,6 +262,15 @@
 
       },
 
+      /**
+       * Function to execute the "proper" run workflow of an Aster recipe.
+       * 
+       * Firstly, the inputs are validated.
+       * If the inputs are valid, it proceeds to the run phase 
+       * which runs the original runFunction of the recipe (which we hijacked earlier).
+       * It then listens for any results by using the listenForResults function.
+       * Once the results are back, it displays it in a jQuery UI dialog box.
+       */
       runThenListen: function () {
 
         if (!$scope.validate()) return;
@@ -236,11 +298,18 @@
 
       },
 
+      /**
+       * Resolves a code-conflict issue between jQuery and Bootstrap.
+       */
       initializeBootstrap: function () {
         if ($.fn.button && $.fn.button.noConflict)
           $.fn.bootstrapBtn = $.fn.button.noConflict()
       },
 
+      /**
+       * Communicates with Python backend 
+       * and acquires necessary data to display in the recipe UI.
+       */
       communicateWithBackend: function () {
 
         $scope.callPythonDo({}).then(
@@ -250,6 +319,9 @@
 
       },
 
+      /**
+       * Activates the tabbing functionality of this recipe.
+       */
       activateTabs: function () {
         try {
           $('#tabs').tabs('destroy')
@@ -257,6 +329,10 @@
         $('#tabs').tabs();
       },
 
+      /**
+       * Activates the informative tooltips of each input control.
+       * Hijacks each tagsInput element so that it properly displays tooltips as well.
+       */
       activateTooltips: function () {
 
         $('#main-container').tooltip();
@@ -278,6 +354,9 @@
 
       },
 
+      /**
+       * Activates the multi-string input boxes.
+       */
       activateMultiTagsInput: function () {
         try {
           $('input.teradata-tags').tagsInput({
@@ -287,14 +366,25 @@
         } catch (e) {}
       },
 
+      /** 
+       * Hijacks the current click handler of the recipe
+       * and replaces it with the runThenListen function.
+       * 
+       * Stores the original recipe run function in the runFunction variable.
+       */
       activateValidation: function () {
 
-        runFunction = $._data($('.btn-run-main').get(0), 'events').click[0].handler.bind($('.btn-run-main').get(0));
-        $('.btn-run-main').off('click');
-        $('.btn-run-main').click(e => $scope.runThenListen());
+        const $runButton = $('.btn-run-main')
+        runFunction = $._data($runButton.get(0), 'events').click[0].handler.bind($runButton.get(0));
+        $runButton
+          .off('click')
+          .on('click', e => $scope.runThenListen());
 
       },
 
+      /**
+       * Hijacks the current UI and applies a few cosmetic improvements.
+       */
       activateCosmeticImprovements: function () {
 
         const $a = $('.mainPane > div:first > div:first > div.recipe-settings-section2 > a');
@@ -310,6 +400,9 @@
 
       },
 
+      /**
+       * Applies the custom changes to the default Dataiku UI needed for the Aster plugin to work.
+       */
       activateUi: function () {
 
         $delay(() => {
@@ -326,6 +419,9 @@
 
       },
 
+      /**
+       * Initializes this plugin.
+       */
       initialize: function (selectedFunction) {
 
         $scope.communicateWithBackend();
