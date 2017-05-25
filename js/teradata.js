@@ -189,7 +189,7 @@
         const listener = setInterval(() => {
           if ($('.recipe-editor-job-result').length && f())
             clearInterval(listener)
-        }, 100)
+        }, 50)
       },
 
       validate: function() {
