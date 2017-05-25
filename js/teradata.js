@@ -199,7 +199,10 @@
 
         if (invalids.length) {
           $scope.validationDialog(`Please amend the following fields: <ul>${invalids.map(x => `<li>${x}</li>`).join('')}</ul>`)
+          return false
         }
+
+        return true
 
       },
 
