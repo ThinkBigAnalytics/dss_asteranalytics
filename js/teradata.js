@@ -234,7 +234,8 @@
       },
 
       initializeBootstrap: function () {
-        $.fn.bootstrapBtn = $.fn.button.noConflict()
+        if ($.fn.button && $.fn.button.noConflict)
+          $.fn.bootstrapBtn = $.fn.button.noConflict()
       },
 
       communicateWithBackend: function () {
