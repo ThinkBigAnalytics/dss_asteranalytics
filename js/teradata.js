@@ -187,8 +187,11 @@
 
       listenForResults: function (f) {
         const listener = setInterval(() => {
-          if ($('.recipe-editor-job-result').length && f())
-            clearInterval(listener)
+          if ($('.recipe-editor-job-result').length && f()) {
+            clearInterval(listener);
+            $('.recipe-editor-job-result').remove();
+          }
+            
         }, 50)
       },
 
