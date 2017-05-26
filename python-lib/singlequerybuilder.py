@@ -34,7 +34,12 @@ def getAsterQuery(dss_function, inputTables, outputTable):
                 orderKeys = ""
                 if requiredinput['isOrdered'] and requiredinput['orderByColumn']:
                     orderKeys = "ORDER BY " + requiredinput['orderByColumn']
-                multiplealiasedinputs += '''ON {schema}.{input_table} AS "{input_name}" {partitionKeys} {orderKeys}'''.format(schema=aliasedinputtableschema,
+                if 'Dimension' == requiredinput.get('name', ''):
+                    multiplealiasedinputs += '''ON {schema}.{input_table} DIMENSION'''.format(schema=aliasedinputtableschema,
+                                                                                                                       input_table=requiredinput['value'],
+                                                                                                                       input_name=requiredinput['name']).rstrip() + "\n"
+                else:
+                    multiplealiasedinputs += '''ON {schema}.{input_table} AS "{input_name}" {partitionKeys} {orderKeys}'''.format(schema=aliasedinputtableschema,
                                                                                                                        input_table=requiredinput['value'],
                                                                                                                        input_name=requiredinput['name'],
                                                                                                                        partitionKeys=partitionKeys,

@@ -47,8 +47,8 @@ def do(payload, config, plugin_config, inputs):
                         required_input_dict['kind'] = partitionByKey
                     if 'isOrdered' in input_tab.keys():
                         required_input_dict['isOrdered'] = input_tab['isOrdered']
-                    if 'name' in input_tab.keys():
-                        required_input_dict['name'] = input_tab['name']
+                    if 'name' in input_tab.keys() or ('Dimension' in input_tab.get('requiredInputKind',[]) and 0 < unaliased_inputs.get('count',0)):
+                        required_input_dict['name'] = input_tab.get('name', 'Dimension')
                         required_input_dict['value'] = ""
                         required_input.append(required_input_dict)
                     else:

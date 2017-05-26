@@ -6,5 +6,124 @@
   "function_version": "1.1",
   "function_type": "graph",
   "short_description": "This function computes the shortest distances between all combinations of the specified source and target vertices.",
-  "long_description": "This function computes the shortest distances between all combinations of the specified source and target vertices. "
+  "long_description": "This function computes the shortest distances between all combinations of the specified source and target vertices. ",
+  "input_tables": [
+    {
+      "requiredInputKind": [
+        "PartitionByKey"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "name": "vertices",
+      "isRequired": true,
+      "description": "Vertices table",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "requiredInputKind": [
+        "PartitionByKey"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "name": "edges",
+      "isRequired": true,
+      "description": "Edges table",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "requiredInputKind": [
+        "PartitionByKey"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "name": "sources",
+      "isRequired": false,
+      "description": "Sources table",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "useInR": false
+    },
+    {
+      "requiredInputKind": [
+        "PartitionByKey"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "name": "targets",
+      "isRequired": false,
+      "description": "Targets table",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "useInR": false
+    }
+  ],
+  "argument_clauses": [
+   {
+      "targetTable": "edges",
+      "checkDuplicate": true,
+      "allowPadding": true,
+      "name": "TargetKey",
+      "isRequired": true,
+      "description": "Specifies the names of the columns that comprise the target vertex key in edges table.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "target.key",
+      "useInR": true
+    },
+    {
+      "defaultValue": 10,
+      "upperBound": 2147483647,
+      "upperBoundType": "INCLUSIVE",
+      "allowNaN": false,
+      "name": "MaxDistance",
+      "isRequired": false,
+      "description": "The MaxDistance is an optional argument with defautl 10. The input value must be no greater than 2147483647. The default value is 10.",
+      "datatype": "INTEGER",
+      "allowsLists": false,
+      "rName": "max.distance",
+      "useInR": true
+    },
+    {
+      "targetTable": "edges",
+      "checkDuplicate": true,
+      "allowedTypeGroups": [
+        "NUMERIC"
+      ],
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "EdgeWeight",
+      "isRequired": false,
+      "description": "Specifies the name of the column in the edges table that contains the edge weights for a weighted graph. Input columns must contain numeric SQL types.",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "edge.weight",
+      "useInR": true
+    },
+    {
+      "defaultValue": true,
+      "name": "Directed",
+      "isRequired": false,
+      "description": "The argument indicated whether the edges are directed or not. The default value is true.",
+      "datatype": "BOOLEAN",
+      "allowsLists": false,
+      "rName": "directed",
+      "useInR": true
+    },
+    {
+      "lowerBound": 1,
+      "lowerBoundType": "INCLUSIVE",
+      "allowNaN": false,
+      "name": "GroupSize",
+      "isRequired": false,
+      "description": "The GroupSize should be a positive integer >= 1 The input value must be no less than 1.",
+      "datatype": "LONG",
+      "allowsLists": false,
+      "rName": "group.size",
+      "useInR": true
+    }
+  ]
 }
