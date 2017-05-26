@@ -89,7 +89,7 @@
       "useInR": true
     },
     {
-      "isOutputTable": false,
+      "isOutputTable": true,
       "name": "OutputTable",
       "isRequired": true,
       "description": "Specifies the output table to which cluster information will be printed.",

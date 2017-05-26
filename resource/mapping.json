@@ -261,8 +261,8 @@
   },
   {
     "category": "Cluster Analysis",
-    "function_name": "GMMProfile_name",
-    "file_name": "GMMPROFILE_NAME.json"
+    "function_name": "GMMProfile",
+    "file_name": "GMMPROFILE.json"
   },
   {
     "category": "Graph Analysis",
