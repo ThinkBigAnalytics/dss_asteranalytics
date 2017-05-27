@@ -12,9 +12,9 @@
       "requiredInputKind": [
         "PartitionByKey"
       ],
-      "isOrdered": false,
+      "isOrdered": true,
       "partitionByOne": false,
-      "name": "input",
+      "name": "saxinput",
       "isRequired": true,
       "description": "",
       "datatype": "TABLE_ALIAS",
@@ -53,7 +53,7 @@
   ],
   "argument_clauses": [
     {
-      "targetTable": "input",
+      "targetTable": "saxinput",
       "checkDuplicate": true,
       "allowedTypeGroups": [
         "NUMERIC"
@@ -69,7 +69,7 @@
       "useInR": true
     },
     {
-      "targetTable": "input",
+      "targetTable": "saxinput",
       "checkDuplicate": true,
       "requiredLength": 1,
       "allowPadding": true,
@@ -117,7 +117,7 @@
     },
     {
       "defaultValue": [
-        NaN
+        null
       ],
       "matchLengthOfArgument": "ValueColumns",
       "allowPadding": true,
@@ -131,7 +131,7 @@
     },
     {
       "defaultValue": [
-        NaN
+        null
       ],
       "lowerBound": 0,
       "lowerBoundType": "EXCLUSIVE",
@@ -253,7 +253,7 @@
       "useInR": true
     },
     {
-      "targetTable": "input",
+      "targetTable": "saxinput",
       "checkDuplicate": true,
       "allowPadding": true,
       "name": "Accumulate",

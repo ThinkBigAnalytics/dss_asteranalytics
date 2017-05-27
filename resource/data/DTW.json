@@ -1,0 +1,154 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "1",
+  "json_content_version": "1",
+  "function_name": "DTW",
+  "function_version": "1.0",
+  "function_type": "non-driver",
+  "short_description": "This function is used to perform a comparison between 2 time series.",
+  "long_description": "This function is used to perform a Fast Dynamic Time Warping time series analysis.",
+  "input_tables": [
+    {
+      "requiredInputKind": [
+        "PartitionByKey"
+      ],
+      "isOrdered": true,
+      "partitionByOne": false,
+      "name": "input_table",
+      "isRequired": true,
+      "description": "the table contains the time series information",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "rName": "input.table",
+      "useInR": true
+    },
+    {
+      "requiredInputKind": [
+        "Dimension"
+      ],
+      "isOrdered": true,
+      "partitionByOne": false,
+      "name": "template_table",
+      "isRequired": true,
+      "description": "the table contains the template information",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "rName": "template.table",
+      "useInR": true
+    },
+    {
+      "requiredInputKind": [
+        "PartitionByKey"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "name": "mapping_table",
+      "isRequired": true,
+      "description": "the table contains the mapping between the rows in the inputTable and the rows in the templateTable",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "rName": "mapping.table",
+      "useInR": true
+    }
+  ],
+  "argument_clauses": [
+    {
+      "targetTable": "input_table",
+      "checkDuplicate": true,
+      "allowPadding": true,
+      "name": "InputColumns",
+      "alternateNames": [
+        "Input_Table_Value_Column_Names",
+		"InputTableValueColumnNames"
+      ],
+      "isRequired": true,
+      "description": "The two names in the input_table of the value_column and timestamp_column columns, respectively",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "input.columns",
+      "useInR": true
+    },
+    {
+      "targetTable": "template_table",
+      "checkDuplicate": true,
+      "allowPadding": true,
+      "name": "TemplateColumns",
+      "alternateNames": [
+        "Template_Table_Value_Column_Names",
+		"TemplateTableValueColumnNames"
+      ],
+      "isRequired": true,
+      "description": "The two names in the template_table of the value_column and timestamp_column column, respectively",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "template.columns",
+      "useInR": true
+    },
+    {
+      "targetTable": "input_table",
+      "checkDuplicate": true,
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "TimeseriesId",
+      "isRequired": true,
+      "description": "The column name of input_timeseries_table that specifies the unique ID for a given time series",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "timeseries.id",
+      "useInR": true
+    },
+    {
+      "targetTable": "template_table",
+      "checkDuplicate": true,
+      "requiredLength": 1,
+      "allowPadding": true,
+      "name": "TemplateId",
+      "isRequired": true,
+      "description": "The column name of template_timeseries_table that specifies the unique ID for a given template",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "template.id",
+      "useInR": true
+    },
+    {
+      "defaultValue": 10,
+      "allowNaN": false,
+      "name": "Radius",
+      "isRequired": false,
+      "description": "The integer value that determines the projected warp path from a previous resolution The default value is 10.",
+      "datatype": "INTEGER",
+      "allowsLists": false,
+      "rName": "radius",
+      "useInR": true
+    },
+    {
+      "permittedValues": [
+        "EuclideanDistance",
+        "BinaryDistance",
+        "ManhattanDistance"
+      ],
+      "defaultValue": "EuclideanDistance",
+      "isOutputColumn": false,
+      "name": "DistMethod",
+      "alternateNames": [
+        "Metric"
+      ],
+      "isRequired": false,
+      "description": "The metric used to compute the warping distance The permitted input values are [EuclideanDistance, BinaryDistance, ManhattanDistance]. The default value is EuclideanDistance.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "dist.method",
+      "useInR": true
+    },
+    {
+      "defaultValue": false,
+      "name": "WarpPath",
+      "isRequired": false,
+      "description": "A boolean that determines whether to output the warping path The default value is false.",
+      "datatype": "BOOLEAN",
+      "allowsLists": false,
+      "rName": "warp.path",
+      "useInR": true
+    }
+  ]
+}
