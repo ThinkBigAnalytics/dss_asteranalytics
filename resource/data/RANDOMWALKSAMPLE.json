@@ -7,6 +7,36 @@
   "function_type": "driver",
   "short_description": "Graph Random Walk Sample function.",
   "long_description": "Graph sampling using the random walk algorithm.",
+  "input_tables": [
+    {
+      "requiredInputKind": [
+        "PartitionByKey"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "name": "vertices",
+      "isRequired": true,
+      "description": "Specifies the vertices of the graph",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "rName": "vertices",
+      "useInR": true
+    },
+    {
+      "requiredInputKind": [
+        "PartitionByKey"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "name": "edges",
+      "isRequired": true,
+      "description": "Specifies the edges of the graph",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "rName": "edges",
+      "useInR": true
+    }
+  ],
   "argument_clauses": [
     {
       "isOutputColumn": false,
@@ -61,6 +91,69 @@
       "datatype": "DRIVER",
       "allowsLists": false,
       "useInR": false
+    },
+    {
+      "targetTable": "edges",
+      "checkDuplicate": true,
+      "allowPadding": true,
+      "name": "TargetKey",
+      "isRequired": true,
+      "description": "",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "target.key",
+      "useInR": true
+    },
+    {
+      "defaultValue": 0.15,
+      "lowerBound": 0,
+      "upperBound": 1,
+      "lowerBoundType": "EXCLUSIVE",
+      "upperBoundType": "EXCLUSIVE",
+      "allowNaN": false,
+      "name": "SampleRate",
+      "isRequired": false,
+      "description": "",
+      "datatype": "DOUBLE",
+      "allowsLists": false,
+      "rName": "sample.rate",
+      "useInR": true
+    },
+    {
+      "defaultValue": 0.15,
+      "lowerBound": 0,
+      "upperBound": 1,
+      "lowerBoundType": "EXCLUSIVE",
+      "upperBoundType": "EXCLUSIVE",
+      "allowNaN": false,
+      "name": "FlyBackRate",
+      "isRequired": false,
+      "description": "",
+      "datatype": "DOUBLE",
+      "allowsLists": false,
+      "rName": "sample.rate",
+      "useInR": true
+    },
+    {
+      "allowNaN": false,
+      "name": "seed",
+      "isRequired": false,
+      "description": "",
+      "datatype": "INTEGER",
+      "allowsLists": false,
+      "rName": "seed",
+      "useInR": true
+    },
+    {
+      "isOutputColumn": true,
+      "allowPadding": true,
+      "name": "OutputTables",
+      "isRequired": false,
+      "description": "",
+      "datatype": "STRING",
+      "allowsLists": true,
+      "rName": "output.tables",
+      "useInR": true
     }
   ]
 }
