@@ -40,12 +40,12 @@
     "file_name": "APPROX_PERCENTILE_SUMMARY.json"
   },
   {
-    "category": "Attribution Analysis",
+    "category": "Time Series Analysis",
     "function_name": "Arima",
     "file_name": "ARIMA.json"
   },
   {
-    "category": "Attribution Analysis",
+    "category": "Time Series Analysis",
     "function_name": "ArimaPredictor",
     "file_name": "ARIMAPREDICTOR.json"
   },
@@ -60,7 +60,7 @@
     "file_name": "BASKET_GENERATOR.json"
   },
   {
-    "category": "Attribution Analysis",
+    "category": "Time Series Analysis",
     "function_name": "Burst",
     "file_name": "BURST.json"
   },
@@ -70,7 +70,7 @@
     "file_name": "CFILTER.json"
   },
   {
-    "category": "Attribution Analysis",
+    "category": "Time Series Analysis",
     "function_name": "ChangePointDetection",
     "file_name": "CHANGEPOINTDETECTION.json"
   },
@@ -135,17 +135,17 @@
     "file_name": "DISTNMATCHREDUCE.json"
   },
   {
-    "category": "Attribution Analysis",
+    "category": "Time Series Analysis",
     "function_name": "DTW",
     "file_name": "DTW.json"
   },
   {
-    "category": "Attribution Analysis",
+    "category": "Time Series Analysis",
     "function_name": "DWT",
     "file_name": "DWT.json"
   },
   {
-    "category": "Attribution Analysis",
+    "category": "Time Series Analysis",
     "function_name": "DWT2D",
     "file_name": "DWT2D.json"
   },
@@ -225,7 +225,7 @@
     "file_name": "FPGROWTH.json"
   },
   {
-    "category": "Attribution Analysis",
+    "category": "Time Series Analysis",
     "function_name": "FrequentPaths",
     "file_name": "FREQUENTPATHS.json"
   },
@@ -320,17 +320,17 @@
     "file_name": "IDENTITYMATCH.json"
   },
   {
-    "category": "Attribution Analysis",
+    "category": "Time Series Analysis",
     "function_name": "IDWT",
     "file_name": "IDWT.json"
   },
   {
-    "category": "Attribution Analysis",
+    "category": "Time Series Analysis",
     "function_name": "IDWT2D",
     "file_name": "IDWT2D.json"
   },
   {
-    "category": "Attribution Analysis",
+    "category": "Time Series Analysis",
     "function_name": "Interpolator",
     "file_name": "INTERPOLATOR.json"
   },
@@ -575,7 +575,7 @@
     "file_name": "RANDOMWALKSAMPLE.json"
   },
   {
-    "category": "",
+    "category": "Time Series Analysis",
     "function_name": "RtChangePointDetection",
     "file_name": "RTCHANGEPOINTDETECTION.json"
   },
@@ -585,7 +585,7 @@
     "file_name": "SAMPLE.json"
   },
   {
-    "category": "Attribution Analysis",
+    "category": "Time Series Analysis",
     "function_name": "Sax2",
     "file_name": "SAX2.json"
   },
@@ -610,7 +610,7 @@
     "file_name": "SENTENIZER.json"
   },
   {
-    "category": "Attribution Analysis",
+    "category": "Time Series Analysis",
     "function_name": "SeriesSplitter",
     "file_name": "SERIESSPLITTER.json"
   },
