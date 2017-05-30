@@ -17,7 +17,10 @@
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
       "rName": "source",
-      "useInR": true
+      "useInR": true,
+      "requiredInputKind": [
+        "PartitionByAny"
+      ]
     },
     {
       "isOrdered": false,
@@ -28,7 +31,10 @@
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
       "rName": "reference",
-      "useInR": true
+      "useInR": true,
+      "requiredInputKind": [
+        "Dimension"
+      ]
     }
   ],
   "argument_clauses": [
