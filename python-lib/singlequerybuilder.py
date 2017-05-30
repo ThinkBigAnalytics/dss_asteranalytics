@@ -18,7 +18,7 @@ def getAsterQuery(dss_function, inputTables, outputTable):
         for requiredinput in aliasedinputs:
             if 'value' in requiredinput and requiredinput["value"]:
                 aliasedinputtableschema = next(x.schemaname for x in inputTables if x.datasetname == requiredinput['value'])
-                inputkind = requiredinput['kind']
+                inputkind = requiredinput.get('kind','')
                 partitionKeys = ""
                 if 'Dimension' == inputkind:
                     partitionKeys = 'DIMENSION'
