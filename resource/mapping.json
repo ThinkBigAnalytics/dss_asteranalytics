@@ -205,7 +205,7 @@
     "file_name": "FMEASURE.json"
   },
   {
-    "category": "Ensembles",
+    "category": "Ensemble",
     "function_name": "Forest_Analyze",
     "file_name": "FOREST_ANALYZE.json"
   },
