@@ -236,28 +236,6 @@
       "allowsLists": false,
       "rName": "drop.monitor.table",
       "useInR": true
-    },
-    {
-      "lowerBound": 1,
-      "lowerBoundType": "INCLUSIVE",
-      "allowNaN": false,
-      "name": "Mtry",
-      "isRequired": false,
-      "description": "The input value must be no less than 1.",
-      "datatype": "INTEGER",
-      "allowsLists": false,
-      "rName": "mtry",
-      "useInR": true
-    },
-    {
-      "allowNaN": false,
-      "name": "MtrySeed",
-      "isRequired": false,
-      "description": "",
-      "datatype": "LONG",
-      "allowsLists": false,
-      "rName": "mtry.seed",
-      "useInR": true
     }
   ]
 }
