@@ -14,7 +14,7 @@
       ],
       "isOrdered": false,
       "partitionByOne": false,
-      "name": "AttributeTable",
+      "name": "attribute_table",
       "isRequired": true,
       "description": "Specifies the name of the table containing the attribute names and the values",
       "datatype": "TABLE_ALIAS",
@@ -28,7 +28,7 @@
       ],
       "isOrdered": false,
       "partitionByOne": false,
-      "name": "ModelTable",
+      "name": "model_table",
       "isRequired": true,
       "description": "Specifies the name of the table containing the output model from single_tree_drive",
       "datatype": "TABLE_ALIAS",
@@ -39,6 +39,7 @@
   ],
   "argument_clauses": [
     {
+      "targetTable": "attribute_table",
       "isOutputColumn": false,
       "allowPadding": true,
       "name": "AttrTableGroupbyColumns",
@@ -47,12 +48,13 @@
       ],
       "isRequired": true,
       "description": "Specifies the names of the columns on which attribute_table is partioned.",
-      "datatype": "STRING",
+      "datatype": "COLUMNS",
       "allowsLists": true,
       "rName": "attr.table.groupby.columns",
       "useInR": true
     },
     {
+      "targetTable": "attribute_table",
       "isOutputColumn": false,
       "allowPadding": true,
       "name": "AttrTablePidColumns",
@@ -61,12 +63,13 @@
       ],
       "isRequired": true,
       "description": "Specifies the names of the columns that define the point ids.",
-      "datatype": "STRING",
+      "datatype": "COLUMNS",
       "allowsLists": true,
       "rName": "attr.table.pid.columns",
       "useInR": true
     },
     {
+      "targetTable": "attribute_table",
       "isOutputColumn": false,
       "name": "AttrTableValColumn",
       "alternateNames": [
@@ -74,10 +77,91 @@
       ],
       "isRequired": true,
       "description": "Specifies the names of attribute table columns that define the attribute value.",
-      "datatype": "STRING",
+      "datatype": "COLUMNS",
       "allowsLists": false,
       "rName": "attr.table.val.column",
       "useInR": true
+    },
+    {
+      "targetTable": "model_table",
+      "isOutputColumn": false,
+      "name": "MODELTABLE_ATTRCOLUMNS",
+      "isRequired": true,
+      "description": "",
+      "datatype": "COLUMNS",
+      "allowsLists":false
+    },
+    {
+      "targetTable": "model_table",
+      "isOutputColumn": false,
+      "name": "MODELTABLE_NODECOLUMN",
+      "isRequired": true,
+      "description": "",
+      "datatype": "COLUMNS",
+      "allowsLists":false
+    },
+    {
+      "targetTable": "model_table",
+      "isOutputColumn": false,
+      "name": "MODELTABLE_SIZECOLUMN",
+      "isRequired": true,
+      "description": "",
+      "datatype": "COLUMNS",
+      "allowsLists":false
+    },
+    {
+      "targetTable": "model_table",
+      "isOutputColumn": false,
+      "name": "MODELTABLE_LEFTSIZECOLUMN",
+      "isRequired": true,
+      "description": "",
+      "datatype": "COLUMNS",
+      "allowsLists":false
+    },
+    {
+      "targetTable": "model_table",
+      "isOutputColumn": false,
+      "name": "MODELTABLE_RIGHTSIZECOLUMN",
+      "isRequired": true,
+      "description": "",
+      "datatype": "COLUMNS",
+      "allowsLists":false
+    },
+    {
+      "targetTable": "model_table",
+      "isOutputColumn": false,
+      "name": "MODELTABLE_SPLITCOLUMN",
+      "isRequired": true,
+      "description": "",
+      "datatype": "COLUMNS",
+      "allowsLists":false
+    },
+    {
+      "targetTable": "model_table",
+      "isOutputColumn": false,
+      "name": "MODELTABLE_LABELCOLUMN",
+      "isRequired": true,
+      "description": "",
+      "datatype": "COLUMNS",
+      "allowsLists":false
+    },
+    {
+      "targetTable": "model_table",
+      "isOutputColumn": false,
+      "name": "MODELTABLE_LEFTLABELCOLUMN",
+      "isRequired": true,
+      "description": "",
+      "datatype": "COLUMNS",
+      "allowsLists":false
+    },
+    {
+      "targetTable": "model_table",
+      "isOutputColumn": false,
+      "name": "MODELTABLE_RIGHTLABELCOLUMN",
+      "isRequired": true,
+      "description": "",
+      "datatype": "COLUMNS",
+      "allowsLists":false
     }
   ]
 }
