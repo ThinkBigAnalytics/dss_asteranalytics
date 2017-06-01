@@ -278,9 +278,9 @@
         runFunction()
         $scope.listenForResults(function () {
 
-          if ($('.alert:not(.ng-hide)').length === 0) return false;
+          if ($('.alert:not(.ng-hide):not(.messenger-message)').length === 0) return false;
 
-          const title = $('.alert:not(.ng-hide)')[0].className.split(' ')[1].split('-')[1]
+          const title = $('.alert:not(.ng-hide):not(.messenger-message)')[0].className.split(' ')[1].split('-')[1]
 
           if (!title || title === 'info') {
             return false
