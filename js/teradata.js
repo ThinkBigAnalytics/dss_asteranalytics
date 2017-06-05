@@ -21,6 +21,41 @@
      */
     let runFunction;
 
+    /**
+     * Dialog container.
+     */
+    const $dialog = $('#dialog');
+
+    /**
+     * Validation dialog container.
+     */
+    const $validationDialog = $('#dialog-validation');
+
+    /**
+     * Function metadata path - this path contains the JSON metadata of each function.
+     */
+    const FUNCTION_METADATA_PATH = '/plugins/AsterAnalytics/resource/data/';
+
+    /**
+     * Parameters to use for the dialog box.
+     */
+    const DIALOG_PARAMETERS = {
+      modal: true,
+      width: '33%',
+      minHeight: 250,
+    }
+
+    /**
+     * Object keys that are repeatedly used in this script.
+     */
+    const KEYS = {
+      LONG_DESCRIPTION: 'long_description',
+      ALTERNATE_NAMES: 'alternateNames',
+      TARGET_TABLE: 'targetTable',
+      INPUT_TABLE: 'INPUTTABLE',
+      INPUT_TABLE_ALTERNATIVE: 'INPUT_TABLE'
+    }
+
     $.extend($scope, {
 
       /**
@@ -29,13 +64,12 @@
        * This is for displaying Aster-side errors.
        */
       dialog: function (title, content) {
-        $('#dialog').attr('title', title);
-        $('#dialog > pre').text(content);
-        $('#dialog').dialog({
-          modal: true,
-          width: '33%',
-          minHeight: 250,
-        });
+
+        $dialog.find('pre').text(content);
+        $dialog
+          .attr('title', title)
+          .dialog(DIALOG_PARAMETERS);
+
       },
 
       /**
@@ -44,12 +78,10 @@
        * This is for displaying frontend validation errors.
        */
       validationDialog: function (html) {
-        $('#dialog-validation > div').html(html);
-        $('#dialog-validation').dialog({
-          modal: true,
-          width: '33%',
-          minHeight: 250,
-        });
+
+        $validationDialog.find('div').html(html);
+        $validationDialog.dialog(DIALOG_PARAMETERS);
+
       },
 
       /**
@@ -62,9 +94,9 @@
         }
 
         $http
-          .get(`/plugins/AsterAnalytics/resource/data/${selectedFunction}.json`)
+          .get(`${FUNCTION_METADATA_PATH}${selectedFunction}.json`)
           .success(data => {
-            functionMetadata = data
+            functionMetadata = data;
             $scope.activateTabs();
             $scope.activateMultiTagsInput();
             $scope.activateTooltips();
@@ -76,48 +108,63 @@
        * Gets the function description from the static JSON metadata.
        */
       getFunctionDescription: function () {
-        return (functionMetadata && 'long_description' in functionMetadata) ?
+
+        return (functionMetadata && KEYS.LONG_DESCRIPTION in functionMetadata) ?
           functionMetadata.long_description :
           '';
+
       },
 
       /**
        * Gets the description of the given argument from the static JSON metadata.
        */
       getArgumentDescription: function (selectedFunction, functionArgument) {
-        let description = '';
-        if (functionMetadata && functionMetadata.argument_clauses) {
 
-          const functionargumententry = functionMetadata.argument_clauses.filter(function (item) {
-            if ('alternateNames' in item) {
-              return item.alternateNames
+        functionArgument = functionArgument.toUpperCase();
+
+        if (!functionMetadata || !functionMetadata.argument_clauses) 
+          return '';
+
+        const potentialMatches = functionMetadata.argument_clauses.filter(item =>
+          KEYS.ALTERNATE_NAMES in item 
+            ? item.alternateNames
                 .map(x => x.toUpperCase())
-                .indexOf(functionArgument.toUpperCase()) > -1;
-            } else {
-              return item.name.toUpperCase() === functionArgument.toUpperCase();
-            }
-          });
+                .includes(functionArgument)
+            : item.name.toUpperCase() === functionArgument
+        );
+        
+        return potentialMatches.length > 0 ? potentialMatches[0].description : '';
 
-          if (functionargumententry && functionargumententry.length > 0) {
-            description = functionargumententry[0].description;
-          }
-
-        }
-
-        return description;
       },
 
       /**
        * Gets the schema of the unaliased inputs from the static JSON metadata.
        */
       getSchemaOfUnaliasedInputs: function (unaliasedInputsList) {
-        if (unaliasedInputsList.values && unaliasedInputsList.values.length > 0) {
-          let targetTableName = unaliasedInputsList.values[0];
-          if (targetTableName && $scope.inputschemas && targetTableName in $scope.inputschemas) {
-            return $scope.inputschemas[targetTableName];
-          }
-        }
-        return [];
+
+        if (!unaliasedInputsList 
+          || !unaliasedInputsList.values 
+          || !unaliasedInputsList.values.length)
+          return [];
+
+        const targetTableName = unaliasedInputsList.values[0];
+        
+        return $scope.inputschemas 
+          && targetTableName 
+          && targetTableName in $scope.inputschemas
+          ? $scope.inputschemas[targetTableName]
+          : []
+
+      },
+
+      findTableNameInArgumentsList: function(argumentsList) {
+
+        let potentialMatches = argumentsList
+          .filter(arg => [KEYS.INPUT_TABLE, KEYS.INPUT_TABLE_ALTERNATIVE].includes(arg.name.toUpperCase()));
+        if (potentialMatches.length)
+            return potentialMatches[0].value;
+        return ''
+        
       },
 
       /**
@@ -126,45 +173,48 @@
        */
       getSchema: function (functionArgument, aliasedInputsList, unaliasedInputsList, argumentsList) {
 
+        aliasedInputsList = aliasedInputsList || []
+        argumentsList = argumentsList || []
+
+        const hasTargetTable = KEYS.TARGET_TABLE in functionArgument
         let targetTableName = ''
-        if ('targetTable' in functionArgument) {
-          let targetTableAlias = functionArgument.targetTable;
-          if ('INPUTTABLE' === targetTableAlias.toUpperCase()) {
-            if (unaliasedInputsList.count > 0) {
-              if (unaliasedInputsList.values && unaliasedInputsList.values.length > 0) {
-                targetTableName = unaliasedInputsList.values[0];
-              }
-            } else {
-              let inputtableargument = (argumentsList || [])
-                .filter(arg => 'INPUTTABLE' === arg.name.toUpperCase() || 'INPUT_TABLE' === arg.name.toUpperCase());
-              if (inputtableargument.length > 0) {
-                targetTableName = inputtableargument[0].value;
-              }
-            }
+        
+        if (hasTargetTable) {
+
+          const targetTableAlias = functionArgument.targetTable.toUpperCase();
+          const isAliased = KEYS.INPUT_TABLE !== targetTableAlias;
+
+          if (isAliased) {
+
+            let matchingInputs = aliasedInputsList.filter(input => targetTableAlias === input.name.toUpperCase());
+            if (matchingInputs.length > 0)
+              targetTableName = matchingInputs[0].value;
+            else
+              targetTableName = $scope.findTableNameInArgumentsList(argumentsList);
+
           } else {
-            let inputslist = (aliasedInputsList || []).filter(n => targetTableAlias.toUpperCase() === n.name.toUpperCase());
-            if (inputslist.length > 0) {
-              targetTableName = inputslist[0].value;
-            } else {
-              let inputtableargument = (argumentsList || []).filter(arg => targetTableAlias.toUpperCase() === arg.name.toUpperCase() || 'INPUT_TABLE' === arg.name.toUpperCase());
-              if (inputtableargument.length > 0) {
-                targetTableName = inputtableargument[0].value;
-              }
-            }
+
+            if (unaliasedInputsList.count && unaliasedInputsList.values && unaliasedInputsList.values.length)
+              targetTableName = unaliasedInputsList.values[0];
+            else
+              targetTableName = $scope.findTableNameInArgumentsList(argumentsList);
+
           }
+
         } else if (unaliasedInputsList.values && unaliasedInputsList.values.length > 0) {
+          
           targetTableName = unaliasedInputsList.values[0]
+        
         }
 
-        if (!targetTableName || !$scope.inputschemas) {
+        if (!targetTableName || !$scope.inputschemas)
           return [];
-        }
 
-        if (targetTableName && targetTableName in $scope.inputschemas) {
+        if (targetTableName && targetTableName in $scope.inputschemas)
           return $scope.inputschemas[targetTableName];
-        }
 
         return $scope.schemas;
+
       },
 
       /**
@@ -181,47 +231,51 @@
        * Checks whether or not the given argument is an output table or not.
        */
       isArgumentOutputTable: function (functionArgument) {
-        if (functionMetadata && functionMetadata.argument_clauses) {
-          const functionargumententry = functionMetadata.argument_clauses.filter(function (item) {
-            if ('alternateNames' in item) {
-              return item.alternateNames
+
+        if (!functionMetadata || !functionMetadata.argument_clauses) 
+          return false;
+
+        const potentialMatches = functionMetadata.argument_clauses.filter(item =>
+          KEYS.ALTERNATE_NAMES in item 
+            ? item.alternateNames
                 .map(x => x.toUpperCase())
-                .indexOf(functionArgument.name.toUpperCase()) > -1;
-            } else {
-              return item.name.toUpperCase() === functionArgument.name.toUpperCase();
-            }
-          });
-          if (functionargumententry && functionargumententry.length > 0) {
-            return functionargumententry[0].isOutputTable;
-          }
-        }
-        return false;
+                .includes(functionArgument)
+            : item.name.toUpperCase() === functionArgument
+        );
+
+        return potentialMatches 
+          && potentialMatches.length > 0 
+          && potentialMatches[0].isOutputTable;
+
       },
 
       /**
        * Checks whether or not required arguments are present in the function metadata.
        */
       hasRequiredArguments: function () {
-        if (!$scope.config.function.arguments || !$scope.config.function.arguments.length) {
+
+        if (!$scope.config.function.arguments || !$scope.config.function.arguments.length)
           return false
-        }
 
         return $scope.config.function.arguments.filter(x => x.isRequired).length > 0
-      },
+      
+    },
 
       /**
        * Checks whether or not optional arguments are present in the function metadata.
        */
       hasOptionalArguments: function () {
-        let hasOptionalArgument = $scope.config.function.arguments &&
-          $scope.config.function.arguments.length &&
-          ($scope.config.function.arguments.filter(x => !x.isRequired).length > 0);
 
-        let hasOptionalInputTable = $scope.config.function.required_input &&
-          $scope.config.function.required_input.length &&
-          ($scope.config.function.required_input.filter(x => !x.isRequired).length > 0);
+        const hasOptionalInputTable = $scope.config.function.required_input 
+          && $scope.config.function.required_input.length 
+          && ($scope.config.function.required_input.filter(x => !x.isRequired).length > 0);
+
+        const hasOptionalArgument = $scope.config.function.arguments 
+          && $scope.config.function.arguments.length 
+          && ($scope.config.function.arguments.filter(x => !x.isRequired).length > 0);
 
         return hasOptionalInputTable || hasOptionalArgument;
+
       },
 
       /**
@@ -248,10 +302,10 @@
        * 
        * Returns true if valid. If not, it shows an error dialog then returns false.
        */
-      validate: function() {
+      validate: function () {
 
         const invalids = []
-        $('.ng-invalid:not(form,.ng-hide)').each((i,x) => invalids.push($(x).parent().prev().text()))
+        $('.ng-invalid:not(form,.ng-hide)').each((i, x) => invalids.push($(x).parent().prev().text()))
 
         if (invalids.length) {
           $scope.validationDialog(`Please amend the following fields: <ul>${invalids.map(x => `<li>${x}</li>`).join('')}</ul>`)
@@ -282,9 +336,8 @@
 
           const title = $('.alert:not(.ng-hide):not(.messenger-message)')[0].className.split(' ')[1].split('-')[1]
 
-          if (!title || title === 'info') {
+          if (!title || title === 'info')
             return false
-          }
 
           const result = $('.alert:not(.ng-hide) > h4').text()
           const detailsUrl = $('.alert:not(.ng-hide) a[href]').attr('href')
@@ -337,10 +390,11 @@
 
         $('#main-container').tooltip();
         $('.tagsinput').each((i, x) => {
+
           const original = $(x).prev().data('original-title')
-          const title = original 
-            ? (original + '<br><br><b>(Press ENTER to add to list)</b>') 
-            : '<b>(Press ENTER to add to list)</b>'
+          const title = original ?
+            (original + '<br><br><b>(Press ENTER to add to list)</b>') :
+            '<b>(Press ENTER to add to list)</b>'
           $(x).data({
               toggle: 'tooltip',
               container: 'body',
@@ -350,6 +404,7 @@
               'original-title': title
             })
             .tooltip()
+
         });
 
       },
@@ -359,10 +414,12 @@
        */
       activateMultiTagsInput: function () {
         try {
+          
           $('input.teradata-tags').tagsInput({
-            'onChange': x => $(x).trigger('change'),
-            'defaultText': 'add param',
+            onChange: x => $(x).trigger('change'),
+            defaultText: 'add param',
           });
+          
         } catch (e) {}
       },
 
