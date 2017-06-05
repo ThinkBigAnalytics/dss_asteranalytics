@@ -46,6 +46,11 @@
     }
 
     /**
+     * Number of milliseconds per listen interval.
+     */
+    const LISTEN_INTERVAL = 50;
+
+    /**
      * Object keys that are repeatedly used in this script.
      */
     const KEYS = {
@@ -290,11 +295,12 @@
        */
       listenForResults: function (f) {
         const listener = setInterval(() => {
-          if ($('.recipe-editor-job-result').length && f()) {
+          const $jobResult = $('.recipe-editor-job-result')
+          if ($jobResult.length && f()) {
             clearInterval(listener);
-            $('.recipe-editor-job-result').remove();
+            $jobResult.remove();
           }
-        }, 50)
+        }, LISTEN_INTERVAL)
       },
 
       /**
@@ -330,22 +336,29 @@
         if (!$scope.validate()) return;
 
         runFunction()
+
         $scope.listenForResults(function () {
 
-          if ($('.alert:not(.ng-hide):not(.messenger-message)').length === 0) return false;
+          const $results = $('.alert:not(.ng-hide):not(.messenger-message)')
 
-          const title = $('.alert:not(.ng-hide):not(.messenger-message)')[0].className.split(' ')[1].split('-')[1]
+          if ($results.length === 0) return false;
 
-          if (!title || title === 'info')
-            return false
+          try {
 
-          const result = $('.alert:not(.ng-hide) > h4').text()
-          const detailsUrl = $('.alert:not(.ng-hide) a[href]').attr('href')
-          $('.alert:not(.ng-hide)').remove()
+            const title = $results.get(0).classList[1].split('-')[1]
 
-          $scope.dialog(title, result)
+            if (!title || title === 'info')
+              return false
 
-          return true
+            const result = $results.find('h4').text()
+            $results.remove()
+            $scope.dialog(title, result)
+
+            return true
+
+          } catch (e) {}
+          
+          return false
 
         })
 
@@ -419,7 +432,7 @@
             onChange: x => $(x).trigger('change'),
             defaultText: 'add param',
           });
-          
+
         } catch (e) {}
       },
 
