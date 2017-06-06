@@ -500,10 +500,19 @@
 
       },
 
+      cleanName: function(rawName) {
+
+        return rawName.split('_').join(' ').toLowerCase()
+
+      },
+
       /**
        * Preprocess function metadata.
        */
       preprocessMetadata: function() {
+
+        console.warn($scope.config.function.arguments)
+        console.warn(functionMetadata)
 
         let i = 0;
         $scope.config.function.arguments.forEach(argument => {

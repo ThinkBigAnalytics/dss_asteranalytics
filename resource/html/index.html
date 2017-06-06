@@ -10,7 +10,7 @@
     <div class="control-group">
       <label class="control-label">Function Name</label>
       <div class="controls">
-        <select ng-model="config.function" ng-options="choice.name.split('_').join(' ').toLowerCase() for choice in choices track by choice.name"
+        <select ng-model="config.function" ng-options="cleanName(choice.name) for choice in choices track by choice.name"
           ng-change="getFunctionMetadata(config.function.name)">
           <option value="" disabled selected>Select an Aster function...</option>
         </select>
@@ -58,7 +58,7 @@
               </tr>
 
               <tr ng-repeat="item in config.function.required_input" ng-model="config.function.required_input" ng-if="item.hasOwnProperty('name') && item.isRequired">
-                <td style="text-transform: capitalize">{{ item.name.split('_').join(' ') | lowercase }} ({{item.kind}})</td>
+                <td style="text-transform: capitalize">{{ cleanName(item.name) }} ({{item.kind}})</td>
                 <td>
                   <select required ng-model="item.value" ng-options="t.fullName.split('.')[1] as t.fullName.split('.')[1] for t in inputs">
                       <option value="" selected>--No Selection--</option>
@@ -101,7 +101,7 @@
 
 
               <tr ng-repeat="item in config.function.arguments" ng-model="config.function.arguments" ng-if="item.isRequired">
-                <td style="text-transform: capitalize">{{ item.name.split('_').join(' ') | lowercase }}</td>
+                <td style="text-transform: capitalize">{{ cleanName(item.name) }}</td>
                 <td>
                   <input required type="text" ng-model="item.value" ng-if="(['STRING','DOUBLE','INTEGER','DRIVER','SQLEXPR', 'LONG'].indexOf(item.datatype) >= 0 || (item.datatype == 'TABLE_NAME' && isArgumentOutputTable(item))) && !item.allowsLists"
                     data-toggle="tooltip" data-container="body" title="{{ getArgumentDescription(config.function.name, item.name) }}"
@@ -152,7 +152,7 @@
 
             <tbody>
               <tr ng-repeat="item in config.function.required_input" ng-model="config.function.required_input" ng-if="item.hasOwnProperty('name') && !item.isRequired">
-                <td style="text-transform: capitalize">{{ item.name.split('_').join(' ') | lowercase }} ({{item.kind}})</td>
+                <td style="text-transform: capitalize">{{ cleanName(item.name) }} ({{item.kind}})</td>
                 <td>
                   <select ng-model="item.value" ng-options="inputtable.fullName.split('.')[1] as inputtable.fullName.split('.')[1] for inputtable in inputs">
                       <option value="" selected>--No Selection--</option>
@@ -164,7 +164,7 @@
                 </td>
               </tr>
               <tr ng-repeat="item in config.function.arguments" ng-model="config.function.arguments" ng-if="!item.isRequired">
-                <td style="text-transform: capitalize">{{ item.name.split('_').join(' ') | lowercase }}</td>
+                <td style="text-transform: capitalize">{{ cleanName(item.name) }}</td>
                 <td>
                   <input type="text" ng-model="item.value" ng-if="(['STRING','DOUBLE','INTEGER','DRIVER','SQLEXPR', 'LONG'].indexOf(item.datatype) >= 0 || (item.datatype == 'TABLE_NAME' && isArgumentOutputTable(item))) && !item.allowsLists"
                     data-toggle="tooltip" data-container="body" title="{{ getArgumentDescription(config.function.name, item.name) }}"
