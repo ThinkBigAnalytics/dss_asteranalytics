@@ -8,7 +8,10 @@ import json
 
 
 def getTableNameFromArgument(argumentValue, inputTables):
-    return next("'" + x.schemaname + '.' + x.tablenamewithoutschema + "'" for x in inputTables if argumentValue == x.datasetname)
+    return next("'" + getTableNameFromTable(x) + "'" for x in inputTables if argumentValue == x.datasetname)
+
+def getTableNameFromTable(inputTable):
+    return inputTable.tablenamewithoutschema if 'public' == inputTable.schemaname else '.'.join([inputTable.schemaname, inputTable.tablenamewithoutschema])
 
 def getJoinedArgumentsString(cargumentslist, arg_dict, inputTables=[]):
     regex = r",\s*(?=(?:[^']*\'[^']*\')*[^']*$)"

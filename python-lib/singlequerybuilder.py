@@ -5,6 +5,8 @@ except ImportError:
 # -*- coding: utf-8 -*-
 import asterqueryutility as queryutility
 
+# break this code down to smaller functions. add unit tests along the way
+
 def getAsterQuery(dss_function, inputTables, outputTable):
     # query
     multiplealiasedinputs = ""
