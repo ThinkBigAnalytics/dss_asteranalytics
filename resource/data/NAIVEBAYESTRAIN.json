@@ -73,11 +73,11 @@
   ],
   "cascaded_functions":[
     {
-      "name":"naiveBayesMap",
+      "name":"NAIVEBAYESMAP",
       "arguments_clauses":["CATEGORICALINPUTS", "NUMERICINPUTS", "RESPONSE"]
     },
     {
-      "name":"naiveBayesReduce",
+      "name":"NAIVEBAYESREDUCE",
       "arguments_clauses":[],
       "arguments_nonuserdefined":[],
       "partitionBy":{"key":"class","isSetByUser":false}

@@ -7,6 +7,21 @@
   "function_type": "sqlmr",
   "short_description": "Parses PST files.",
   "long_description": "Parses Email (PST) files on AFS",
+  "input_tables": [
+    {
+      "requiredInputKind": [
+        "PartitionByAny"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "isRequired": true,
+      "description": "An empty fact table used to run the function.",
+      "name":"empty_table",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "useInR": true
+    }
+  ],
   "argument_clauses": [
     {
       "isOutputColumn": false,
