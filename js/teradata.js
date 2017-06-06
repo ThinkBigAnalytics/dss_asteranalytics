@@ -108,10 +108,11 @@
           return;
         }
 
-        $http
+        const promise = $http
           .get(`${FUNCTION_METADATA_PATH}${selectedFunction}.json`)
           .success(data => {
             functionMetadata = data;
+            $scope.preprocessMetadata();
             $scope.activateTabs();
             $scope.activateMultiTagsInput();
             $scope.activateTooltips();
@@ -386,7 +387,7 @@
        * Communicates with Python backend 
        * and acquires necessary data to display in the recipe UI.
        */
-      communicateWithBackend: function () {
+      communicateWithBackend: function (f) {
 
         $scope.callPythonDo({}).then(
           data => $.extend($scope, data),
@@ -500,13 +501,29 @@
       },
 
       /**
+       * Preprocess function metadata.
+       */
+      preprocessMetadata: function() {
+
+        let i = 0;
+        $scope.config.function.arguments.forEach(argument => {
+
+          if (typeof functionMetadata.argument_clauses[i].defaultValue != 'undefined') {
+            argument.value = functionMetadata.argument_clauses[i].defaultValue;
+          }
+
+          ++i;
+
+        });
+
+      },
+
+      /**
        * Initializes this plugin.
        */
       initialize: function (selectedFunction) {
 
         $scope.communicateWithBackend();
-        $scope.getFunctionMetadata(selectedFunction);
-
         $scope.activateUi();
 
       }
