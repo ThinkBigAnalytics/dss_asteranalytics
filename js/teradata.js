@@ -46,6 +46,14 @@
     }
 
     /**
+     * Parameters to use for the dialog box CSS.
+     */
+    const DIALOG_CSS_PARAMETERS = { 
+      'max-height': '70vh', 
+      overflow: 'auto'
+    }
+
+    /**
      * Number of milliseconds per listen interval.
      */
     const LISTEN_INTERVAL = 50;
@@ -74,6 +82,7 @@
         $dialog
           .attr('title', title)
           .dialog(DIALOG_PARAMETERS);
+        $dialog.css(DIALOG_CSS_PARAMETERS);
 
       },
 
@@ -86,6 +95,7 @@
 
         $validationDialog.find('div').html(html);
         $validationDialog.dialog(DIALOG_PARAMETERS);
+        $validationDialog.css(DIALOG_CSS_PARAMETERS);
 
       },
 
