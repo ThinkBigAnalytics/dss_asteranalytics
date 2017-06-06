@@ -47,6 +47,29 @@
             </thead>
 
             <tbody>
+              <tr ng-if="shouldShowPartitionOrderFields(config.function.unaliased_inputs)">
+                <td>Unaliased Input Tables</td>
+                <td>
+                  <select required multiple size="8" ng-model="config.function.unaliased_inputs.values" ng-options="t.fullName.split('.')[1] as t.fullName.split('.')[1] for t in inputs"
+                    data-toggle="tooltip" data-container="body" data-placement="right" data-html="true" title="<b>(Ctrl+Click to multi-select)</b>">
+                      <option value="" selected>--No Selection--</option>
+                  </select>
+                </td>
+              </tr>
+
+              <tr ng-repeat="item in config.function.required_input" ng-model="config.function.required_input" ng-if="item.hasOwnProperty('name') && item.isRequired">
+                <td style="text-transform: capitalize">{{ item.name.split('_').join(' ') | lowercase }} ({{item.kind}})</td>
+                <td>
+                  <select required ng-model="item.value" ng-options="t.fullName.split('.')[1] as t.fullName.split('.')[1] for t in inputs">
+                      <option value="" selected>--No Selection--</option>
+                  </select>
+                  <input required style="margin-left: 4px;" ng-show="'PartitionByKey' == item.kind" placeholder="partition column" type="text"
+                    ng-model="item.partitionAttributes" />
+                  <input required style="margin-left: 4px;" ng-show="item.isOrdered" type="text" ng-model="item.orderByColumn" placeholder="order by column"
+                  />
+                </td>
+              </tr>
+              
               <tr ng-if="config.function.isOrdered && shouldShowPartitionOrderFields(config.function.unaliased_inputs)">
                 <td>ORDER BY Column</td>
                 <td>
@@ -111,29 +134,6 @@
                 </td>
               </tr>
 
-              <tr ng-if="shouldShowPartitionOrderFields(config.function.unaliased_inputs)">
-                <td>Unaliased Input Tables</td>
-                <td>
-                  <select required multiple size="8" ng-model="config.function.unaliased_inputs.values" ng-options="t.fullName.split('.')[1] as t.fullName.split('.')[1] for t in inputs"
-                    data-toggle="tooltip" data-container="body" data-placement="right" data-html="true" title="<b>(Ctrl+Click to multi-select)</b>">
-                      <option value="" selected>--No Selection--</option>
-                  </select>
-                </td>
-              </tr>
-
-              <tr ng-repeat="item in config.function.required_input" ng-model="config.function.required_input" ng-if="item.hasOwnProperty('name') && item.isRequired">
-                <td style="text-transform: capitalize">{{ item.name.split('_').join(' ') | lowercase }} ({{item.kind}})</td>
-                <td>
-                  <select required ng-model="item.value" ng-options="t.fullName.split('.')[1] as t.fullName.split('.')[1] for t in inputs">
-                      <option value="" selected>--No Selection--</option>
-                  </select>
-                  <input required style="margin-left: 4px;" ng-show="'PartitionByKey' == item.kind" placeholder="partition column" type="text"
-                    ng-model="item.partitionAttributes" />
-                  <input required style="margin-left: 4px;" ng-show="item.isOrdered" type="text" ng-model="item.orderByColumn" placeholder="order by column"
-                  />
-                </td>
-              </tr>
-
             </tbody>
           </table>
 
@@ -151,6 +151,18 @@
             </thead>
 
             <tbody>
+              <tr ng-repeat="item in config.function.required_input" ng-model="config.function.required_input" ng-if="item.hasOwnProperty('name') && !item.isRequired">
+                <td style="text-transform: capitalize">{{ item.name.split('_').join(' ') | lowercase }} ({{item.kind}})</td>
+                <td>
+                  <select ng-model="item.value" ng-options="inputtable.fullName.split('.')[1] as inputtable.fullName.split('.')[1] for inputtable in inputs">
+                      <option value="" selected>--No Selection--</option>
+                  </select>
+                  <input style="margin-left: 4px;" ng-show="'PartitionByKey' == item.kind" placeholder="partition column" type="text" ng-model="item.partitionAttributes"
+                  />
+                  <input style="margin-left: 4px;" ng-show="item.isOrdered" type="text" ng-model="item.orderByColumn" placeholder="order by column"
+                  />
+                </td>
+              </tr>
               <tr ng-repeat="item in config.function.arguments" ng-model="config.function.arguments" ng-if="!item.isRequired">
                 <td style="text-transform: capitalize">{{ item.name.split('_').join(' ') | lowercase }}</td>
                 <td>
@@ -182,18 +194,6 @@
                     ng-options="t.fullName.split('.')[1] as t.fullName.split('.')[1] for t in inputs">
                     <option value="" selected>--No Selection--</option>
                   </select>
-                </td>
-              </tr>
-              <tr ng-repeat="item in config.function.required_input" ng-model="config.function.required_input" ng-if="item.hasOwnProperty('name') && !item.isRequired">
-                <td style="text-transform: capitalize">{{ item.name.split('_').join(' ') | lowercase }} ({{item.kind}})</td>
-                <td>
-                  <select ng-model="item.value" ng-options="inputtable.fullName.split('.')[1] as inputtable.fullName.split('.')[1] for inputtable in inputs">
-                      <option value="" selected>--No Selection--</option>
-                  </select>
-                  <input style="margin-left: 4px;" ng-show="'PartitionByKey' == item.kind" placeholder="partition column" type="text" ng-model="item.partitionAttributes"
-                  />
-                  <input style="margin-left: 4px;" ng-show="item.isOrdered" type="text" ng-model="item.orderByColumn" placeholder="order by column"
-                  />
                 </td>
               </tr>
             </tbody>
