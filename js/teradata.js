@@ -9,9 +9,12 @@
      * the Angular rendering cycle will have finished before
      * running the given function f.
      */
-    const $delay = f => $timeout(f, 500)
+    const $delay = f => $timeout(f, 500);
 
-    const SEPARATOR = String.fromCharCode(0)
+    /**
+     * Default separator for list-like objects.
+     */
+    const SEPARATOR = String.fromCharCode(0);
 
     /**
      * A private variable containing the function metadata.
@@ -514,17 +517,32 @@
        */
       preprocessMetadata: function() {
 
-        console.warn($scope.config.function.arguments)
-        console.warn(functionMetadata)
+        if (
+          !functionMetadata
+          || !$scope.config
+          || !$scope.config.function
+          || !$scope.config.function.arguments 
+          || !$scope.config.function.arguments.length) return;
 
-        let i = 0;
-        $scope.config.function.arguments.forEach(argument => {
+        $delay(() => {
 
-          if (typeof functionMetadata.argument_clauses[i].defaultValue != 'undefined') {
-            argument.value = functionMetadata.argument_clauses[i].defaultValue;
-          }
+          // Re-arrange argument order.
+          $scope.config.function.arguments = [
+            ...$scope.config.function.arguments.filter(x => x.datatype === 'TABLE_NAME'),
+            ...$scope.config.function.arguments.filter(x => x.datatype !== 'TABLE_NAME'),
+          ]
 
-          ++i;
+          // Properly bind default arguments.
+          let i = 0;
+          $scope.config.function.arguments.forEach(argument => {
+
+            if (typeof functionMetadata.argument_clauses[i].defaultValue != 'undefined') {
+              argument.value = functionMetadata.argument_clauses[i].defaultValue;
+            }
+
+            ++i;
+
+          });
 
         });
 
@@ -533,14 +551,30 @@
       /**
        * Initializes this plugin.
        */
-      initialize: function (selectedFunction) {
+      initialize: function () {
 
         $scope.communicateWithBackend();
+        if ($scope.config.function) {
+          $scope.getFunctionMetadata($scope.config.function.name);
+        }
+        $scope.preprocessMetadata();
         $scope.activateUi();
+
+      },
+
+      /**
+       * Initializes this plugin.
+       */
+      refresh: function(selectedFunction) {
+
+        $scope.getFunctionMetadata(selectedFunction);
+        $scope.preprocessMetadata();
 
       }
 
     })
+
+    $scope.initialize();
 
   });
 
