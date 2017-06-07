@@ -63,10 +63,25 @@
                   <select required ng-model="item.value" ng-options="t.fullName.split('.')[1] as t.fullName.split('.')[1] for t in inputs">
                       <option value="" selected>--No Selection--</option>
                   </select>
-                  <input required style="margin-left: 4px;" ng-show="'PartitionByKey' == item.kind" placeholder="partition column" type="text"
-                    ng-model="item.partitionAttributes" />
-                  <input required style="margin-left: 4px;" ng-show="item.isOrdered" type="text" ng-model="item.orderByColumn" placeholder="order by column"
-                  />
+
+                  <div class="inner-cell" ng-show="'PartitionByKey' == item.kind">
+                    <p class="inner-label">Partition by </p>
+                    <select 
+                      ng-model="item.partitionAttributes" 
+                      ng-options="inputtable.fullName.split('.')[1] as inputtable.fullName.split('.')[1] for inputtable in inputs">
+                        <option value="" selected>--No Selection--</option>
+                    </select>
+                  </div>
+
+                  <div class="inner-cell" ng-show="item.isOrdered">
+                    <p class="inner-label">Order by </p>
+                    <select 
+                      ng-model="item.orderByColumn" 
+                      ng-options="inputtable.fullName.split('.')[1] as inputtable.fullName.split('.')[1] for inputtable in inputs">
+                        <option value="" selected>--No Selection--</option>
+                    </select>
+                  </div>
+
                 </td>
               </tr>
               
@@ -151,16 +166,36 @@
             </thead>
 
             <tbody>
-              <tr ng-repeat="item in config.function.required_input" ng-model="config.function.required_input" ng-if="item.hasOwnProperty('name') && !item.isRequired">
+              <tr ng-repeat="item in config.function.required_input" 
+                ng-model="config.function.required_input" 
+                ng-if="item.hasOwnProperty('name') && !item.isRequired"
+              >
                 <td style="text-transform: capitalize">{{ cleanName(item.name) }} ({{item.kind}})</td>
                 <td>
-                  <select ng-model="item.value" ng-options="inputtable.fullName.split('.')[1] as inputtable.fullName.split('.')[1] for inputtable in inputs">
-                      <option value="" selected>--No Selection--</option>
+                  <select 
+                    ng-model="item.value" 
+                    ng-options="inputtable.fullName.split('.')[1] as inputtable.fullName.split('.')[1] for inputtable in inputs"
+                  >
+                    <option value="" selected>--No Selection--</option>
                   </select>
-                  <input style="margin-left: 4px;" ng-show="'PartitionByKey' == item.kind" placeholder="partition column" type="text" ng-model="item.partitionAttributes"
-                  />
-                  <input style="margin-left: 4px;" ng-show="item.isOrdered" type="text" ng-model="item.orderByColumn" placeholder="order by column"
-                  />
+
+                  <div class="inner-cell" ng-show="'PartitionByKey' == item.kind">
+                    <p class="inner-label">Partition by</p>
+                    <select 
+                      ng-model="item.partitionAttributes" 
+                      ng-options="inputtable.fullName.split('.')[1] as inputtable.fullName.split('.')[1] for inputtable in inputs">
+                        <option value="" selected>--No Selection--</option>
+                    </select>
+                  </div>
+
+                  <div class="inner-cell" ng-show="item.isOrdered">
+                    <p class="inner-label">Order by</p>
+                    <select 
+                      ng-model="item.orderByColumn"
+                      ng-options="inputtable.fullName.split('.')[1] as inputtable.fullName.split('.')[1] for inputtable in inputs">
+                        <option value="" selected>--No Selection--</option>
+                    </select>
+                  </div>
                 </td>
               </tr>
               <tr ng-repeat="item in config.function.arguments" ng-model="config.function.arguments" ng-if="!item.isRequired">

@@ -205,3 +205,14 @@ div.tagsinput span.tag a {
 span.ui-dialog-title::first-letter {
     text-transform: uppercase !important;
 }
+
+label.inner-label {
+    float: left;
+    margin-right: 8px;
+    margin-top: 4px;
+}
+
+div.inner-cell {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
