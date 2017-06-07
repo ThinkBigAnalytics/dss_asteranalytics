@@ -22,6 +22,6 @@ class BooleanArgument(AsterArgument):
     @property
     def argumentclause(self):
         if self._argument.get('value','') or self._argumentDef.get('defaultValue', False):
-            return self.name + "(" + """'{}'""".format(bool(self._argument.get('value', ""))) + ")\n"
+            return self.name + "(" + self.value + ")\n"
         return ''
         
