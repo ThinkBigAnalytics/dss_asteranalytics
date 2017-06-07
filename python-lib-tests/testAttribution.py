@@ -9,7 +9,6 @@ from querybuilderfacade import *
 from testAttributionConfig import *
 from inputtableinfo import *
 from outputtableinfo import *
-from connectioninfo import *
 
 class TestAttribution(unittest.TestCase):
     

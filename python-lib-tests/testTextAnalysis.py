@@ -9,7 +9,6 @@ from querybuilderfacade import *
 from testTextAnalysisConfig import *
 from inputtableinfo import *
 from outputtableinfo import *
-from connectioninfo import *
 from dssFunction import *
 
 class TestTextAnalysis(unittest.TestCase):
@@ -148,3 +147,30 @@ MODEL('ner_model.bin')
 COMMIT;
 END TRANSACTION;"""
         self.assertEqual('\n'.join(actualquery) + '\nEND TRANSACTION;', expectedquery, 'Nertrainer')
+        
+    def testTextParser(self):
+        testInputConnectionConfig = {'table' : 'textparser_input', 'schema':'dss'}
+        testOutputConnectionConfig = {'table' : 'textparser_output', 'schema': 'dss'}
+        functionInputTable = inputtableinfo(testInputConnectionConfig, 'textparser_input', textParserConfig)
+        functionOutputTable = outputtableinfo(testOutputConnectionConfig, 'textparser_output', textParserConfig)
+        actualquery = getFunctionsQuery(textParserConfig, [functionInputTable], functionOutputTable)
+        expectedquery = """CREATE DIMENSION TABLE dss.textparser_output
+AS
+SELECT *
+FROM   TEXT_PARSER
+(
+
+ON dss.textparser_input PARTITION BY ANY
+
+
+TEXT_COLUMN('text_data')
+CASE_INSENSITIVE('True')
+OUTPUT_BY_WORD('True')
+REMOVE_STOP_WORDS('True')
+STOP_WORDS('stopwords.txt')
+PUNCTUATION('\[.,?\!\]')
+LIST_POSITIONS('True')
+ACCUMULATE('doc_id', 'category')
+
+);"""
+        self.assertEqual(actualquery[2], expectedquery, 'test boolean arguments')

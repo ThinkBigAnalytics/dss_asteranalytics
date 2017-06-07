@@ -8,12 +8,6 @@ class inputtableinfo(tableinfo.tableinfo):
         self.__dssfunction = dss_function
         
     @property
-    def tablename(self):
-        return ".".join([self._schemaname,
-                         self._tablename]) if self.__dssfunction.get("hasInputTable",
-                                                              True) else """(SELECT 1)"""
-
-    @property
     def schemaname(self):
         return self._schemaname
 
@@ -32,11 +26,8 @@ class inputtableinfo(tableinfo.tableinfo):
     def __getPartitionKeyFromFunctionDef(self, dss_function):
         # partition
         partitionInputKind = dss_function.get("partitionInputKind","")
-        hasInputTable = dss_function.get("hasInputTable", True)
         partitionKeys = ""
-        if not hasInputTable:
-            partitionKeys = "1"
-        elif "PartitionByAny" in partitionInputKind:
+        if "PartitionByAny" in partitionInputKind:
             partitionKeys = "ANY"
         elif "PartitionByKey" in partitionInputKind:
             partitionKeys = ", ".join(dss_function["partitionAttributes"])

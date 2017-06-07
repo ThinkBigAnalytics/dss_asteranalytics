@@ -11,6 +11,8 @@
      */
     const $delay = f => $timeout(f, 500)
 
+    const SEPARATOR = String.fromCharCode(0)
+
     /**
      * A private variable containing the function metadata.
      */
@@ -442,6 +444,7 @@
           $('input.teradata-tags').tagsInput({
             onChange: x => $(x).trigger('change'),
             defaultText: 'add param',
+            delimiter: SEPARATOR
           });
 
         } catch (e) {}

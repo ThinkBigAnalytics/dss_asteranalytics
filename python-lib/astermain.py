@@ -12,7 +12,6 @@ from querybuilderfacade import *
 from inputtableinfo import *
 from outputtableinfo import *
 from outputtableinfo import *
-from connectioninfo import *
 
 def asterDo():
     # Recipe inputs

@@ -3,38 +3,32 @@ try:
     from sets import Set
 except ImportError:
     Set = set
-import re
 import json
 
+from asterargumentfactory import *
 
-def getTableNameFromArgument(argumentValue, inputTables):
-    return next("'" + getTableNameFromTable(x) + "'" for x in inputTables if argumentValue == x.datasetname)
+def areStringsEqual(a, b):
+    return a.upper() == b.upper()
 
-def getTableNameFromTable(inputTable):
-    return inputTable.tablenamewithoutschema if 'public' == inputTable.schemaname else '.'.join([inputTable.schemaname, inputTable.tablenamewithoutschema])
+def isStringInList(astring, blist):
+    return astring.upper() in [y.upper() for y in blist]
+
+def isArgumentDictionaryEntry(argument, x):
+    argumentname = argument.get('name', '')
+    entryname = x.get('name', '')
+    blist = x.get('alternateNames', [])
+    return areStringsEqual(argumentname, entryname) or \
+        isStringInList(argumentname, blist)
+
+    
+def getArgumentClause(cargument, arg_dict, inputTables):
+    argumentdef  = next(iter(x for x in arg_dict if isArgumentDictionaryEntry(cargument, x)), {})
+    asterarg = AsterArgumentFactory.createArg(cargument, argumentdef, inputTables)
+    return asterarg.argumentclause
 
 def getJoinedArgumentsString(cargumentslist, arg_dict, inputTables=[]):
-    regex = r",\s*(?=(?:[^']*\'[^']*\')*[^']*$)"
-    
-    carguments = ""
-    for argument in cargumentslist:
-        if "BOOLEAN" == argument.get('datatype','').upper():
-            argument_filtered = [x for x in arg_dict if argument.get('name','').upper() == x.get('name','').upper() or argument.get('name','').upper() in [y.upper() for y in x.get('alternateNames', [])]]
-            argumentdef = {}
-            
-            if 0 < len(argument_filtered):
-                argumentdef = argument_filtered[0]
-            if argument.get('value','') or argumentdef.get('defaultValue',False):
-                carguments += argument["name"].upper() + "(" + """'{}'""".format(bool(argument.get('value', ""))) + ")\n"
-        elif 'value' in argument and argument['value']:
-            if ("COLUMNS" == argument["datatype"].upper() or "COLUMN_NAMES" == argument.get('datatype', '').upper()) and argument.get("allowsLists", False):
-                cargvalues = ", ".join("'" + astercolumn + "'" for astercolumn in argument["value"])
-            elif 'TABLE_NAME' == argument['datatype'] and not argument.get('allowsLists', False) and not argument.get('isOutputTable', False):
-                cargvalues = getTableNameFromArgument(argument.get('value', ""), inputTables)
-            else:
-                cargvalues = ", ".join([re.sub(r"^'|'$", '', s) if (argument["datatype"].upper() == "SQLEXPR") else (s if (s[:1] == "'" and s[-1:] == "'") else ("'" + s + "'")) for s in re.split(regex, argument["value"])]) if argument.get("allowsLists", False) else ("""'{}'""".format(argument.get('value', "")))
-            carguments += argument["name"].upper() + "(" + cargvalues + ")\n"
-    return carguments
+    return ''.join(map(lambda x: getArgumentClause(x, arg_dict, inputTables), \
+                         cargumentslist))
 
 def getArgumentClausesFromJson(f):
     return f.get('argument_clauses',[])
