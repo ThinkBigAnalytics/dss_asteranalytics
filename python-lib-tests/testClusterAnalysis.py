@@ -27,11 +27,26 @@ SELECT *
 FROM   CANOPY
 (
 ON (SELECT 1) PARTITION BY 1
-
-
 INPUTTABLE('computers_train1')
 LOOSEDISTANCE('1000')
 TIGHTDISTANCE('500')
 
 );'''
         self.assertEqual(actualquery[2], expectedquery, "test TABLE_NAME argument datatype")
+        
+    def testKmeansPlot(self):
+        inputConnectionConfig = {'table': 'computers_train1', 'schema': 'dss'}
+        secondaryInputConnectionConfig = {'table': 'kmeanssample_centroid', 'schema': 'dss'}
+        
+        functionInputTable = inputtableinfo(inputConnectionConfig, 'computers_train1', kmeansplotConfig)
+        centroidTable = inputtableinfo(secondaryInputConnectionConfig, 'kmeanssample', kmeansplotConfig)
+        actualquery = getSelectClause(kmeansplotConfig, [functionInputTable, centroidTable])
+        expectedquery = '''SELECT *
+FROM   KMEANSPLOT
+(
+ON dss.computers_train1 PARTITION BY ANY
+ON dss.kmeanssample_centroid  DIMENSION
+CENTROIDSTABLE('dss.kmeanssample_centroid')
+
+);'''
+        self.assertEqual(actualquery, expectedquery, "test UNALIASED DIMENSIONAL INPUT")

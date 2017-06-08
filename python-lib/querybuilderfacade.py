@@ -15,3 +15,8 @@ def getFunctionsQuery(dss_function, inputTables, outputTable):
     if 'cascaded_functions' in dss_function:
         return getCascadedFunctionsQuery(dss_function, inputTables, outputTable)
     return getSingleFunctionsQuery(dss_function, inputTables, outputTable)
+
+def getSelectClause(dss_function, inputTables):
+    return '' if 'cascaded_functions' in \
+        dss_function else singlequery.getSelectQuery(dss_function, inputTables)
+

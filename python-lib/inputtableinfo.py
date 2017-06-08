@@ -1,4 +1,5 @@
 import tableinfo
+from pseudoconstantgetters import *
 
 class inputtableinfo(tableinfo.tableinfo):
     def __init__(self, connectioninfo, datasetname, dss_function):
@@ -22,18 +23,17 @@ class inputtableinfo(tableinfo.tableinfo):
     @property
     def orderKey(self):
         return self.__orderKey
+    
+    def __getPartitionAttributes(self, dss_function):
+        return ', '.join(dss_function.get('partitionAttributes', []))
+             
 
     def __getPartitionKeyFromFunctionDef(self, dss_function):
         # partition
-        partitionInputKind = dss_function.get("partitionInputKind","")
-        partitionKeys = ""
-        if "PartitionByAny" in partitionInputKind:
-            partitionKeys = "ANY"
-        elif "PartitionByKey" in partitionInputKind:
-            partitionKeys = ", ".join(dss_function["partitionAttributes"])
-        elif "PartitionByOne" in partitionInputKind:
-            partitionKeys = "1"
-        return partitionKeys
+        kind = next(iter(dss_function.get("partitionInputKind",[])),'DSSOTHERS')
+        return getPartitionKind(kind) + \
+            (self.__getPartitionAttributes(dss_function) if 'PartitionByKey' == kind else '')
+       
 
     def __getOrderByKeyFromFunctionDef(self, dss_function):
         #no empty string checking for orderByColumn since this is mandatory if isOrdered is true

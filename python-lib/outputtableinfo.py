@@ -7,12 +7,8 @@ class outputtableinfo(tableinfo.tableinfo):
         
     @property
     def tableType(self):
-        return self.__asterArgs.get("outputType", "")
-    
-    @tableType.setter
-    def tableType(self,value):
-        self.__asterArgs["outputType"] = value
-    
+        return self.__asterArgs.get("outputType", 'DIMENSION') or 'DIMENSION'
+       
     @property
     def hashKey(self):
         return self.__asterArgs.get("hashKey", "")

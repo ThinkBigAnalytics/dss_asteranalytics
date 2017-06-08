@@ -51,16 +51,13 @@ AS
 SELECT *
 FROM   ATTRIBUTION
 (
-
 ON dss.attribution_sample_table1 PARTITION BY user_id ORDER BY time_stamp
 ON dss.attribution_sample_table2 PARTITION BY user_id ORDER BY time_stamp
-
 ON dss.conversion_event_table AS "conversion" DIMENSION
 ON dss.excluding_event_table AS "excluding" DIMENSION
 ON dss.optional_event_table AS "optional" DIMENSION
 ON dss.model1_table AS "model1" DIMENSION
 ON dss.model2_table AS "model2" DIMENSION
-
 EVENT_COLUMN_NAME('event')
 TIMESTAMP_COLUMN_NAME('time_stamp')
 WINDOW('rows:10&seconds:20')

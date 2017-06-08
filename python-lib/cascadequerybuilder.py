@@ -7,9 +7,6 @@ import asterqueryutility as queryutility
 
 def getAsterQuery(dss_function, inputTables, outputTable):
     
-    if outputTable.tableType is None or outputTable.tableType == '':
-        outputTable.tableType = 'DIMENSION'
-        
     # query, not yet supporting partition by and order by clauses from recipe settings,
     # but not needed for naiveBayes
     query = ""

@@ -19,7 +19,6 @@ def isArgumentDictionaryEntry(argument, x):
     blist = x.get('alternateNames', [])
     return areStringsEqual(argumentname, entryname) or \
         isStringInList(argumentname, blist)
-
     
 def getArgumentClause(cargument, arg_dict, inputTables):
     argumentdef  = next(iter(x for x in arg_dict if isArgumentDictionaryEntry(cargument, x)), {})
@@ -32,10 +31,12 @@ def getJoinedArgumentsString(cargumentslist, arg_dict, inputTables=[]):
 
 def getArgumentClausesFromJson(f):
     return f.get('argument_clauses',[])
+
 try:
     from dataiku.customrecipe import *
     def getJson(function_name):
-        return json.loads(open('%s/data/%s' % (get_recipe_resource(), function_name + '.json')).read())
+        return json.loads(open('%s/data/%s' % (get_recipe_resource(),
+                                               function_name + '.json')).read())
 except ImportError:
     def getJson(function_name):
         return json.loads(open('%s/data/%s' % ('../resource', function_name + '.json')).read())

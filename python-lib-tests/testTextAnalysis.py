@@ -29,10 +29,7 @@ AS
 SELECT *
 FROM   TEXTTOKENIZER
 (
-
 ON bs186029.text_chunked PARTITION BY ANY
-
-
 TEXTCOLUMN('chunk')
 
 );
@@ -55,10 +52,7 @@ AS
 SELECT *
 FROM   EVALUATENAMEDENTITYFINDERPARTITION
 (
-
 ON dss.textclassifier_input PARTITION BY 1
-
-
 
 );
 COMMIT;
@@ -80,10 +74,7 @@ AS
 SELECT *
 FROM   NERTRAINER
 (
-
 ON dss.ner_sports_train PARTITION BY id
-
-
 TEXTCOLUMN('content')
 MODELFILE('ner_model.bin')
 FEATURETEMPLATE('template_1.txt')
@@ -95,7 +86,7 @@ END TRANSACTION;"""
 
     def testNer(self):
         testInputConnectionConfig = {'table' : 'ner_sports_test', 'schema':'dss'}
-        testRuleConnectionConfig = {'table' : 'rule_table', 'schema':'dss'}
+        testRuleConnectionConfig = {'table' : 'rule_table1', 'schema':'dss'}
         testOutputConnectionConfig = {'table' : 'dss_ner', 'schema': 'dss'}
         functionInputTable = inputtableinfo(testInputConnectionConfig, 'ner_sports_test', nerConfig)
         ruleTable = inputtableinfo(testRuleConnectionConfig, 'rule_table', nerConfig)
@@ -108,11 +99,8 @@ AS
 SELECT *
 FROM   NER
 (
-
 ON dss.ner_sports_test PARTITION BY ANY
-
-ON dss.rule_table AS "rules" DIMENSION
-
+ON dss.rule_table1 AS "rules" DIMENSION
 TEXTCOLUMN('content')
 MODELS('ner_model.bin')
 ACCUMULATE('id')
@@ -136,10 +124,7 @@ AS
 SELECT *
 FROM   NEREVALUATOR
 (
-
 ON dss.ner_sports_test PARTITION BY id
-
-
 TEXTCOLUMN('content')
 MODEL('ner_model.bin')
 
@@ -159,10 +144,7 @@ AS
 SELECT *
 FROM   TEXT_PARSER
 (
-
 ON dss.textparser_input PARTITION BY ANY
-
-
 TEXT_COLUMN('text_data')
 CASE_INSENSITIVE('True')
 OUTPUT_BY_WORD('True')

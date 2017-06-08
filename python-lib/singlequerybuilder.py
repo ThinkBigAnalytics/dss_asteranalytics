@@ -1,97 +1,76 @@
+from _ast import If
 try:
     from sets import Set
 except ImportError:
     Set = set
 # -*- coding: utf-8 -*-
 import asterqueryutility as queryutility
+from pseudoconstantgetters import *
 
-# break this code down to smaller functions. add unit tests along the way
+
+def getInputTableFromDatasets(datasetname, inputDatasets):
+    return next(iter(x for x in inputDatasets if x.datasetname == datasetname), None)
+
+def getUnaliasedInputOnClause(requiredinput, inputTables):
+    table = getInputTableFromDatasets(requiredinput, inputTables)
+    return UNALIASED_ON_CLAUSE.format(input_table=table.tablename,
+               partitionKeys=table.partitionKey, orderKeys=table.orderKey and
+               " ".join(["ORDER BY", table.orderKey])).rstrip() +\
+               "\n" if table else ''
+               
+def getOrderByClause(inputdef):
+    orderByColumn = inputdef.get('orderByColumn', '') if\
+    inputdef.get('isOrdered', False) else ''
+    return orderByColumn and ("ORDER BY " + orderByColumn)
+
+def getAliasClause(inputdef):
+    return '' if 'Dimension' == inputdef.get('name') else\
+        ('AS "' + inputdef.get('name', '') + '"')
+
+def getAliasedInputONClause(requiredinput, inputTables):
+    inputtable = getInputTableFromDatasets(requiredinput.get('value', ''), inputTables)
+    return ALIASED_ON_CLAUSE.format(input_table=inputtable.tablename,
+           input_name= getAliasClause(requiredinput),
+           partitionKeys = getPartitionKind(requiredinput.get('kind','')),
+           orderKeys = getOrderByClause(requiredinput)).rstrip() + "\n" if inputtable else ''
+           
+def getMultipleAliasedInputsClause(dss_function, inputTables):
+    aliasedinputs = [x for x in dss_function.get('required_input', []) if
+                     x.get('name', '') and x.get('value', '')]
+    return ''.join(map(lambda x: getAliasedInputONClause(x, inputTables), aliasedinputs))
+
+def getMultipleUnaliasedInputsClause(dss_function, inputTables):
+    unaliasedinputsdict = dss_function.get('unaliased_inputs', {})
+    unaliasedinputs = unaliasedinputsdict.get('values', [])
+    return ''.join(map(lambda x: getUnaliasedInputOnClause(x, inputTables),
+                       unaliasedinputs[:int(min(unaliasedinputsdict.get('count', 1),
+                                                len(unaliasedinputs)))]))
+    
+def getArgumentClauses(dss_function, inputTables):
+    return queryutility.getJoinedArgumentsString(dss_function.get('arguments', []),
+                                                 queryutility.getArgumentClausesFromJson(
+                                                     queryutility.getJson(dss_function.get('name',''))),
+                                                 inputTables)
+
+def getOnClause(dss_function, inputTables):
+    return (getMultipleUnaliasedInputsClause(dss_function, inputTables) +
+            getMultipleAliasedInputsClause(dss_function, inputTables)).strip() or\
+            ON_SELECT_ONE_PARTITION_BY_ONE
+            
+def getSelectQuery(dss_function, inputTables):
+    return SELECT_QUERY.format(dss_function.get('name', ''),
+                       getOnClause(dss_function, inputTables),
+                       getArgumentClauses(dss_function, inputTables))
+
+def getCreateQuery(dss_function, inputTables, outputTable):
+    return CREATE_QUERY.format(outputTable.tableType,
+                       outputTable.tablename,
+                       DISTRIBUTE_BY_HASH.format(outputTable.hashKey) if
+                       "FACT" == outputTable.tableType else "",
+                       getSelectQuery(dss_function, inputTables))
 
 def getAsterQuery(dss_function, inputTables, outputTable):
-    # query
-    multiplealiasedinputs = ""
-    multipleunaliasedinputs = ""
-    onselect = ""
-    inputTable = inputTables[0]
-    
-    
-    if 'required_input' in dss_function:
-        aliasedinputs = [x for x in dss_function['required_input'] if 'name' in x and 'value' in x and x['value']]
-        for requiredinput in aliasedinputs:
-            if 'value' in requiredinput and requiredinput["value"]:
-                aliasedinputtableschema = next(x.schemaname for x in inputTables if x.datasetname == requiredinput['value'])
-                inputkind = requiredinput.get('kind','')
-                partitionKeys = ""
-                if 'Dimension' == inputkind:
-                    partitionKeys = 'DIMENSION'
-                elif "PartitionByAny" == inputkind:
-                    partitionKeys = 'PARTITION BY ANY'
-                elif "PartitionByKey" == inputkind:
-                    partitionKeys = 'PARTITION BY ' + requiredinput['partitionAttributes']
-                elif "PartitionByOne" == inputkind:
-                    partitionKeys = 'PARTITION BY 1'
-                else:
-                    partitionKeys = ""
-                    
-                orderKeys = ""
-                if requiredinput['isOrdered'] and requiredinput['orderByColumn']:
-                    orderKeys = "ORDER BY " + requiredinput['orderByColumn']
-                if 'Dimension' == requiredinput.get('name', ''):
-                    multiplealiasedinputs += '''ON {schema}.{input_table} DIMENSION'''.format(schema=aliasedinputtableschema,
-                                                                                                                       input_table=requiredinput['value'],
-                                                                                                                       input_name=requiredinput['name']).rstrip() + "\n"
-                else:
-                    multiplealiasedinputs += '''ON {schema}.{input_table} AS "{input_name}" {partitionKeys} {orderKeys}'''.format(schema=aliasedinputtableschema,
-                                                                                                                       input_table=requiredinput['value'],
-                                                                                                                       input_name=requiredinput['name'],
-                                                                                                                       partitionKeys=partitionKeys,
-                                                                                                                       orderKeys=orderKeys).rstrip() + "\n"
-    
-    if 'unaliased_inputs' in dss_function and 'values' in dss_function['unaliased_inputs'] and len(dss_function['unaliased_inputs']['values']) > 0:
-        unaliasedinputs = dss_function['unaliased_inputs']['values']
-        unaliasedinputsdesc = dss_function['unaliased_inputs']['desc']
-        for requiredinput in unaliasedinputs:
-            unaliasedtable = next(x for x in inputTables if x.datasetname == requiredinput)
-            partitionKeys = "" if not unaliasedtable.partitionKey else " ".join(["PARTITION BY", unaliasedtable.partitionKey])
-                    
-            orderKeys = "" if not unaliasedtable.orderKey else " ".join(["ORDER BY", unaliasedtable.orderKey])
-
-            multipleunaliasedinputs += """ON {schema}.{input_table} {partitionKeys} {orderKeys}""".format(schema=unaliasedtable.schemaname,
-                                                                                                          input_table=unaliasedtable.tablenamewithoutschema,
-                                                                                                          partitionKeys=partitionKeys,
-                                                                                                          orderKeys=orderKeys).rstrip() + "\n"
-                                                                                           
-            if 1 == int(dss_function['unaliased_inputs'].get('count', 1)):
-                break
-    
-    if not multiplealiasedinputs and not multipleunaliasedinputs:
-        onselect = "ON (SELECT 1) PARTITION BY 1"
-    
-    if outputTable.tableType is None or outputTable.tableType == '':
-        outputTable.tableType = 'DIMENSION'
-    
-    jsonFunction = queryutility.getJson(dss_function.get('name',''))
-    query = """CREATE {} TABLE {}{}
-AS
-SELECT *
-FROM   {}
-(
-{}
-{}
-{}
-{}
-);""".format(outputTable.tableType,
-                       outputTable.tablename,
-                       " DISTRIBUTE BY HASH({})".format(outputTable.hashKey) if "FACT" == outputTable.tableType else "",
-                       dss_function["name"],
-                       onselect,
-                       multipleunaliasedinputs,
-                       multiplealiasedinputs,
-                       queryutility.getJoinedArgumentsString(dss_function["arguments"], queryutility.getArgumentClausesFromJson(jsonFunction), inputTables))
-
-    pre_queries = ["BEGIN TRANSACTION;",
-                   "DROP TABLE IF EXISTS {outputTablename};".format(outputTablename=outputTable.tablename),
-                   query,
-                   "COMMIT;"]
-        
-    return pre_queries
+    return [BEGIN_TRANSACTION_QUERY,
+                   DROP_QUERY.format(outputTablename=outputTable.tablename),
+                   getCreateQuery(dss_function, inputTables, outputTable),
+                   COMMIT_QUERY]

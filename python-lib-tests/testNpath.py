@@ -26,10 +26,7 @@ AS
 SELECT *
 FROM   NPATH
 (
-
 ON public.tv_shows PARTITION BY id ORDER BY ts
-
-
 MODE('nonoverlapping')
 PATTERN('S1{1,3}.S2')
 SYMBOLS(tvshow='BreakingBad' as S2, tvshow <> 'BreakingBad' as S1)
