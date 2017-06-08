@@ -252,22 +252,7 @@
        * Checks whether or not the given argument is an output table or not.
        */
       isArgumentOutputTable: function (functionArgument) {
-
-        if (!functionMetadata || !functionMetadata.argument_clauses) 
-          return false;
-
-        const potentialMatches = functionMetadata.argument_clauses.filter(item =>
-          KEYS.ALTERNATE_NAMES in item 
-            ? item.alternateNames
-                .map(x => x.toUpperCase())
-                .includes(functionArgument)
-            : item.name.toUpperCase() === functionArgument
-        );
-
-        return potentialMatches 
-          && potentialMatches.length > 0 
-          && potentialMatches[0].isOutputTable;
-
+        return functionArgument.isOutputTable
       },
 
       /**
