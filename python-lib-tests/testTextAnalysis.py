@@ -83,7 +83,7 @@ FEATURETEMPLATE('template_1.txt')
 );
 COMMIT;
 END TRANSACTION;"""
-        self.assertEqual('\n'.join(actualquery) + '\nEND TRANSACTION;', expectedquery, 'Nertrainer')
+        self.assertEqual('\n'.join(actualquery) + '\nEND TRANSACTION;', expectedquery, 'Nertrainer test INTEGER argument')
 
     def testNer(self):
         testInputConnectionConfig = {'table' : 'ner_sports_test', 'schema':'dss'}
@@ -110,7 +110,7 @@ SHOWCONTEXT('2')
 );
 COMMIT;
 END TRANSACTION;"""
-        self.assertEqual('\n'.join(actualquery) + '\nEND TRANSACTION;', expectedquery, 'Nerevaluator TEST INTEGER')
+        self.assertEqual('\n'.join(actualquery) + '\nEND TRANSACTION;', expectedquery, 'Nerevaluator')
 
     def testNerEvaluator(self):
         testInputConnectionConfig = {'table' : 'ner_sports_test', 'schema':'dss'}
