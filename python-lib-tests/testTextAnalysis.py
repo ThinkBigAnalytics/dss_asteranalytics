@@ -57,7 +57,7 @@ ON dss.textclassifier_input PARTITION BY 1
 );
 COMMIT;
 END TRANSACTION;"""
-        self.assertEqual('\n'.join(actualquery) + '\nEND TRANSACTION;', expectedquery,
+        self.assertEqual('\n'.join(actualquery + ['END TRANSACTION;']), expectedquery,
                          'EvaluateNamedEntityFinderPartition')
 
     # 1 unaliased input, several arguments, 1 output
@@ -77,6 +77,7 @@ FROM   NERTRAINER
 ON dss.ner_sports_train PARTITION BY id
 TEXTCOLUMN('content')
 MODELFILE('ner_model.bin')
+MAXITERATION('1000')
 FEATURETEMPLATE('template_1.txt')
 
 );
@@ -109,7 +110,7 @@ SHOWCONTEXT('2')
 );
 COMMIT;
 END TRANSACTION;"""
-        self.assertEqual('\n'.join(actualquery) + '\nEND TRANSACTION;', expectedquery, 'Nerevaluator')
+        self.assertEqual('\n'.join(actualquery) + '\nEND TRANSACTION;', expectedquery, 'Nerevaluator TEST INTEGER')
 
     def testNerEvaluator(self):
         testInputConnectionConfig = {'table' : 'ner_sports_test', 'schema':'dss'}

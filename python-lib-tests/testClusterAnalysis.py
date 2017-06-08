@@ -50,3 +50,4 @@ CENTROIDSTABLE('dss.kmeanssample_centroid')
 
 );'''
         self.assertEqual(actualquery, expectedquery, "test UNALIASED DIMENSIONAL INPUT")
+

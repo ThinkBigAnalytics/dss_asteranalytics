@@ -12,4 +12,4 @@ class ListArgument(AsterArgument):
 
     @property
     def value(self):
-        return ", ".join("'" + x + "'" for x in self._argument.get('value'))
+        return ", ".join("'{}'".format(x) for x in self._argument.get('value'))

@@ -4,7 +4,7 @@ Created on Jun 6, 2017
 @author: DT186022
 '''
 
-
+from integerargument import *
 from booleanargument import *
 from ListArgument import *
 from sqlexprargument import *
@@ -21,6 +21,8 @@ class AsterArgumentFactory(object):
             return BooleanArgument(argument, argumentDef)
         elif 'SQLEXPR' == argumentDef.get('datatype', '').upper():
             return SqlExprArgument(argument, argumentDef)
+        elif 'INTEGER' == argumentDef.get('datatype', '').upper() and not argumentDef.get('allowsLists', False):
+            return IntegerArgument(argument, argumentDef)
         elif 'TABLE_NAME' == argumentDef['datatype'] and not \
         argumentDef.get('allowsLists', False) \
         and not argumentDef.get('isOutputTable', False):

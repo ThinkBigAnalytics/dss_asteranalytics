@@ -5,18 +5,21 @@ import singlequerybuilder as singlequery
 from inputtableinfo import *
 from outputtableinfo import *
 
-def getCascadedFunctionsQuery(dss_function, inputTables, outputTable):
-    return cascadequery.getAsterQuery(dss_function, inputTables, outputTable)
-
-def getSingleFunctionsQuery(dss_function, inputTables, outputTable):
-    return singlequery.getAsterQuery(dss_function, inputTables, outputTable)
-
-def getFunctionsQuery(dss_function, inputTables, outputTable):
-    if 'cascaded_functions' in dss_function:
-        return getCascadedFunctionsQuery(dss_function, inputTables, outputTable)
-    return getSingleFunctionsQuery(dss_function, inputTables, outputTable)
 
 def getSelectClause(dss_function, inputTables):
-    return '' if 'cascaded_functions' in \
+    return cascadequery.getSelectQuery(dss_function, inputTables)\
+        if 'cascaded_functions' in \
         dss_function else singlequery.getSelectQuery(dss_function, inputTables)
 
+def getCreateQuery(dss_function, inputTables, outputTable):
+    return CREATE_QUERY.format(outputTable.tableType,
+                       outputTable.tablename,
+                       DISTRIBUTE_BY_HASH.format(outputTable.hashKey) if
+                       "FACT" == outputTable.tableType else "",
+                       getSelectClause(dss_function, inputTables))
+
+def getFunctionsQuery(dss_function, inputTables, outputTable):
+    return [BEGIN_TRANSACTION_QUERY,
+                   DROP_QUERY.format(outputTablename=outputTable.tablename),
+                   getCreateQuery(dss_function, inputTables, outputTable),
+                   COMMIT_QUERY]

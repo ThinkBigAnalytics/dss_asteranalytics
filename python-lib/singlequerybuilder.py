@@ -62,15 +62,4 @@ def getSelectQuery(dss_function, inputTables):
                        getOnClause(dss_function, inputTables),
                        getArgumentClauses(dss_function, inputTables))
 
-def getCreateQuery(dss_function, inputTables, outputTable):
-    return CREATE_QUERY.format(outputTable.tableType,
-                       outputTable.tablename,
-                       DISTRIBUTE_BY_HASH.format(outputTable.hashKey) if
-                       "FACT" == outputTable.tableType else "",
-                       getSelectQuery(dss_function, inputTables))
 
-def getAsterQuery(dss_function, inputTables, outputTable):
-    return [BEGIN_TRANSACTION_QUERY,
-                   DROP_QUERY.format(outputTablename=outputTable.tablename),
-                   getCreateQuery(dss_function, inputTables, outputTable),
-                   COMMIT_QUERY]
