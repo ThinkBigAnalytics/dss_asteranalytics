@@ -35,8 +35,15 @@ def getArgumentClausesFromJson(f):
 try:
     from dataiku.customrecipe import *
     def getJson(function_name):
-        return json.loads(open('%s/data/%s' % (get_recipe_resource(),
+        try:
+            return json.loads(open('%s/data/%s' % (get_recipe_resource(),
                                                function_name + '.json')).read())
+        except:
+            return ''
+
 except ImportError:
     def getJson(function_name):
-        return json.loads(open('%s/data/%s' % ('../resource', function_name + '.json')).read())
+        try:
+            return json.loads(open('%s/data/%s' % ('../resource', function_name + '.json')).read())
+        except:
+            return ''

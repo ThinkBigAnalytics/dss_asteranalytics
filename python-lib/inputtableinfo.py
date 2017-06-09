@@ -5,8 +5,9 @@ class inputtableinfo(tableinfo.tableinfo):
     def __init__(self, connectioninfo, datasetname, dss_function):
         super(inputtableinfo, self).__init__(connectioninfo, datasetname)
         self.__partitionKey = self.__getPartitionKeyFromFunctionDef(dss_function)
-        self.__orderKey = self.__getOrderByKeyFromFunctionDef(dss_function)
+        self.__orderKey = self.__getOrderByKeyFromInputDef(dss_function)
         self.__dssfunction = dss_function
+        self.__alias = ''
         
     @property
     def schemaname(self):
@@ -24,17 +25,29 @@ class inputtableinfo(tableinfo.tableinfo):
     def orderKey(self):
         return self.__orderKey
     
-    def __getPartitionAttributes(self, dss_function):
-        return ', '.join(dss_function.get('partitionAttributes', []))
-             
+    @property
+    def alias(self):
+        return self.__alias
+
+    def setPropertiesFromDef(self, inputdef):
+        tablealias = inputdef.get('name', '')
+        self.__alias = '' if 'Dimension' == tablealias else tablealias
+        self.__partitionKey = self.__getPartitionClauseFromInputDef(
+            inputdef.get('kind', 'DSSOTHERS'), inputdef)
+        self.__orderKey = self.__getOrderByKeyFromInputDef(inputdef)
+
+    def __getPartitionAttributes(self, inputdef):
+        return ', '.join(inputdef.get('partitionAttributes', []))
+
+    def __getPartitionClauseFromInputDef(self, kind, inputdef):
+        return getPartitionKind(kind) +\
+            (self.__getPartitionAttributes(inputdef) if 'PartitionByKey' == kind else '')
 
     def __getPartitionKeyFromFunctionDef(self, dss_function):
         # partition
         kind = next(iter(dss_function.get("partitionInputKind",[])),'DSSOTHERS')
-        return getPartitionKind(kind) + \
-            (self.__getPartitionAttributes(dss_function) if 'PartitionByKey' == kind else '')
-       
+        return self.__getPartitionClauseFromInputDef(kind, dss_function)
 
-    def __getOrderByKeyFromFunctionDef(self, dss_function):
+    def __getOrderByKeyFromInputDef(self, inputdef):
         #no empty string checking for orderByColumn since this is mandatory if isOrdered is true
-        return dss_function.get("orderByColumn", "")
+        return inputdef.get("orderByColumn", "")

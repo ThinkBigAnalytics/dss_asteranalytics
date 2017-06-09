@@ -21,7 +21,8 @@ class AsterArgumentFactory(object):
             return BooleanArgument(argument, argumentDef)
         elif 'SQLEXPR' == argumentDef.get('datatype', '').upper():
             return SqlExprArgument(argument, argumentDef)
-        elif 'INTEGER' == argumentDef.get('datatype', '').upper() and not argumentDef.get('allowsLists', False):
+        elif 'INTEGER' == argumentDef.get('datatype', '').upper() and\
+        not argumentDef.get('allowsLists', False):
             return IntegerArgument(argument, argumentDef)
         elif 'TABLE_NAME' == argumentDef['datatype'] and not \
         argumentDef.get('allowsLists', False) \

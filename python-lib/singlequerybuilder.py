@@ -23,21 +23,19 @@ def getOrderByClause(inputdef):
     inputdef.get('isOrdered', False) else ''
     return orderByColumn and ("ORDER BY " + orderByColumn)
 
-def getAliasClause(inputdef):
-    return '' if 'Dimension' == inputdef.get('name') else\
-        ('AS "' + inputdef.get('name', '') + '"')
-
-def getAliasedInputONClause(requiredinput, inputTables):
-    inputtable = getInputTableFromDatasets(requiredinput.get('value', ''), inputTables)
-    return ALIASED_ON_CLAUSE.format(input_table=inputtable.tablename,
-           input_name= getAliasClause(requiredinput),
-           partitionKeys = getPartitionKind(requiredinput.get('kind','')),
-           orderKeys = getOrderByClause(requiredinput)).rstrip() + "\n" if inputtable else ''
+def getAliasedInputONClause(input_, jsonfile, inputTables):
+    table = getInputTableFromDatasets(input_.get('value', ''), inputTables)
+    table.setPropertiesFromDef(input_)
+    return ALIASED_ON_CLAUSE.format(input_table=table.tablename,
+           input_name=table.alias and ('AS "' + table.alias + '"'),
+           partitionKeys=table.partitionKey,
+           orderKeys = table.orderKey and
+               " ".join(["ORDER BY", table.orderKey])).rstrip() + "\n" if table else ''
            
-def getMultipleAliasedInputsClause(dss_function, inputTables):
+def getMultipleAliasedInputsClause(dss_function, jsonfile, inputTables):
     aliasedinputs = [x for x in dss_function.get('required_input', []) if
                      x.get('name', '') and x.get('value', '')]
-    return ''.join(map(lambda x: getAliasedInputONClause(x, inputTables), aliasedinputs))
+    return ''.join(map(lambda x: getAliasedInputONClause(x, jsonfile, inputTables), aliasedinputs))
 
 def getMultipleUnaliasedInputsClause(dss_function, inputTables):
     unaliasedinputsdict = dss_function.get('unaliased_inputs', {})
@@ -46,20 +44,18 @@ def getMultipleUnaliasedInputsClause(dss_function, inputTables):
                        unaliasedinputs[:int(min(unaliasedinputsdict.get('count', 1),
                                                 len(unaliasedinputs)))]))
     
-def getArgumentClauses(dss_function, inputTables):
+def getArgumentClauses(dss_function, jsonfile, inputTables):
     return queryutility.getJoinedArgumentsString(dss_function.get('arguments', []),
-                                                 queryutility.getArgumentClausesFromJson(
-                                                     queryutility.getJson(dss_function.get('name',''))),
+                                                 queryutility.getArgumentClausesFromJson(jsonfile),
                                                  inputTables)
 
-def getOnClause(dss_function, inputTables):
+def getOnClause(dss_function, jsonfile, inputTables):
     return (getMultipleUnaliasedInputsClause(dss_function, inputTables) +
-            getMultipleAliasedInputsClause(dss_function, inputTables)).strip() or\
+            getMultipleAliasedInputsClause(dss_function, jsonfile, inputTables)).strip() or\
             ON_SELECT_ONE_PARTITION_BY_ONE
             
 def getSelectQuery(dss_function, inputTables):
+    jsonfile= queryutility.getJson(dss_function.get('name',''))
     return SELECT_QUERY.format(dss_function.get('name', ''),
-                       getOnClause(dss_function, inputTables),
-                       getArgumentClauses(dss_function, inputTables))
-
-
+                       getOnClause(dss_function, jsonfile, inputTables),
+                       getArgumentClauses(dss_function, jsonfile, inputTables))
