@@ -497,6 +497,12 @@
 
       },
 
+      cleanKind: function(rawKind) {
+
+        return rawKind ? `(${rawKind})` : ''
+
+      },
+
       /**
        * Preprocess function metadata.
        */
