@@ -32,9 +32,14 @@ class inputtableinfo(tableinfo.tableinfo):
     def setPropertiesFromDef(self, inputdef):
         tablealias = inputdef.get('name', '')
         self.__alias = '' if 'Dimension' == tablealias else tablealias
-        self.__partitionKey = self.__getPartitionClauseFromInputDef(
+        self.__partitionKey = self.__getPartitionClauseFromAliasedInputDef(
             inputdef.get('kind', 'DSSOTHERS'), inputdef)
         self.__orderKey = self.__getOrderByKeyFromInputDef(inputdef)
+
+    def __getPartitionClauseFromAliasedInputDef(self, kind, inputdef):
+        partitionbycolumn = inputdef.get('partitionAttributes', '')
+        return getPartitionKind(kind) +\
+            (partitionbycolumn if 'PartitionByKey' == kind else '')
 
     def __getPartitionAttributes(self, inputdef):
         return ', '.join(inputdef.get('partitionAttributes', []))

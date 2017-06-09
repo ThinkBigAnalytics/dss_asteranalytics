@@ -157,3 +157,22 @@ ACCUMULATE('doc_id', 'category')
 
 );"""
         self.assertEqual(actualquery[2], expectedquery, 'test boolean arguments')
+        
+    def testTfidf(self):
+        inputConnectionConfig = {'table': 'tf', 'schema': 'dssenron'}
+        secondinputConnectionConfig = {'table': 'doccount_trigram', 'schema': 'dssenron'}
+        secondaryInputConnectionConfig = {'table': 'lp_svm_tfidf_output', 'schema': 'dssenron'}
+        
+        functionInputTable = inputtableinfo(inputConnectionConfig, 'tf', tfidfConfig)
+        doccountInputTable = inputtableinfo(secondinputConnectionConfig, 'doccount_trigram', tfidfConfig)
+        actualquery = getSelectClause(tfidfConfig, [functionInputTable, doccountInputTable])
+        expectedquery = '''SELECT *
+FROM   TF_IDF
+(
+ON dssenron.tf AS "tf" PARTITION BY term
+ON dssenron.doccount_trigram AS "doccount" DIMENSION ORDER BY testColumn
+ON dssenron.doccount_trigram AS "docperterm" PARTITION BY tf
+ON dssenron.doccount_trigram AS "idf" PARTITION BY doccount_trigram ORDER BY testColumn2
+
+);'''
+        self.assertEqual(actualquery, expectedquery, "test UNALIASED DIMENSIONAL INPUT")
