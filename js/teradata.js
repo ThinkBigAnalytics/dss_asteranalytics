@@ -380,7 +380,10 @@
       communicateWithBackend: function (f) {
 
         $scope.callPythonDo({}).then(
-          data => $.extend($scope, data),
+          data => {
+            $.extend($scope, data)
+            f()
+          },
           () => {}
         );
 
@@ -517,6 +520,11 @@
 
         $delay(() => {
 
+          // Re-arrange functions alphabetically.
+          if ($scope.choices) {
+            $scope.choices = $scope.choices.sort((a, b) => a.name.localeCompare(b.name))
+          }
+
           // Re-arrange argument order.
           $scope.config.function.arguments = [
             ...$scope.config.function.arguments.filter(x => x.datatype === 'TABLE_NAME'),
@@ -527,7 +535,8 @@
           let i = 0;
           $scope.config.function.arguments.forEach(argument => {
 
-            if (typeof functionMetadata.argument_clauses[i].defaultValue != 'undefined') {
+            if (functionMetadata.argument_clauses[i] 
+              && typeof functionMetadata.argument_clauses[i].defaultValue != 'undefined') {
               argument.value = functionMetadata.argument_clauses[i].defaultValue;
             }
 
@@ -544,12 +553,15 @@
        */
       initialize: function () {
 
-        $scope.communicateWithBackend();
-        if ($scope.config.function) {
-          $scope.getFunctionMetadata($scope.config.function.name);
-        }
-        $scope.preprocessMetadata();
-        $scope.activateUi();
+        $scope.communicateWithBackend(() => {
+
+          if ($scope.config.function) {
+            $scope.getFunctionMetadata($scope.config.function.name);
+          }
+          $scope.preprocessMetadata();
+          $scope.activateUi();
+
+        });
 
       },
 
