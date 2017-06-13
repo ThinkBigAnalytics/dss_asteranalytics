@@ -3,7 +3,8 @@ Created on Jun 6, 2017
 
 @author: DT186022
 '''
-import re
+
+from pseudoconstantgetters import *
 
 class AsterArgument(object):
     '''
@@ -21,11 +22,11 @@ class AsterArgument(object):
     
     @property
     def value(self):
-        regex = chr(0)
-        return ", ".join(\
-                         [(s if (s[:1] == "'" and s[-1:] == "'") else \
-                           ("'" + s + "'")) for s in \
-                          re.split(regex, """'{}'""".format(self._argument.get('value','')))])
+        print (self._argument.get('value', ''))
+        return ", ".join(
+            ["'{}'".format(s) for s in
+             """{}""".format(self._argument.get('value', '')).split(DELIMITER)])
+    
     @property
     def argumentclause(self):
         return """{argumentname}({argumentvalue})\n""". \

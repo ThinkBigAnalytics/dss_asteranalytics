@@ -14,5 +14,5 @@ class SqlExprArgument(AsterArgument):
     @property
     def value(self):
         DELIMITER = chr(0)
-        return ", ".join(re.split(DELIMITER, self._argument.get('value','')))
+        return ", ".join('{}'.format(self._argument.get('value','')).split(DELIMITER))
         
