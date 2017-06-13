@@ -416,9 +416,14 @@
         $('#main-container').tooltip();
         $('.tagsinput').each((i, x) => {
 
-          const original = $(x).prev().data('original-title')
-          const title = original ?
-            (original + '<br><br><b>(Press ENTER to add to list)</b>') :
+          const original = $(x).prev().data('original-title') || ''
+
+          const encoded = original.replace(/[\u00A0-\u9999<>\&]/gim, function(i) {
+            return '&#'+i.charCodeAt(0)+';';
+          });
+
+          const title = encoded ?
+            (encoded + '<br><br><b>(Press ENTER to add to list)</b>') :
             '<b>(Press ENTER to add to list)</b>'
           $(x).data({
               toggle: 'tooltip',
