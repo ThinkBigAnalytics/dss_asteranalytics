@@ -9,7 +9,7 @@
      * the Angular rendering cycle will have finished before
      * running the given function f.
      */
-    const $delay = f => $timeout(f, 500);
+    const $delay = f => $timeout(f, 100);
 
     /**
      * Default separator for list-like objects.
