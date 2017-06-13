@@ -74,6 +74,14 @@
       INPUT_TABLE_ALTERNATIVE: 'INPUT_TABLE'
     }
 
+    /** Regex for locating HTML entities. */
+    const ENTITY_REGEX = /[\u00A0-\u9999<>\&]/gim
+
+    /** Properly encodes an HTML entity. */
+    function encodeRegex(i) {
+      return '&#'+i.charCodeAt(0)+';';
+    }
+
     $.extend($scope, {
 
       /**
@@ -139,29 +147,19 @@
       /**
        * Gets the description of the given argument from the static JSON metadata.
        */
-      getArgumentDescription: function (selectedFunction, functionArgument) {
+      getArgumentDescription: function (i) {
 
-        functionArgument = functionArgument.toUpperCase();
-
-        if (!functionMetadata || !functionMetadata.argument_clauses) 
-          return '';
-
-        const potentialMatches = functionMetadata.argument_clauses.filter(item =>
-          KEYS.ALTERNATE_NAMES in item 
-            ? item.alternateNames
-                .map(x => x.toUpperCase())
-                .includes(functionArgument)
-            : item.name.toUpperCase() === functionArgument
-        );
-        
-        return potentialMatches.length > 0 ? potentialMatches[0].description : '';
+        return (functionMetadata && functionMetadata.argument_clauses[i])
+          ? functionMetadata.argument_clauses[i].description
+          : null;
 
       },
 
-      getPermittedValues: function(item) {
+      getPermittedValues: function(i) {
 
-        return functionMetadata.argument_clauses[item.index].permittedValues 
-          ? functionMetadata.argument_clauses[item.index].permittedValues 
+        return (functionMetadata && functionMetadata.argument_clauses[i]
+          && functionMetadata.argument_clauses[i].permittedValues)
+          ? functionMetadata.argument_clauses[i].permittedValues 
           : null;
 
       },
@@ -418,9 +416,7 @@
 
           const original = $(x).prev().data('original-title') || ''
 
-          const encoded = original.replace(/[\u00A0-\u9999<>\&]/gim, function(i) {
-            return '&#'+i.charCodeAt(0)+';';
-          });
+          const encoded = original.replace(ENTITY_REGEX, encodeRegex);
 
           const title = encoded ?
             (encoded + '<br><br><b>(Press ENTER to add to list)</b>') :
@@ -538,18 +534,12 @@
             $scope.choices = $scope.choices.sort((a, b) => a.name.localeCompare(b.name))
           }
 
-          // Re-arrange argument order.
-          $scope.config.function.arguments = [
-            ...$scope.config.function.arguments.filter(x => x.datatype === 'TABLE_NAME'),
-            ...$scope.config.function.arguments.filter(x => x.datatype !== 'TABLE_NAME'),
-          ]
-
           // Properly bind default arguments.
           let i = 0;
           $scope.config.function.arguments.forEach(argument => {
 
             // Index each argument for easy access.
-            argument.index = i;
+            argument.i = i;
 
             if (functionMetadata.argument_clauses[i] 
               && typeof functionMetadata.argument_clauses[i].defaultValue != 'undefined') {
@@ -559,6 +549,12 @@
             ++i;
 
           });
+
+          // Re-arrange argument order.
+          $scope.config.function.arguments = [
+            ...$scope.config.function.arguments.filter(x => x.datatype === 'TABLE_NAME'),
+            ...$scope.config.function.arguments.filter(x => x.datatype !== 'TABLE_NAME'),
+          ]
 
         });
 
