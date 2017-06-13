@@ -245,9 +245,7 @@
        * and order by fields when there are no unaliased input dataset
        */
       shouldShowPartitionOrderFields: function (unaliasedInputsList) {
-        
         return unaliasedInputsList && unaliasedInputsList.count > 0;
-
       },
 
       /**
@@ -256,6 +254,18 @@
       isArgumentOutputTable: function (functionArgument) {
         return functionArgument.isOutputTable
       },
+
+      /**
+       * Checks whether or not required arguments are present in the function metadata.
+       */
+      hasRequiredArguments: function () {
+
+        if (!$scope.config.function.arguments || !$scope.config.function.arguments.length)
+          return false
+
+        return $scope.config.function.arguments.filter(x => x.isRequired).length > 0
+      
+    },
 
       /**
        * Checks whether or not optional arguments are present in the function metadata.
@@ -521,18 +531,19 @@
             ...$scope.config.function.arguments.filter(x => x.datatype !== 'TABLE_NAME'),
           ]
 
-          
+          // Properly bind default arguments.
           let i = 0;
           $scope.config.function.arguments.forEach(argument => {
 
-            // Properly bind default arguments.
             if (functionMetadata.argument_clauses[i] 
               && typeof functionMetadata.argument_clauses[i].defaultValue != 'undefined') {
               argument.value = functionMetadata.argument_clauses[i].defaultValue;
             }
 
-            // Extend the python-based argument clauses with the JSON metadata.
-            $.extend(argument, functionMetadata.argument_clauses[i])
+            if (functionMetadata.argument_clauses[i] 
+              && typeof functionMetadata.argument_clauses[i].permittedValues != 'undefined') {
+              argument.permittedValues = functionMetadata.argument_clauses[i].permittedValues;
+            }
 
             ++i;
 
