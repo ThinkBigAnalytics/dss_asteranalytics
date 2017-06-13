@@ -158,6 +158,14 @@
 
       },
 
+      getPermittedValues: function(item) {
+
+        return functionMetadata.argument_clauses[item.index].permittedValues 
+          ? functionMetadata.argument_clauses[item.index].permittedValues 
+          : null;
+
+      },
+
       /**
        * Gets the schema of the unaliased inputs from the static JSON metadata.
        */
@@ -535,14 +543,12 @@
           let i = 0;
           $scope.config.function.arguments.forEach(argument => {
 
+            // Index each argument for easy access.
+            argument.index = i;
+
             if (functionMetadata.argument_clauses[i] 
               && typeof functionMetadata.argument_clauses[i].defaultValue != 'undefined') {
               argument.value = functionMetadata.argument_clauses[i].defaultValue;
-            }
-
-            if (functionMetadata.argument_clauses[i] 
-              && typeof functionMetadata.argument_clauses[i].permittedValues != 'undefined') {
-              argument.permittedValues = functionMetadata.argument_clauses[i].permittedValues;
             }
 
             ++i;

@@ -125,12 +125,12 @@
                 <td style="text-transform: capitalize">{{ cleanName(item.name) }}</td>
                 <td>
                   <input required type="text" ng-model="item.value" 
-                    ng-if="(['STRING','DOUBLE','INTEGER','DRIVER','SQLEXPR', 'LONG'].indexOf(item.datatype) >= 0 || (item.datatype == 'TABLE_NAME' && isArgumentOutputTable(item))) && !item.allowsLists && !item.permittedValues"
+                    ng-if="(['STRING','DOUBLE','INTEGER','DRIVER','SQLEXPR', 'LONG'].indexOf(item.datatype) >= 0 || (item.datatype == 'TABLE_NAME' && isArgumentOutputTable(item))) && !item.allowsLists && !getPermittedValues(item)"
                     data-toggle="tooltip" data-container="body" title="{{ getArgumentDescription(config.function.name, item.name) }}"
                     data-placement="right" />
 
                   <input required class="teradata-tags" ng-model="item.value" type="text" 
-                    ng-if="['STRING','DOUBLE','INTEGER','DRIVER','SQLEXPR', 'LONG'].indexOf(item.datatype) >= 0 && item.allowsLists && !item.permittedValues"
+                    ng-if="['STRING','DOUBLE','INTEGER','DRIVER','SQLEXPR', 'LONG'].indexOf(item.datatype) >= 0 && item.allowsLists && !getPermittedValues(item)"
                     data-toggle="tooltip" data-container="body" title="{{ getArgumentDescription(config.function.name, item.name) }}"
                     data-placement="right"></input>
 
@@ -139,7 +139,7 @@
                     title="{{ getArgumentDescription(config.function.name, item.name) }}" data-placement="right" />
 
                   <select required 
-                    ng-if="(item.datatype == 'COLUMN_NAMES' || item.datatype == 'COLUMNS') && !item.allowsLists && !item.permittedValues" ng-model="item.value"
+                    ng-if="(item.datatype == 'COLUMN_NAMES' || item.datatype == 'COLUMNS') && !item.allowsLists && !getPermittedValues(item)" ng-model="item.value"
                     data-toggle="tooltip" data-container="body" title="{{ getArgumentDescription(config.function.name, item.name) }}"
                     data-placement="right" 
                     ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in getSchema(item, config.function.required_input, config.function.unaliased_inputs, config.function.arguments)">
@@ -147,23 +147,23 @@
                   </select>
 
                   <select required multiple size="8" 
-                    ng-if="(item.datatype == 'COLUMN_NAMES' || item.datatype == 'COLUMNS') && item.allowsLists && !item.permittedValues"
+                    ng-if="(item.datatype == 'COLUMN_NAMES' || item.datatype == 'COLUMNS') && item.allowsLists && !getPermittedValues(item)"
                     ng-model="item.value" data-toggle="tooltip" data-html="true" title="{{ getArgumentDescription(config.function.name, item.name) }}<br><br><b>(Ctrl+Click to multi-select)</b>"
                     data-placement="right" data-container="body" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in getSchema(item, config.function.required_input, config.function.unaliased_inputs, config.function.arguments)">
                     <option value="" selected>--No Selection--</option>
                   </select>
 
-                  <select required ng-if="item.datatype == 'TABLE_NAME' && !isArgumentOutputTable(item) && !item.permittedValues" 
+                  <select required ng-if="item.datatype == 'TABLE_NAME' && !isArgumentOutputTable(item) && !getPermittedValues(item)" 
                     ng-model="item.value" data-toggle="tooltip"
                     data-container="body" title="{{ getArgumentDescription(config.function.name, item.name) }}" data-placement="right"
                     ng-options="t.fullName.split('.')[1] as t.fullName.split('.')[1] for t in inputs">
                     <option value="" selected>--No Selection--</option>
                   </select>
 
-                  <select required ng-if="item.permittedValues && item.permittedValues.length" 
+                  <select required ng-if="getPermittedValues(item)" 
                     ng-model="item.value" data-toggle="tooltip"
                     data-container="body" title="{{ getArgumentDescription(config.function.name, item.name) }}" data-placement="right"
-                    ng-options="t as t for t in item.permittedValues">
+                    ng-options="t as t for t in getPermittedValues(item)">
                     <option value="" selected>--No Selection--</option>
                   </select>
                 </td>
@@ -222,41 +222,41 @@
                 <td style="text-transform: capitalize">{{ cleanName(item.name) }}</td>
                 <td>
                   <input type="text" ng-model="item.value" 
-                    ng-if="(['STRING','DOUBLE','INTEGER','DRIVER','SQLEXPR', 'LONG'].indexOf(item.datatype) >= 0 || (item.datatype == 'TABLE_NAME' && isArgumentOutputTable(item))) && !item.allowsLists && !item.permittedValues"
+                    ng-if="(['STRING','DOUBLE','INTEGER','DRIVER','SQLEXPR', 'LONG'].indexOf(item.datatype) >= 0 || (item.datatype == 'TABLE_NAME' && isArgumentOutputTable(item))) && !item.allowsLists && !getPermittedValues(item)"
                     data-toggle="tooltip" data-container="body" title="{{ getArgumentDescription(config.function.name, item.name) }}"
                     data-placement="right" />
 
                   <input class="teradata-tags" ng-model="item.value" type="text" 
-                    ng-if="['STRING','DOUBLE','INTEGER','DRIVER','SQLEXPR', 'LONG'].indexOf(item.datatype) >= 0 && item.allowsLists && !item.permittedValues"
+                    ng-if="['STRING','DOUBLE','INTEGER','DRIVER','SQLEXPR', 'LONG'].indexOf(item.datatype) >= 0 && item.allowsLists && !getPermittedValues(item)"
                     data-toggle="tooltip" data-container="body" title="{{ getArgumentDescription(config.function.name, item.name) }}"
                     data-placement="right"></input>
 
-                  <input type="checkbox" ng-model="item.value" ng-if="item.datatype == 'BOOLEAN' && !item.permittedValues" data-toggle="tooltip" data-container="body"
+                  <input type="checkbox" ng-model="item.value" ng-if="item.datatype == 'BOOLEAN' && !getPermittedValues(item)" data-toggle="tooltip" data-container="body"
                     title="{{ getArgumentDescription(config.function.name, item.name) }}" data-placement="right" />
 
-                  <select ng-if="(item.datatype == 'COLUMN_NAMES' || item.datatype == 'COLUMNS') && !item.allowsLists && !item.permittedValues" ng-model="item.value"
+                  <select ng-if="(item.datatype == 'COLUMN_NAMES' || item.datatype == 'COLUMNS') && !item.allowsLists && !getPermittedValues(item)" ng-model="item.value"
                     data-toggle="tooltip" data-container="body" title="{{ getArgumentDescription(config.function.name, item.name) }}"
                     data-placement="right" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in getSchema(item, config.function.required_input, config.function.unaliased_inputs, config.function.arguments)">
                     <option value="" selected>--No Selection--</option>
                   </select>
 
-                  <select multiple size="8" ng-if="(item.datatype == 'COLUMN_NAMES' || item.datatype == 'COLUMNS') && item.allowsLists && !item.permittedValues" 
+                  <select multiple size="8" ng-if="(item.datatype == 'COLUMN_NAMES' || item.datatype == 'COLUMNS') && item.allowsLists && !getPermittedValues(item)" 
                     ng-model="item.value"
                     data-toggle="tooltip" data-html="true" title="{{ getArgumentDescription(config.function.name, item.name) }}<br><br><b>(Ctrl+Click to multi-select)</b>"
                     data-placement="right" data-container=body ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in getSchema(item, config.function.required_input, config.function.unaliased_inputs, config.function.arguments)">
                     <option value="" selected>--No Selection--</option>
                   </select>
 
-                  <select ng-if="item.datatype == 'TABLE_NAME' && !isArgumentOutputTable(item) && !item.permittedValues" ng-model="item.value" data-toggle="tooltip"
+                  <select ng-if="item.datatype == 'TABLE_NAME' && !isArgumentOutputTable(item) && !getPermittedValues(item)" ng-model="item.value" data-toggle="tooltip"
                     data-container="body" title="{{ getArgumentDescription(config.function.name, item.name) }}" data-placement="right"
                     ng-options="t.fullName.split('.')[1] as t.fullName.split('.')[1] for t in inputs">
                     <option value="" selected>--No Selection--</option>
                   </select>
 
-                  <select required ng-if="item.permittedValues && item.permittedValues.length" 
+                  <select required ng-if="getPermittedValues(item)" 
                     ng-model="item.value" data-toggle="tooltip"
                     data-container="body" title="{{ getArgumentDescription(config.function.name, item.name) }}" data-placement="right"
-                    ng-options="t as t for t in item.permittedValues">
+                    ng-options="t as t for t in getPermittedValues(item)">
                     <option ng-if="!item.value" value="" selected>--No Selection--</option>
                   </select>
                 </td>
