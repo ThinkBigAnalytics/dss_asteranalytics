@@ -540,6 +540,11 @@
               argument.value = functionMetadata.argument_clauses[i].defaultValue;
             }
 
+            if (functionMetadata.argument_clauses[i] 
+              && typeof functionMetadata.argument_clauses[i].permittedValues != 'undefined') {
+              argument.permittedValues = functionMetadata.argument_clauses[i].permittedValues;
+            }
+
             ++i;
 
           });
