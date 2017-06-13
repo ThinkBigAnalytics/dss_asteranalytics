@@ -137,6 +137,28 @@
       },
 
       /**
+       * Gets the description of the given argument from the static JSON metadata.
+       */
+      getArgumentDescription: function (selectedFunction, functionArgument) {
+
+        functionArgument = functionArgument.toUpperCase();
+
+        if (!functionMetadata || !functionMetadata.argument_clauses) 
+          return '';
+
+        const potentialMatches = functionMetadata.argument_clauses.filter(item =>
+          KEYS.ALTERNATE_NAMES in item 
+            ? item.alternateNames
+                .map(x => x.toUpperCase())
+                .includes(functionArgument)
+            : item.name.toUpperCase() === functionArgument
+        );
+        
+        return potentialMatches.length > 0 ? potentialMatches[0].description : '';
+
+      },
+
+      /**
        * Gets the schema of the unaliased inputs from the static JSON metadata.
        */
       getSchemaOfUnaliasedInputs: function (unaliasedInputsList) {
