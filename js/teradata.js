@@ -125,6 +125,14 @@
           .get(`${FUNCTION_METADATA_PATH}${selectedFunction}.json`)
           .success(data => {
             functionMetadata = data;
+
+            // Preprocess descriptions.
+            functionMetadata.argument_clauses.forEach(
+              x => x.description = x.description 
+                ? x.description.replace(ENTITY_REGEX, encodeRegex)
+                : ''
+            )
+
             $scope.preprocessMetadata();
             $scope.activateTabs();
             $scope.activateMultiTagsInput();
@@ -412,24 +420,27 @@
       activateTooltips: function () {
 
         $('#main-container').tooltip();
-        $('.tagsinput').each((i, x) => {
 
-          const original = $(x).prev().data('original-title') || ''
+        $delay(() => {
 
-          const encoded = original.replace(ENTITY_REGEX, encodeRegex);
+          $('.tagsinput').each((i, x) => {
 
-          const title = encoded ?
-            (encoded + '<br><br><b>(Press ENTER to add to list)</b>') :
-            '<b>(Press ENTER to add to list)</b>'
-          $(x).data({
-              toggle: 'tooltip',
-              container: 'body',
-              placement: 'right',
-              html: true,
-              title: title,
-              'original-title': title
-            })
-            .tooltip()
+            const original = $(x).prev().attr('data-original-title') || ''
+
+            const title = original ?
+              (original + '<br><br><b>(Press ENTER to add to list)</b>') :
+              '<b>(Press ENTER to add to list)</b>'
+            $(x).data({
+                toggle: 'tooltip',
+                container: 'body',
+                placement: 'right',
+                html: true,
+                title: title,
+                'original-title': title
+              })
+              .tooltip()
+
+          });
 
         });
 
@@ -496,7 +507,6 @@
           $scope.activateCosmeticImprovements();
           $scope.activateTabs();
           $scope.activateMultiTagsInput();
-          $scope.activateTooltips();
           $scope.activateValidation();
 
         });
