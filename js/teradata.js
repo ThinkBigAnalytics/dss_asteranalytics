@@ -91,6 +91,12 @@
        */
       dialog: function (title, content) {
 
+        // [HACK] Sometimes, the title is "error" because of timing issues.
+        // So we force it to succeed if the content is "Job succeeded".
+        if (content === 'Job succeeded.') {
+          title = 'Success'
+        }
+
         $dialog.find('pre').text(content);
         $dialog
           .attr('title', title)
