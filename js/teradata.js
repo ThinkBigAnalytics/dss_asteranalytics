@@ -391,13 +391,10 @@
        * Communicates with Python backend 
        * and acquires necessary data to display in the recipe UI.
        */
-      communicateWithBackend: function (f) {
+      communicateWithBackend: function () {
 
         $scope.callPythonDo({}).then(
-          data => {
-            $.extend($scope, data)
-            f()
-          },
+          data => $.extend($scope, data),
           () => {}
         );
 
@@ -575,15 +572,13 @@
        */
       initialize: function () {
 
-        $scope.communicateWithBackend(() => {
-
-          if ($scope.config.function) {
-            $scope.getFunctionMetadata($scope.config.function.name);
-          }
-          $scope.preprocessMetadata();
-          $scope.activateUi();
-
-        });
+        $scope.communicateWithBackend();
+        if ($scope.config.function) {
+          $scope.getFunctionMetadata($scope.config.function.name);
+        }
+	
+        $scope.preprocessMetadata();
+        $scope.activateUi();
 
       },
 
