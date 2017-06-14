@@ -20,6 +20,8 @@ class IntegerArgument(AsterArgument):
             return "{}".format(float(value)).split('.')[0]
         except ValueError:
             return '0'
+        except BaseException:
+            return '0'
     
     @property
     def value(self):
