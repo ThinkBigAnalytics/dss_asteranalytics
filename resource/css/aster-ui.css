@@ -216,3 +216,11 @@ div.inner-cell {
     margin-top: 8px;
     margin-bottom: 8px;
 }
+
+.other a {
+    width: 100%;
+    color: #0088cc !important;
+    text-align: center;
+    display: block;
+    margin-top: 6vh;
+}

@@ -89,7 +89,7 @@
        * 
        * This is for displaying Aster-side errors.
        */
-      dialog: function (title, content) {
+      dialog: function (title, content, elem) {
 
         // [HACK] Sometimes, the title is "error" because of timing issues.
         // So we force it to succeed if the content is "Job succeeded".
@@ -98,9 +98,13 @@
         }
 
         $dialog.find('pre').text(content);
+        $(elem).click(() => $('.ui-dialog-content').dialog('close'));
+        $dialog.find('.other').empty().append(elem);
+
         $dialog
           .attr('title', title)
           .dialog(DIALOG_PARAMETERS);
+
         $dialog.css(DIALOG_CSS_PARAMETERS);
 
       },
@@ -372,8 +376,11 @@
               return false
 
             const result = $results.find('h4').text()
+
+            const $jobLinkClone = $results.find('a').last().clone(true, true)
+
             $results.remove()
-            $scope.dialog(title, result)
+            $scope.dialog(title, result, $jobLinkClone)
 
             return true
 
