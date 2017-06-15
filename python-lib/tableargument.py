@@ -15,8 +15,8 @@ class TableArgument(AsterArgument):
     def __getTableNameFromArgument(self, argumentValue, inputTables):
         # this next algo here is not safe without a default value,
         # I hope you can put up a unit test and alter it
-        return next("'" + self.__getTableNameFromTable(x) + "'" for \
-                    x in inputTables if argumentValue == x.datasetname)
+        return next(iter("'" + self.__getTableNameFromTable(x) + "'" for
+                         x in inputTables if argumentValue == x.datasetname), '')
 
     def __getTableNameFromTable(self, inputTable):
         return inputTable.tablenamewithoutschema if \

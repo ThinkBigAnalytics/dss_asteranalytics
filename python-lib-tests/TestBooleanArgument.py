@@ -31,11 +31,27 @@ class TestBooleanArgument(unittest.TestCase):
         
     def testTrueBooleanArgumentClauseDefaultTrue(self):
         argument = {'name': 'CASESENSITIVE', 'value': True}
-        testasterargument = BooleanArgument(argument, self.__argumentdef)
         argumentdef = {'datatype': 'BOOLEAN', 'isRequired': False, 'allowsLists': False,
                        'defaultValue': True}
+        testasterargument = BooleanArgument(argument, argumentdef)
         self.assertEqual("CASESENSITIVE('True')\n", testasterargument.argumentclause,
                          "Test when boolean argument is True and default is True")
+
+    def testFalseBooleanArgumentClauseDefaultTrue(self):
+        argument = {'name': 'CASESENSITIVE', 'value': False}
+        argumentdef = {'datatype': 'BOOLEAN', 'isRequired': False, 'allowsLists': False,
+                       'defaultValue': True}
+        testasterargument = BooleanArgument(argument, argumentdef)
+        self.assertEqual("CASESENSITIVE('False')\n", testasterargument.argumentclause,
+                         "Test when boolean argument is False and default is True")
+        
+    def testNoneBooleanArgumentClauseDefaultTrue(self):
+        argument = {'name': 'CASESENSITIVE', 'value': None}
+        argumentdef = {'datatype': 'BOOLEAN', 'isRequired': False, 'allowsLists': False,
+                       'defaultValue': True}
+        testasterargument = BooleanArgument(argument, argumentdef)
+        self.assertEqual("CASESENSITIVE('False')\n", testasterargument.argumentclause,
+                         "Test when boolean argument is None and default is True")
     
     def testSingleValuedFalseStringBooleanArgument(self):
         argument = {'name': 'CASESENSITIVE', 'value': False}

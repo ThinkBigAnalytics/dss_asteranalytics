@@ -22,7 +22,6 @@ class AsterArgument(object):
     
     @property
     def value(self):
-        print (self._argument.get('value', ''))
         return ", ".join(
             ["'{}'".format(s) for s in
              """{}""".format(self._argument.get('value', '')).split(DELIMITER)])
