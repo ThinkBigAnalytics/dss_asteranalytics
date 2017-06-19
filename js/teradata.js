@@ -136,18 +136,34 @@
           .success(data => {
             functionMetadata = data;
 
-            // Preprocess descriptions.
-            functionMetadata.argument_clauses.forEach(
-              x => x.description = x.description 
-                ? x.description.replace(ENTITY_REGEX, encodeRegex)
-                : ''
-            )
-
+            $scope.preprocessDescriptions();
             $scope.preprocessMetadata();
             $scope.activateTabs();
             $scope.activateMultiTagsInput();
             $scope.activateTooltips();
           })
+
+      },
+
+      /**
+       * Preprocesses the descriptions so that the special characters are correctly rendered.
+       */
+      preprocessDescriptions: function() {
+
+        if (!functionMetadata || !functionMetadata.argument_clauses) 
+          return;
+
+        functionMetadata.argument_clauses.forEach(
+          x => {
+            try {
+
+              x.description = x.description 
+              ? x.description.replace(ENTITY_REGEX, encodeRegex)
+              : ''
+
+            } catch (e) {}
+          }
+        )
 
       },
 
@@ -167,18 +183,36 @@
        */
       getArgumentDescription: function (i) {
 
-        return (functionMetadata && functionMetadata.argument_clauses[i])
+        try {
+
+          return (functionMetadata && functionMetadata.argument_clauses[i])
           ? functionMetadata.argument_clauses[i].description
           : null;
+        
+        } catch (e) {
+        
+          return null
+        
+        }
 
       },
 
       getPermittedValues: function(i) {
 
-        return (functionMetadata && functionMetadata.argument_clauses[i]
-          && functionMetadata.argument_clauses[i].permittedValues)
+        try {
+
+          return (functionMetadata 
+            && functionMetadata.argument_clauses[i]
+            && functionMetadata.argument_clauses[i].permittedValues)
           ? functionMetadata.argument_clauses[i].permittedValues 
           : null;
+          
+        } catch (error) {
+          
+          return null;
+
+        }
+        
 
       },
 
@@ -561,9 +595,15 @@
             // Index each argument for easy access.
             argument.i = i;
 
-            if (functionMetadata.argument_clauses[i] 
-              && typeof functionMetadata.argument_clauses[i].defaultValue != 'undefined') {
-              argument.value = functionMetadata.argument_clauses[i].defaultValue;
+            try {
+
+              if (functionMetadata.argument_clauses[i] 
+                && typeof functionMetadata.argument_clauses[i].defaultValue != 'undefined') {
+                argument.value = functionMetadata.argument_clauses[i].defaultValue;
+              }
+
+            } catch (e) {
+
             }
 
             ++i;

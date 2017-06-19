@@ -34,6 +34,12 @@
     background: url(/plugins/AsterAnalytics/resource/img/chart2.jpg) !important;
 }
 
+.dss-page.cluster-analysis {
+    background: url(http://datablend.be/wp-content/uploads/2013/12/yelp-graph.jpg) !important;
+    background-size: contain !important;
+    background-position-x: -130px !important;
+}
+
 /*#tabs-required input, #tabs-required select,
 #tabs-optional input, #tabs-optional select {
     zoom: 90%;
