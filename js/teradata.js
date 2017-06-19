@@ -1,5 +1,15 @@
 (function (window, document, angular, $) {
 
+  if (typeof window === 'undefined' || !window) {
+    throw new Error('DOM Window not present!')
+  } else if (typeof document === 'undefined' || !document) {
+    throw new Error('DOM Document not present!')
+  } else if (typeof angular === 'undefined' || !angular) {
+    throw new Error('Angular library not present!')
+  } else if (typeof $ === 'undefined' || !$) {
+    throw new Error('jQuery library not present!')
+  }
+
   const app = angular.module('teradata.module', []);
 
   app.controller('TeradataController', function ($scope, $timeout) {
