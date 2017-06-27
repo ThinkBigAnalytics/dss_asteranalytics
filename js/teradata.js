@@ -333,7 +333,7 @@
 
         return $scope.config.function.arguments.filter(x => x.isRequired).length > 0
       
-    },
+      },
 
       /**
        * Checks whether or not optional arguments are present in the function metadata.
@@ -639,7 +639,7 @@
         if ($scope.config.function) {
           $scope.getFunctionMetadata($scope.config.function.name);
         }
-	
+
         $scope.preprocessMetadata();
         $scope.activateUi();
 
