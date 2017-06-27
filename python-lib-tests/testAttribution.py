@@ -45,8 +45,8 @@ class TestAttribution(unittest.TestCase):
                                          secondModelTable],
                                         functionOutputTable)
         expectedquery = """BEGIN TRANSACTION;
-DROP TABLE IF EXISTS public.attributionoutput;
-CREATE DIMENSION TABLE public.attributionoutput
+DROP TABLE IF EXISTS "public.attributionoutput";
+CREATE DIMENSION TABLE "public.attributionoutput"
 AS
 SELECT *
 FROM   ATTRIBUTION

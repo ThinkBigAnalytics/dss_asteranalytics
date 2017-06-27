@@ -23,8 +23,8 @@ class TestTextAnalysis(unittest.TestCase):
         functionOutputTable = outputtableinfo(textTokenizerOutputConnectionConfig, 'text_tokenized', textTokenizerConfig)
         actualquery = getFunctionsQuery(textTokenizerConfig, [functionInputTable], functionOutputTable)
         expectedquery = """BEGIN TRANSACTION;
-DROP TABLE IF EXISTS public.text_tokenized;
-CREATE DIMENSION TABLE public.text_tokenized
+DROP TABLE IF EXISTS "public.text_tokenized";
+CREATE DIMENSION TABLE "public.text_tokenized"
 AS
 SELECT *
 FROM   TEXTTOKENIZER
@@ -46,8 +46,8 @@ END TRANSACTION;"""
         functionOutputTable = outputtableinfo(testOuputConnectionConfig, 'dss_test', testConfig)
         actualquery = getFunctionsQuery(testConfig, [functionInputTable], functionOutputTable)
         expectedquery = """BEGIN TRANSACTION;
-DROP TABLE IF EXISTS public.dss_test;
-CREATE DIMENSION TABLE public.dss_test
+DROP TABLE IF EXISTS "public.dss_test";
+CREATE DIMENSION TABLE "public.dss_test"
 AS
 SELECT *
 FROM   EVALUATENAMEDENTITYFINDERPARTITION
@@ -68,8 +68,8 @@ END TRANSACTION;"""
         functionOutputTable = outputtableinfo(testOutputConnectionConfig, 'dss_nertrainer', nertrainerConfig)
         actualquery = getFunctionsQuery(nertrainerConfig, [functionInputTable], functionOutputTable)
         expectedquery = """BEGIN TRANSACTION;
-DROP TABLE IF EXISTS dss.dss_nertrainer;
-CREATE DIMENSION TABLE dss.dss_nertrainer
+DROP TABLE IF EXISTS "dss.dss_nertrainer";
+CREATE DIMENSION TABLE "dss.dss_nertrainer"
 AS
 SELECT *
 FROM   NERTRAINER
@@ -94,8 +94,8 @@ END TRANSACTION;"""
         functionOutputTable = outputtableinfo(testOutputConnectionConfig, 'dss_ner', nerConfig)
         actualquery = getFunctionsQuery(nerConfig, [functionInputTable, ruleTable], functionOutputTable)
         expectedquery = """BEGIN TRANSACTION;
-DROP TABLE IF EXISTS dss.dss_ner;
-CREATE DIMENSION TABLE dss.dss_ner
+DROP TABLE IF EXISTS "dss.dss_ner";
+CREATE DIMENSION TABLE "dss.dss_ner"
 AS
 SELECT *
 FROM   NER
@@ -119,8 +119,8 @@ END TRANSACTION;"""
         functionOutputTable = outputtableinfo(testOutputConnectionConfig, 'dss_ner', nerEvaluatorConfig)
         actualquery = getFunctionsQuery(nerEvaluatorConfig, [functionInputTable], functionOutputTable)
         expectedquery = """BEGIN TRANSACTION;
-DROP TABLE IF EXISTS dss.dss_nerevaluator;
-CREATE DIMENSION TABLE dss.dss_nerevaluator
+DROP TABLE IF EXISTS "dss.dss_nerevaluator";
+CREATE DIMENSION TABLE "dss.dss_nerevaluator"
 AS
 SELECT *
 FROM   NEREVALUATOR
@@ -140,7 +140,7 @@ END TRANSACTION;"""
         functionInputTable = inputtableinfo(testInputConnectionConfig, 'textparser_input', textParserConfig)
         functionOutputTable = outputtableinfo(testOutputConnectionConfig, 'textparser_output', textParserConfig)
         actualquery = getFunctionsQuery(textParserConfig, [functionInputTable], functionOutputTable)
-        expectedquery = """CREATE DIMENSION TABLE dss.textparser_output
+        expectedquery = """CREATE DIMENSION TABLE "dss.textparser_output"
 AS
 SELECT *
 FROM   TEXT_PARSER

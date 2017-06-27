@@ -49,7 +49,7 @@ def asterDo():
     executor.query_to_df("END TRANSACTION;", pre_queries=query)
     
     # write table schema
-    nQuery = """SELECT * FROM {} LIMIT (1);""".format(outputTable.tablename)
+    nQuery = '''SELECT * FROM "{}" LIMIT (1);'''.format(outputTable.tablename)
     selectResult = executor.query_to_df(nQuery);
     output_schema = []
     for column in selectResult.columns:

@@ -9,9 +9,9 @@ from pseudoconstants import *
 def getPartitionKind(kind):
     return PARTITION_KEY_MAPPING.get(kind, '')
 
-CREATE_QUERY = """CREATE {} TABLE {}{}
+CREATE_QUERY = '''CREATE {} TABLE "{}"{}
 AS
-{}"""
+{}'''
 
 SELECT_QUERY = '''SELECT *
 FROM   {}
@@ -30,7 +30,7 @@ DISTRIBUTE_BY_HASH = ' DISTRIBUTE BY HASH({})'
 
 BEGIN_TRANSACTION_QUERY = 'BEGIN TRANSACTION;'
 
-DROP_QUERY = 'DROP TABLE IF EXISTS {outputTablename};'
+DROP_QUERY = 'DROP TABLE IF EXISTS "{outputTablename}";'
 
 COMMIT_QUERY = "COMMIT;"
 

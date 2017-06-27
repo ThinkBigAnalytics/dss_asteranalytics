@@ -22,8 +22,8 @@ class TestNaiveBayes(unittest.TestCase):
         functionOutputTable = outputtableinfo(outputConnectionConfig, 'naivebayestrain_out', naiveBayesTrainConfig)
         actualquery = getFunctionsQuery(naiveBayesTrainConfig, [functionInputTable], functionOutputTable)
         expectedquery = '''BEGIN TRANSACTION;
-DROP TABLE IF EXISTS dss.naivebayestrain_out;
-CREATE DIMENSION TABLE dss.naivebayestrain_out
+DROP TABLE IF EXISTS "dss.naivebayestrain_out";
+CREATE DIMENSION TABLE "dss.naivebayestrain_out"
 AS
 (SELECT * FROM NAIVEBAYESREDUCE (ON (SELECT * FROM NAIVEBAYESMAP (ON public.dss_nb_iris_dataset_train   NUMERICINPUTS('sepal_length', 'sepal_width', 'petal_length', 'petal_width')
 RESPONSE('species')

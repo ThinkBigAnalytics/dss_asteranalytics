@@ -21,7 +21,7 @@ class TestClusterAnalysis(unittest.TestCase):
         functionInputTable = inputtableinfo(inputConnectionConfig, 'computers_train1_public', canopyConfig)
         functionOutputTable = outputtableinfo(outputConnectionConfig, 'canopy_out', canopyConfig)
         actualquery = getFunctionsQuery(canopyConfig, [functionInputTable], functionOutputTable)
-        expectedquery = '''CREATE DIMENSION TABLE dss.canopy_out
+        expectedquery = '''CREATE DIMENSION TABLE "dss.canopy_out"
 AS
 SELECT *
 FROM   CANOPY

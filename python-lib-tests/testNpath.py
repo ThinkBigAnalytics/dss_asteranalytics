@@ -21,7 +21,7 @@ class Test(unittest.TestCase):
         functionInputTable = inputtableinfo(inputConnectionConfig, 'tv_shows', npathConfig)
         functionOutputTable = outputtableinfo(outputConnectionConfig, 'dss_tv_show_npath', npathConfig)
         actualquery = getFunctionsQuery(npathConfig, [functionInputTable], functionOutputTable)
-        expectedquery = '''CREATE DIMENSION TABLE dss.dss_tv_show_npath
+        expectedquery = '''CREATE DIMENSION TABLE "dss.dss_tv_show_npath"
 AS
 SELECT *
 FROM   NPATH
