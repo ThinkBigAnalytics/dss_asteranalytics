@@ -73,7 +73,7 @@
                     <p class="inner-label">Partition by </p>
                     <select 
                       ng-model="item.partitionAttributes" 
-                      ng-options="inputtable.fullName.split('.')[1] as inputtable.fullName.split('.')[1] for inputtable in inputs">
+                      ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]">
                         <option value="" selected>--No Selection--</option>
                     </select>
                   </div>
@@ -82,7 +82,7 @@
                     <p class="inner-label">Order by </p>
                     <select 
                       ng-model="item.orderByColumn" 
-                      ng-options="inputtable.fullName.split('.')[1] as inputtable.fullName.split('.')[1] for inputtable in inputs">
+                      ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]">
                         <option value="" selected>--No Selection--</option>
                     </select>
                   </div>
@@ -204,7 +204,7 @@
                     <p class="inner-label">Partition by</p>
                     <select 
                       ng-model="item.partitionAttributes" 
-                      ng-options="inputtable.fullName.split('.')[1] as inputtable.fullName.split('.')[1] for inputtable in inputs">
+                      ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]">
                         <option value="" selected>--No Selection--</option>
                     </select>
                   </div>
@@ -213,7 +213,7 @@
                     <p class="inner-label">Order by</p>
                     <select 
                       ng-model="item.orderByColumn"
-                      ng-options="inputtable.fullName.split('.')[1] as inputtable.fullName.split('.')[1] for inputtable in inputs">
+                      ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]">
                         <option value="" selected>--No Selection--</option>
                     </select>
                   </div>
