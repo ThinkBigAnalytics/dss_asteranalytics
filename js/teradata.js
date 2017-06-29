@@ -189,6 +189,14 @@
       },
 
       /**
+       * Test Function
+       */
+      testFunction: function (selectedOption) {
+        console.log(selectedOption);
+        
+      },
+
+      /**
        * Gets the description of the given argument from the static JSON metadata.
        */
       getArgumentDescription: function (i) {
@@ -652,7 +660,7 @@
 
         $scope.getFunctionMetadata(selectedFunction);
         $scope.preprocessMetadata();
-
+        console.log($scope);
       }
 
     })

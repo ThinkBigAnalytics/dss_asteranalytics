@@ -24,6 +24,28 @@
       </div>
     </div>
 
+    <div class="control-group">
+      <label class="control-label">Distribution Type</label>
+      <div class="controls">
+        <select ng-model="config.distribution" 
+          ng-change="refresh(config.distribution)">
+          <option value="" disabled selected>Select a Distribution Type...</option>
+          <option value="fact">Fact</option>
+          <option value="dimension">Dimension</option>
+        </select>
+      </div>
+    </div>
+
+    <!--<div><p >Test</p></div>-->
+        <div class="control-group" ng-if="config.distribution == 'fact'">
+      <label class="control-label">Distribution Key</label>
+      <div class="controls" style="max-width: 40%; text-align: justify">
+         <input required type="text" ng-model="config.distribution_key"                     
+                    data-toggle="tooltip" data-container="body" data-html="false" title="distribution_key"
+                    data-placement="right"/>
+      </div>
+    </div>
+
     <hr ng-if="config.function">
 
     <div class="control-group" ng-if="config.function">
