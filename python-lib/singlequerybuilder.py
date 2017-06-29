@@ -18,6 +18,10 @@ def getUnaliasedInputOnClause(requiredinput, inputTables):
                " ".join(["ORDER BY", table.orderKey])).rstrip() +\
                "\n" if table else ''
                
+def getInputQueryOnClause(inputquery):
+    return UNALIASED_QUERY_ON_CLAUSE.format(input_query=inputquery) +\
+               "\n" if inputquery else ''
+
 def getOrderByClause(inputdef):
     orderByColumn = inputdef.get('orderByColumn', '') if\
     inputdef.get('isOrdered', False) else ''
@@ -38,7 +42,10 @@ def getMultipleAliasedInputsClause(dss_function, jsonfile, inputTables):
     return ''.join(map(lambda x: getAliasedInputONClause(x, jsonfile, inputTables), aliasedinputs))
 
 def getMultipleUnaliasedInputsClause(dss_function, inputTables):
-    unaliasedinputsdict = dss_function.get('unaliased_inputs', {})
+    isQueryMode = dss_function.get('isQueryMode', False)
+    if isQueryMode:
+        return ''.join(map(lambda x: getInputQueryOnClause(x),
+             """{}""".format(dss_function.get('queries', '')).split(DELIMITER)))
     unaliasedinputs = unaliasedinputsdict.get('values', [])
     return ''.join(map(lambda x: getUnaliasedInputOnClause(x, inputTables),
                        unaliasedinputs[:int(min(unaliasedinputsdict.get('count', 1),

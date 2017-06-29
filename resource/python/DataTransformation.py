@@ -25,7 +25,9 @@ def do(payload, config, plugin_config, inputs):
                  "partitionAttributes":"",
                  "isOrdered":False,
                  "orderByColumn":"",
-                 "hasInputTable":False
+                 "hasInputTable":False,
+                 "isQueryMode": False,
+                 "queries": []
                 }
             keys = f.keys()
             required_input = []

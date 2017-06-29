@@ -26,6 +26,8 @@ ALIASED_ON_CLAUSE = '''ON {input_table} {input_name} {partitionKeys} {orderKeys}
 
 UNALIASED_ON_CLAUSE = '''ON {input_table} {partitionKeys} {orderKeys}'''
 
+UNALIASED_QUERY_ON_CLAUSE = '''ON {input_query}'''
+
 DISTRIBUTE_BY_HASH = ' DISTRIBUTE BY HASH({})'
 
 BEGIN_TRANSACTION_QUERY = 'BEGIN TRANSACTION;'
