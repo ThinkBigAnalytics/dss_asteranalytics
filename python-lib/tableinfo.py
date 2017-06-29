@@ -6,7 +6,8 @@ class tableinfo(object):
         
     @property
     def tablename(self):
-        return ".".join([self._schemaname, self._tablename])
+        return ".".join(['"{}"'.format(self._schemaname),
+                         '"{}"'.format(self._tablename)])
     
     @property
     def datasetname(self):
