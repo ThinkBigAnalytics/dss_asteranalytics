@@ -16,7 +16,6 @@ def do(payload, config, plugin_config, inputs):
     choices = []
     for fle in files:
         try:
-            aster_args = json.loads(open('%s/%s' % (os.getenv("DKU_CUSTOM_RESOURCE_FOLDER"), "asterarguments.json")).read())
             f = json.loads(open('%s/data/%s' % (os.getenv("DKU_CUSTOM_RESOURCE_FOLDER"), fle)).read())
             d = {"name":"",
                  "arguments":"",
@@ -82,13 +81,6 @@ def do(payload, config, plugin_config, inputs):
                 d["arguments"]=a
             if 'cascaded_functions' in keys:
                 d["cascaded_functions"] = f['cascaded_functions']
-            aster_arg_list = []
-            for argument in aster_args:
-                aster_arg = {"name":"","label":"","value":""}
-                aster_arg["name"] = argument["name"]
-                aster_arg["label"] = argument["label"]                
-                aster_arg_list.append(aster_arg)
-            d["asterarguments"] = aster_arg_list
             choices.append(d);
         except ValueError, e:
             logging.info("file is not valid json");
