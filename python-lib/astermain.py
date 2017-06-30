@@ -32,7 +32,7 @@ def asterDo():
 
     # output dataset
     outputTable = outputtableinfo(output_dataset.get_location_info()['info'], main_output_name,
-                                  dss_function)
+                                  get_recipe_config() or {})
 
     # input datasets
     main_input_names = get_input_names_for_role('main')

@@ -14,8 +14,7 @@ def getSelectClause(dss_function, inputTables):
 def getCreateQuery(dss_function, inputTables, outputTable):
     return CREATE_QUERY.format(outputTable.tableType,
                        outputTable.tablename,
-                       DISTRIBUTE_BY_HASH.format(outputTable.hashKey) if
-                       "FACT" == outputTable.tableType else "",
+                       outputTable.hashKey and DISTRIBUTE_BY_HASH.format(outputTable.hashKey),
                        getSelectClause(dss_function, inputTables))
 
 def getFunctionsQuery(dss_function, inputTables, outputTable):
