@@ -32,6 +32,11 @@
     let functionMetadata;
 
     /**
+     * A private variable containing the function metadata.
+     */
+    let functionVersion;
+
+    /**
      * A private variable containing the function to run the given recipe.
      */
     let runFunction;
@@ -63,8 +68,8 @@
     /**
      * Parameters to use for the dialog box CSS.
      */
-    const DIALOG_CSS_PARAMETERS = { 
-      'max-height': '70vh', 
+    const DIALOG_CSS_PARAMETERS = {
+      'max-height': '70vh',
       overflow: 'auto'
     }
 
@@ -89,7 +94,7 @@
 
     /** Properly encodes an HTML entity. */
     function encodeRegex(i) {
-      return '&#'+i.charCodeAt(0)+';';
+      return '&#' + i.charCodeAt(0) + ';';
     }
 
     $.extend($scope, {
@@ -145,7 +150,10 @@
           .get(`${FUNCTION_METADATA_PATH}${selectedFunction}.json`)
           .success(data => {
             functionMetadata = data;
-
+            // console.log('Function Metadata');
+            // console.log(data);
+            // console.log($scope.config);
+            
             $scope.preprocessDescriptions();
             $scope.preprocessMetadata();
             $scope.activateTabs();
@@ -158,20 +166,20 @@
       /**
        * Preprocesses the descriptions so that the special characters are correctly rendered.
        */
-      preprocessDescriptions: function() {
+      preprocessDescriptions: function () {
 
-        if (!functionMetadata || !functionMetadata.argument_clauses) 
+        if (!functionMetadata || !functionMetadata.argument_clauses)
           return;
 
         functionMetadata.argument_clauses.forEach(
           x => {
             try {
 
-              x.description = x.description 
-              ? x.description.replace(ENTITY_REGEX, encodeRegex)
-              : ''
+              x.description = x.description
+                ? x.description.replace(ENTITY_REGEX, encodeRegex)
+                : ''
 
-            } catch (e) {}
+            } catch (e) { }
           }
         )
 
@@ -189,12 +197,21 @@
       },
 
       /**
-       * Test Function
+       * Checks if there is a version mismatch in function_version
        */
-      testFunction: function (selectedOption) {
-        console.log(selectedOption);
-        
-      },
+      checkVersionMismatch: function () {
+        $delay(() => {
+          console.log($scope.config.function.function_version ? $scope.config.function.function_version : '');
+          console.log(functionVersion);
+          if (functionVersion == ($scope.config.function.function_version ? $scope.config.function.function_version : '')) {
+            return true;
+          } else {
+            return false;
+          }
+
+        })
+    },
+
 
       /**
        * Gets the description of the given argument from the static JSON metadata.
@@ -204,33 +221,33 @@
         try {
 
           return (functionMetadata && functionMetadata.argument_clauses[i])
-          ? functionMetadata.argument_clauses[i].description
-          : null;
-        
+            ? functionMetadata.argument_clauses[i].description
+            : null;
+
         } catch (e) {
-        
+
           return null
-        
+
         }
 
       },
 
-      getPermittedValues: function(i) {
+      getPermittedValues: function (i) {
 
         try {
 
-          return (functionMetadata 
+          return (functionMetadata
             && functionMetadata.argument_clauses[i]
             && functionMetadata.argument_clauses[i].permittedValues)
-          ? functionMetadata.argument_clauses[i].permittedValues 
-          : null;
-          
+            ? functionMetadata.argument_clauses[i].permittedValues
+            : null;
+
         } catch (error) {
-          
+
           return null;
 
         }
-        
+
 
       },
 
@@ -239,29 +256,29 @@
        */
       getSchemaOfUnaliasedInputs: function (unaliasedInputsList) {
 
-        if (!unaliasedInputsList 
-          || !unaliasedInputsList.values 
+        if (!unaliasedInputsList
+          || !unaliasedInputsList.values
           || !unaliasedInputsList.values.length)
           return [];
 
         const targetTableName = unaliasedInputsList.values[0];
-        
-        return $scope.inputschemas 
-          && targetTableName 
+
+        return $scope.inputschemas
+          && targetTableName
           && targetTableName in $scope.inputschemas
           ? $scope.inputschemas[targetTableName]
           : []
 
       },
 
-      findTableNameInArgumentsList: function(argumentsList) {
+      findTableNameInArgumentsList: function (argumentsList) {
 
         let potentialMatches = argumentsList
           .filter(arg => [KEYS.INPUT_TABLE, KEYS.INPUT_TABLE_ALTERNATIVE].includes(arg.name.toUpperCase()));
         if (potentialMatches.length)
-            return potentialMatches[0].value;
+          return potentialMatches[0].value;
         return ''
-        
+
       },
 
       /**
@@ -275,7 +292,7 @@
 
         const hasTargetTable = KEYS.TARGET_TABLE in functionArgument
         let targetTableName = ''
-        
+
         if (hasTargetTable) {
 
           const targetTableAlias = functionArgument.targetTable.toUpperCase();
@@ -299,9 +316,9 @@
           }
 
         } else if (unaliasedInputsList.values && unaliasedInputsList.values.length > 0) {
-          
+
           targetTableName = unaliasedInputsList.values[0]
-        
+
         }
 
         if (!targetTableName || !$scope.inputschemas)
@@ -340,7 +357,7 @@
           return false
 
         return $scope.config.function.arguments.filter(x => x.isRequired).length > 0
-      
+
       },
 
       /**
@@ -348,12 +365,12 @@
        */
       hasOptionalArguments: function () {
 
-        const hasOptionalInputTable = $scope.config.function.required_input 
-          && $scope.config.function.required_input.length 
+        const hasOptionalInputTable = $scope.config.function.required_input
+          && $scope.config.function.required_input.length
           && ($scope.config.function.required_input.filter(x => !x.isRequired).length > 0);
 
-        const hasOptionalArgument = $scope.config.function.arguments 
-          && $scope.config.function.arguments.length 
+        const hasOptionalArgument = $scope.config.function.arguments
+          && $scope.config.function.arguments.length
           && ($scope.config.function.arguments.filter(x => !x.isRequired).length > 0);
 
         return hasOptionalInputTable || hasOptionalArgument;
@@ -412,6 +429,9 @@
 
         if (!$scope.validate()) return;
 
+        console.log(functionVersion);
+        console.log($scope.config.function.function_version);
+        $scope.config.function.function_version = functionVersion;
         runFunction()
 
         $scope.listenForResults(function () {
@@ -436,8 +456,8 @@
 
             return true
 
-          } catch (e) {}
-          
+          } catch (e) { }
+
           return false
 
         })
@@ -460,7 +480,7 @@
 
         $scope.callPythonDo({}).then(
           data => $.extend($scope, data),
-          () => {}
+          () => { }
         );
 
       },
@@ -471,7 +491,7 @@
       activateTabs: function () {
         try {
           $('#tabs').tabs('destroy')
-        } catch (e) {}
+        } catch (e) { }
         $('#tabs').tabs();
       },
 
@@ -493,13 +513,13 @@
               (original + '<br><br><b>(Press ENTER to add to list)</b>') :
               '<b>(Press ENTER to add to list)</b>'
             $(x).data({
-                toggle: 'tooltip',
-                container: 'body',
-                placement: 'right',
-                html: true,
-                title: title,
-                'original-title': title
-              })
+              toggle: 'tooltip',
+              container: 'body',
+              placement: 'right',
+              html: true,
+              title: title,
+              'original-title': title
+            })
               .tooltip()
 
           });
@@ -513,14 +533,14 @@
        */
       activateMultiTagsInput: function () {
         try {
-          
+
           $('input.teradata-tags').tagsInput({
             onChange: x => $(x).trigger('change'),
             defaultText: 'add param',
             delimiter: SEPARATOR
           });
 
-        } catch (e) {}
+        } catch (e) { }
       },
 
       /** 
@@ -575,13 +595,13 @@
 
       },
 
-      cleanName: function(rawName) {
+      cleanName: function (rawName) {
 
         return rawName.split('_').join(' ').toLowerCase()
 
       },
 
-      cleanKind: function(rawKind) {
+      cleanKind: function (rawKind) {
 
         return rawKind ? `(${rawKind})` : ''
 
@@ -590,13 +610,13 @@
       /**
        * Preprocess function metadata.
        */
-      preprocessMetadata: function() {
+      preprocessMetadata: function () {
 
         if (
           !functionMetadata
           || !$scope.config
           || !$scope.config.function
-          || !$scope.config.function.arguments 
+          || !$scope.config.function.arguments
           || !$scope.config.function.arguments.length) return;
 
         $delay(() => {
@@ -615,7 +635,7 @@
 
             try {
 
-              if (functionMetadata.argument_clauses[i] 
+              if (functionMetadata.argument_clauses[i]
                 && typeof functionMetadata.argument_clauses[i].defaultValue != 'undefined') {
                 argument.value = functionMetadata.argument_clauses[i].defaultValue;
               }
@@ -656,11 +676,11 @@
       /**
        * Initializes this plugin.
        */
-      refresh: function(selectedFunction) {
+      refresh: function (selectedFunction) {
 
         $scope.getFunctionMetadata(selectedFunction);
         $scope.preprocessMetadata();
-        console.log($scope);
+        // console.log($scope);
       }
 
     })
@@ -668,5 +688,7 @@
     $scope.initialize();
 
   });
+
+
 
 })(window, document, angular, jQuery);
