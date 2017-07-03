@@ -46,6 +46,7 @@ def getMultipleUnaliasedInputsClause(dss_function, inputTables):
     if isQueryMode:
         return ''.join(map(lambda x: getInputQueryOnClause(x),
              """{}""".format(dss_function.get('queries', '')).split(DELIMITER)))
+    unaliasedinputsdict = dss_function.get('unaliased_inputs', {})
     unaliasedinputs = unaliasedinputsdict.get('values', [])
     return ''.join(map(lambda x: getUnaliasedInputOnClause(x, inputTables),
                        unaliasedinputs[:int(min(unaliasedinputsdict.get('count', 1),
