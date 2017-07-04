@@ -201,8 +201,8 @@
   },
   {
     "category": "Statistical Analysis",
-    "function_name": "FixedSample",
-    "file_name": "FIXEDSAMPLE.json"
+    "function_name": "RandomSample",
+    "file_name": "RANDOMSAMPLE.json"
   },
   {
     "category": "Statistical Analysis",

@@ -1,0 +1,29 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "2",
+  "json_content_version": "1",
+  "function_name": "ApproxDCountReduce",
+  "function_version": "1.1",
+  "function_type": "non-driver",
+  "function_r_name": "aa.approx.dcount",
+  "short_description": "computes approximate count on specified columns (or compound columns) by combining results from approx_dcount_partial",
+  "long_description": "Outputs approximate distinct counts of specified columns; must be used in conjuction with approx_dcount_partial; note: the outputted result may be exact (i.e. not approximate) in the regime with low cardinality",
+  "input_tables": [
+    {
+      "requiredInputKind": [
+        "PartitionByKey"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "name": "input",
+      "alternateNames": [],
+      "isRequired": true,
+      "rDescription": "Specifies the input table.",
+      "description": "Specifies the input table.",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "useInR": true,
+      "rOrderNum": 0
+    }
+  ]
+}
