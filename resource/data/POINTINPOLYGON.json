@@ -9,6 +9,9 @@
   "long_description": "This function takes as input a list of location points and a list of polygons.It will return a list of binary values for every point and polygon combination that indicate whether the point is contained in the polygon.",
   "input_tables": [
     {
+      "requiredInputKind": [
+        "PartitionByAny"
+      ],
       "isOrdered": false,
       "partitionByOne": false,
       "name": "source",
@@ -20,6 +23,9 @@
       "useInR": true
     },
     {
+      "requiredInputKind": [
+        "Dimension"
+      ],
       "isOrdered": false,
       "partitionByOne": false,
       "name": "reference",
