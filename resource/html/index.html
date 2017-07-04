@@ -91,14 +91,14 @@
 
                 <div class="inner-cell" ng-show="'PartitionByKey' == item.kind">
                   <p class="inner-label">Partition by </p>
-                  <select ng-model="item.partitionAttributes" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]">
+                  <select multiple size="4" ng-model="item.partitionAttributes" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]">
                         <option value="" selected>--No Selection--</option>
                     </select>
                 </div>
 
                 <div class="inner-cell" ng-show="item.isOrdered">
                   <p class="inner-label">Order by </p>
-                  <select ng-model="item.orderByColumn" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]">
+                  <select multiple size="4" ng-model="item.orderByColumn" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]">
                         <option value="" selected>--No Selection--</option>
                     </select>
                 </div>
@@ -201,14 +201,14 @@
 
                 <div class="inner-cell" ng-show="'PartitionByKey' == item.kind">
                   <p class="inner-label">Partition by</p>
-                  <select ng-model="item.partitionAttributes" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]">
+                  <select multiple size="4" ng-model="item.partitionAttributes" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]">
                         <option value="" selected>--No Selection--</option>
                     </select>
                 </div>
 
                 <div class="inner-cell" ng-show="item.isOrdered">
                   <p class="inner-label">Order by</p>
-                  <select ng-model="item.orderByColumn" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]">
+                  <select multiple size="4" ng-model="item.orderByColumn" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]">
                         <option value="" selected>--No Selection--</option>
                     </select>
                 </div>
