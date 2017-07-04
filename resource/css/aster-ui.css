@@ -230,3 +230,21 @@ div.inner-cell {
     display: block;
     margin-top: 6vh;
 }
+
+.warning-div {
+    margin-bottom: 0.5em
+}
+
+.label-warning {
+    background-color: #f0ad4e;
+    display: inline;
+    padding: .2em .6em .3em;
+    font-size: 100%;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25em;
+}

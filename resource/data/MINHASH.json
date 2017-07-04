@@ -3,7 +3,7 @@
   "json_schema_minor_version": "1",
   "json_content_version": "1",
   "function_name": "minhash",
-  "function_version": "1.3",
+  "function_version": "1.1",
   "function_type": "driver",
   "short_description": "This function clusters the users according to their Jaccard similarity measure.",
   "long_description": "This function clusters the users according to their Jaccard similarity measure.",

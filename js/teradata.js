@@ -34,7 +34,7 @@
     /**
      * A private variable containing the function metadata.
      */
-    let functionVersion;
+    let functionVersion = '';
 
     /**
      * A private variable containing the function to run the given recipe.
@@ -150,10 +150,13 @@
           .get(`${FUNCTION_METADATA_PATH}${selectedFunction}.json`)
           .success(data => {
             functionMetadata = data;
-            // console.log('Function Metadata');
-            // console.log(data);
-            // console.log($scope.config);
-            
+            console.log(functionMetadata);
+            functionVersion = functionMetadata.function_version;
+            console.log(functionVersion);
+            // //console.log('Function Metadata');
+            // //console.log(data);
+            // //console.log($scope.config);
+
             $scope.preprocessDescriptions();
             $scope.preprocessMetadata();
             $scope.activateTabs();
@@ -200,17 +203,19 @@
        * Checks if there is a version mismatch in function_version
        */
       checkVersionMismatch: function () {
-        $delay(() => {
+        // $delay(() => {
           console.log($scope.config.function.function_version ? $scope.config.function.function_version : '');
-          console.log(functionVersion);
-          if (functionVersion == ($scope.config.function.function_version ? $scope.config.function.function_version : '')) {
-            return true;
-          } else {
+          // console.log(functionVersion);
+          if (functionVersion === ($scope.config.function.function_version ? $scope.config.function.function_version : '')) {
+            console.log('False');
             return false;
+          } else {
+            console.log('True')
+            return true;
           }
 
-        })
-    },
+        // })
+      },
 
 
       /**
@@ -275,8 +280,13 @@
 
         let potentialMatches = argumentsList
           .filter(arg => [KEYS.INPUT_TABLE, KEYS.INPUT_TABLE_ALTERNATIVE].includes(arg.name.toUpperCase()));
-        if (potentialMatches.length)
+          //console.log('Find tablename');
+          //console.log(potentialMatches);
+          //console.log(argumentsList);
+        if (potentialMatches.length){
+          //console.log('We finally got here');
           return potentialMatches[0].value;
+        }          
         return ''
 
       },
@@ -286,7 +296,7 @@
        * and the static JSON file associated with the function.
        */
       getSchema: function (functionArgument, aliasedInputsList, unaliasedInputsList, argumentsList) {
-
+        //console.log('Get Schema runs');
         aliasedInputsList = aliasedInputsList || []
         argumentsList = argumentsList || []
 
@@ -294,38 +304,66 @@
         let targetTableName = ''
 
         if (hasTargetTable) {
-
+          //console.log('hasTargetTable');
           const targetTableAlias = functionArgument.targetTable.toUpperCase();
-          const isAliased = KEYS.INPUT_TABLE !== targetTableAlias;
+          // const isAliased = KEYS.INPUT_TABLE !== targetTableAlias;
+          const isAliased = !aliasedInputsList.includes(targetTableAlias);
+          //console.log(KEYS.INPUT_TABLE);
+          //console.log(targetTableAlias);
 
           if (isAliased) {
-
+            //console.log('isAliased');
             let matchingInputs = aliasedInputsList.filter(input => targetTableAlias === input.name.toUpperCase());
-            if (matchingInputs.length > 0)
+            if (matchingInputs.length > 0) {
+              //console.log('Matching inputs > 0');
               targetTableName = matchingInputs[0].value;
-            else
+            } else {
+              //console.log('Matching inputs < 0');
               targetTableName = $scope.findTableNameInArgumentsList(argumentsList);
+            }
+
 
           } else {
+            //console.log('isNotAliased');
+            //console.log(unaliasedInputsList);
+            if (unaliasedInputsList.count && unaliasedInputsList.values && unaliasedInputsList.values.length) {
+              //console.log('If inside');
 
-            if (unaliasedInputsList.count && unaliasedInputsList.values && unaliasedInputsList.values.length)
               targetTableName = unaliasedInputsList.values[0];
-            else
+              //console.log(targetTableName);
+            }
+
+            else {
               targetTableName = $scope.findTableNameInArgumentsList(argumentsList);
+              //console.log('Else inside');
+              //console.log(targetTableName);
+            }
+
 
           }
 
         } else if (unaliasedInputsList.values && unaliasedInputsList.values.length > 0) {
 
           targetTableName = unaliasedInputsList.values[0]
+          //console.log('This else if');
+          //console.log(targetTableName);
 
         }
 
-        if (!targetTableName || !$scope.inputschemas)
+        if (!targetTableName || !$scope.inputschemas) {
+          //console.log('This happened');
+          //console.log(targetTableName);
+          //console.log($scope);
           return [];
+        }
 
-        if (targetTableName && targetTableName in $scope.inputschemas)
+
+        if (targetTableName && targetTableName in $scope.inputschemas) {
+          //console.log('Schemas');
+          //console.log($scope.inputschemas[targetTableName]);
           return $scope.inputschemas[targetTableName];
+
+        }
 
         return $scope.schemas;
 
@@ -429,13 +467,16 @@
 
         if (!$scope.validate()) return;
 
-        console.log(functionVersion);
-        console.log($scope.config.function.function_version);
+        //console.log(functionVersion);
+        //console.log($scope.config.function.function_version);
         $scope.config.function.function_version = functionVersion;
-        runFunction()
+        runFunction();
 
         $scope.listenForResults(function () {
-
+          //console.log('Got results');
+          // //console.log(message);
+          //console.log(functionVersion);
+          //console.log($scope.config.function.function_version);
           const $results = $('.alert:not(.ng-hide):not(.messenger-message)')
 
           if ($results.length === 0) return false;
@@ -680,7 +721,7 @@
 
         $scope.getFunctionMetadata(selectedFunction);
         $scope.preprocessMetadata();
-        // console.log($scope);
+        // //console.log($scope);
       }
 
     })
