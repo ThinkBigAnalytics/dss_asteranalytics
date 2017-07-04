@@ -36,6 +36,11 @@
   },
   {
     "category": "Statistical Analysis",
+    "function_name": "ApproxPercentileReduce",
+    "file_name": "APPROXPERCENTILEREDUCE.json"
+  },
+  {
+    "category": "Statistical Analysis",
     "function_name": "Approx_Percentile_Summary",
     "file_name": "APPROX_PERCENTILE_SUMMARY.json"
   },
