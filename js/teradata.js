@@ -206,7 +206,7 @@
         // $delay(() => {
           console.log($scope.config.function.function_version ? $scope.config.function.function_version : '');
           // console.log(functionVersion);
-          if (functionVersion === ($scope.config.function.function_version ? $scope.config.function.function_version : '')) {
+          if (($scope.config.function.function_version ? $scope.config.function.function_version : '') === functionVersion || ($scope.config.function.function_version ? $scope.config.function.function_version : '') === '') {
             console.log('False');
             return false;
           } else {
