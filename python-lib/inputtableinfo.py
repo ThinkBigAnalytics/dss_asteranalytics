@@ -58,4 +58,6 @@ class inputtableinfo(tableinfo.tableinfo):
 
     def __getOrderByKeyFromInputDef(self, inputdef):
         #no empty string checking for orderByColumn since this is mandatory if isOrdered is true
-        return inputdef.get("orderByColumn", "")
+        orderKeyFromInputDef = inputdef.get("orderByColumn", "")
+        return ', '.join(orderKeyFromInputDef) if \
+            isinstance(orderKeyFromInputDef, (list, tuple)) else orderKeyFromInputDef 
