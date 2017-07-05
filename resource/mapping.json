@@ -31,6 +31,11 @@
   },
   {
     "category": "Statistical Analysis",
+    "function_name": "ApproxDCountReduce",
+    "file_name": "APPROXDCOUNTREDUCE.json"
+  },
+  {
+    "category": "Statistical Analysis",
     "function_name": "ApproxPercentileMap",
     "file_name": "APPROXPERCENTILEMAP.json"
   },

@@ -108,7 +108,7 @@
       "useInR": true
     },
     {
-      "targetTable": "PredictTable",
+      "targetTable": "Predict_Table",
       "checkDuplicate": true,
       "allowedTypeGroups": [
         "NUMERIC",
@@ -136,7 +136,7 @@
       "useInR": true
     },
     {
-      "targetTable": "PredictTable",
+      "targetTable": "Predict_Table",
       "checkDuplicate": true,
       "allowPadding": true,
       "name": "Accumulate",
