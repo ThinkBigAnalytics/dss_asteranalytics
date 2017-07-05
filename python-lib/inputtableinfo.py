@@ -38,6 +38,9 @@ class inputtableinfo(tableinfo.tableinfo):
 
     def __getPartitionClauseFromAliasedInputDef(self, kind, inputdef):
         partitionbycolumn = inputdef.get('partitionAttributes', '')
+        if isinstance(partitionbycolumn, (list, tuple)):
+            return getPartitionKind(kind) +\
+                (', '.join(partitionbycolumn) if 'PartitionByKey' == kind else '')
         return getPartitionKind(kind) +\
             (partitionbycolumn if 'PartitionByKey' == kind else '')
 
