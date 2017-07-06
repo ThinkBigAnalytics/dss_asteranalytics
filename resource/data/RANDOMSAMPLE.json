@@ -2,7 +2,7 @@
   "json_schema_major_version": "1",
   "json_schema_minor_version": "1",
   "json_content_version": "1",
-  "function_name": "FixedSample",
+  "function_name": "RandomSample",
   "function_version": "1.0",
   "function_type": "driver",
   "short_description": "This function samples a table and returns a fixed number of rows.",

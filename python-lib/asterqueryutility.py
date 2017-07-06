@@ -46,4 +46,4 @@ except ImportError:
         try:
             return json.loads(open('%s/data/%s' % ('../resource', function_name + '.json')).read())
         except:
-            return ''
+            return {}
