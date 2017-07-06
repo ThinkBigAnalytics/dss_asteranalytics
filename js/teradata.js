@@ -204,15 +204,15 @@
        */
       checkVersionMismatch: function () {
         // $delay(() => {
-          console.log($scope.config.function.function_version ? $scope.config.function.function_version : '');
-          // console.log(functionVersion);
-          if (($scope.config.function.function_version ? $scope.config.function.function_version : '') === functionVersion || ($scope.config.function.function_version ? $scope.config.function.function_version : '') === '') {
-            console.log('False');
-            return false;
-          } else {
-            console.log('True')
-            return true;
-          }
+        console.log($scope.config.function.function_version ? $scope.config.function.function_version : '');
+        // console.log(functionVersion);
+        if (($scope.config.function.function_version ? $scope.config.function.function_version : '') === functionVersion || ($scope.config.function.function_version ? $scope.config.function.function_version : '') === '') {
+          console.log('False');
+          return false;
+        } else {
+          console.log('True')
+          return true;
+        }
 
         // })
       },
@@ -276,17 +276,33 @@
 
       },
 
-      findTableNameInArgumentsList: function (argumentsList) {
-
+      findTableNameInArgumentsList: function (argumentsList, tableNameAlias) {
+        //Get alternate names
+        var tableNameAliases = [];
+        tableNameAliases.push(tableNameAlias);
+        functionMetadata.argument_clauses.map(argument => {
+          if(argument.name.toUpperCase() === tableNameAlias){
+            if(KEYS.ALTERNATE_NAMES in argument){
+              argument.alternateNames.map(function(altname) {tableNameAliases.push(altname);})
+            }
+            console.log('tableNameAliases');
+            console.log(tableNameAliases);
+            // tableNameAliases.push(argument.name.toUpperCase());
+            
+          }
+        })
         let potentialMatches = argumentsList
-          .filter(arg => [KEYS.INPUT_TABLE, KEYS.INPUT_TABLE_ALTERNATIVE].includes(arg.name.toUpperCase()));
-          //console.log('Find tablename');
-          //console.log(potentialMatches);
-          //console.log(argumentsList);
-        if (potentialMatches.length){
+            .filter(arg => tableNameAliases.includes(arg.name.toUpperCase()));
+        // .filter(arg => tableNameAlias.toUpperCase() === arg.name.toUpperCase());
+          // .filter(arg => [KEYS.INPUT_TABLE, KEYS.INPUT_TABLE_ALTERNATIVE].includes(arg.name.toUpperCase()));
+        console.log('Find tablename');
+        console.log(potentialMatches);
+        console.log(argumentsList);
+        if (potentialMatches.length) {
+          console.log(potentialMatches);
           //console.log('We finally got here');
           return potentialMatches[0].value;
-        }          
+        }
         return ''
 
       },
@@ -299,27 +315,51 @@
         //console.log('Get Schema runs');
         aliasedInputsList = aliasedInputsList || []
         argumentsList = argumentsList || []
-
+        console.log('getSchema');
+        // console.log(functionMetadata)
+        console.log(functionArgument);
+        console.log(aliasedInputsList);
+        console.log(unaliasedInputsList);
+        console.log(argumentsList);
         const hasTargetTable = KEYS.TARGET_TABLE in functionArgument
         let targetTableName = ''
-
+        var isAliasedInputsPopulated;
+        var isInAliasedInputsList = false;
+        var y = false;
         if (hasTargetTable) {
           //console.log('hasTargetTable');
           const targetTableAlias = functionArgument.targetTable.toUpperCase();
+          // if (KEYS.ALTERNATE_NAMES in func)
+          // var tableAliasList = 
+          console.log('Table name');
+          console.log(targetTableAlias);
           // const isAliased = KEYS.INPUT_TABLE !== targetTableAlias;
-          const isAliased = !aliasedInputsList.includes(targetTableAlias);
+          if (aliasedInputsList !== []){
+            isAliasedInputsPopulated = true;
+            aliasedInputsList.map((input) => {
+              if (input.name.toUpperCase() === targetTableAlias.toUpperCase()) {
+                console.log('true');
+                isInAliasedInputsList = true;
+              }                            
+            }
+            )
+          } else {
+            isInAliasedInputsList = false;
+          }
+          // const isAliased = aliasedInputsList.includes(targetTableAlias);
+          const isAliased = isInAliasedInputsList;
           //console.log(KEYS.INPUT_TABLE);
           //console.log(targetTableAlias);
 
           if (isAliased) {
-            //console.log('isAliased');
+            console.log('isAliased');
             let matchingInputs = aliasedInputsList.filter(input => targetTableAlias === input.name.toUpperCase());
             if (matchingInputs.length > 0) {
               //console.log('Matching inputs > 0');
               targetTableName = matchingInputs[0].value;
             } else {
               //console.log('Matching inputs < 0');
-              targetTableName = $scope.findTableNameInArgumentsList(argumentsList);
+              targetTableName = $scope.findTableNameInArgumentsList(argumentsList, targetTableAlias);
             }
 
 
@@ -327,16 +367,16 @@
             //console.log('isNotAliased');
             //console.log(unaliasedInputsList);
             if (unaliasedInputsList.count && unaliasedInputsList.values && unaliasedInputsList.values.length) {
-              //console.log('If inside');
-
+              console.log('Went to unaliased');
+              
               targetTableName = unaliasedInputsList.values[0];
               //console.log(targetTableName);
             }
 
             else {
-              targetTableName = $scope.findTableNameInArgumentsList(argumentsList);
-              //console.log('Else inside');
-              //console.log(targetTableName);
+              targetTableName = $scope.findTableNameInArgumentsList(argumentsList, targetTableAlias);
+              console.log('Went to arguments');
+              console.log(targetTableName);
             }
 
 
