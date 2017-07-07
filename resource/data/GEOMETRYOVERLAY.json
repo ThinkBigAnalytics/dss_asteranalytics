@@ -1,86 +1,141 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
   "function_name": "GeometryOverlay",
-  "function_version": "1.1",
+  "function_version": "1.2",
   "function_type": "non-driver",
+  "function_r_name": "aa.geometry.overlay",
   "short_description": "This function is used to find the result of overlaying two geometries.",
   "long_description": "This function is used to find the result of overlaying two geometries. Overlay operations include intersection, difference, union, and symmetric difference. It can be used to perform operations to prepare sets of geometries for use with LocationPointInGeometry.  geospatial from AFS, parse the format and output them into database relations.",
   "input_tables": [
     {
+      "requiredInputKind": [
+        "PartitionByAny",
+        "PartitionByKey"
+      ],
       "isOrdered": false,
       "partitionByOne": false,
       "name": "source",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "The input table contains the source geometry information",
       "description": "The input table contains the source geometry information",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "rName": "source",
+      "rName": "source.data",
       "useInR": true,
-      "requiredInputKind": [
-        "PartitionByAny"
-      ]
+      "rOrderNum": 1
     },
     {
+      "requiredInputKind": [
+        "Dimension",
+        "PartitionByKey"
+      ],
       "isOrdered": false,
       "partitionByOne": false,
       "name": "reference",
-      "isRequired": true,
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "The input table contains the reference geometry information",
       "description": "The input table contains the reference geometry information",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "rName": "reference",
+      "rName": "reference.data",
       "useInR": true,
-      "requiredInputKind": [
-        "Dimension"
-      ]
+      "rOrderNum": 2
     }
   ],
   "argument_clauses": [
     {
-      "targetTable": "source",
+      "targetTable": [
+        "source"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
       "allowedTypeGroups": [
         "STRING"
       ],
       "requiredLength": 1,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "SourceLocationColumn",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "The name of the column in the source table that contains the geometry object description. Input columns must contain string SQL types.",
+      "rDescription": "Specifies the name of the source table column that contains the polygon description in WKT format.",
+      "description": "Specifies the name of the source table column that contains the polygon description in WKT format.",
       "datatype": "COLUMNS",
       "allowsLists": false,
       "rName": "source.location.column",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 3
     },
     {
-      "targetTable": "reference",
+      "targetTable": [
+        "reference"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
       "allowedTypeGroups": [
         "STRING"
       ],
       "requiredLength": 1,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "ReferenceLocationColumn",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The name of the column in the reference table that contains the geometry object description. Input columns must contain string SQL types.",
+      "rDescription": "Specifies the name of the reference table column that contains the location of the polygon description in WKT format.",
+      "description": "Specifies the name of the reference table column that contains the location of the polygon description in WKT format.",
       "datatype": "COLUMNS",
       "allowsLists": false,
       "rName": "reference.location.column",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 4
     },
     {
-      "targetTable": "reference",
+      "targetTable": [
+        "reference"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "ReferenceNameColumns",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The name of the columns in the reference table that specify the name of the geometry object.",
+      "rDescription": "Specifies the name of the reference table column that contains the names of the polygons.",
+      "description": "Specifies the name of the reference table column that contains the names of the polygons.",
       "datatype": "COLUMNS",
       "allowsLists": true,
       "rName": "reference.name.columns",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 5
+    },
+    {
+      "targetTable": [
+        "source"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "Accumulate",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "Specifies the names of the source table columns to copy to the output table.",
+      "description": "Specifies the names of the source table columns to copy to the output table.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "accumulate",
+      "useInR": true,
+      "rOrderNum": 9
     },
     {
       "permittedValues": [
@@ -93,44 +148,45 @@
       ],
       "isOutputColumn": false,
       "name": "BoundaryOperator",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "The geometry overlay operator to apply. The permitted input values are [union, intersection, difference, symdifference, buffer, convexhull].",
+      "rDescription": "Specifies the boundary (geometry overlay) operator ",
+      "description": "Specifies the boundary (geometry overlay) operator ",
       "datatype": "STRING",
       "allowsLists": false,
       "rName": "boundary.operator",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 6
     },
     {
       "defaultValue": false,
       "name": "OutputAll",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "A boolean value that specifies whether the result of non-intersection geometries is included in the output. The default value is false.",
+      "rDescription": "Specifies whether to include the result of non-intersection geometries in the output. The default value is 'false'.",
+      "description": "Specifies whether to include the result of non-intersection geometries in the output. The default value is 'false'.",
       "datatype": "BOOLEAN",
       "allowsLists": false,
       "rName": "output.all",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 8
     },
     {
+      "lowerBound": -Infinity,
+      "upperBound": Infinity,
+      "lowerBoundType": "INCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
       "allowNaN": false,
       "name": "Distance",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The distance required by the BUFFER operator.",
+      "rDescription": "Specifies the distance by which to extend or decrease the polygon.",
+      "description": "Specifies the distance by which to extend or decrease the polygon.",
       "datatype": "DOUBLE",
       "allowsLists": false,
       "rName": "distance",
-      "useInR": true
-    },
-    {
-      "targetTable": "source",
-      "checkDuplicate": true,
-      "allowPadding": true,
-      "name": "Accumulate",
-      "isRequired": false,
-      "description": "The columns in the source table to be passed to the output. ",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "accumulate",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 7
     }
   ]
 }

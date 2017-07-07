@@ -1,11 +1,12 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
   "function_name": "LoopyBeliefPropagation",
-  "function_version": "1.0",
+  "function_version": "1.1",
   "function_type": "non-driver",
-  "short_description": "This function predicts the labels for unobserved nodes based on the lables of observed nodes.",
+  "function_r_name": "aa.loopy.belief.propagation",
+  "short_description": "This function predicts the labels for unobserved nodes based on the labels of observed nodes.",
   "long_description": "This function predicts the labels for unobserved nodes based on the labels of observed nodes. It works on a binary labeled graph. Some nodes have labels, while labels for other nodes are missing.",
   "input_tables": [
     {
@@ -15,12 +16,15 @@
       "isOrdered": false,
       "partitionByOne": false,
       "name": "edges",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "",
       "description": "",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "rName": "edges",
-      "useInR": true
+      "rName": "edges.data",
+      "useInR": true,
+      "rOrderNum": 2
     },
     {
       "requiredInputKind": [
@@ -29,12 +33,15 @@
       "isOrdered": false,
       "partitionByOne": false,
       "name": "vertices",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "",
       "description": "",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "rName": "vertices",
-      "useInR": true
+      "rName": "vertices.data",
+      "useInR": true,
+      "rOrderNum": 1
     },
     {
       "requiredInputKind": [
@@ -43,90 +50,143 @@
       "isOrdered": false,
       "partitionByOne": false,
       "name": "observation",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "",
       "description": "",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "rName": "observation",
-      "useInR": true
+      "rName": "observation.data",
+      "useInR": true,
+      "rOrderNum": 3
     }
   ],
   "argument_clauses": [
     {
-      "targetTable": "edges",
+      "targetTable": [
+        "edges"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "TargetKey",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The column names that make up the key of target nodes in the edges table",
+      "rDescription": "Specifies the names of the edges table columns that comprise the key of the target vertices.",
+      "description": "Specifies the names of the edges table columns that comprise the key of the target vertices.",
       "datatype": "COLUMNS",
       "allowsLists": true,
       "rName": "target.key",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 4
     },
     {
-      "targetTable": "observation",
+      "targetTable": [
+        "observation"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
       "requiredLength": 1,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "ObservationColumn",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The 'observation' column in the observation table",
+      "rDescription": "Specifies the name of the observation table column that contains the observations.",
+      "description": "Specifies the name of the observation table column that contains the observations.",
       "datatype": "COLUMNS",
       "allowsLists": false,
       "rName": "observation.column",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 5
     },
     {
-      "targetTable": "edges",
+      "targetTable": [
+        "edges"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
       "requiredLength": 1,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "EdgeWeight",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The name of the column that specifies the weight of the edge. The weight is a positive non-zero value. Edges with zero or negative weights are ignored when constructing the graph.",
+      "rDescription": "Specifies the name of the edges table column that contains the edge weights. The function uses only positive edge weights. The sum of the edge weights that the function uses must be 1.",
+      "description": "Specifies the name of the edges table column that contains the edge weights. The function uses only positive edge weights. The sum of the edge weights that the function uses must be 1.",
       "datatype": "COLUMNS",
       "allowsLists": false,
       "rName": "edge.weight",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 6
     },
     {
-      "targetTable": "vertices",
+      "targetTable": [
+        "vertices"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "Accumulate",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The columns from the vertices table to pass to the output",
+      "rDescription": "Specifies the names of the vertices table columns to copy to the output table.",
+      "description": "Specifies the names of the vertices table columns to copy to the output table.",
       "datatype": "COLUMNS",
       "allowsLists": true,
       "rName": "accumulate",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 7
     },
     {
       "defaultValue": 20,
       "lowerBound": 0,
+      "upperBound": 2147483647,
       "lowerBoundType": "EXCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
       "allowNaN": false,
       "name": "MaxIterNum",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The maximum iteration number that the algorithm runs for. The default is '20' The input value must be greater than 0. The default value is 20.",
+      "rDescription": "Specifies the maximum number of iterations that the algorithm can run. The default value is 20. ",
+      "description": "Specifies the maximum number of iterations that the algorithm can run. The default value is 20. ",
       "datatype": "INTEGER",
       "allowsLists": false,
       "rName": "max.iter.num",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 8
     },
     {
       "defaultValue": 1.0E-4,
       "lowerBound": 0,
+      "upperBound": Infinity,
       "lowerBoundType": "EXCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
       "allowNaN": false,
       "name": "Threshold",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The threshold value specifying the convergence criteria. Default is '0.0001' The input value must be greater than 0.0. The default value is 1.0E-4.",
+      "rDescription": "Specifies the threshold value for convergence. The default value is 0.0001. ",
+      "description": "Specifies the threshold value for convergence. The default value is 0.0001. ",
       "datatype": "DOUBLE",
       "allowsLists": false,
       "rName": "threshold",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 9
     }
   ]
 }

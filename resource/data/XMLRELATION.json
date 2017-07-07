@@ -1,25 +1,37 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
-  "function_name": "xmlrelation",
-  "function_version": "1.3",
+  "function_name": "XMLRelation",
+  "function_version": "1.4",
   "function_type": "non-driver",
+  "function_r_name": "aa.xml.relation",
   "short_description": "Implements the XMLRlation SQL/MR function.",
   "long_description": "The output schema is determined by OUTPUT and MaxDepth arguments. The <DocIDColumns> and out_nodeid are default output columns. The other output columns: for 'fulldata' schema, D*Element, D*Attributes, D*Value and D*ID, where * indicates the depth from 0 to MaxDepth (root is in depth 0); for 'parentchild' schema, Element, Attributes, Value and parentID; for 'fullpath' schema, Element, Attributes, Value and D*ID, where * indicates the depth from 0 to MaxDepth. The format of (D*)Attributes is AttributeName=Value[delimiter_string...]. So '=' is not recommended to be ATTRIBUTEDELIMITER.",
   "input_tables": [
     {
+      "requiredInputKind": [
+        "PartitionByAny"
+      ],
       "isOrdered": false,
       "partitionByOne": false,
+      "name": "input",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "The input table that contains XML documents. ",
       "description": "The input table that contains XML documents. ",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "useInR": true
+      "rName": "data",
+      "useInR": true,
+      "rOrderNum": 1
     }
   ],
   "argument_clauses": [
     {
+      "targetTable": [
+        "input"
+      ],
       "checkDuplicate": true,
       "allowedTypes": [
         "bytea"
@@ -28,38 +40,80 @@
         "STRING"
       ],
       "requiredLength": 1,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "TextColumn",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "The input table column that contains the XML documents to be scanned. Input columns must contain string SQL types. Input columns can be the following SQL types: bytea.",
+      "rDescription": "Specifies the name of the input table column that contains the XML documents. The function skips malformed XML documents.",
+      "description": "Specifies the name of the input table column that contains the XML documents. The function skips malformed XML documents.",
       "datatype": "COLUMNS",
       "allowsLists": false,
       "rName": "text.column",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 2
     },
     {
+      "targetTable": [
+        "input"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "DocIdColumns",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "A list of the columns which make up the identifiers of the input XML documents. ",
+      "rDescription": "Specifies the names of the input table columns that contain the identifiers of the XML documents. No docid_column can have the same name as an output table column.",
+      "description": "Specifies the names of the input table columns that contain the identifiers of the XML documents. No docid_column can have the same name as an output table column.",
       "datatype": "COLUMNS",
       "allowsLists": true,
       "rName": "doc.id.columns",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 3
+    },
+    {
+      "targetTable": [
+        "input"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "Accumulate",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "Specifies the names of input column names to copy to the output table. No accumulate_column can have the same name as an output table column.",
+      "description": "Specifies the names of input column names to copy to the output table. No accumulate_column can have the same name as an output table column.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "accumulate",
+      "useInR": true,
+      "rOrderNum": 10
     },
     {
       "defaultValue": 5,
       "lowerBound": 0,
+      "upperBound": 2147483647,
       "lowerBoundType": "EXCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
       "allowNaN": false,
       "name": "MaxDepth",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The maximum depth in the XML tree of the XML documents that will be processed.  The input value must be greater than 0. The default value is 5.",
+      "rDescription": "Specifies the maximum depth in the XML tree at which to process XML documents. The max.depth and output arguments determine the schema of the output table, and the number of columns in the output table must not exceed 1600. The default value is 5.",
+      "description": "Specifies the maximum depth in the XML tree at which to process XML documents. The MaxDepth and Output arguments determine the schema of the output table, and the number of columns in the output table must not exceed 1600. The default value is 5.",
       "datatype": "INTEGER",
       "allowsLists": false,
       "rName": "max.depth",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 4
     },
     {
       "defaultValue": false,
@@ -68,33 +122,44 @@
         "AttributeToNode"
       ],
       "isRequired": false,
-      "description": "if 'true' attributes are handled as children of the node. If 'false' attributes of one XML node are stored in one element of the output tuple.  The default value is false.",
+      "rDescription": "Specifies whether to treat the attributes of a node as its child nodes. The default value is 'false' (attributes of a node are stored in one element of the output tuple).",
+      "description": "Specifies whether to treat the attributes of a node as its child nodes. The default value is 'false' (attributes of a node are stored in one element of the output tuple).",
       "datatype": "BOOLEAN",
       "allowsLists": false,
       "rName": "attribute.as.node",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 6
     },
     {
+      "permittedValues": [],
       "defaultValue": ",",
       "isOutputColumn": false,
       "name": "AttributeDelimiter",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Specifies the delimiter used to separate multiple attributes of one node in XML documents.  The default value is ,.",
+      "rDescription": "Specifies the delimiter used to separate multiple attributes of one node in XML documents. The default value is a comma ','.",
+      "description": "Specifies the delimiter used to separate multiple attributes of one node in XML documents. The default value is a comma ','.",
       "datatype": "STRING",
       "allowsLists": false,
       "rName": "attribute.delimiter",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 7
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "ExcludeElements",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Used to supply a list of nodes to exclude as path strings. The default value is no nodes are excluded. ",
+      "rDescription": "Specifies the paths to the nodes to exclude from processing. The function excludes each specified node and its child nodes. Examples of paths to nodes are:  'chapter'  'root/book' 'root/book/{author,chapter}'",
+      "description": "Specifies the paths to the nodes to exclude from processing. The function excludes each specified node and its child nodes. Examples of paths to nodes are:  'chapter'  'root/book' 'root/book/{author,chapter}'",
       "datatype": "STRING",
       "allowsLists": true,
       "rName": "exclude.elements",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 5
     },
     {
       "permittedValues": [
@@ -105,37 +170,30 @@
       "defaultValue": "fullpath",
       "isOutputColumn": false,
       "name": "Output",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Specifies the schema of the output table.  The permitted input values are [fulldata, parentchild, fullpath]. The default value is fullpath.",
+      "rDescription": "Specifies the output table schema. The max.depth and output arguments determine the schema of the output table, and the number of columns in the output table must not exceed 1600. The default value is 'fullpath'.",
+      "description": "Specifies the output table schema. The MaxDepth and Output arguments determine the schema of the output table, and the number of columns in the output table must not exceed 1600. The default value is 'fullpath'. ",
       "datatype": "STRING",
       "allowsLists": false,
       "rName": "output",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 8
     },
     {
+      "permittedValues": [],
       "defaultValue": "false",
       "isOutputColumn": false,
       "name": "ErrorHandler",
-      "alternateNames": [
-        "Error_Handler"
-      ],
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Error handler for handling the errors that occur when parsing an XML document.  The default value is false.",
+      "rDescription": "Specifies whether the function handles errors that occur when parsing an XML document. The default value is 'false' (the function aborts and throws an exception). If you specify 'true':  If an error occurs while parsing a row, the function skips that row. When the function completes the parsing, it outputs only the nodes that were error-free.  You can tell the function to output an additional column named output_column_name and populate it with the values of the specified columns. In the output column, the values of the specified columns are separated with semicolons. For example, the following argument adds the column error_info to the output table and populates it with the values of input columns col1 and col2 (with a semicolon after each value): error.handler('true;error_info:col1,col2') The default output_column_name is error.handler.",
+      "description": "Specifies whether the function handles errors that occur when parsing an XML document. The default value is 'false' (the function aborts and throws an exception).If you specify 'true':  If an error occurs while parsing a row, the function skips that row. When the function completes the parsing, it outputs only the nodes that were error-free.  You can tell the function to output an additional column named output_column_name and populate it with the values of the specified columns. In the output column, the values of the specified columns are separated with semicolons. For example, the following argument adds the column error_info to the output table and populates it with the values of input columns col1 and col2 (with a semicolon after each value): ErrorHandler('true;error_info:col1,col2') The default output_column_name is ErrorHandler.",
       "datatype": "STRING",
       "allowsLists": false,
       "rName": "error.handler",
-      "useInR": true
-    },
-    {
-      "checkDuplicate": true,
-      "allowPadding": true,
-      "name": "Accumulate",
-      "isRequired": false,
-      "description": "Columns from the input table to be passed through from input to output.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "accumulate",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 9
     }
   ]
 }

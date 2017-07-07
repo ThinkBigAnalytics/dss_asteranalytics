@@ -1,0 +1,153 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "2",
+  "json_content_version": "1",
+  "function_name": "KNNRecommenderPredict",
+  "function_version": "1.2",
+  "function_type": "non-driver",
+  "function_r_name": "aa.knn.recommender.predict",
+  "short_description": "This function predicts unrated items and recommend topk items to users.",
+  "long_description": "This function predicts unrated items and recommend topk items to users.",
+  "input_tables": [
+    {
+      "requiredInputKind": [
+        "PartitionByKey"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "name": "ratings",
+      "alternateNames": [],
+      "isRequired": true,
+      "rDescription": "The user rating table.",
+      "description": "The user rating table.",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "rName": "ratings.data",
+      "useInR": true,
+      "rOrderNum": 1
+    },
+    {
+      "requiredInputKind": [
+        "Dimension"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "name": "weights",
+      "alternateNames": [],
+      "isRequired": true,
+      "rDescription": "The table (produced by ta.knnrecommendertrain) containing the interpolation weights.",
+      "description": "The table (produced by KnnRecommenderTrain) containing the interpolation weights.",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "rName": "weights.data",
+      "useInR": true,
+      "rOrderNum": 2
+    },
+    {
+      "requiredInputKind": [
+        "Dimension"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "name": "bias",
+      "alternateNames": [],
+      "isRequired": true,
+      "rDescription": "The table (produced by ta.knnrecommendertrain) containing the global, user, and item bias statistics.",
+      "description": "The table (produced by KnnRecommenderTrain) containing the global, user, and item bias statistics.",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "rName": "bias.data",
+      "useInR": true,
+      "rOrderNum": 3
+    }
+  ],
+  "argument_clauses": [
+    {
+      "targetTable": [
+        "ratings"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "INTEGER"
+      ],
+      "requiredLength": 1,
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "UserIdColumn",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "The user id column in the rating table. The default is the first column in the rating table.",
+      "description": "The user id column in the rating table. The default is the first column in the rating table.",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "userid.column",
+      "useInR": true,
+      "rOrderNum": 4
+    },
+    {
+      "targetTable": [
+        "ratings"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "INTEGER"
+      ],
+      "requiredLength": 1,
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "ItemIdColumn",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "The item id column in the rating table. The default is the second column in the rating table.",
+      "description": "The item id column in the rating table. The default is the second column in the rating table.",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "itemid.column",
+      "useInR": true,
+      "rOrderNum": 5
+    },
+    {
+      "targetTable": [
+        "ratings"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "NUMERIC"
+      ],
+      "requiredLength": 1,
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "RatingColumn",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "The rating column in the rating table. The default is the third column in the rating table.",
+      "description": "The rating column in the rating table. The default is the third column in the rating table.",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "rating.column",
+      "useInR": true,
+      "rOrderNum": 6
+    },
+    {
+      "defaultValue": 3,
+      "lowerBound": 0,
+      "upperBound": 2147483647,
+      "lowerBoundType": "EXCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
+      "allowNaN": false,
+      "name": "Topk",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "Number of items to recommend for each user. The topk highest-rated items are recommended.",
+      "description": "Number of items to recommend for each user. The TopK highest-rated items are recommended.",
+      "datatype": "INTEGER",
+      "allowsLists": false,
+      "rName": "topk",
+      "useInR": true,
+      "rOrderNum": 7
+    }
+  ]
+}

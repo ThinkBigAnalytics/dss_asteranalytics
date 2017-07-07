@@ -1,12 +1,15 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
-  "function_name": "naiveBayesReduce",
-  "function_version": "1.1",
+  "function_name": "NaiveBayesReduce",
+  "function_version": "1.2",
   "function_type": "non-driver",
+  "function_r_name": "aa.naivebayes.train",
   "short_description": "Reduce phase of naive Bayes model training",
   "long_description": "Trains a Naive Bayes classifier on a dense matrix of training data.",
+  "function_operation": "reduce",
+  "partner_function": "NaiveBayesMap",
   "input_tables": [
     {
       "requiredInputKind": [
@@ -14,11 +17,15 @@
       ],
       "isOrdered": false,
       "partitionByOne": false,
+      "name": "input",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "This input table is the output of naiveBayesMap function.",
       "description": "This input table is the output of naiveBayesMap function.",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 0
     }
   ]
 }

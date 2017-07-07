@@ -1,12 +1,13 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
   "function_name": "PartitionScale",
-  "function_version": "1.2",
+  "function_version": "1.4",
   "function_type": "non-driver",
-  "short_description": "This function scales the input to a specfied range.",
-  "long_description": "This function scales the input to a specfied range based on the values in each partition.",
+  "function_r_name": "aa.partition.scale",
+  "short_description": "This function scales the input to a specified range.",
+  "long_description": "This function scales the input to a specified range based on the values in each partition.",
   "input_tables": [
     {
       "requiredInputKind": [
@@ -14,30 +15,62 @@
       ],
       "isOrdered": false,
       "partitionByOne": false,
+      "name": "input",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "The input dataset for scale function.",
       "description": "The input dataset for scale function.",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "useInR": true
+      "rName": "data",
+      "useInR": true,
+      "rOrderNum": 1
     }
   ],
   "argument_clauses": [
     {
-      "permittedValues": [
-        "KEEP",
-        "OMIT",
-        "ZERO",
-        "LOCATION"
+      "targetTable": [
+        "input"
       ],
-      "defaultValue": "KEEP",
-      "isOutputColumn": false,
-      "name": "MissValue",
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "NUMERIC"
+      ],
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "InputColumns",
+      "alternateNames": [],
+      "isRequired": true,
+      "rDescription": "Specifies the input table columns that contain the attribute values of the samples. The attribute values must be numeric values between -1e308 and 1e308. If a value is outside this range, the function treats it as infinity.",
+      "description": "Specifies the input table columns that contain the attribute values of the samples. The attribute values must be numeric values between -1e308 and 1e308. If a value is outside this range, the function treats it as infinity.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "input.columns",
+      "useInR": true,
+      "rOrderNum": 4
+    },
+    {
+      "targetTable": [
+        "input"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "Accumulate",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Specify how miss values(null) are processed in PartitionScale. The permitted input values are [KEEP, OMIT, ZERO, LOCATION]. The default value is KEEP.",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "miss.value",
-      "useInR": true
+      "rDescription": "Specifies the input table columns to copy to the output table. By default, the function copies no input table columns to the output table. Tip: To identify the sequences in the output, specify the partition columns in this argument.",
+      "description": "Specifies the input table columns to copy to the output table. By default, the function copies no input table columns to the output table. Tip: To identify the sequences in the output, specify the partition columns in this argument.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "accumulate",
+      "useInR": true,
+      "rOrderNum": 6
     },
     {
       "permittedValues": [
@@ -50,14 +83,38 @@
         "MAXABS"
       ],
       "isOutputColumn": false,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "Method",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "Specify one or more methods used to scale the dataset.  If multiple methods are specified, a column scalemethod is added to the output to identify the result of different methods. The permitted input values are [MEAN, SUM, USTD, STD, RANGE, MIDRANGE, MAXABS].",
+      "rDescription": "Specifies one or more statistical methods to use to scale the data set. For method values and descriptions. If you specify multiple methods, the output table includes the column scalemethod (which contains the method name) and a row for each input-row/method combination",
+      "description": "Specifies one or more statistical methods to use to scale the data set. For method values and descriptions. If you specify multiple methods, the output table includes the column scalemethod (which contains the method name) and a row for each input-row/method combination",
       "datatype": "STRING",
       "allowsLists": true,
       "rName": "method",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 2
+    },
+    {
+      "permittedValues": [
+        "KEEP",
+        "OMIT",
+        "ZERO",
+        "LOCATION"
+      ],
+      "defaultValue": "KEEP",
+      "isOutputColumn": false,
+      "name": "MissValue",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "Specifies how the ta.partitionscale function is to process NULL values in input, as follows: KEEP (default): Keep NULL values, OMIT: Ignore any row that has a NULL value, ZERO: Replace each NULL value with zero, LOCATION: Replace each NULL value with its location value.",
+      "description": "Specifies how the PartitionScale function is to process NULL values in input, as follows: KEEP (default): Keep NULL values, OMIT: Ignore any row that has a NULL value, ZERO: Replace each NULL value with zero, LOCATION: Replace each NULL value with its location value.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "miss.value",
+      "useInR": true,
+      "rOrderNum": 3
     },
     {
       "defaultValue": false,
@@ -66,69 +123,53 @@
         "GlobalScale"
       ],
       "isRequired": false,
-      "description": " If true, all the input columns are scaled to the same location and scale. Otherwise, each column will be scaled separately.  The default value is false.",
+      "rDescription": " Specifies whether all input columns are scaled to the same location and scale. The default value is 'false' (each input column is scaled separately). ",
+      "description": " Specifies whether all input columns are scaled to the same location and scale. The default value is 'false' (each input column is scaled separately). ",
       "datatype": "BOOLEAN",
       "allowsLists": false,
       "rName": "global",
-      "useInR": true
-    },
-    {
-      "checkDuplicate": true,
-      "allowedTypeGroups": [
-        "NUMERIC"
-      ],
-      "allowPadding": true,
-      "name": "InputColumns",
-      "isRequired": true,
-      "description": "The data columns that contain the attribute values of the samples in the input table. These columns must contain numeric values between -1e308 and 1e308. The input can be list of columns or ranges or a mixture. Format example: 'col1','[4:21]','[25:53]','col73'. Input columns must contain numeric SQL types.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "input.columns",
-      "useInR": true
-    },
-    {
-      "checkDuplicate": true,
-      "allowPadding": true,
-      "name": "Accumulate",
-      "isRequired": false,
-      "description": "Columns from the input table to be passed through from input to output.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "accumulate",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 5
     },
     {
       "defaultValue": [
         1
       ],
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "Multiplier",
       "alternateNames": [
         "MultFactor"
       ],
       "isRequired": false,
-      "description": "The result will multiple this factor. If a single value is given, it will be adopted in all the input columns. If a list is specified, each value will be associated with a input column in order.  The default value is 1.0.",
+      "rDescription": "Specifies one or more multiplying factors to apply to the input variables (multiplier in the following formula): X' = intercept + multiplier * (X - location)/scale If you specify only one multiplier, it applies to all columns specified by the input.columns argument. If you specify multiple multiplying factor, each multiplier applies to the corresponding input column. For example, the first multiplier applies to the first column specified by the InputColumns argument, the second multiplier applies to the second input column, and so on. The default multiplier is 1. ",
+      "description": "Specifies one or more multiplying factors to apply to the input variables (multiplier in the following formula): X' = intercept + multiplier * (X - location)/scale If you specify only one multiplier, it applies to all columns specified by the InputColumns argument. If you specify multiple multiplying factor, each multiplier applies to the corresponding input column. For example, the first multiplier applies to the first column specified by the InputColumns argument, the second multiplier applies to the second input column, and so on. The default multiplier is 1. ",
       "datatype": "DOUBLE",
       "allowsLists": true,
       "rName": "multiplier",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 7
     },
     {
+      "permittedValues": [],
       "defaultValue": [
         "0"
       ],
       "isOutputColumn": false,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "Intercept",
       "alternateNames": [
         "AddFactor"
       ],
       "isRequired": false,
-      "description": "The result will add this factor. If a single value is given, it will be adopted in all the input columns. If a list is specified, each value will be associated with a input column in order.   The default value is 0.",
+      "rDescription": "Specifies one or more addition factors incrementing the scaled results—intercept in the following formula: X' = intercept + multiplier * (X - location)/scale If you specify only one intercept, it applies to all columns specified by the input.columns argument. If you specify multiple addition factors, each intercept applies to the corresponding input column. The syntax of intercept is: [-]{number | min | mean | max } where min, mean, and max are the global minimum, maximum, mean values in the corresponding columns. The function scales the values of min, mean, and max. For example, if intercept is '- min' and multiplier is 1, the scaled result is transformed to a nonnegative sequence according to this formula, where scaledmin is the scaled value: X' = -scaledmin + 1 * (X - location)/scale The default intercept is 0.",
+      "description": "Specifies one or more addition factors incrementing the scaled results—intercept in the following formula: X' = intercept + multiplier * (X - location)/scale If you specify only one intercept, it applies to all columns specified by the InputColumns argument. If you specify multiple addition factors, each intercept applies to the corresponding input column. The syntax of intercept is: [-]{number | min | mean | max } where min, mean, and max are the global minimum, maximum, mean values in the corresponding columns. The function scales the values of min, mean, and max. For example, if intercept is '- min' and multiplier is 1, the scaled result is transformed to a nonnegative sequence according to this formula, where scaledmin is the scaled value: X' = -scaledmin + 1 * (X - location)/scale The default intercept is 0.",
       "datatype": "STRING",
       "allowsLists": true,
       "rName": "intercept",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 8
     }
   ]
 }

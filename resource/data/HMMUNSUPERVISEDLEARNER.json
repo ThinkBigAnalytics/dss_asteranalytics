@@ -1,10 +1,11 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
   "function_name": "HMMUnsupervisedLearner",
-  "function_version": "1.3",
+  "function_version": "1.4",
   "function_type": "driver",
+  "function_r_name": "aa.hmm.unsupervised.learner",
   "short_description": "Given observation sequences O and the size of the states, find the model theta = (A, B, Pi) that maximizes P(O | theta).",
   "long_description": "Given an observation sequence O and the size of the states, find the model theta = (A, B, Pi) that maximizes P(O | theta). ",
   "input_tables": [
@@ -15,93 +16,233 @@
       "isOrdered": true,
       "partitionByOne": false,
       "name": "vertices",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "vertex table",
       "description": "vertex table",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
       "rName": "vertices",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 1
     }
   ],
   "argument_clauses": [
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "Domain",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The address of the Queen. The host parameter is the Aster Database Queen’s IP saddress or hostname.",
+      "rDescription": "The address of the Queen. The host parameter is the Aster Database Queen’s IP address or hostname.",
+      "description": "The address of the Queen. The host parameter is the Aster Database Queen’s IP address or hostname.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "Database",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The name of the database where the input table is located.",
       "description": "The name of the database where the input table is located.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "UserId",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The Aster Database user name of the user running this function.",
       "description": "The Aster Database user name of the user running this function.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "Password",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The Aster Database password of the user.",
       "description": "The Aster Database password of the user.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "SSLSettings",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "A string that includes all the SSL settings, except the password for the truststore.",
       "description": "A string that includes all the SSL settings, except the password for the truststore.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "SSLTrustStorePassword",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The password for the SSL truststore.",
       "description": "The password for the SSL truststore.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
+    },
+    {
+      "targetTable": [
+        "vertices"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "requiredLength": 1,
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "SeqColumn",
+      "alternateNames": [
+        "SequenceKey"
+      ],
+      "isRequired": true,
+      "rDescription": "The name of the column that contains the sequence attribute. The sequence_attribute must be a sequence attribute in the partition.columns clause. A sequence must contain more than two observation symbol.",
+      "description": "The name of the column that contains the sequence attribute. The sequence_attribute must be a sequence attribute in the PARTITION BY clause. A sequence must contain more than two observation symbol.",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "sequence.key",
+      "useInR": true,
+      "rOrderNum": 3
+    },
+    {
+      "targetTable": [
+        "vertices"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "requiredLength": 1,
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "ObsColumn",
+      "alternateNames": [
+        "ObservedKey"
+      ],
+      "isRequired": true,
+      "rDescription": "The name of the column that contains the observed symbols. The function scans the input table to find all possible observed symbols. Note: Observed symbols are case-sensitive.",
+      "description": "The name of the column that contains the observed symbols. The function scans the input table to find all possible observed symbols. Note: Observed symbols are case-sensitive.",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "observed.key",
+      "useInR": true,
+      "rOrderNum": 4
+    },
+    {
+      "targetTable": [
+        "vertices"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "requiredLength": 1,
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "ModelColumn",
+      "alternateNames": [
+        "ModelKey"
+      ],
+      "isRequired": false,
+      "rDescription": "The name of the column that contains the model attribute. If you specify this argument, then model_attribute must match a model_key in the partition.columns clause. The values in the column can be integers or strings.",
+      "description": "The name of the column that contains the model attribute. If you specify this argument, then model_attribute must match a model_key in the PARTITION BY clause. The values in the column can be integers or strings.",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "model.key",
+      "useInR": true,
+      "rOrderNum": 2
+    },
+    {
+      "targetTable": [
+        "vertices"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "SkipColumn",
+      "alternateNames": [
+        "SkipKey"
+      ],
+      "isRequired": false,
+      "rDescription": "The name of the column whose values determine whether the function skips the row. The function skips the row if the value is “true”, “yes”, “y”, or “1”. The function does not skip the row if the value is “false”, “f”, “no”, “n”, “0”, or NULL.",
+      "description": "The name of the column whose values determine whether the function skips the row. The function skips the row if the value is “true”, “yes”, “y”, or “1”. The function does not skip the row if the value is “false”, “f”, “no”, “n”, “0”, or NULL.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "skip.column",
+      "useInR": true,
+      "rOrderNum": 8
     },
     {
       "lowerBound": 1,
+      "upperBound": 2147483647,
       "lowerBoundType": "INCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
       "allowNaN": false,
-      "name": "NumberHiddenStates",
+      "name": "HiddenStateNum",
+      "alternateNames": [
+        "NumberHiddenStates"
+      ],
       "isRequired": true,
-      "description": "The number of hidden states must be greater than 1, inclusive. The input value must be no less than 1.",
+      "rDescription": "The number of hidden states. Note: The number of hidden states can influence model quality and performance, so choose the number appropriately.",
+      "description": "The number of hidden states. Note: The number of hidden states can influence model quality and performance, so choose the number appropriately.",
       "datatype": "INTEGER",
       "allowsLists": false,
-      "rName": "number.hidden.states",
-      "useInR": true
+      "rName": "hidden.states.num",
+      "useInR": true,
+      "rOrderNum": 5
     },
     {
       "defaultValue": 10,
       "lowerBound": 1,
+      "upperBound": 2147483647,
       "lowerBoundType": "INCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
       "allowNaN": false,
-      "name": "MaxIterations",
+      "name": "MaxIterNum",
+      "alternateNames": [
+        "MaxIterations"
+      ],
       "isRequired": false,
-      "description": "The maximum number of iterations must be greater than 1, inclusive. The input value must be no less than 1. The default value is 10.",
+      "rDescription": "The number of iterations that the training process runs before the function completes. The default is 10.",
+      "description": "The number of iterations that the training process runs before the function completes. The default is 10.",
       "datatype": "INTEGER",
       "allowsLists": false,
-      "rName": "max.iterations",
-      "useInR": true
+      "rName": "max.iter.num",
+      "useInR": true,
+      "rOrderNum": 6
     },
     {
       "lowerBound": 0.0,
@@ -110,99 +251,63 @@
       "upperBoundType": "INCLUSIVE",
       "allowNaN": false,
       "name": "Epsilon",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Invalid value. The value should be positive, numeric and less than 1.0. The input value must be greater than 0.0 but no greater than 1.0.",
+      "rDescription": "The threshold value in determining the convergence of HMM training. If the parameter value difference is less than the threshold, the training process converges. There is no default value. If you do not specify epsilon, only max.iter.num determines when the training process converges.",
+      "description": "The threshold value in determining the convergence of HMM training. If the parameter value difference is less than the threshold, the training process converges. There is no default value. If you do not specify Epsilon, only MaxIterNum determines when the training process converges.",
       "datatype": "DOUBLE",
       "allowsLists": false,
       "rName": "epsilon",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 7
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "InitParams",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "",
+      "rDescription": "When init.methods has the value 'input', this argument specifies the initial parameters for the models. The first parameter specifies the initial state probabilities, the secondparameter specifies the state transition probabilities, and the third parameter specifies the emission probabilities. For example, if the hidden.states.num argument specifies three hidden states and two observed symbols ('yes' and 'no'), then the init.params values are: • init_state_probability_vector (the initial state probabilities): ‘0.3333333333 0.3333333333 0.3333333333', • state_transition_probability_matrix (the state transition probabilities): ‘0.3333333333 0.3333333333 0.3333333333; 0.3333333333 0.3333333333 0.3333333333; 0.3333333333 0.3333333333 0.3333333333', • observation_emission_probability_matrix (the emission probabilities): 'no:0.25 yes:0.75; no:0.35 yes:0.65; no:0.45 yes:0.55' The sum of the probabilities in each row for the initial state probabilities, state transition probabilities, or emission probabilities parameters must be rounded to 1.0. The observed symbols are case-sensitive. The number of states and the number of observed symbols must be consistent with the number.hidden.states argument and the observed symbols in the input table; otherwise, the function displays error messages.",
+      "description": "When InitMethods has the value 'input', this argument specifies the initial parameters for the models. The first parameter specifies the initial state probabilities, the second parameter specifies the state transition probabilities, and the third parameter specifies the emission probabilities. For example, if the NumberHiddenStates argument specifies three hidden states and two observed symbols ('yes' and 'no'), then the InitParams values are: • init_state_probability_vector (the initial state probabilities): ‘0.3333333333 0.3333333333 0.3333333333', • state_transition_probability_matrix (the state transition probabilities): ‘0.3333333333 0.3333333333 0.3333333333; 0.3333333333 0.3333333333 0.3333333333; 0.3333333333 0.3333333333 0.3333333333', • observation_emission_probability_matrix (the emission probabilities): 'no:0.25 yes:0.75; no:0.35 yes:0.65; no:0.45 yes:0.55' The sum of the probabilities in each row for the initial state probabilities, state transition probabilities, or emission probabilities parameters must be rounded to 1.0. The observed symbols are case-sensitive. The number of states and the number of observed symbols must be consistent with the NumberHiddenStates argument and the observed symbols in the input table; otherwise, the function displays error messages.",
       "datatype": "STRING",
       "allowsLists": true,
       "rName": "init.params",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 10
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "InitMethods",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "",
+      "rDescription": "The method that the function uses to generate the initial parameters for the initial state probabilities, state transition probabilities, and emission probabilities. The possibilitiesare: • random (default): The initial parameters are based on uniform distribution. • flat: The probabilities are equal. Each cell holds the same probability in the matrix or vector. • input: The function takes the initial parameters from the init.params argument. The names of these methods are case-insensitive. The seed number is meaningful only when the specified method is random. ",
+      "description": "The method that the function uses to generate the initial parameters for the initial state probabilities, state transition probabilities, and emission probabilities. The possibilities are: • random (default): The initial parameters are based on uniform distribution. • flat: The probabilities are equal. Each cell holds the same probability in the matrix or vector. • input: The function takes the initial parameters from the InitParams argument. The names of these methods are case-insensitive. The seed number is meaningful only when the specified method is random. ",
       "datatype": "STRING",
       "allowsLists": true,
       "rName": "init.methods",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 9
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
-      "name": "ModelKey",
-      "isRequired": false,
-      "description": "",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "model.key",
-      "useInR": true
-    },
-    {
-      "isOutputColumn": false,
-      "name": "SequenceKey",
-      "isRequired": true,
-      "description": "",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "sequence.key",
-      "useInR": true
-    },
-    {
-      "isOutputColumn": false,
-      "name": "ObservedKey",
-      "isRequired": true,
-      "description": "",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "observed.key",
-      "useInR": true
-    },
-    {
-      "lowerBound": 1,
-      "lowerBoundType": "INCLUSIVE",
-      "allowNaN": false,
-      "name": "BatchSize",
-      "isRequired": false,
-      "description": "The batch size must be a positive value greater than 1, inclusive. The input value must be no less than 1.",
-      "datatype": "INTEGER",
-      "allowsLists": false,
-      "rName": "batch.size",
-      "useInR": true
-    },
-    {
-      "targetTable": "vertices",
-      "checkDuplicate": true,
-      "allowPadding": true,
-      "name": "SkipKey",
-      "isRequired": false,
-      "description": "Skip the row or not",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "skip.key",
-      "useInR": true
-    },
-    {
-      "isOutputColumn": true,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "OutputTables",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "",
+      "rDescription": "The names of the output tables: • init_state_prob is the initial state probability table (default name is Pi). • state_transition_prob is the state transition probabilities table (default name is A). • emit_prob is the emission probability table (default name is B).",
+      "description": "The names of the output tables: • init_state_prob is the initial state probability table (default name is Pi). • state_transition_prob is the state transition probabilities table (default name is A). • emit_prob is the emission probability table (default name is B).",
       "datatype": "STRING",
       "allowsLists": true,
       "rName": "output.tables",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 11
     }
   ]
 }

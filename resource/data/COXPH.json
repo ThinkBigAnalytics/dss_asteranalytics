@@ -1,60 +1,261 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
   "function_name": "CoxPH",
-  "function_version": "1.0",
+  "function_version": "1.3",
   "function_type": "driver",
+  "function_r_name": "aa.coxph",
   "short_description": "Cox Proportitional Hazard Model function",
   "long_description": "Cox Proportitional Hazard Model function. ",
-  "driver_arguments": {
-    "domain": "",
-    "database": "",
-    "userid": "",
-    "password": "",
-    "SSLsettings": "",
-    "SSLtruststorepassword": ""
-  },
   "argument_clauses": [
     {
-      "name": "inputtable",
-      "isRequired": true,
-      "description": "The inputtable is a required argument clause.",
-      "datatype": "STRING",
+      "permittedValues": [],
+      "isOutputColumn": false,
+      "name": "Domain",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "The address of the Queen. The host parameter is the Aster Database Queen’s IP address or hostname.",
+      "description": "The address of the Queen. The host parameter is the Aster Database Queen’s IP address or hostname.",
+      "datatype": "DRIVER",
       "allowsLists": false,
-      "rName": "inputtable",
-      "useInR": true
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
-      "name": "coefficient_table",
+      "permittedValues": [],
+      "isOutputColumn": false,
+      "name": "Database",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "The name of the database where the input table is located.",
+      "description": "The name of the database where the input table is located.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false,
+      "rOrderNum": 0
+    },
+    {
+      "permittedValues": [],
+      "isOutputColumn": false,
+      "name": "UserId",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "The Aster Database user name of the user running this function.",
+      "description": "The Aster Database user name of the user running this function.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false,
+      "rOrderNum": 0
+    },
+    {
+      "permittedValues": [],
+      "isOutputColumn": false,
+      "name": "Password",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "The Aster Database password of the user.",
+      "description": "The Aster Database password of the user.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false,
+      "rOrderNum": 0
+    },
+    {
+      "permittedValues": [],
+      "isOutputColumn": false,
+      "name": "SSLSettings",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "A string that includes all the SSL settings, except the password for the truststore.",
+      "description": "A string that includes all the SSL settings, except the password for the truststore.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false,
+      "rOrderNum": 0
+    },
+    {
+      "permittedValues": [],
+      "isOutputColumn": false,
+      "name": "SSLTrustStorePassword",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "The password for the SSL truststore.",
+      "description": "The password for the SSL truststore.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false,
+      "rOrderNum": 0
+    },
+    {
+      "isOutputTable": false,
+      "name": "inputtable",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "The coefficient_table is a required argument clause.",
-      "datatype": "STRING",
+      "rDescription": "Specifies the name of the table that contains the input parameters.",
+      "description": "Specifies the name of the table that contains the input parameters.",
+      "datatype": "TABLE_NAME",
+      "allowsLists": false,
+      "rName": "data",
+      "useInR": true,
+      "rOrderNum": 1
+    },
+    {
+      "isOutputTable": true,
+      "name": "coefficient_table",
+      "alternateNames": [],
+      "isRequired": true,
+      "rDescription": "Specifies the name of the table where the function outputs the estimated coefficients of the input parameters.",
+      "description": "Specifies the name of the table where the function outputs the estimated coefficients of the input parameters.",
+      "datatype": "TABLE_NAME",
       "allowsLists": false,
       "rName": "coefficient.table",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 100
     },
     {
+      "isOutputTable": true,
       "name": "linear_predictor_table",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "The linear_predictor_table is a required argument clause.",
       "description": "The linear_predictor_table is a required argument clause.",
-      "datatype": "STRING",
+      "datatype": "TABLE_NAME",
       "allowsLists": false,
       "rName": "linear.predictor.table",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 101
+    },
+    {
+      "targetTable": [
+        "inputtable"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "requiredLength": 1,
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "time_interval_column",
+      "alternateNames": [],
+      "isRequired": true,
+      "rDescription": "Specifies the name of the column in input_table that contains the time intervals of the input parameters; that is, end_time - start_time, in any unit of time (for example, years, months, or days).",
+      "description": "Specifies the name of the column in input_table that contains the time intervals of the input parameters; that is, end_time - start_time, in any unit of time (for example, years, months, or days).",
+      "datatype": "COLUMN_NAMES",
+      "allowsLists": false,
+      "rName": "time.interval.column",
+      "useInR": true,
+      "rOrderNum": 3
+    },
+    {
+      "targetTable": [
+        "inputtable"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "requiredLength": 1,
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "event_column",
+      "alternateNames": [],
+      "isRequired": true,
+      "rDescription": "Specifies the name of the column in input_table that contains 1 if the event occurred by end_time and 0 if it did not. (0 represents survival or right-censorship.) The function ignores values other than 1 and 0.",
+      "description": "Specifies the name of the column in input_table that contains 1 if the event occurred by end_time and 0 if it did not. (0 represents survival or right-censorship.) The function ignores values other than 1 and 0.",
+      "datatype": "COLUMN_NAMES",
+      "allowsLists": false,
+      "rName": "event.column",
+      "useInR": true,
+      "rOrderNum": 4
+    },
+    {
+      "targetTable": [
+        "inputtable"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "feature_columns",
+      "alternateNames": [],
+      "isRequired": true,
+      "rDescription": "Specifies the names of the input table columns that contain the features of the input parameters.",
+      "description": "Specifies the names of the input table columns that contain the features of the input parameters.",
+      "datatype": "COLUMN_NAMES",
+      "allowsLists": true,
+      "rName": "feature.columns",
+      "useInR": true,
+      "rOrderNum": 2
+    },
+    {
+      "targetTable": [
+        "inputtable"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "INTEGER",
+        "STRING"
+      ],
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "categorical_columns",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "Specifies the names of the input table columns that contain categorical predictors. Each categorical_column must also be a feature_column. By default, the function detects the categorical columns by their SQL data types.",
+      "description": "Specifies the names of the input table columns that contain categorical predictors. Each categorical_column must also be a feature_column. By default, the function detects the categorical columns by their SQL data types.",
+      "datatype": "COLUMN_NAMES",
+      "allowsLists": true,
+      "rName": "categorical.columns",
+      "useInR": true,
+      "rOrderNum": 7
+    },
+    {
+      "targetTable": [
+        "inputtable"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "accumulate",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "Specifies the names of the columns in input_table that the function copies to linear_predictor_table.",
+      "description": "Specifies the names of the columns in input_table that the function copies to linear_predictor_table.",
+      "datatype": "COLUMN_NAMES",
+      "allowsLists": true,
+      "rName": "accumulate",
+      "useInR": true,
+      "rOrderNum": 8
     },
     {
       "defaultValue": 10,
       "lowerBound": 1,
+      "upperBound": 2147483647,
       "lowerBoundType": "INCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
       "allowNaN": false,
       "name": "MaxIterNum",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The maximum number of iterations should be greater than 0. The input value must be no less than 1. The default value is 10.",
+      "rDescription": "Specifies the maximum number of iterations that the function runs before finishing, if the convergence threshold has not been met. The default value is 10.",
+      "description": "Specifies the maximum number of iterations that the function runs before finishing, if the convergence threshold has not been met. The default value is 10.",
       "datatype": "INTEGER",
       "allowsLists": false,
       "rName": "max.iter.num",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 6
     },
     {
       "defaultValue": 1.0E-9,
@@ -64,50 +265,15 @@
       "upperBoundType": "EXCLUSIVE",
       "allowNaN": false,
       "name": "Threshold",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The threshold value should be between 0 and 1.0, exclusive. The input value must be greater than 0.0 and less than 1.0. The default value is 1.0E-9.",
+      "rDescription": "Specifies the convergence threshold. The default value is 0.000000001.",
+      "description": "Specifies the convergence threshold. The default value is 0.000000001.",
       "datatype": "DOUBLE",
       "allowsLists": false,
       "rName": "threshold",
-      "useInR": true
-    },
-    {
-      "name": "event_column",
-      "isRequired": true,
-      "description": "The event_column is a required argument clause.",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "event.column",
-      "useInR": true
-    },
-    {
-      "name": "time_interval_column",
-      "isRequired": true,
-      "description": "The time_interval_column is a required argument clause.",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "time.interval.column",
-      "useInR": true
-    },
-    {
-      "allowPadding": true,
-      "name": "feature_columns",
-      "isRequired": true,
-      "description": "",
-      "datatype": "STRING",
-      "allowsLists": true,
-      "rName": "feature.columns",
-      "useInR": true
-    },
-    {
-      "allowPadding": true,
-      "name": "accumulate",
-      "isRequired": false,
-      "description": "",
-      "datatype": "STRING",
-      "allowsLists": true,
-      "rName": "accumulate",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 5
     }
   ]
 }

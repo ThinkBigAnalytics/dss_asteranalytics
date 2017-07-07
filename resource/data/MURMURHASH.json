@@ -1,56 +1,94 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
-  "function_name": "murmurhash",
-  "function_version": "1.1",
+  "function_name": "MurmurHash",
+  "function_version": "1.2",
   "function_type": "non-driver",
+  "function_r_name": "aa.murmur.hash",
   "short_description": "Implements the MurmurHash SQL/MR function.",
   "long_description": "MurmurHash is a non-cryptographic hash function suitable for general hash-based lookup. The function output the hashed value of each cell in the input columns. ",
   "input_tables": [
     {
+      "requiredInputKind": [
+        "PartitionByAny"
+      ],
       "isOrdered": false,
       "partitionByOne": false,
+      "name": "input",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "The input table that contains the data.",
       "description": "The input table that contains the data.",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "useInR": true
+      "rName": "data",
+      "useInR": true,
+      "rOrderNum": 1
     }
   ],
   "argument_clauses": [
     {
+      "targetTable": [
+        "input"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "InputColumns",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "A list of columns in the input table for which to calculate hash values. This can be an individual column, a list of column names or a range of columns by position number.",
+      "rDescription": "Specifies the names of the input table columns for which to calculate hash values. Note: NULL values in the input columns are output as NULL.",
+      "description": "Specifies the names of the input table columns for which to calculate hash values. Note: NULL values in the input columns are output as NULL.",
       "datatype": "COLUMNS",
       "allowsLists": true,
       "rName": "input.columns",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 2
     },
     {
-      "defaultValue": 32,
-      "allowNaN": false,
-      "name": "HashBit",
-      "isRequired": false,
-      "description": "The output hash bit. Two values are allowed '32' and '64'. The default value is 32.",
-      "datatype": "INTEGER",
-      "allowsLists": false,
-      "rName": "hash.bit",
-      "useInR": true
-    },
-    {
+      "targetTable": [
+        "input"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "Accumulate",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Columns from the input table to be passed through from input to output.",
+      "rDescription": "Specifies the names of the input table columns to copy to the output table.",
+      "description": "Specifies the names of the input table columns to copy to the output table.",
       "datatype": "COLUMNS",
       "allowsLists": true,
       "rName": "accumulate",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 4
+    },
+    {
+      "defaultValue": 32,
+      "lowerBound": -2147483648,
+      "upperBound": 2147483647,
+      "lowerBoundType": "INCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
+      "allowNaN": false,
+      "name": "HashBit",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "Specifies whether the function generates 32-bit hash values (the default) or 64-bit hash values.",
+      "description": "Specifies whether the function generates 32-bit hash values (the default) or 64-bit hash values.",
+      "datatype": "INTEGER",
+      "allowsLists": false,
+      "rName": "hash.bit",
+      "useInR": true,
+      "rOrderNum": 3
     }
   ]
 }

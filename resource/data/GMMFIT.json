@@ -1,10 +1,11 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
   "function_name": "GMMFit",
-  "function_version": "1.0",
+  "function_version": "1.1",
   "function_type": "driver",
+  "function_r_name": "aa.gmm",
   "short_description": "Fits a Gaussian Mixture Model to data.",
   "long_description": "Clusters data using a Gaussian Mixture Model or a Dirichlet Process Gaussian Mixture Model.",
   "input_tables": [
@@ -15,114 +16,157 @@
       "isOrdered": false,
       "partitionByOne": true,
       "name": "init_params",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "Contains initial values for the cluster weights, means, and covariances. The user may specify one, two, or all three of the cluster parameters.",
       "description": "Contains initial values for the cluster weights, means, and covariances. The user may specify one, two, or all three of the cluster parameters.",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "rName": "init.params",
-      "useInR": true
+      "rName": "init.params.data",
+      "useInR": true,
+      "rOrderNum": 1
     }
   ],
   "argument_clauses": [
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "Domain",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The address of the Queen. The host parameter is the Aster Database Queen’s IP saddress or hostname.",
+      "rDescription": "The address of the Queen. The host parameter is the Aster Database Queen’s IP address or hostname.",
+      "description": "The address of the Queen. The host parameter is the Aster Database Queen’s IP address or hostname.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "Database",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The name of the database where the input table is located.",
       "description": "The name of the database where the input table is located.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "UserId",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The Aster Database user name of the user running this function.",
       "description": "The Aster Database user name of the user running this function.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "Password",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The Aster Database password of the user.",
       "description": "The Aster Database password of the user.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "SSLSettings",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "A string that includes all the SSL settings, except the password for the truststore.",
       "description": "A string that includes all the SSL settings, except the password for the truststore.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "SSLTrustStorePassword",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The password for the SSL truststore.",
       "description": "The password for the SSL truststore.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
       "isOutputTable": false,
       "name": "InputTable",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "Specifies the table containing the input data to be clustered.",
+      "rDescription": "Specifies the name of the table that contains the input data to be clustered.",
+      "description": "Specifies the name of the table that contains the input data to be clustered.",
       "datatype": "TABLE_NAME",
       "allowsLists": false,
-      "rName": "input.table",
-      "useInR": true
+      "rName": "data",
+      "useInR": true,
+      "rOrderNum": 2
     },
     {
       "isOutputTable": true,
       "name": "OutputTable",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "Specifies the output table to which cluster information will be printed.",
+      "rDescription": "Specifies the name of the output table to which the function outputs cluster information. The table must not already exist.",
+      "description": "Specifies the name of the output table to which the function outputs cluster information. The table must not already exist.",
       "datatype": "TABLE_NAME",
       "allowsLists": false,
-      "rName": "output.table",
-      "useInR": true
+      "rName": "cluster.info",
+      "useInR": true,
+      "rOrderNum": 100
     },
     {
       "defaultValue": 20,
       "lowerBound": 0,
+      "upperBound": 2147483647,
       "lowerBoundType": "EXCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
       "allowNaN": false,
       "name": "MaxClusterNum",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Specifies the maximum number of clusters in a Dirichlet Process model. The GMMFit function will invoke the DP-GMM algorithm if MaxClusterNum is specified. The input value must be greater than 0. The default value is 20.",
+      "rDescription": "Specifies the maximum number of clusters in a Dirichlet Process model and causes the function to use the DP-GMM algorithm. This value must have the data type INTEGER. The default value is 20.",
+      "description": "Specifies the maximum number of clusters in a Dirichlet Process model and causes the function to use the DP-GMM algorithm. This value must have the data type INTEGER. The default value is 20.",
       "datatype": "INTEGER",
       "allowsLists": false,
       "rName": "max.cluster.num",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 3
     },
     {
       "defaultValue": 10,
       "lowerBound": 0,
+      "upperBound": 2147483647,
       "lowerBoundType": "EXCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
       "allowNaN": false,
       "name": "ClusterNum",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Specifies the exact number of clusters in a model. The GMMFit function will invoke the basic GMM algorithm if ClusterNum is specified. The input value must be greater than 0. The default value is 10.",
+      "rDescription": "Specifies the number of clusters in a model and causes the function to use  the basic GMM algorithm. This value must have the data type INTEGER and be greater than 0. The default value is 10.",
+      "description": "Specifies the number of clusters in a model and causes the function to use  the basic GMM algorithm. This value must have the data type INTEGER and be greater than 0. The default value is 10.",
       "datatype": "INTEGER",
       "allowsLists": false,
       "rName": "cluster.num",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 4
     },
     {
       "permittedValues": [
@@ -134,61 +178,82 @@
       "defaultValue": "DIAGONAL",
       "isOutputColumn": false,
       "name": "CovarianceType",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Specifies the form of the covariance matrix. This option allows the user to reduce the number of parameters that need to be estimated for each cluster. The permitted input values are [SPHERICAL, DIAGONAL, FULL, TIED]. The default value is DIAGONAL.",
+      "rDescription": "Specifies the type of the covariance matrices, thereby determining how many parameters the function estimates for each cluster: 'spherical': Each covariance matrix is of the form σI. The function estimates one parameter for each cluster, 'diagonal' (default): Each covariance matrix has zeroes on the nondiagonal. The function estimates D parameters for each cluster, where D is the number of dimensions in the matrix, 'tied': Each cluster has the same covariance matrix. The function estimates (1/2)D(D-1) parameters, 'full': Each cluster has an arbitrary covariance matrix. The function estimates (1/2)D(D-1) parameters for each cluster.",
+      "description": "Specifies the type of the covariance matrices, thereby determining how many parameters the function estimates for each cluster: 'spherical': Each covariance matrix is of the form σI. The function estimates one parameter for each cluster, 'diagonal' (default): Each covariance matrix has zeroes on the nondiagonal. The function estimates D parameters for each cluster, where D is the number of dimensions in the matrix, 'tied': Each cluster has the same covariance matrix. The function estimates (1/2)D(D-1) parameters, 'full': Each cluster has an arbitrary covariance matrix. The function estimates (1/2)D(D-1) parameters for each cluster.",
       "datatype": "STRING",
       "allowsLists": false,
       "rName": "covariance.type",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 5
     },
     {
       "defaultValue": 0.001,
       "lowerBound": 0,
+      "upperBound": Infinity,
       "lowerBoundType": "EXCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
       "allowNaN": false,
       "name": "Tolerance",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Specifies the minimum change in log-likelihood between iterations that will cause GMMFit to terminate. The input value must be greater than 0.0. The default value is 0.001.",
+      "rDescription": "Specifies the minimum change in log-likelihood between iterations that causes the function to terminate. This value must have the data type DOUBLE PRECISION and be greater than 0. The default value is 0.001.",
+      "description": "Specifies the minimum change in log-likelihood between iterations that causes the function to terminate. This value must have the data type DOUBLE PRECISION and be greater than 0. The default value is 0.001.",
       "datatype": "DOUBLE",
       "allowsLists": false,
       "rName": "tolerance",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 6
     },
     {
       "defaultValue": 10,
       "lowerBound": 0,
+      "upperBound": 2147483647,
       "lowerBoundType": "EXCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
       "allowNaN": false,
       "name": "MaxIterNum",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Specifies the maximum number of iterations for which GMMFit will run. The input value must be greater than 0. The default value is 10.",
+      "rDescription": "Specifies the maximum number of iterations for which the function runs. This value must have the data type INTEGER and be greater than 0. The default value is 10.",
+      "description": "Specifies the maximum number of iterations for which the function runs. This value must have the data type INTEGER and be greater than 0. The default value is 10.",
       "datatype": "INTEGER",
       "allowsLists": false,
       "rName": "max.iter.num",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 7
     },
     {
       "defaultValue": 0.001,
       "lowerBound": 0,
+      "upperBound": Infinity,
       "lowerBoundType": "EXCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
       "allowNaN": false,
       "name": "ConcentrationParam",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Can only by used with MaxClusterNum. The concentration parameter α controls the number of clusters generated by the DP-GMM. The expected number of clusters is α log N, where N is the number of points in the data set, so a larger value of ConcentrationParam will tend to result in the algorithm finding more clusters. The input value must be greater than 0.0. The default value is 0.001.",
+      "rDescription": "Note: Specify this argument only if you specify max.cluster.num. Specifies the concentration parameter, α, which determines the number of clusters that the DP-GMM algorithm generates. This value must have the data type DOUBLE PRECISION and be greater than 0. The expected number of clusters is α log N, where N is the number of points in the data set; therefore, a larger α value tends to cause the algorithm to find more clusters.",
+      "description": "Note: Specify this argument only if you specify MaxClusterNum. Specifies the concentration parameter, α, which determines the number of clusters that the DP-GMM algorithm generates. This value must have the data type DOUBLE PRECISION and be greater than 0. The expected number of clusters is α log N, where N is the number of points in the data set; therefore, a larger α value tends to cause the algorithm to find more clusters.",
       "datatype": "DOUBLE",
       "allowsLists": false,
       "rName": "concentration.param",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 8
     },
     {
       "defaultValue": false,
       "name": "PackOutput",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Indicates where the output format should be packed or unpacked. The default value is false.",
+      "rDescription": "Specifies whether the function packs the output. The default value is 'false'.",
+      "description": "Specifies whether the function packs the output. The default value is 'false'.",
       "datatype": "BOOLEAN",
       "allowsLists": false,
       "rName": "pack.output",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 9
     }
   ]
 }

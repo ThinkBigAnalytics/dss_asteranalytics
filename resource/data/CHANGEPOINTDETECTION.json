@@ -1,10 +1,11 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
   "function_name": "ChangePointDetection",
-  "function_version": "1.1",
+  "function_version": "1.2",
   "function_type": "non-driver",
+  "function_r_name": "aa.changepoint.detection",
   "short_description": "ChangePointDetection function detects change point for retrospective data.",
   "long_description": "ChangePointDetection function detects change point for retrospective data.",
   "input_tables": [
@@ -14,14 +15,64 @@
       ],
       "isOrdered": true,
       "partitionByOne": false,
+      "name": "input",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "This table defining the input time series data.",
       "description": "This table defining the input time series data.",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "useInR": true
+      "rName": "data",
+      "useInR": true,
+      "rOrderNum": 1
     }
   ],
   "argument_clauses": [
+    {
+      "targetTable": [
+        "input"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "NUMERIC"
+      ],
+      "requiredLength": 1,
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "ValueColumn",
+      "alternateNames": [],
+      "isRequired": true,
+      "rDescription": "Specifies the name of the input table column that contains the time series data.",
+      "description": "Specifies the name of the input table column that contains the time series data.",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "value.column",
+      "useInR": true,
+      "rOrderNum": 2
+    },
+    {
+      "targetTable": [
+        "input"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "Accumulate",
+      "alternateNames": [],
+      "isRequired": true,
+      "rDescription": "Specifies the names of the input table columns to copy to the output table. Tip: To identify change points in the output table, specify the columns that appear in partition_exp and order_by_exp.",
+      "description": "Specifies the names of the input table columns to copy to the output table. Tip: To identify change points in the output table, specify the columns that appear in partition_exp and order_by_exp.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "accumulate",
+      "useInR": true,
+      "rOrderNum": 3
+    },
     {
       "permittedValues": [
         "normal_distribution",
@@ -30,12 +81,15 @@
       "defaultValue": "normal_distribution",
       "isOutputColumn": false,
       "name": "SegmentationMethod",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The fitting method for each segmentation.  The permitted input values are [normal_distribution, linear_regression]. The default value is normal_distribution.",
+      "rDescription": "Specifies one of these segmentation methods:'normal_distribution' (default): In each segment, the data is in a normal distribution, 'linear_regression': In each segment, the data is in linear regression.",
+      "description": "Specifies one of these segmentation methods:'normal_distribution' (default): In each segment, the data is in a normal distribution, 'linear_regression': In each segment, the data is in linear regression.",
       "datatype": "STRING",
       "allowsLists": false,
       "rName": "segmentation.method",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 4
     },
     {
       "permittedValues": [
@@ -44,62 +98,48 @@
       "defaultValue": "binary",
       "isOutputColumn": false,
       "name": "SearchMethod",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Method to search change point. The only permitted input value is binary. The default value is binary.",
+      "rDescription": "Specifies the search method, binary segmentation. This is the default and only possible value.",
+      "description": "Specifies the search method, binary segmentation. This is the default and only possible value.",
       "datatype": "STRING",
       "allowsLists": false,
       "rName": "search.method",
-      "useInR": true
-    },
-    {
-      "checkDuplicate": true,
-      "allowedTypeGroups": [
-        "NUMERIC"
-      ],
-      "requiredLength": 1,
-      "allowPadding": true,
-      "name": "ValueColumn",
-      "isRequired": true,
-      "description": "The column with time series data to process. Input columns must contain numeric SQL types.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "value.column",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 5
     },
     {
       "defaultValue": 10,
       "lowerBound": 0,
+      "upperBound": 2147483647,
       "lowerBoundType": "EXCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
       "allowNaN": false,
       "name": "MaxChangeNum",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The maximum count of change point number. The input value must be greater than 0. The default value is 10.",
+      "rDescription": "Specifies the maximum number of change points to detect. The default value is 10.",
+      "description": "Specifies the maximum number of change points to detect. The default value is 10.",
       "datatype": "INTEGER",
       "allowsLists": false,
       "rName": "max.change.num",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 6
     },
     {
+      "permittedValues": [],
       "defaultValue": "BIC",
       "isOutputColumn": false,
       "name": "Penalty",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Penalty function which is used to avoid the over fitting. The default value is BIC.",
+      "rDescription": "Specifies the penalty function, which is used to avoid over-fitting. Possible values are: 'BIC' (default), 'AIC', threshold, a DOUBLE PRECISION valueFor BIC, the condition for the existence of a change point is: ln(L1)−ln(L0) > (p1-p0)*ln(n)/2 For normal distribution and linear regression, the condition is: (p1-p0)*ln(n)/2 = ln(n) For AIC, the condition for the existence of a change point is: ln(L1)−ln(L0) > p1-p0 For normal distribution and linear regression, the condition is: p1-p0 = 2 For threshold, the specified value is compared to: ln(L1)−ln(L0) L1 and L2 are the maximum likelihood estimation of hypotheses H1 and H0. For normal distribution, the definition of Log(L1 ) and Log(L0) are in “Background”. p is the number of additional parameters introduced by adding a change point. p is used in the information criterion BIC or AIC. p1 and p0 represent this parameter in hypotheses H1 and H0 separately",
+      "description": "Specifies the penalty function, which is used to avoid over-fitting. Possible values are: 'BIC' (default), 'AIC', threshold, a DOUBLE PRECISION valueFor BIC, the condition for the existence of a change point is: ln(L1)−ln(L0) > (p1-p0)*ln(n)/2 For normal distribution and linear regression, the condition is: (p1-p0)*ln(n)/2 = ln(n) For AIC, the condition for the existence of a change point is: ln(L1)−ln(L0) > p1-p0 For normal distribution and linear regression, the condition is: p1-p0 = 2 For threshold, the specified value is compared to: ln(L1)−ln(L0) L1 and L2 are the maximum likelihood estimation of hypotheses H1 and H0. For normal distribution, the definition of Log(L1 ) and Log(L0) are in “Background”. p is the number of additional parameters introduced by adding a change point. p is used in the information criterion BIC or AIC. p1 and p0 represent this parameter in hypotheses H1 and H0 separately",
       "datatype": "STRING",
       "allowsLists": false,
       "rName": "penalty",
-      "useInR": true
-    },
-    {
-      "checkDuplicate": true,
-      "allowPadding": true,
-      "name": "Accumulate",
-      "isRequired": true,
-      "description": "Additional columns which will be appended to output table.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "accumulate",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 7
     },
     {
       "permittedValues": [
@@ -110,12 +150,15 @@
       "defaultValue": "changepoint",
       "isOutputColumn": false,
       "name": "OutputOption",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Output columns option. The permitted input values are [changepoint, segment, verbose]. The default value is changepoint.",
+      "rDescription": "Specifies the output table columns. Refer to “Output. The default value is 'CHANGEPOINT'.",
+      "description": "Specifies the output table columns. Refer to “Output. The default value is 'CHANGEPOINT'.",
       "datatype": "STRING",
       "allowsLists": false,
       "rName": "output.option",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 8
     }
   ]
 }

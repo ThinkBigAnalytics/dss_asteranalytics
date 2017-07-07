@@ -1,10 +1,11 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
-  "function_name": "pagerank",
-  "function_version": "1.1",
+  "function_name": "PageRank",
+  "function_version": "1.2",
   "function_type": "graph",
+  "function_r_name": "aa.pagerank",
   "short_description": "Computes the page rank for all pages in a web graph.",
   "long_description": "Computes the page rank for all pages in a web graph represented by two database tables. The assumption is that the function is provided input as follows: TABLE vertices (vertex keys, ...) TABLE edges (source vertex keys, target vertex keys, edge weight, ...). The function only supports edge weights. If EdgeWeight is not specified, PageRank takes the input as unweighted.",
   "input_tables": [
@@ -15,12 +16,15 @@
       "isOrdered": false,
       "partitionByOne": false,
       "name": "vertices",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "The input table contains vertices in the graph. ",
       "description": "The input table contains vertices in the graph. ",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "rName": "vertices",
-      "useInR": true
+      "rName": "vertices.data",
+      "useInR": true,
+      "rOrderNum": 1
     },
     {
       "requiredInputKind": [
@@ -29,42 +33,84 @@
       "isOrdered": false,
       "partitionByOne": false,
       "name": "edges",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "The input table contains edges in the graph. ",
       "description": "The input table contains edges in the graph. ",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "rName": "edges",
-      "useInR": true
+      "rName": "edges.data",
+      "useInR": true,
+      "rOrderNum": 2
     }
   ],
   "argument_clauses": [
     {
-      "targetTable": "edges",
+      "targetTable": [
+        "edges"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "TargetKey",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "The names of the target key columns in the edges table. The number of attributes and their types should correspond to those of the vertex_key SQL clause. ",
+      "rDescription": "Specifies the target key columns in the edges table",
+      "description": "Specifies the target key columns in the edges table",
       "datatype": "COLUMNS",
       "allowsLists": true,
-      "rName": "target.key",
-      "useInR": true
+      "rName": "  target.key",
+      "useInR": true,
+      "rOrderNum": 3
     },
     {
-      "targetTable": "edges",
+      "targetTable": [
+        "edges"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
       "allowedTypeGroups": [
         "NUMERIC"
       ],
       "requiredLength": 1,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "EdgeWeight",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The name of the weight column in the edges table of a weighted graph. The weight is a positive non-zero value. The default is the graph is regarded as an unweighted graph.  Input columns must contain numeric SQL types.",
+      "rDescription": " Specifies the column in the edges table that contains the edge weight, which must be a positive value. By default, all edges have the same weight (that is, the graph is unweighted). ",
+      "description": " Specifies the column in the edges table that contains the edge weight, which must be a positive value. By default, all edges have the same weight (that is, the graph is unweighted). ",
       "datatype": "COLUMNS",
       "allowsLists": false,
-      "rName": "edge.weight",
-      "useInR": true
+      "rName": "weights",
+      "useInR": true,
+      "rOrderNum": 4
+    },
+    {
+      "targetTable": [
+        "vertices"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "Accumulate",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "Specifies the vertices table columns to copy to the output table.",
+      "description": "Specifies the vertices table columns to copy to the output table.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "accumulate",
+      "useInR": true,
+      "rOrderNum": 8
     },
     {
       "defaultValue": 0.85,
@@ -74,50 +120,53 @@
       "upperBoundType": "INCLUSIVE",
       "allowNaN": false,
       "name": "DampFactor",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "A value between 0 and 1 to be used in the pagerank formula. The input value must be no less than 0.0 and no greater than 1.0. The default value is 0.85.",
+      "rDescription": " Specifies the value to use in the PageRank formula. The damp_factor must be a DOUBLE PRECISION value between 0 and 1. The default value is 0.85.",
+      "description": " Specifies the value to use in the PageRank formula. The damp_factor must be a DOUBLE PRECISION value between 0 and 1. The default value is 0.85.",
       "datatype": "DOUBLE",
       "allowsLists": false,
-      "rName": "damp.factor",
-      "useInR": true
+      "rName": "damping",
+      "useInR": true,
+      "rOrderNum": 5
     },
     {
       "defaultValue": 20,
+      "rDefaultValue": 1000,
       "lowerBound": 0,
+      "upperBound": 2147483647,
       "lowerBoundType": "EXCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
       "allowNaN": false,
       "name": "MaxIterNum",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The maximum iteration number for which the algorithm runs.  The input value must be greater than 0. The default value is 20.",
+      "rDescription": "Specifies the maximum number of iterations for which the algorithm runs before the function completes. The max_iterations must be a positive INTEGER value. The default value is 20. Note: max_iterations is the number of SQL-GR iterations (that is, the algorithm iterations shown in AMC minus 3). ",
+      "description": "Specifies the maximum number of iterations for which the algorithm runs before the function completes. The max_iterations must be a positive INTEGER value. The default value is 20. Note: max_iterations is the number of SQL-GR iterations (that is, the algorithm iterations shown in AMC minus 3). ",
       "datatype": "INTEGER",
       "allowsLists": false,
-      "rName": "max.iter.num",
-      "useInR": true
+      "rName": "niter",
+      "useInR": true,
+      "rOrderNum": 6
     },
     {
       "defaultValue": 1.0E-4,
+      "rDefaultValue": 0.001,
       "lowerBound": 0,
+      "upperBound": Infinity,
       "lowerBoundType": "EXCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
       "allowNaN": false,
       "name": "Threshold",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The threshold value specifying the convergence criteria. The input value must be greater than 0.0. The default value is 1.0E-4.",
+      "rDescription": "Specifies the convergence criteria value. The threshold must be a DOUBLE PRECISION value. The default value is 0.0001.",
+      "description": "Specifies the convergence criteria value. The threshold must be a DOUBLE PRECISION value. The default value is 0.0001.",
       "datatype": "DOUBLE",
       "allowsLists": false,
-      "rName": "threshold",
-      "useInR": true
-    },
-    {
-      "targetTable": "vertices",
-      "checkDuplicate": true,
-      "allowPadding": true,
-      "name": "Accumulate",
-      "isRequired": false,
-      "description": "Columns from the input table to be passed through from input to output.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "accumulate",
-      "useInR": true
+      "rName": "eps",
+      "useInR": true,
+      "rOrderNum": 7
     }
   ]
 }

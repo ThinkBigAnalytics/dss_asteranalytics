@@ -1,37 +1,56 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
   "function_name": "ScaleMap",
-  "function_version": "1.2",
+  "function_version": "1.4",
   "function_type": "non-driver",
+  "function_r_name": "aa.scale.map",
   "short_description": "This function gathers the statistic of the input.",
   "long_description": "This function gathers the statistic of the input.  It collects min, max, count, sum and squaresum.",
+  "function_operation": "map",
+  "partner_function": "Scale, ScalePrinter",
   "input_tables": [
     {
+      "requiredInputKind": [
+        "PartitionByAny"
+      ],
       "isOrdered": false,
       "partitionByOne": false,
+      "name": "input",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "The input dataset for scale function.",
       "description": "The input dataset for scale function.",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "useInR": true
+      "rName": "data",
+      "useInR": true,
+      "rOrderNum": 1
     }
   ],
   "argument_clauses": [
     {
+      "targetTable": [
+        "input"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
       "allowedTypeGroups": [
         "NUMERIC"
       ],
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "InputColumns",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "The data columns that contain the attribute values of the samples in the input table. These columns must contain numeric values between -1e308 and 1e308. The input can be list of columns or ranges or a mixture. Format example: 'col1','[4:21]','[25:53]','col73'. Input columns must contain numeric SQL types.",
+      "rDescription": "Specifies the input table columns that contain the attribute values of the samples. The attribute values must be numeric values between -1e308 and 1e308. If a value is outside this range, the function treats it as infinity.",
+      "description": "Specifies the input table columns that contain the attribute values of the samples. The attribute values must be numeric values between -1e308 and 1e308. If a value is outside this range, the function treats it as infinity.",
       "datatype": "COLUMNS",
       "allowsLists": true,
       "rName": "input.columns",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 2
     },
     {
       "permittedValues": [
@@ -43,12 +62,15 @@
       "defaultValue": "KEEP",
       "isOutputColumn": false,
       "name": "MissValue",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Specify how miss values(null) are processed in Scale. The permitted input values are [KEEP, OMIT, ZERO, LOCATION]. The default value is KEEP.",
+      "rDescription": "Specifies how the ta.scale, ta.scalemap, and ta.partitionscale functions are to process NULL values in input, as follows:KEEP (default): Keep NULL values, OMIT: Ignore any row that has a NULL value, ZERO: Replace each NULL value with zero, LOCATION: Replace each NULL value with its location value.",
+      "description": "Specifies how the Scale, ScaleMap, and PartitionScale functions are to process NULL values in input, as follows:KEEP (default): Keep NULL values, OMIT: Ignore any row that has a NULL value, ZERO: Replace each NULL value with zero, LOCATION: Replace each NULL value with its location value.",
       "datatype": "STRING",
       "allowsLists": false,
       "rName": "miss.value",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 3
     }
   ]
 }

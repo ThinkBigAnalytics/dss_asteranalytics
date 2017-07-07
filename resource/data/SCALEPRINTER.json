@@ -1,10 +1,12 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
   "function_name": "ScalePrinter",
-  "function_version": "1.2",
+  "function_version": "1.4",
   "function_type": "non-driver",
+  "function_r_name": "aa.scale.printer",
+  "ref_function_r_name": "aa.scale.map",
   "short_description": "This function prints the statistic of the input.",
   "long_description": "This function prints the statistic of the input, including min, max, count, sum, squaresum, avg, std and variance.",
   "input_tables": [
@@ -14,11 +16,16 @@
       ],
       "isOrdered": false,
       "partitionByOne": true,
+      "name": "input",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "The output ta.scalemap function",
       "description": "The output of ScaleMap function.",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "useInR": true
+      "rName": "object",
+      "useInR": true,
+      "rOrderNum": 1
     }
   ]
 }

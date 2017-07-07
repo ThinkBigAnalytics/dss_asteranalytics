@@ -1,10 +1,11 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
   "function_name": "TextChunker",
-  "function_version": "1.1",
+  "function_version": "1.3",
   "function_type": "non-driver",
+  "function_r_name": "aa.text.chunker",
   "short_description": "Text classification SQL/MR function",
   "long_description": "Predict the category of the document in each text column",
   "input_tables": [
@@ -14,40 +15,66 @@
       ],
       "isOrdered": true,
       "partitionByOne": false,
+      "name": "input",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "The relation contains the text to be scaned",
+      "rDescription": "The relation contains the text to be scanned",
+      "description": "The relation contains the text to be scanned",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "useInR": true
+      "rName": "data",
+      "useInR": true,
+      "rOrderNum": 1
     }
   ],
   "argument_clauses": [
     {
+      "targetTable": [
+        "input"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
       "requiredLength": 1,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "WordColumn",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "The input table column that contains the words to do 'chunking' on",
+      "rDescription": "Specifies the name of the input table column that contains the words to chunk into phrases. Typically, this is the word column of the output table of the  \"ta.postagger\"function",
+      "description": "Specifies the name of the input table column that contains the words to chunk into phrases. Typically, this is the word column of the output table of the \"POSTagger\" function",
       "datatype": "COLUMNS",
       "allowsLists": false,
       "rName": "word.column",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 2
     },
     {
+      "targetTable": [
+        "input"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
       "requiredLength": 1,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "PosColumn",
       "alternateNames": [
         "PosTagColumn"
       ],
       "isRequired": true,
-      "description": "The input table column that contains the part-of-speech tag of words",
+      "rDescription": "Specifies the name of the input table column the part-of-speech (POS) tag of words. Typically, this is the pos_tag column of the output table of the \"ta.postagger\" function",
+      "description": "Specifies the name of the input table column the part-of-speech (POS) tag of words. Typically, this is the pos_tag column of the output table of the POSTagger function",
       "datatype": "COLUMNS",
       "allowsLists": false,
       "rName": "pos.column",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 3
     }
   ]
 }

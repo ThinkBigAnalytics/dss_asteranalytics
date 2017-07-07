@@ -1,122 +1,209 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
-  "function_name": "dwt2d",
-  "function_version": "1.3",
+  "function_name": "DWT2D",
+  "function_version": "1.4",
   "function_type": "driver",
+  "function_r_name": "aa.dwt2d",
   "short_description": "This function performs 2D forward wavelet transform.",
   "long_description": "This function is used for 2D DWT forward transformation. It can perform transformation on multiple sequences simultaneously.  For each sequence, this function generates corresponding coefficients in the outputtable  and the meta data in the metatable",
   "argument_clauses": [
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "Domain",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The address of the Queen. The host parameter is the Aster Database Queen’s IP saddress or hostname.",
+      "rDescription": "The address of the Queen. The host parameter is the Aster Database Queen’s IP address or hostname.",
+      "description": "The address of the Queen. The host parameter is the Aster Database Queen’s IP address or hostname.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "Database",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The name of the database where the input table is located.",
       "description": "The name of the database where the input table is located.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "UserId",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The Aster Database user name of the user running this function.",
       "description": "The Aster Database user name of the user running this function.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "Password",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The Aster Database password of the user.",
       "description": "The Aster Database password of the user.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "SSLSettings",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "A string that includes all the SSL settings, except the password for the truststore.",
       "description": "A string that includes all the SSL settings, except the password for the truststore.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "SSLTrustStorePassword",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The password for the SSL truststore.",
       "description": "The password for the SSL truststore.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
-      "targetTable": "InputTable",
-      "checkDuplicate": true,
-      "requiredLength": 2,
-      "allowPadding": true,
-      "name": "IndexColumns",
+      "isOutputTable": false,
+      "name": "InputTable",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "Specify the columns that contain the indexes of input data, two values separated by comma are required for this field.",
-      "datatype": "COLUMN_NAMES",
-      "allowsLists": true,
-      "rName": "index.columns",
-      "useInR": true
-    },
-    {
-      "isOutputColumn": false,
-      "name": "Range",
-      "isRequired": false,
-      "description": "Specify the start and end coordinates of the input data, integers are required for each value in the field.",
-      "datatype": "STRING",
+      "rDescription": "Specifies the name of the table or view that contains the sequences to be transformed",
+      "description": "Specifies the name of the table or view that contains the sequences to be transformed",
+      "datatype": "TABLE_NAME",
       "allowsLists": false,
-      "rName": "range",
-      "useInR": true
-    },
-    {
-      "defaultValue": true,
-      "name": "CompactOutput",
-      "isRequired": false,
-      "description": "If 'true' rows with all the coefficients values are very small (the absolute value less than 1e-12) should be emitted in output table. The default value is true.",
-      "datatype": "BOOLEAN",
-      "allowsLists": false,
-      "rName": "compact.output",
-      "useInR": true
-    },
-    {
-      "isOutputColumn": false,
-      "name": "Wavelet",
-      "alternateNames": [
-        "WaveletName"
-      ],
-      "isRequired": false,
-      "description": "The name of predefined wavelet filter to be used.",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "wavelet",
-      "useInR": true
+      "rName": "data",
+      "useInR": true,
+      "rOrderNum": 1
     },
     {
       "isOutputTable": false,
       "name": "WaveletFilterTable",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The table that stores the coefficients of the filters.",
+      "rDescription": "Specifies the name of the table that contains the coefficients of the wave filters.",
+      "description": "Specifies the name of the table that contains the coefficients of the wave filters.",
       "datatype": "TABLE_NAME",
       "allowsLists": false,
-      "rName": "wavelet.filter.table",
-      "useInR": true
+      "rName": "wavelet.filter",
+      "useInR": true,
+      "rOrderNum": 6
+    },
+    {
+      "isOutputTable": true,
+      "name": "OutputTable",
+      "alternateNames": [],
+      "isRequired": true,
+      "rDescription": "Specifies the name for the table that the function creates to store the coefficients generated by the wavelet transform. This table must not exist.",
+      "description": "Specifies the name for the table that the function creates to store the coefficients generated by the wavelet transform. This table must not exist.",
+      "datatype": "TABLE_NAME",
+      "allowsLists": false,
+      "rName": "coefficient",
+      "useInR": true,
+      "rOrderNum": 100
+    },
+    {
+      "isOutputTable": true,
+      "name": "MetaTable",
+      "alternateNames": [],
+      "isRequired": true,
+      "rDescription": "Specifies the name for the table that the function creates to store the meta information for the wavelet transform. This table must not exist.",
+      "description": "Specifies the name for the table that the function creates to store the meta information for the wavelet transform. This table must not exist.",
+      "datatype": "TABLE_NAME",
+      "allowsLists": false,
+      "rName": "meta.table",
+      "useInR": true,
+      "rOrderNum": 101
+    },
+    {
+      "targetTable": [
+        "InputTable"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "IndexColumns",
+      "alternateNames": [],
+      "isRequired": true,
+      "rDescription": "Specifies the columns that contain the indexes of the input sequences. For a matrix,  indexy_column contains the y coordinates and indexx_column contains the x coordinates.",
+      "description": "Specifies the columns that contain the indexes of the input sequences. For a matrix,  indexy_column contains the y coordinates and indexx_column contains the x coordinates.",
+      "datatype": "COLUMN_NAMES",
+      "allowsLists": true,
+      "rName": "index.columns",
+      "useInR": true,
+      "rOrderNum": 3
+    },
+    {
+      "targetTable": [
+        "InputTable"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "InputColumns",
+      "alternateNames": [],
+      "isRequired": true,
+      "rDescription": "Specifies the names of the columns in the input table or view that contain the data to be transformed. These columns must contain numeric values between -1e308 and 1e308. The function treats NULL as 0.",
+      "description": "Specifies the names of the columns in the input table or view that contain the data to be transformed. These columns must contain numeric values between -1e308 and 1e308. The function treats NULL as 0.",
+      "datatype": "COLUMN_NAMES",
+      "allowsLists": true,
+      "rName": "input.columns",
+      "useInR": true,
+      "rOrderNum": 2
+    },
+    {
+      "targetTable": [
+        "InputTable"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "PartitionColumns",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "Specifies the names of the partition.columns, which identify the sequences. Rows with the same partition.columns values belong to the same sequence. If you specify multiple partition.columns, then the function treats the first one as the distribute key of the output and meta tables. By default, all rows belong to one sequence, and the function generates a distribute key column named dwt_idrandom_name in both the output table and the meta table. In both tables, every cell of dwt_idrandom_name has the value 1.",
+      "description": "Specifies the names of the partition columns, which identify the sequences. Rows with the same partition column values belong to the same sequence. If you specify multiple partition columns, then the function treats the first one as the distribute key of the output and meta tables. By default, all rows belong to one sequence, and the function generates a distribute key column named dwt_idrandom_name in both the output table and the meta table. In both tables, every cell of dwt_idrandom_name has the value 1.",
+      "datatype": "COLUMN_NAMES",
+      "allowsLists": true,
+      "rName": "partition.columns",
+      "useInR": true,
+      "rOrderNum": 10
     },
     {
       "lowerBound": 1,
@@ -125,12 +212,58 @@
       "upperBoundType": "INCLUSIVE",
       "allowNaN": false,
       "name": "Level",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "The level of wavelet transform to be performed. The input value must be no less than 1 and no greater than 1000.",
+      "rDescription": "Specifies the wavelet transform level. The value level must be an integer in the range [1, 1000].",
+      "description": "Specifies the wavelet transform level. The value level must be an integer in the range [1, 1000].",
       "datatype": "INTEGER",
       "allowsLists": false,
       "rName": "level",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 7
+    },
+    {
+      "permittedValues": [],
+      "isOutputColumn": false,
+      "name": "Range",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "Specifies the start and end indexes of the input data, all of which must be integers. The default values for each sequence are: • starty: minimum y index • startx: minimum x index • endy: maximum y index • endx: maximum x index. The function treats any NULL value as 0. The range can specify a maximum of 1,000,000 cells.",
+      "description": "Specifies the start and end indexes of the input data, all of which must be integers. The default values for each sequence are: • starty: minimum y index • startx: minimum x index • endy: maximum y index • endx: maximum x index. The function treats any NULL value as 0. The range can specify a maximum of 1,000,000 cells.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "range",
+      "useInR": true,
+      "rOrderNum": 4
+    },
+    {
+      "defaultValue": true,
+      "name": "CompactOutput",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "Specifies whether to ignore (not output) rows in which all coefficient values are very small (having an absolute value less than 1e-12). The default value is 'true'. For a sparse input matrix, ignoring such rows reduces the output table size.",
+      "description": "Specifies whether to ignore (not output) rows in which all coefficient values are very small (having an absolute value less than 1e-12). The default value is 'true'. For a sparse input matrix, ignoring such rows reduces the output table size.",
+      "datatype": "BOOLEAN",
+      "allowsLists": false,
+      "rName": "compact.output",
+      "useInR": true,
+      "rOrderNum": 9
+    },
+    {
+      "permittedValues": [],
+      "isOutputColumn": false,
+      "name": "Wavelet",
+      "alternateNames": [
+        "WaveletName"
+      ],
+      "isRequired": false,
+      "rDescription": "Specifies a wavelet filter name",
+      "description": "Specifies a wavelet filter name",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "wavelet",
+      "useInR": true,
+      "rOrderNum": 5
     },
     {
       "permittedValues": [
@@ -141,66 +274,15 @@
       "defaultValue": "sym",
       "isOutputColumn": false,
       "name": "ExtensionMode",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The method for handling the problem of border distortion. The permitted input values are [sym, zpd, ppd]. The default value is sym.",
+      "rDescription": " Specifies the method for handling border distortion, an extension_mode from Table 3 - 104. The default value is 'sym'.",
+      "description": " Specifies the method for handling border distortion, an extension_mode from Table 3 - 104. The default value is 'sym'.",
       "datatype": "STRING",
       "allowsLists": false,
       "rName": "extension.mode",
-      "useInR": true
-    },
-    {
-      "isOutputTable": false,
-      "name": "InputTable",
-      "isRequired": true,
-      "description": "The name of the input table or view.",
-      "datatype": "TABLE_NAME",
-      "allowsLists": false,
-      "rName": "input.table",
-      "useInR": true
-    },
-    {
-      "isOutputTable": true,
-      "name": "OutputTable",
-      "isRequired": true,
-      "description": "The name for the output table for the coefficients generated by the wavelet transform.",
-      "datatype": "TABLE_NAME",
-      "allowsLists": false,
-      "rName": "output.table",
-      "useInR": true
-    },
-    {
-      "isOutputTable": true,
-      "name": "MetaTable",
-      "isRequired": true,
-      "description": "The name for the output table for the meta information of the transformation.",
-      "datatype": "TABLE_NAME",
-      "allowsLists": false,
-      "rName": "meta.table",
-      "useInR": true
-    },
-    {
-      "targetTable": "InputTable",
-      "checkDuplicate": true,
-      "allowPadding": true,
-      "name": "InputColumns",
-      "isRequired": true,
-      "description": "The data columns of the input table to be transformed.",
-      "datatype": "COLUMN_NAMES",
-      "allowsLists": true,
-      "rName": "input.columns",
-      "useInR": true
-    },
-    {
-      "targetTable": "InputTable",
-      "checkDuplicate": true,
-      "allowPadding": true,
-      "name": "PartitionColumns",
-      "isRequired": false,
-      "description": "One or more columns identify the different sequences.",
-      "datatype": "COLUMN_NAMES",
-      "allowsLists": true,
-      "rName": "partition.columns",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 8
     }
   ]
 }

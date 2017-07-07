@@ -1,12 +1,13 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
   "function_name": "NaiveBayesTextClassifierInternal",
-  "function_version": "1.1",
+  "function_version": "1.2",
   "function_type": "non-driver",
   "short_description": "Build a naive bayes text classifier.",
   "long_description": "Build a naive bayes text classifier.",
+  "partner_function": "NaiveBayesTextClassifierTrainer",
   "input_tables": [
     {
       "requiredInputKind": [
@@ -14,11 +15,15 @@
       ],
       "isOrdered": false,
       "partitionByOne": false,
+      "name": "input",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "The table defining the training tokens.",
       "description": "The table defining the training tokens.",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 0
     },
     {
       "requiredInputKind": [
@@ -27,12 +32,15 @@
       "isOrdered": false,
       "partitionByOne": false,
       "name": "stopwords",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The table defining stop words.",
       "description": "The table defining stop words.",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
       "rName": "stopwords",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 0
     },
     {
       "requiredInputKind": [
@@ -41,59 +49,135 @@
       "isOrdered": false,
       "partitionByOne": false,
       "name": "categories",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The table defining allowed categories.",
       "description": "The table defining allowed categories.",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
       "rName": "categories",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 0
     }
   ],
   "argument_clauses": [
     {
+      "targetTable": [
+        "input"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
       "allowedTypeGroups": [
         "STRING"
       ],
       "requiredLength": 1,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
-      "name": "Token_Column",
+      "name": "TokenColumn",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "Specify the token column in token table which contains the tokens for modeling. Input columns must contain string SQL types.",
+      "rDescription": "Specifies the name of the token_table column that contains the tokens to be classified.",
+      "description": "Specifies the name of the token_table column that contains the tokens to be classified.",
       "datatype": "COLUMNS",
       "allowsLists": false,
       "rName": "token.column",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 0
     },
     {
+      "targetTable": [
+        "input"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "STRING"
+      ],
+      "requiredLength": 1,
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "DocCategoryColumn",
+      "alternateNames": [],
+      "isRequired": true,
+      "rDescription": " Specifies the name of the token_table column that contains the document category.",
+      "description": " Specifies the name of the token_table column that contains the document category.",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "doc.category.column",
+      "useInR": true,
+      "rOrderNum": 0
+    },
+    {
+      "targetTable": [
+        "input"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
       "allowedTypeGroups": [
         "STRING",
         "INTEGER"
       ],
+      "matchLengthOfArgument": "",
       "allowPadding": true,
-      "name": "Doc_Id_Columns",
+      "name": "DocIdColumns",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Specify the document identifier columns in token table. Required only when model type is Bernoulli. Input columns must contain integer SQL types. Input columns must contain string SQL types.",
+      "rDescription": "Specifies the names of the token_table columns that contain the document identifier.",
+      "description": "Specifies the names of the token_table columns that contain the document identifier.",
       "datatype": "COLUMNS",
       "allowsLists": true,
       "rName": "doc.id.columns",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 0
     },
     {
+      "targetTable": [
+        "categories"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "STRING"
+      ],
+      "defaultValues": [
+        "[0:0]"
+      ],
+      "requiredLength": 1,
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "CategoryColumn",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": " Specifies the name of the categories_table column that contains the prediction categories. The default value is the first column of categories_table.",
+      "description": " Specifies the name of the categories_table column that contains the prediction categories. The default value is the first column of categories_table.",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "category.column",
+      "useInR": true,
+      "rOrderNum": 0
+    },
+    {
+      "targetTable": [
+        "stopwords"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
       "allowedTypeGroups": [
         "STRING"
       ],
       "requiredLength": 1,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
-      "name": "Doc_Category_Column",
-      "isRequired": true,
-      "description": "Specify the document category column name. Input columns must contain string SQL types.",
+      "name": "StopwordsColumn",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "Specifies the name of the stop_words_table column that contains the stop words. The default value is the first column of stop_words_table.",
+      "description": "Specifies the name of the stop_words_table column that contains the stop words. The default value is the first column of stop_words_table.",
       "datatype": "COLUMNS",
       "allowsLists": false,
-      "rName": "doc.category.column",
-      "useInR": true
+      "rName": "stopwords.column",
+      "useInR": true,
+      "rOrderNum": 0
     },
     {
       "permittedValues": [
@@ -102,67 +186,48 @@
       ],
       "defaultValue": "MULTINOMIAL",
       "isOutputColumn": false,
-      "name": "Model_Type",
+      "name": "ModelType",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Specify the text classifier type. The permitted input values are [MULTINOMIAL, BERNOULLI]. The default value is MULTINOMIAL.",
+      "rDescription": "Specifies the model type of the text classifier. The default value is 'Multinomial'. The formulas for the two model types follow this table.",
+      "description": "Specifies the model type of the text classifier. The default value is 'Multinomial'. The formulas for the two model types follow this table.",
       "datatype": "STRING",
       "allowsLists": false,
       "rName": "model.type",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 0
     },
     {
-      "targetTable": "categories",
-      "checkDuplicate": true,
-      "allowedTypeGroups": [
-        "STRING"
-      ],
-      "requiredLength": 1,
-      "allowPadding": true,
-      "name": "CategoryColumn",
-      "isRequired": false,
-      "description": "Specifies the column in category table which contains allowed categories. Input columns must contain string SQL types.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "category.column",
-      "useInR": true
-    },
-    {
+      "permittedValues": [],
       "isOutputColumn": false,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "Categories",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Specify the allowed category list.",
+      "rDescription": "Specifies the prediction categories. Note: Specify either this argument or the categories_table, but not both.",
+      "description": "Specifies the prediction categories. Note: Specify either this argument or the categories_table, but not both.",
       "datatype": "STRING",
       "allowsLists": true,
       "rName": "categories",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 0
     },
     {
-      "targetTable": "stopwords",
-      "checkDuplicate": true,
-      "allowedTypeGroups": [
-        "STRING"
-      ],
-      "requiredLength": 1,
-      "allowPadding": true,
-      "name": "StopwordsColumn",
-      "isRequired": false,
-      "description": "Specifies the column in stopwords table which contains stop words. Input columns must contain string SQL types.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "stopwords.column",
-      "useInR": true
-    },
-    {
+      "permittedValues": [],
       "isOutputColumn": false,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "Stopwords",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Specify the stop words list.",
+      "rDescription": "Specifies words to ignore (such as a, an, and the). Note: Specify either this argument or the stop_words_table, but not both.",
+      "description": "Specifies words to ignore (such as a, an, and the). Note: Specify either this argument or the stop_words_table, but not both.",
       "datatype": "STRING",
       "allowsLists": true,
       "rName": "stopwords",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 0
     }
   ]
 }

@@ -1,10 +1,12 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
-  "function_name": "LdaTopicPrinter",
-  "function_version": "1.1",
+  "function_name": "LDATopicPrinter",
+  "function_version": "1.2",
   "function_type": "non-driver",
+  "function_r_name": "aa.lda.topicprinter",
+  "ref_function_r_name": "aa.lda",
   "short_description": "This function extracts the information from the model table.",
   "long_description": "Since model table is stored in binary fromat, this function is adopted to show the contained information of the table. If summary is true, the parameters  and training set of the model table is given. Otherwise, each topic and related words are outputted. ",
   "input_tables": [
@@ -14,11 +16,16 @@
       ],
       "isOrdered": false,
       "partitionByOne": true,
+      "name": "input",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "The model table.",
       "description": "The model table.",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "useInR": true
+      "rName": "object",
+      "useInR": true,
+      "rOrderNum": 1
     }
   ],
   "argument_clauses": [
@@ -29,13 +36,16 @@
         "ShowSummary"
       ],
       "isRequired": false,
-      "description": " If the value is true, a summary information of the model table will be emitted and all the other arguments are ignored.  The default value is false.",
+      "rDescription": "Specifies whether to display only a summary of the information in the model table. The default value is 'false'.",
+      "description": "Specifies whether to display only a summary of the information in the model table. The default value is 'false'.",
       "datatype": "BOOLEAN",
       "allowsLists": false,
       "rName": "summary",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 2
     },
     {
+      "permittedValues": [],
       "defaultValue": "all",
       "isOutputColumn": false,
       "name": "OutputTopicWordNum",
@@ -43,11 +53,13 @@
         "OutputTopicWordNumber"
       ],
       "isRequired": false,
-      "description": " It is a positive integer number or per-defined string \"all\", which specifies how many top topic words (words with most weights) should be outputted accompany with the corresponding topic id. If \"all\" is given, output all related topic words. The default value is all.",
+      "rDescription": " Specifies the number of top topic words and their topic identifiers to include in the output table for each training document.The value topic_words must be either a positive integer or the string 'all'. The default value, 'all', specifies all topic words and their topic identifiers.",
+      "description": " Specifies the number of top topic words and their topic identifiers to include in the output table for each training document.The value topic_words must be either a positive integer or the string 'all'. The default value, 'all', specifies all topic words and their topic identifiers.",
       "datatype": "STRING",
       "allowsLists": false,
-      "rName": "output.topic.word.num",
-      "useInR": true
+      "rName": "out.topicwordnum",
+      "useInR": true,
+      "rOrderNum": 3
     },
     {
       "defaultValue": false,
@@ -56,11 +68,13 @@
         "ShowWordWeight"
       ],
       "isRequired": false,
-      "description": "If the value is true, the weight of each unique word belong to the topicid will be emitted, normalized to 1 according to topicid. In other words, it is the probability of each unique word belong to a specified topicid. The default value is false.",
+      "rDescription": "Specifies whether to display the weight (probability of occurrence) of each unique word in each topic. The weights for the unique words in each topic are normalized to 1. The default value is 'false'.",
+      "description": "Specifies whether to display the weight (probability of occurrence) of each unique word in each topic. The weights for the unique words in each topic are normalized to 1. The default value is 'false'.",
       "datatype": "BOOLEAN",
       "allowsLists": false,
       "rName": "word.weight",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 4
     },
     {
       "defaultValue": false,
@@ -69,21 +83,26 @@
         "ShowWordCount"
       ],
       "isRequired": false,
-      "description": "If the value is true, the wordcount of each <topicid,unique word> pair will be emitted according to the training set. The wordcount is a decimal, as the topic distribution is counted into the value.  The default value is false.",
+      "rDescription": "Specifies whether to display the count (number of occurrences) of each unique word in each topic. Topic distribution is factored into word counts. The default value is 'false'.",
+      "description": "Specifies whether to display the count (number of occurrences) of each unique word in each topic. Topic distribution is factored into word counts. The default value is 'false'.",
       "datatype": "BOOLEAN",
       "allowsLists": false,
       "rName": "word.count",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 5
     },
     {
       "defaultValue": true,
       "name": "OutputByWord",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "if the value is true, the output will be one row per each word and topicid pair, otherwise all the words belong to a topic will be output in one row. The default value is true.",
+      "rDescription": "Specifies whether to display each topic-word pair in its own row. The default value is 'true'.If you specify 'false', each row contains a unique topic and all words that occur in that topic, separated by commas.",
+      "description": "Specifies whether to display each topic-word pair in its own row. The default value is 'true'.If you specify 'false', each row contains a unique topic and all words that occur in that topic, separated by commas.",
       "datatype": "BOOLEAN",
       "allowsLists": false,
-      "rName": "output.by.word",
-      "useInR": true
+      "rName": "out.byword",
+      "useInR": true,
+      "rOrderNum": 6
     }
   ]
 }

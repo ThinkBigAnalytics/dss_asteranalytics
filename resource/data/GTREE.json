@@ -1,10 +1,11 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
-  "json_content_version": "1",
-  "function_name": "GTree",
-  "function_version": "1.0",
-  "function_type": "graph",
+  "json_schema_minor_version": "2",
+  "json_content_version": "2",
+  "function_name": "gTree",
+  "function_version": "1.2",
+  "function_type": "non-driver",
+  "function_r_name": "aa.gtree",
   "short_description": "Implements the GTree SQL-GR function.",
   "long_description": "GTree is a SQL-GR function used for analyzing hierarchical data.",
   "input_tables": [
@@ -15,12 +16,15 @@
       "isOrdered": false,
       "partitionByOne": false,
       "name": "vertices",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "The table defining the set of vertices in the graph.",
       "description": "The table defining the set of vertices in the graph.",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
       "rName": "vertices",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 1
     },
     {
       "requiredInputKind": [
@@ -29,12 +33,15 @@
       "isOrdered": false,
       "partitionByOne": false,
       "name": "edges",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "The table defining the set of edges in the graph.",
       "description": "The table defining the set of edges in the graph.",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
       "rName": "edges",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 2
     },
     {
       "requiredInputKind": [
@@ -43,49 +50,70 @@
       "isOrdered": false,
       "partitionByOne": false,
       "name": "root",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "The table defining the set of vertices from which GTree will start traversing the graph.",
       "description": "The table defining the set of vertices from which GTree will start traversing the graph.",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
       "rName": "root",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 3
     }
   ],
   "argument_clauses": [
     {
-      "targetTable": "edges",
+      "targetTable": [
+        "edges"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "TargetKey",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "The vertex key consisting of one or more columns in the edges table that identifies the target vertex of an edge.",
+      "rDescription": "Specifies the names of the columns in the edges table that identify the target vertex of an edge.",
+      "description": "Specifies the names of the columns in the edges table that identify the target vertex of an edge.",
       "datatype": "COLUMNS",
       "allowsLists": true,
       "rName": "target.key",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 4
     },
     {
       "defaultValue": false,
       "name": "AllowCycles",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Indicates whether or not the input graph can include cycles. The default value is false.",
+      "rDescription": "Specifies whether the input graph can include cycles. The default value is 'false'.",
+      "description": "Specifies whether the input graph can include cycles. The default value is 'false'.",
       "datatype": "BOOLEAN",
       "allowsLists": false,
       "rName": "allow.cycles",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 5
     },
     {
       "defaultValue": 1000,
       "lowerBound": 0,
+      "upperBound": 2147483647,
       "lowerBoundType": "EXCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
       "allowNaN": false,
       "name": "MaxIterNum",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The maximum depth to which GTree will traverse the graph. The input value must be greater than 0. The default value is 1000.",
+      "rDescription": "Specifies the maximum depth to which the function traverses the graph (a nonnegative integer). The default value is 1000.",
+      "description": "Specifies the maximum depth to which the function traverses the graph (a nonnegative integer). The default value is 1000.",
       "datatype": "INTEGER",
       "allowsLists": false,
       "rName": "max.iter.num",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 6
     },
     {
       "permittedValues": [
@@ -95,34 +123,60 @@
       "defaultValue": "END",
       "isOutputColumn": false,
       "name": "Output",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Indicates whether GTree will output all paths or only those that terminate due to reaching a leaf vertex, a cycle, or the max number of iterations. The permitted input values are [ALL, END]. The default value is END.",
+      "rDescription": "Specifies whether the function outputs all paths ('all') or only paths that end by reaching a leaf vertex, a cycle, or the maximum number of iterations ('end'). The default value is 'end'.",
+      "description": "Specifies whether the function outputs all paths ('all') or only paths that end by reaching a leaf vertex, a cycle, or the maximum number of iterations ('end'). The default value is 'end'.",
       "datatype": "STRING",
       "allowsLists": false,
       "rName": "output",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 7
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "Results",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "A sequence of aggregate functions to be calculated along each vertex path by GTree. See manual for the list of supported aggregates.",
+      "rDescription": "Specifies the aggregate functions that the function calculates along each vertex in each path. The function outputs one column of results for each aggregate function. The column name is alias, if specified; otherwise it is func(expr).",
+      "description": "Specifies the aggregate functions that the function calculates along each vertex in each path. The function outputs one column of results for each aggregate function. The column name is alias, if specified; otherwise it is func(expr).",
       "datatype": "STRING",
       "allowsLists": true,
       "rName": "results",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 8
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "EdgeResults",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "A sequence of aggregate functions to be calculated along each edge path by GTree. See manual for the list of supported aggregates.",
+      "rDescription": "Specifies the aggregate functions that the function calculates along each edge in each path. The function outputs one column of results for each aggregate function. The column name is alias, if specified; otherwise it is func(expr).",
+      "description": "Specifies the aggregate functions that the function calculates along each edge in each path. The function outputs one column of results for each aggregate function. The column name is alias, if specified; otherwise it is func(expr).",
       "datatype": "STRING",
       "allowsLists": true,
       "rName": "edge.results",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 9
+    },
+    {
+      "defaultValue": true,
+      "name": "FinalEdgeFlag",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "Specifies whether the function includes the edge that follows the final vertex when calculating the functions that edge.results specifies. The default value is 'true'.",
+      "description": "Specifies whether the function includes the edge that follows the final vertex when calculating the functions that EdgeResults specifies. The default value is 'true'.",
+      "datatype": "BOOLEAN",
+      "allowsLists": false,
+      "rName": "final.edge.flag",
+      "useInR": true,
+      "rOrderNum": 10
     }
   ]
 }

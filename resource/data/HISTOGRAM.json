@@ -1,0 +1,283 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "2",
+  "json_content_version": "1",
+  "function_name": "Histogram",
+  "function_version": "1.1",
+  "function_type": "driver",
+  "function_r_name": "aa.hist",
+  "short_description": "Performs histogram calculation on a data set",
+  "long_description": "Enhanced histogram calculation on a data set, which accepts bin breaks or bin <start,end> as input or determines them auto, output <bin number,bin_start, bin_end, bin_count, bin_percent>.",
+  "argument_clauses": [
+    {
+      "permittedValues": [],
+      "isOutputColumn": false,
+      "name": "Domain",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "The address of the Queen. The host parameter is the Aster Database Queen’s IP address or hostname.",
+      "description": "The address of the Queen. The host parameter is the Aster Database Queen’s IP address or hostname.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false,
+      "rOrderNum": 0
+    },
+    {
+      "permittedValues": [],
+      "isOutputColumn": false,
+      "name": "Database",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "The name of the database where the input table is located.",
+      "description": "The name of the database where the input table is located.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false,
+      "rOrderNum": 0
+    },
+    {
+      "permittedValues": [],
+      "isOutputColumn": false,
+      "name": "UserId",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "The Aster Database user name of the user running this function.",
+      "description": "The Aster Database user name of the user running this function.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false,
+      "rOrderNum": 0
+    },
+    {
+      "permittedValues": [],
+      "isOutputColumn": false,
+      "name": "Password",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "The Aster Database password of the user.",
+      "description": "The Aster Database password of the user.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false,
+      "rOrderNum": 0
+    },
+    {
+      "permittedValues": [],
+      "isOutputColumn": false,
+      "name": "SSLSettings",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "A string that includes all the SSL settings, except the password for the truststore.",
+      "description": "A string that includes all the SSL settings, except the password for the truststore.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false,
+      "rOrderNum": 0
+    },
+    {
+      "permittedValues": [],
+      "isOutputColumn": false,
+      "name": "SSLTrustStorePassword",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "The password for the SSL truststore.",
+      "description": "The password for the SSL truststore.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false,
+      "rOrderNum": 0
+    },
+    {
+      "isOutputTable": false,
+      "name": "InputTable",
+      "alternateNames": [],
+      "isRequired": true,
+      "rDescription": "The table containing the input data.",
+      "description": "The table containing the input data.",
+      "datatype": "TABLE_NAME",
+      "allowsLists": false,
+      "rName": "data",
+      "useInR": true,
+      "rOrderNum": 1
+    },
+    {
+      "isOutputTable": false,
+      "name": "CustomBinTable",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "A table containing the boundary points between bins. If this argument is present, custom.bin.column must also be present. auto.bin, start.value, bin.size, and end.value cannot be present.",
+      "description": "A table containing the boundary points between bins. If this argument is present, CustomBinColumn must also be present. AutoBin, StartValue, BinSize, and EndValue cannot be present.",
+      "datatype": "TABLE_NAME",
+      "allowsLists": false,
+      "rName": "custom.bin.table",
+      "useInR": true,
+      "rOrderNum": 3
+    },
+    {
+      "isOutputTable": true,
+      "name": "OutputTable",
+      "alternateNames": [],
+      "isRequired": true,
+      "rDescription": "Name for the table that the function will generate, containing the output.",
+      "description": "Name for the table that the function will generate, containing the output.",
+      "datatype": "TABLE_NAME",
+      "allowsLists": false,
+      "rName": "output.table",
+      "useInR": true,
+      "rOrderNum": 100
+    },
+    {
+      "targetTable": [
+        "InputTable"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "NUMERIC"
+      ],
+      "requiredLength": 1,
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "ValueColumn",
+      "alternateNames": [],
+      "isRequired": true,
+      "rDescription": "The column in the input table for which statistics will be computed. Column must contain a numeric SQL types (integer, bigint, real, double precision, numeric, decimal, smallint).",
+      "description": "The column in the input table for which statistics will be computed. Column must contain a numeric SQL types (integer, bigint, real, double precision, numeric, decimal, smallint).",
+      "datatype": "COLUMN_NAMES",
+      "allowsLists": false,
+      "rName": "value.column",
+      "useInR": true,
+      "rOrderNum": 8
+    },
+    {
+      "targetTable": [
+        "CustomBinTable"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "NUMERIC"
+      ],
+      "requiredLength": 1,
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "CustomBinColumn",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "The column in the custom.bin.table containing the boundary values. Input columns must contain numeric SQL types. If this argument is present, custom.bin.table must also be present. auto.bin, start.value, bin.size, and end.value cannot be present.",
+      "description": "The column in the CustomBinTable containing the boundary values. Input columns must contain numeric SQL types. If this argument is present, CustomBinTable must also be present. AutoBin, StartValue, BinSize, and EndValue cannot be present.",
+      "datatype": "COLUMN_NAMES",
+      "allowsLists": false,
+      "rName": "custom.bin.column",
+      "useInR": true,
+      "rOrderNum": 4
+    },
+    {
+      "targetTable": [
+        "InputTable"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "GROUPTYPE"
+      ],
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "GroupbyColumns",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "Columns in the input table used to group values for binning. These columns cannot contain doubles or floats.",
+      "description": "Columns in the input table used to group values for binning. These columns cannot contain doubles or floats.",
+      "datatype": "COLUMN_NAMES",
+      "allowsLists": true,
+      "rName": "groupby.columns",
+      "useInR": true,
+      "rOrderNum": 10
+    },
+    {
+      "permittedValues": [
+        "left",
+        "right"
+      ],
+      "defaultValue": "left",
+      "isOutputColumn": false,
+      "name": "Inclusion",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "Indicates whether points on bin boundaries should be included in the bin on the left or the bin on the right. The permitted values are [left, right]. The default value is left.",
+      "description": "Indicates whether points on bin boundaries should be included in the bin on the left or the bin on the right. The permitted values are [left, right]. The default value is left.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "inclusion",
+      "useInR": true,
+      "rOrderNum": 9
+    },
+    {
+      "permittedValues": [],
+      "isOutputColumn": false,
+      "name": "AutoBin",
+      "alternateNames": [
+        "Bin_Select"
+      ],
+      "isRequired": false,
+      "rDescription": "Specifies either the algorithm to be used for selecting bin boundaries or the approximate number of bins to be found. The permitted values are STURGES, SCOTT, or a positive integer. If this argument is present, custom.bin.table, custom.bin.column, start.value, bin.size, and end.value cannot be present.",
+      "description": "Specifies either the algorithm to be used for selecting bin boundaries or the approximate number of bins to be found. The permitted values are STURGES, SCOTT, or a positive integer. If this argument is present, CustomBinTable, CustomBinColumn, StartValue, BinSize, and EndValue cannot be present.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "auto.bin",
+      "useInR": true,
+      "rOrderNum": 2
+    },
+    {
+      "lowerBound": -Infinity,
+      "upperBound": Infinity,
+      "lowerBoundType": "INCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
+      "allowNaN": false,
+      "name": "StartValue",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "The smallest value to be used in binning. If this argument is present, bin.size and en.value must also be present. auto.bin, custom.bin.table and custom.bin.column cannot be present.",
+      "description": "The smallest value to be used in binning. If this argument is present, BinSize and EndValue must also be present. AutoBin, CustomBinTable and CustomBinColumn cannot be present.",
+      "datatype": "DOUBLE",
+      "allowsLists": false,
+      "rName": "start.value",
+      "useInR": true,
+      "rOrderNum": 6
+    },
+    {
+      "lowerBound": -Infinity,
+      "upperBound": Infinity,
+      "lowerBoundType": "INCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
+      "allowNaN": false,
+      "name": "EndValue",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "The largest value to be used in binning. If this argument is present, start.value and bin.size must also be present. auto.bin, custom.bin.table and custom.bin.column cannot be present.",
+      "description": "The largest value to be used in binning. If this argument is present, StartValue and BinSize must also be present. AutoBin, CustomBinTable and CustomBinColumn cannot be present.",
+      "datatype": "DOUBLE",
+      "allowsLists": false,
+      "rName": "end.value",
+      "useInR": true,
+      "rOrderNum": 7
+    },
+    {
+      "lowerBound": 0,
+      "upperBound": Infinity,
+      "lowerBoundType": "EXCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
+      "allowNaN": false,
+      "name": "BinSize",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "For equally sized bins, a double value specifying the width of the bin. Omit this argument if you are not using equally sized bins. The input value must be greater than 0.0. If this argument is present, start.value and end.value must also be present. auto.bin, custom.bin.table and custom.bin.column cannot be present.",
+      "description": "For equally sized bins, a double value specifying the width of the bin. Omit this argument if you are not using equally sized bins. The input value must be greater than 0.0. If this argument is present, StartValue and EndValue must also be present. AutoBin, CustomBinTable and CustomBinColumn cannot be present.",
+      "datatype": "DOUBLE",
+      "allowsLists": false,
+      "rName": "bin.size",
+      "useInR": true,
+      "rOrderNum": 5
+    }
+  ]
+}

@@ -1,66 +1,205 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
-  "function_name": "LdaTrainer",
-  "function_version": "1.1",
+  "function_name": "LDATrainer",
+  "function_version": "1.2",
   "function_type": "driver",
+  "function_r_name": "aa.lda",
   "short_description": "This function estimates the word allocation according to given set.",
   "long_description": "This function is used to estimate the word allocation for each topic and topic distribution for each document according to a specified training set.",
   "argument_clauses": [
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "Domain",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The address of the Queen. The host parameter is the Aster Database Queen’s IP saddress or hostname.",
+      "rDescription": "The address of the Queen. The host parameter is the Aster Database Queen’s IP address or hostname.",
+      "description": "The address of the Queen. The host parameter is the Aster Database Queen’s IP address or hostname.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "Database",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The name of the database where the input table is located.",
       "description": "The name of the database where the input table is located.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "UserId",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The Aster Database user name of the user running this function.",
       "description": "The Aster Database user name of the user running this function.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "Password",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The Aster Database password of the user.",
       "description": "The Aster Database password of the user.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "SSLSettings",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "A string that includes all the SSL settings, except the password for the truststore.",
       "description": "A string that includes all the SSL settings, except the password for the truststore.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "SSLTrustStorePassword",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The password for the SSL truststore.",
       "description": "The password for the SSL truststore.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
+    },
+    {
+      "isOutputTable": false,
+      "name": "InputTable",
+      "alternateNames": [],
+      "isRequired": true,
+      "rDescription": "Specifies the name of the table or view that contains the new documents.",
+      "description": "Specifies the name of the table or view that contains the new documents.",
+      "datatype": "TABLE_NAME",
+      "allowsLists": false,
+      "rName": "data",
+      "useInR": true,
+      "rOrderNum": 1
+    },
+    {
+      "isOutputTable": true,
+      "name": "ModelTable",
+      "alternateNames": [],
+      "isRequired": true,
+      "rDescription": "Specifies the name for the model table that the function creates in the database. This table must not already exist.",
+      "description": "Specifies the name for the model table that the function creates in the database. This table must not already exist.",
+      "datatype": "TABLE_NAME",
+      "allowsLists": false,
+      "rName": "model.table",
+      "useInR": true,
+      "rOrderNum": 100
+    },
+    {
+      "isOutputTable": true,
+      "name": "OutputTable",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "Specifies the name of the output table that contains the topic distribution of eachdocument in the input table, which the function creates in the database. This table must not already exist. If you omit this argument, the function does not generate this table.",
+      "description": "Specifies the name of the output table that contains the topic distribution of eachdocument in the input table, which the function creates in the database. This table must not already exist. If you omit this argument, the function does not generate this table.",
+      "datatype": "TABLE_NAME",
+      "allowsLists": false,
+      "rName": "doc.distribution.data",
+      "useInR": true,
+      "rOrderNum": 101
+    },
+    {
+      "targetTable": [
+        "InputTable"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [
+        "numeric",
+        "uuid",
+        "bytea"
+      ],
+      "allowedTypeGroups": [
+        "STRING",
+        "INTEGER"
+      ],
+      "requiredLength": 1,
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "DocIDColumn",
+      "alternateNames": [],
+      "isRequired": true,
+      "rDescription": "Specifies the name of the input column that contains the document identifiers. ",
+      "description": "Specifies the name of the input column that contains the document identifiers. ",
+      "datatype": "COLUMN_NAMES",
+      "allowsLists": false,
+      "rName": "docid.column",
+      "useInR": true,
+      "rOrderNum": 3
+    },
+    {
+      "targetTable": [
+        "InputTable"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "STRING",
+        "INTEGER"
+      ],
+      "requiredLength": 1,
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "WordColumn",
+      "alternateNames": [],
+      "isRequired": true,
+      "rDescription": "Specifies the name of the input column that contains the words (one word in each row).",
+      "description": "Specifies the name of the input column that contains the words (one word in each row).",
+      "datatype": "COLUMN_NAMES",
+      "allowsLists": false,
+      "rName": "word.column",
+      "useInR": true,
+      "rOrderNum": 4
+    },
+    {
+      "targetTable": [
+        "InputTable"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "NUMERIC"
+      ],
+      "requiredLength": 1,
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "CountColumn",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": " Specifies the name of the input column that contains the count of the corresponding word in the row, a NUMERIC value.",
+      "description": " Specifies the name of the input column that contains the count of the corresponding word in the row, a NUMERIC value.",
+      "datatype": "COLUMN_NAMES",
+      "allowsLists": false,
+      "rName": "count.column",
+      "useInR": true,
+      "rOrderNum": 7
     },
     {
       "lowerBound": 2,
@@ -73,50 +212,67 @@
         "TopicNumber"
       ],
       "isRequired": true,
-      "description": "Indicates the number of topics for all the documents in the input table. The input value must be no less than 2 and no greater than 1000.",
+      "rDescription": "Specifies the number of topics for all the documents in the input table, an INTEGER value in the range [2, 1000].",
+      "description": "Specifies the number of topics for all the documents in the input table, an INTEGER value in the range [2, 1000].",
       "datatype": "INTEGER",
       "allowsLists": false,
       "rName": "topic.num",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 2
     },
     {
       "defaultValue": 0.1,
       "lowerBound": 0.0,
+      "upperBound": Infinity,
       "lowerBoundType": "EXCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
       "allowNaN": false,
       "name": "Alpha",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Hyper parameter for the model. It is a prior smooth parameter for the topic distribution over documents. When alpha is smaller, each document tends to associate with less topics. The input value must be greater than 0.0. The default value is 0.1.",
+      "rDescription": "Specifies a hyperparameter of the model, the prior smooth parameter for the topic distribution over documents.As alpha decreases, fewer topics are associated with each document. The default value is 0.1.",
+      "description": "Specifies a hyperparameter of the model, the prior smooth parameter for the topic distribution over documents.As alpha decreases, fewer topics are associated with each document. The default value is 0.1.",
       "datatype": "DOUBLE",
       "allowsLists": false,
       "rName": "alpha",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 5
     },
     {
       "defaultValue": 0.1,
       "lowerBound": 0.0,
+      "upperBound": Infinity,
       "lowerBoundType": "EXCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
       "allowNaN": false,
       "name": "Eta",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Hyper parameter of the model. It is a prior smooth parameter for the word distribution over topics. When eta is smaller, each topic tends to associate with less words. The input value must be greater than 0.0. The default value is 0.1.",
+      "rDescription": "Specifies a hyperparameter of the model, the prior smooth parameter for the word distribution over topics.As eta decreases, fewer words are associated with each topic.The default value is 0.1.",
+      "description": "Specifies a hyperparameter of the model, the prior smooth parameter for the word distribution over topics.As eta decreases, fewer words are associated with each topic.The default value is 0.1.",
       "datatype": "DOUBLE",
       "allowsLists": false,
       "rName": "eta",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 6
     },
     {
       "defaultValue": 50,
       "lowerBound": 0,
+      "upperBound": 2147483647,
       "lowerBoundType": "EXCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
       "allowNaN": false,
       "name": "MaxIterate",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Specifies the maximum number of iteration to be performed, if the model is not converged during the training.  The input value must be greater than 0. The default value is 50.",
+      "rDescription": "Specifies the maximum number of iterations to perform if the model does not converge, a positive INTEGER value. The default value is 50. ",
+      "description": "Specifies the maximum number of iterations to perform if the model does not converge, a positive INTEGER value. The default value is 50. ",
       "datatype": "INTEGER",
       "allowsLists": false,
-      "rName": "max.iterate",
-      "useInR": true
+      "rName": "maxiter",
+      "useInR": true,
+      "rOrderNum": 8
     },
     {
       "defaultValue": 1.0E-4,
@@ -126,109 +282,35 @@
       "upperBoundType": "EXCLUSIVE",
       "allowNaN": false,
       "name": "ConvergenceDelta",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Specifies the convergence delta of log perplexity during the training. The input value must be greater than 0.0 and less than 1.0. The default value is 1.0E-4.",
+      "rDescription": "Specifies the convergence delta of log perplexity, a NUMERIC value in the range [0.0,1.0]. The default value is 1e-4.",
+      "description": "Specifies the convergence delta of log perplexity, a NUMERIC value in the range [0.0,1.0]. The default value is 1e-4.",
       "datatype": "DOUBLE",
       "allowsLists": false,
       "rName": "convergence.delta",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 9
     },
     {
+      "lowerBound": -9223372036854775808,
+      "upperBound": 9223372036854775807,
+      "lowerBoundType": "INCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
       "allowNaN": false,
       "name": "Seed",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Specifies the seed used in initializing the model. If the same seed argument is provided, the function should generate exact the same model for a given input table.",
+      "rDescription": "Specifies the seed with which to initialize the model, a LONG value. Given the same seed, cluster configuration, and input table, the function generates the same model. By default, the function initializes the model randomly.",
+      "description": "Specifies the seed with which to initialize the model, a LONG value. Given the same seed, cluster configuration, and input table, the function generates the same model. By default, the function initializes the model randomly.",
       "datatype": "LONG",
       "allowsLists": false,
       "rName": "seed",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 10
     },
     {
-      "isOutputTable": false,
-      "name": "InputTable",
-      "isRequired": true,
-      "description": "The name for the input relation. It should be a table or a view. Each row of the relation consists of document id, the word and optional the word count.",
-      "datatype": "TABLE_NAME",
-      "allowsLists": false,
-      "rName": "input.table",
-      "useInR": true
-    },
-    {
-      "isOutputTable": true,
-      "name": "ModelTable",
-      "isRequired": true,
-      "description": "The name of the output table for the relation between the topics and words. This table must not exist.",
-      "datatype": "TABLE_NAME",
-      "allowsLists": false,
-      "rName": "model.table",
-      "useInR": true
-    },
-    {
-      "isOutputTable": true,
-      "name": "OutputTable",
-      "isRequired": false,
-      "description": "The name of the output table for the topic distribution of each document in the inputtable. This table must not exist. If not specified, the topic distribution are not outputted.",
-      "datatype": "TABLE_NAME",
-      "allowsLists": false,
-      "rName": "output.table",
-      "useInR": true
-    },
-    {
-      "targetTable": "InputTable",
-      "checkDuplicate": true,
-      "allowedTypes": [
-        "numeric",
-        "uuid",
-        "bytea"
-      ],
-      "allowedTypeGroups": [
-        "STRING",
-        "INTEGER"
-      ],
-      "requiredLength": 1,
-      "allowPadding": true,
-      "name": "DocIdColumn",
-      "isRequired": true,
-      "description": "The column identify different documents. Input columns must contain integer SQL types. Input columns must contain string SQL types. Input columns can be the following SQL types: [numeric, uuid, bytea].",
-      "datatype": "COLUMN_NAMES",
-      "allowsLists": false,
-      "rName": "doc.id.column",
-      "useInR": true
-    },
-    {
-      "targetTable": "InputTable",
-      "checkDuplicate": true,
-      "allowedTypeGroups": [
-        "STRING",
-        "INTEGER"
-      ],
-      "requiredLength": 1,
-      "allowPadding": true,
-      "name": "WordColumn",
-      "isRequired": true,
-      "description": "The column contains the words. Input columns must contain integer SQL types. Input columns must contain string SQL types.",
-      "datatype": "COLUMN_NAMES",
-      "allowsLists": false,
-      "rName": "word.column",
-      "useInR": true
-    },
-    {
-      "targetTable": "InputTable",
-      "checkDuplicate": true,
-      "allowedTypeGroups": [
-        "NUMERIC"
-      ],
-      "requiredLength": 1,
-      "allowPadding": true,
-      "name": "CountColumn",
-      "isRequired": false,
-      "description": " The column contains the count of corresponding word in the row. If specified, it should be of type numeric. If not specified, each row will be associated with a count value 1. Input columns must contain numeric SQL types.",
-      "datatype": "COLUMN_NAMES",
-      "allowsLists": false,
-      "rName": "count.column",
-      "useInR": true
-    },
-    {
+      "permittedValues": [],
       "defaultValue": "all",
       "isOutputColumn": false,
       "name": "OutputTopicNum",
@@ -236,13 +318,16 @@
         "OutputTopicNumber"
       ],
       "isRequired": false,
-      "description": "Specifies how many top weighted topics will be output for each document. It is a positive integer number or per-defined string \"all\". If \"all\" is given, all the topics and corresponding weight will be outputted for each input document.  The default value is all.",
+      "rDescription": "Specifies the number of top-weighted topics and their weights to include in the output table for each training document. The value topics must be a positive INTEGER. The default value, 'all', specifies all topics and their weights.",
+      "description": "Specifies the number of top-weighted topics and their weights to include in the output table for each training document. The value topics must be a positive INTEGER. The default value, 'all', specifies all topics and their weights.",
       "datatype": "STRING",
       "allowsLists": false,
-      "rName": "output.topic.num",
-      "useInR": true
+      "rName": "out.topicnum",
+      "useInR": true,
+      "rOrderNum": 11
     },
     {
+      "permittedValues": [],
       "defaultValue": "none",
       "isOutputColumn": false,
       "name": "OutputTopicWordNum",
@@ -250,11 +335,13 @@
         "OutputTopicWordNumber"
       ],
       "isRequired": false,
-      "description": "Specifies how many top topic words should be outputted in the output table accompany with the corresponding topic id. It is a positive integer number or per-defined string \"all\", \"none\". If \"none\" is given, none of the topic words will be outputted. If \"all\" is given, the function will emit all related topic words corresponding to each outputted topicid. The default value is none.",
+      "rDescription": "Specifies the number of top topic words and their topic identifiers to include in the output table for each training document. The value topic_words must be a positive INTEGER. The value 'all' specifies all topic words and their topic identifiers. The default value, 'none', specifies no topic words or topic identifiers.",
+      "description": "Specifies the number of top topic words and their topic identifiers to include in the output table for each training document. The value topic_words must be a positive INTEGER. The value 'all' specifies all topic words and their topic identifiers. The default value, 'none', specifies no topic words or topic identifiers.",
       "datatype": "STRING",
       "allowsLists": false,
-      "rName": "output.topic.word.num",
-      "useInR": true
+      "rName": "out.topicwordnum",
+      "useInR": true,
+      "rOrderNum": 12
     }
   ]
 }

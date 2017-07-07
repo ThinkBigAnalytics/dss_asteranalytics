@@ -1,10 +1,11 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
-  "function_name": "emavg",
-  "function_version": "1.2",
+  "function_name": "EMAVG",
+  "function_version": "1.3",
   "function_type": "non-driver",
+  "function_r_name": "aa.emavg",
   "short_description": "Computes Exponential Moving Averages",
   "long_description": "The exponential moving average computes the average over a number of points in a time series but applies a weighting to older values",
   "input_tables": [
@@ -14,14 +15,43 @@
       ],
       "isOrdered": true,
       "partitionByOne": false,
+      "name": "input",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "Input table.",
+      "rDescription": "Specifies the name of the table that contains the columns",
+      "description": "Specifies the name of the table that contains the columns",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "useInR": true
+      "rName": "data",
+      "useInR": true,
+      "rOrderNum": 1
     }
   ],
   "argument_clauses": [
+    {
+      "targetTable": [
+        "input"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "NUMERIC"
+      ],
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "TargetColumns",
+      "alternateNames": [
+        "Columns"
+      ],
+      "isRequired": false,
+      "rDescription": "Specifies the input column names for which the moving average is to be computed. If you omit this argument, then the function copies every input column to the output table but does not compute moving average.",
+      "description": "Specifies the input column names for which the moving average is to be computed. If you omit this argument, then the function copies every input column to the output table but does not compute moving average.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "target.columns",
+      "useInR": true,
+      "rOrderNum": 2
+    },
     {
       "defaultValue": 0.1,
       "lowerBound": 0,
@@ -30,59 +60,48 @@
       "upperBoundType": "INCLUSIVE",
       "allowNaN": true,
       "name": "Alpha",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Specifies the damping factor, which is the degree of weighting decrease. The input value must be no less than 0.0 and no greater than 1.0. The default value is 0.1.",
+      "rDescription": "Specifies the damping factor, a value in the range [0, 1], which represents a percentage in the range [0, 100]. For example, if alpha is 0.2, then the damping factor is 20%. A higher alpha discounts older observations faster. The default value is 0.1.",
+      "description": "Specifies the damping factor, a value in the range [0, 1], which represents a percentage in the range [0, 100]. For example, if alpha is 0.2, then the damping factor is 20%. A higher alpha discounts older observations faster. The default value is 0.1.",
       "datatype": "DOUBLE",
       "allowsLists": false,
       "rName": "alpha",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 3
     },
     {
       "defaultValue": 2,
       "lowerBound": 1,
+      "upperBound": 2147483647,
       "lowerBoundType": "INCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
       "allowNaN": false,
       "name": "StartRows",
-      "alternateNames": [
-        "Start_Rows"
-      ],
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Specifies the lag, expressed in rows, after which exponential moving average will start to be calculated. The input value must be no less than 1. The default value is 2.",
+      "rDescription": "Specifies the number of rows at the beginning of the time series that the function \"skips\" before it begins the calculation of the exponential moving average. The function uses the arithmetic average of these rows as the initial value of the exponential moving average. The value n must be an integer. The default value of n is 2.",
+      "description": "Specifies the number of rows at the beginning of the time series that the function \"skips\" before it begins the calculation of the exponential moving average. The function uses the arithmetic average of these rows as the initial value of the exponential moving average. The value n must be an integer. The default value of n is 2.",
       "datatype": "INTEGER",
       "allowsLists": false,
       "rName": "start.rows",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 4
     },
     {
       "defaultValue": false,
       "name": "IncludeFirst",
       "alternateNames": [
-        "Return_All",
-		"ReturnAll"
+        "ReturnAll"
       ],
       "isRequired": false,
-      "description": "Specifies whether the first START_ROWS rows should be included in the output or not. The default value is false.",
+      "rDescription": "Specifies whether to include the starting rows in the output table. The default value is 'false'. If you specify 'true', the output columns for the starting rows contain NULL, because their exponential moving average is undefined.",
+      "description": "Specifies whether to include the starting rows in the output table. The default value is 'false'. If you specify 'true', the output columns for the starting rows contain NULL, because their exponential moving average is undefined.",
       "datatype": "BOOLEAN",
       "allowsLists": false,
       "rName": "include.first",
-      "useInR": true
-    },
-    {
-      "checkDuplicate": true,
-      "allowedTypeGroups": [
-        "NUMERIC"
-      ],
-      "allowPadding": true,
-      "name": "TargetColumns",
-      "alternateNames": [
-        "Columns"
-      ],
-      "isRequired": false,
-      "description": "Name of the column name for which the exponential moving average will be calculated. Input columns must contain numeric SQL types.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "target.columns",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 5
     }
   ]
 }

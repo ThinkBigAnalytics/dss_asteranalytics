@@ -1,10 +1,12 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
   "function_name": "EvaluateSentimentExtractor",
-  "function_version": "1.1",
+  "function_version": "1.2",
   "function_type": "non-driver",
+  "function_r_name": "aa.sentiment.evaluate",
+  "ref_function_r_name": "aa.sentiment.extract",
   "short_description": "Evaluate the sentiment extraction SQL/MR function.",
   "long_description": "Evaluate the sentiment extraction SQL/MR function, by comapring the RESULT_COLUMN and RESULT_COLUMN.The value of EXPECT_COLUMN and RESULT_COLUMN should be 'pos' represent positive,'neg' represent negative and 'neu' represent neutral",
   "input_tables": [
@@ -14,45 +16,68 @@
       ],
       "isOrdered": false,
       "partitionByOne": true,
+      "name": "input",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "The input table should contain a text column which contains input text.",
       "description": "The input table should contain a text column which contains input text.",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "useInR": true
+      "rName": "object",
+      "useInR": true,
+      "rOrderNum": 1
     }
   ],
   "argument_clauses": [
     {
+      "targetTable": [
+        "input"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
       "requiredLength": 1,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "ObsColumn",
       "alternateNames": [
-        "Expect_Column",
-		"ExpectColumn"
+        "ExpectColumn"
       ],
       "isRequired": true,
-      "description": "The input table column with the expected polarity/values POS, NEG or NEU.",
+      "rDescription": "Specifies the name of the input column with the observed sentiment (POS, NEG or NEU).",
+      "description": "Specifies the name of the input column with the observed sentiment (POS, NEG or NEU).",
       "datatype": "COLUMNS",
       "allowsLists": false,
       "rName": "obs.column",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 2
     },
     {
+      "targetTable": [
+        "input"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
       "requiredLength": 1,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "SentimentColumn",
       "alternateNames": [
-        "Result_Column",
-		"ResultColumn"
+        "ResultColumn"
       ],
       "isRequired": true,
-      "description": "The input table column with the result polarity/values POS, NEG or NEU.",
+      "rDescription": "Specifies the name of the input column with the predicted sentiment (POS, NEG or NEU).",
+      "description": "Specifies the name of the input column with the predicted sentiment (POS, NEG or NEU).",
       "datatype": "COLUMNS",
       "allowsLists": false,
       "rName": "sentiment.column",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 3
     }
   ]
 }

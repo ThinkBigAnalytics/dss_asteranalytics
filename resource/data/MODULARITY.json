@@ -1,10 +1,11 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
   "function_name": "Modularity",
-  "function_version": "1.1",
+  "function_version": "1.2",
   "function_type": "driver",
+  "function_r_name": "aa.modularity",
   "short_description": "This function divides input graph in communities.",
   "long_description": "The function establishes communities among vertices based on the edges (similarity) in a graph by maximizing modularity metric.",
   "input_tables": [
@@ -15,12 +16,15 @@
       "isOrdered": false,
       "partitionByOne": false,
       "name": "vertices",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "vertex table",
       "description": "vertex table",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "rName": "vertices",
-      "useInR": true
+      "rName": "vertices.data",
+      "useInR": true,
+      "rOrderNum": 1
     },
     {
       "requiredInputKind": [
@@ -29,12 +33,15 @@
       "isOrdered": false,
       "partitionByOne": false,
       "name": "edges",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "edge table",
       "description": "edge table",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "rName": "edges",
-      "useInR": true
+      "rName": "edges.data",
+      "useInR": true,
+      "rOrderNum": 2
     },
     {
       "requiredInputKind": [
@@ -43,81 +50,198 @@
       "isOrdered": false,
       "partitionByOne": false,
       "name": "sources",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "source table",
       "description": "source table",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "rName": "sources",
-      "useInR": true
+      "rName": "sources.data",
+      "useInR": true,
+      "rOrderNum": 3
     }
   ],
   "argument_clauses": [
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "Domain",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The address of the Queen. The host parameter is the Aster Database Queen’s IP saddress or hostname.",
+      "rDescription": "The address of the Queen. The host parameter is the Aster Database Queen’s IP address or hostname.",
+      "description": "The address of the Queen. The host parameter is the Aster Database Queen’s IP address or hostname.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "Database",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The name of the database where the input table is located.",
       "description": "The name of the database where the input table is located.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "UserId",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The Aster Database user name of the user running this function.",
       "description": "The Aster Database user name of the user running this function.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "Password",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The Aster Database password of the user.",
       "description": "The Aster Database password of the user.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "SSLSettings",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "A string that includes all the SSL settings, except the password for the truststore.",
       "description": "A string that includes all the SSL settings, except the password for the truststore.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "SSLTrustStorePassword",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The password for the SSL truststore.",
       "description": "The password for the SSL truststore.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
-      "targetTable": "vertices",
+      "isOutputTable": true,
+      "name": "CommunityEdgeTable",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "Specifies the name of the table that the function generates to output the weights of the edges between the communities at different resolution levels. If a table with community_edge_table exists, the function overwrites the existing table. If you omit this argument, the function does not create this table.",
+      "description": "Specifies the name of the table that the function generates to output the weights of the edges between the communities at different resolution levels. If a table with community_edge_table exists, the function overwrites the existing table. If you omit this argument, the function does not create this table.",
+      "datatype": "TABLE_NAME",
+      "allowsLists": false,
+      "rName": "community.edge.data",
+      "useInR": true,
+      "rOrderNum": 100
+    },
+    {
+      "targetTable": [
+        "edges"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "TargetKey",
+      "alternateNames": [],
+      "isRequired": true,
+      "rDescription": "Specifies the key of the target vertex of an edge. The key consists of the names of one or more edges table columns.",
+      "description": "Specifies the key of the target vertex of an edge. The key consists of the names of one or more edges table columns.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "target.key",
+      "useInR": true,
+      "rOrderNum": 4
+    },
+    {
+      "targetTable": [
+        "vertices"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
       "requiredLength": 1,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "CommunityAssociation",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Specifies the name of the column that represents the community association of the vertices. ",
+      "rDescription": " Specifies the name of the column that represents the community association of the vertices. Use this argument if you already know some vertex communities.",
+      "description": " Specifies the name of the column that represents the community association of the vertices. Use this argument if you already know some vertex communities.",
       "datatype": "COLUMNS",
       "allowsLists": false,
       "rName": "community.association",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 7
+    },
+    {
+      "targetTable": [
+        "vertices"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "Accumulate",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "Specifies the names of the vertices columns to copy to the community vertex table. By default, the function copies the vertex_key columns to the output vertex table for each vertex, changing the column names to id, id_1, id_2, and so on.",
+      "description": "Specifies the names of the vertices columns to copy to the community vertex table. By default, the function copies the vertex_key columns to the output vertex table for each vertex, changing the column names to id, id_1, id_2, and so on.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "accumulate",
+      "useInR": true,
+      "rOrderNum": 10
+    },
+    {
+      "targetTable": [
+        "edges"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "NUMERIC"
+      ],
+      "requiredLength": 1,
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "EdgeWeight",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "Specifies the name of the edges table column that contains edge weights. The weights are positive values. By default, the weight of each edge is 1 (that is, the graph is unweighted). This argument determines how the function treats duplicate edges (that is, edges with the same source and destination, which might have different weights). For a weighted graph, the function treats duplicate edges as a single edge whose weight is the sum of the weights of the duplicate edges. For an unweighted graph, the function uses only one of the duplicate edges.",
+      "description": "Specifies the name of the edges table column that contains edge weights. The weights are positive values. By default, the weight of each edge is 1 (that is, the graph is unweighted). This argument determines how the function treats duplicate edges (that is, edges with the same source and destination, which might have different weights). For a weighted graph, the function treats duplicate edges as a single edge whose weight is the sum of the weights of the duplicate edges. For an unweighted graph, the function uses only one of the duplicate edges.",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "edge.weight",
+      "useInR": true,
+      "rOrderNum": 6
     },
     {
       "defaultValue": [
@@ -127,93 +251,49 @@
       "upperBound": 1000000.0,
       "lowerBoundType": "INCLUSIVE",
       "upperBoundType": "INCLUSIVE",
+      "matchLengthOfArgument": "",
       "allowPadding": false,
       "name": "Resolution",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Specifies the hierarchical (zoom-in) level information for the communities. Each input value must be no less than 0.0 and no greater than 1000000.0. The default value is 1.0.",
+      "rDescription": "Specifies hierarchical-level information for the communities. The default resolution is 1.0. If you specify a list of resolution values, the function incrementally finds the communities for each value and for the default value. Each resolution must be a distinct DOUBLE PRECISION value in the range [0.0, 1000000.0]. The value 0.0 puts each node in its own community of size 1. You can specify a maximum of 500 resolution values. To get the modularity of more than 500 resolution points, call the function multiple times, specifying different values in each call.",
+      "description": "Specifies hierarchical-level information for the communities. The default resolution is 1.0. If you specify a list of resolution values, the function incrementally finds the communities for each value and for the default value. Each resolution must be a distinct DOUBLE PRECISION value in the range [0.0, 1000000.0]. The value 0.0 puts each node in its own community of size 1. You can specify a maximum of 500 resolution values. To get the modularity of more than 500 resolution points, call the function multiple times, specifying different values in each call.",
       "datatype": "FLOAT",
       "allowsLists": true,
       "rName": "resolution",
-      "useInR": true
-    },
-    {
-      "isOutputColumn": false,
-      "name": "CommunityEdgeTable",
-      "isRequired": false,
-      "description": "Specifies the name for the table that the function generates to contain the weights of the edges between the communities at different resolution levels.",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "community.edge.table",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 8
     },
     {
       "defaultValue": 1,
       "lowerBound": 1,
+      "upperBound": 9223372036854775807,
       "lowerBoundType": "INCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
       "allowNaN": false,
       "name": "Seed",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Specifies the seed to use for creating a random number during modularity computation. The input value must be no less than 1. The default value is 1.",
+      "rDescription": "Specifies the seed to use to create a random number during modularity computation. The seed must be a positive BIGINT value. The function multiplies seed by the hash code of vertex_key to generate a unique seed for each vertex. The default seed is 1. The seed significantly impacts community formation (and modularity score), because the function uses seed for these purposes: • To break ties between different vertices during community formation • To determine how deeply to analyze the graph. Deeper analysis of the graph can improve community formation, but can also increase execution time.",
+      "description": "Specifies the seed to use to create a random number during modularity computation. The seed must be a positive BIGINT value. The function multiplies seed by the hash code of vertex_key to generate a unique seed for each vertex. The default seed is 1. The seed significantly impacts community formation (and modularity score), because the function uses seed for these purposes: • To break ties between different vertices during community formation • To determine how deeply to analyze the graph. Deeper analysis of the graph can improve community formation, but can also increase execution time.",
       "datatype": "LONG",
       "allowsLists": false,
       "rName": "seed",
-      "useInR": true
-    },
-    {
-      "targetTable": "vertices",
-      "checkDuplicate": true,
-      "allowPadding": true,
-      "name": "Accumulate",
-      "isRequired": false,
-      "description": "Specifies the names of the columns from vertices that are to be passed to the output.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "accumulate",
-      "useInR": true
-    },
-    {
-      "targetTable": "edges",
-      "checkDuplicate": true,
-      "allowPadding": true,
-      "name": "TargetKey",
-      "isRequired": true,
-      "description": "Specifies the names of the columns that comprise the target vertex key in edges table.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "target.key",
-      "useInR": true
-    },
-    {
-      "targetTable": "edges",
-      "checkDuplicate": true,
-      "allowedTypes": [
-        "integer",
-        "smallint",
-        "bigint",
-        "double precision",
-        "numeric",
-        "real"
-      ],
-      "requiredLength": 1,
-      "allowPadding": true,
-      "name": "EdgeWeight",
-      "isRequired": false,
-      "description": "Specifies the name of the column in the edges table that contains the edge weights for a weighted graph. Input columns can be the following SQL types: [integer, smallint, bigint, double precision, numeric, real].",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "edge.weight",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 9
     },
     {
       "defaultValue": true,
       "name": "Directed",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The argument indicated whether the edges are directed or not. The default value is true.",
+      "rDescription": "Legacy argument that determined whether the graph was directed. The default value was 'true'. The function now ignores this argument, treating all graphs as undirected.",
+      "description": "Legacy argument that determined whether the graph was directed. The default value was 'true'. The function now ignores this argument, treating all graphs as undirected.",
       "datatype": "BOOLEAN",
       "allowsLists": false,
       "rName": "directed",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 5
     }
   ]
 }
-

@@ -1,53 +1,206 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
   "function_name": "ConfusionMatrix",
-  "function_version": "1.2",
-  "function_type": "non-driver",
-  "short_description": "Compute the confusion matrix.",
-  "long_description": "Compute the confusion matrix, by comapring the ExpectColumn and PredictColumn",
+  "function_version": "2.1",
+  "function_type": "driver",
+  "function_r_name": "aa.confusion.matrix",
+  "short_description": "Plot a real confusion matrix table",
+  "long_description": "Plot the output of ConfusionMatrix a real table with fmeasure value.",
   "input_tables": [
     {
       "requiredInputKind": [
         "PartitionByKey"
       ],
       "isOrdered": false,
-      "partitionByOne": false,
+      "partitionByOne": true,
+      "name": "input",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "The relation contains the data to be analyzed",
+      "rDescription": "The input table of ConfusionMatrix function",
+      "description": "The input table of ConfusionMatrix function",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "useInR": true
+      "rName": "data",
+      "useInR": true,
+      "rOrderNum": 1
     }
   ],
   "argument_clauses": [
     {
+      "permittedValues": [],
+      "isOutputColumn": false,
+      "name": "Domain",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "The address of the Queen. The host parameter is the Aster Database Queen’s IP address or hostname.",
+      "description": "The address of the Queen. The host parameter is the Aster Database Queen’s IP address or hostname.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false,
+      "rOrderNum": 0
+    },
+    {
+      "permittedValues": [],
+      "isOutputColumn": false,
+      "name": "Database",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "The name of the database where the input table is located.",
+      "description": "The name of the database where the input table is located.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false,
+      "rOrderNum": 0
+    },
+    {
+      "permittedValues": [],
+      "isOutputColumn": false,
+      "name": "UserId",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "The Aster Database user name of the user running this function.",
+      "description": "The Aster Database user name of the user running this function.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false,
+      "rOrderNum": 0
+    },
+    {
+      "permittedValues": [],
+      "isOutputColumn": false,
+      "name": "Password",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "The Aster Database password of the user.",
+      "description": "The Aster Database password of the user.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false,
+      "rOrderNum": 0
+    },
+    {
+      "permittedValues": [],
+      "isOutputColumn": false,
+      "name": "SSLSettings",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "A string that includes all the SSL settings, except the password for the truststore.",
+      "description": "A string that includes all the SSL settings, except the password for the truststore.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false,
+      "rOrderNum": 0
+    },
+    {
+      "permittedValues": [],
+      "isOutputColumn": false,
+      "name": "SSLTrustStorePassword",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "The password for the SSL truststore.",
+      "description": "The password for the SSL truststore.",
+      "datatype": "DRIVER",
+      "allowsLists": false,
+      "useInR": false,
+      "rOrderNum": 0
+    },
+    {
+      "targetTable": [
+        "input"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
       "requiredLength": 1,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "ObsColumn",
       "alternateNames": [
         "ExpectColumn"
       ],
       "isRequired": true,
-      "description": "The name of the column with the expected category",
+      "rDescription": "Specifies the name of the input column that contains the observed class.",
+      "description": "Specifies the name of the input column that contains the observed class.",
       "datatype": "COLUMNS",
       "allowsLists": false,
-      "rName": "obs.column",
-      "useInR": true
+      "rName": "reference",
+      "useInR": true,
+      "rOrderNum": 2
     },
     {
+      "targetTable": [
+        "input"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
       "requiredLength": 1,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "PredictColumn",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "The name of the column with the predicted category",
+      "rDescription": "Specifies the name of the input column that contains the predicted class.",
+      "description": "Specifies the name of the input column that contains the predicted class.",
       "datatype": "COLUMNS",
       "allowsLists": false,
-      "rName": "predict.column",
-      "useInR": true
+      "rName": "prediction",
+      "useInR": true,
+      "rOrderNum": 3
+    },
+    {
+      "permittedValues": [],
+      "isOutputColumn": true,
+      "name": "OutputTable",
+      "alternateNames": [],
+      "isRequired": true,
+      "rDescription": "Specifies the string with which to start the output table names. (which are output_table_1, output_table_2, and output_table_3).",
+      "description": "Specifies the string with which to start the output table names. (which are output_table_1, output_table_2, and output_table_3).",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "output.tablename.prefix",
+      "useInR": true,
+      "rOrderNum": 4
+    },
+    {
+      "permittedValues": [],
+      "isOutputColumn": false,
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "classes",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "Specifies the classes to output in output_table.",
+      "description": "Specifies the classes to output in output_table.",
+      "datatype": "STRING",
+      "allowsLists": true,
+      "rName": "classes",
+      "useInR": true,
+      "rOrderNum": 5
+    },
+    {
+      "lowerBound": 0.0,
+      "upperBound": 1.0,
+      "lowerBoundType": "EXCLUSIVE",
+      "upperBoundType": "EXCLUSIVE",
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "Prevalence",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "Specifies the prevalences for the classes to output in output_table_3. Therefore, if you specify prevalence, then you must also specify classes, and for every class, you must specify a prevalence",
+      "description": "Specifies the prevalences for the classes to output in output_table_3. Therefore, if you specify Prevalence, then you must also specify Classes, and for every class, you must specify a prevalence.",
+      "datatype": "DOUBLE",
+      "allowsLists": true,
+      "rName": "prevalence",
+      "useInR": true,
+      "rOrderNum": 6
     }
   ]
 }

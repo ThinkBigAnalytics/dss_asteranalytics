@@ -1,145 +1,195 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
-  "function_name": "path_analyzer",
-  "function_version": "1.3",
+  "function_name": "Path_Analyzer",
+  "function_version": "1.4",
   "function_type": "driver",
+  "function_r_name": "aa.path.evaluate",
   "short_description": "This function generates the children, parent for a particular node and calcuates its depth and number of visits.",
   "long_description": "This is a wrapper function, invoked by a 'ON (SELECT 1) PARTITION BY 1' clause. This Function generates the children, parent for a particular node and calcuates its depth and number of visits.",
   "argument_clauses": [
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "Domain",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The address of the Queen. The host parameter is the Aster Database Queen’s IP saddress or hostname.",
+      "rDescription": "The address of the Queen. The host parameter is the Aster Database Queen’s IP address or hostname.",
+      "description": "The address of the Queen. The host parameter is the Aster Database Queen’s IP address or hostname.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "Database",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The name of the database where the input table is located.",
       "description": "The name of the database where the input table is located.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "UserId",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The Aster Database user name of the user running this function.",
       "description": "The Aster Database user name of the user running this function.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "Password",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The Aster Database password of the user.",
       "description": "The Aster Database password of the user.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "SSLSettings",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "A string that includes all the SSL settings, except the password for the truststore.",
       "description": "A string that includes all the SSL settings, except the password for the truststore.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "SSLTrustStorePassword",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The password for the SSL truststore.",
       "description": "The password for the SSL truststore.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
       "isOutputTable": false,
       "name": "InputTable",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "The name of the table containing the input data.",
+      "rDescription": "Specifies either the name of the input table or view or a ta.npath query whose result is the input table. The input table contains the paths to analyze. Each path is a string of alphanumeric symbols that represents an ordered sequence of page views (or actions). Typically each symbol is a code that represents a unique page view. If you specify an ta.npath query, it must select both the column that contains the paths (sequence_column) and the column that contains the number of times a path was traveled (count_column). It must also specify sequence_column in the groupby.columns clause, so that the input table has one row for each unique path traveled on a web site.",
+      "description": "Specifies either the name of the input table or view or an nPath query whose result is the input table. The input table contains the paths to analyze. Each path is a string of alphanumeric symbols that represents an ordered sequence of page views (or actions). Typically each symbol is a code that represents a unique page view. If you specify an nPath query, it must select both the column that contains the paths (sequence_column) and the column that contains the number of times a path was traveled (count_column). It must also specify sequence_column in the GROUP BY clause, so that the input table has one row for each unique path traveled on a web site.",
       "datatype": "TABLE_NAME",
       "allowsLists": false,
-      "rName": "input.table",
-      "useInR": true
+      "rName": "data",
+      "useInR": true,
+      "rOrderNum": 1
     },
     {
       "isOutputTable": true,
       "name": "OutputTable",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "The name of the table where the output data should be stored.",
+      "rDescription": "Specifies the name of the output table.",
+      "description": "Specifies the name of the output table.",
       "datatype": "TABLE_NAME",
       "allowsLists": false,
       "rName": "output.table",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 100
     },
     {
-      "targetTable": "InputTable",
+      "targetTable": [
+        "InputTable"
+      ],
       "checkDuplicate": true,
       "allowedTypes": [
         "character varying"
       ],
+      "allowedTypeGroups": [],
       "requiredLength": 1,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "SeqColumn",
       "alternateNames": [
         "Seq"
       ],
       "isRequired": true,
-      "description": "Name of the column in the input relation that contains the paths to be analyzed. Input columns can be the following SQL types: character varying.",
+      "rDescription": "Specifies the name of the input table column that contains the paths.",
+      "description": "Specifies the name of the input table column that contains the paths.",
       "datatype": "COLUMN_NAMES",
       "allowsLists": false,
       "rName": "seq.column",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 2
     },
     {
-      "targetTable": "InputTable",
+      "targetTable": [
+        "InputTable"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
       "allowedTypeGroups": [
         "INTEGER"
       ],
       "requiredLength": 1,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "CountColumn",
       "alternateNames": [
         "Cnt"
       ],
       "isRequired": true,
-      "description": "Name of the column containing the count values. Input columns must contain integer SQL types.",
+      "rDescription": "Specifies the name of the input table column that contains the number of times a path was traveled.",
+      "description": "Specifies the name of the input table column that contains the number of times a path was traveled.",
       "datatype": "COLUMN_NAMES",
       "allowsLists": false,
       "rName": "count.column",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 3
     },
     {
       "defaultValue": false,
       "name": "Hash",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Boolean value specifying whether the hash code of the “node” column should be included in the output. The default value is false.",
+      "rDescription": "Specifies whether to include the hash code of the output column node. The default value is 'false'.",
+      "description": "Specifies whether to include the hash code of the output column node. The default value is 'false'.",
       "datatype": "BOOLEAN",
       "allowsLists": false,
       "rName": "hash",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 4
     },
     {
+      "permittedValues": [],
       "defaultValue": ",",
       "isOutputColumn": false,
       "name": "Delimiter",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Single-character delimiter used in the path string. The default value is ,.",
+      "rDescription": "Specifies the single-character delimiter that separates symbols in the path string. The default value is comma (',').Note: Do not use any of the following characters as delimiter (they cause the function to fail): Asterisk (*), Plus (+), Left parenthesis ((), Right parenthesis ()), Single quotation mark ('), Escaped single quotation mark ('), Backslash ('')",
+      "description": "Specifies the single-character delimiter that separates symbols in the path string. The default value is comma (',').Note: Do not use any of the following characters as delimiter (they cause the function to fail): Asterisk (*), Plus (+), Left parenthesis ((), Right parenthesis ()), Single quotation mark ('), Escaped single quotation mark ('), Backslash ('')",
       "datatype": "STRING",
       "allowsLists": false,
       "rName": "delimiter",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 5
     }
   ]
 }

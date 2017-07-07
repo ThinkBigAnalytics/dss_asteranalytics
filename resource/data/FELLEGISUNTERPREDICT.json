@@ -1,10 +1,12 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
   "function_name": "FellegiSunterPredict",
-  "function_version": "1.1",
+  "function_version": "1.2",
   "function_type": "non-driver",
+  "function_r_name": "aa.fellegi.sunter.predict",
+  "ref_function_r_name": "aa.fellegi.sunter.train",
   "short_description": "SQL/MR function to predict if two objects are match or un-match using a Fellegi-Sunter model",
   "long_description": "SQL/MR function to predict if two objects are match or un-match using a Fellegi-Sunter model",
   "input_tables": [
@@ -14,11 +16,16 @@
       ],
       "isOrdered": false,
       "partitionByOne": false,
+      "name": "input",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "The relation that contains the object pairs to be compared.",
       "description": "The relation that contains the object pairs to be compared.",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "useInR": true
+      "rName": "newdata",
+      "useInR": true,
+      "rOrderNum": 2
     },
     {
       "requiredInputKind": [
@@ -27,25 +34,39 @@
       "isOrdered": false,
       "partitionByOne": false,
       "name": "model",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "The relation that contains the model learned by FellegiSunterTrainer.",
       "description": "The relation that contains the model learned by FellegiSunterTrainer.",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "rName": "model",
-      "useInR": true
+      "rName": "object",
+      "useInR": true,
+      "rOrderNum": 1
     }
   ],
   "argument_clauses": [
     {
+      "targetTable": [
+        "input"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "Accumulate",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Columns from the input table to be passed through from input to output.",
+      "rDescription": "Specifies the names of input table columns to be copied to the output table.",
+      "description": "Specifies the names of input table columns to be copied to the output table.",
       "datatype": "COLUMNS",
       "allowsLists": true,
       "rName": "accumulate",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 3
     }
   ]
 }

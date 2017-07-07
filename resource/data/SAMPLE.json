@@ -1,10 +1,11 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
   "function_name": "Sample",
-  "function_version": "1.2",
+  "function_version": "1.3",
   "function_type": "non-driver",
+  "function_r_name": "aa.sample",
   "short_description": "Samples rows from an input table.",
   "long_description": "Sampling function that does simple and stratified no-replacement sampling. ",
   "input_tables": [
@@ -15,11 +16,16 @@
       ],
       "isOrdered": false,
       "partitionByOne": false,
+      "name": "input",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "The table containing the data to be sampled.",
       "description": "The table containing the data to be sampled.",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "useInR": true
+      "rName": "data",
+      "useInR": true,
+      "rOrderNum": 1
     },
     {
       "requiredInputKind": [
@@ -28,83 +34,112 @@
       "isOrdered": false,
       "partitionByOne": false,
       "name": "summary",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The summary input contains the stratum count information.",
       "description": "The summary input contains the stratum count information.",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "rName": "summary",
-      "useInR": true
+      "rName": "summary.data",
+      "useInR": true,
+      "rOrderNum": 2
     }
   ],
   "argument_clauses": [
     {
-      "lowerBound": 0,
-      "upperBound": 1,
-      "lowerBoundType": "INCLUSIVE",
-      "upperBoundType": "INCLUSIVE",
-      "allowPadding": true,
-      "name": "SampleFraction",
-      "isRequired": false,
-      "description": "One or more sample fractions to use in the sampling of data. Each input value must be no less than 0.0 and no greater than 1.0.",
-      "datatype": "DOUBLE",
-      "allowsLists": true,
-      "rName": "sample.fraction",
-      "useInR": true
-    },
-    {
-      "allowPadding": true,
-      "name": "ApproxSampleSize",
-      "alternateNames": [
-        "ApproximateSampleSize"
+      "targetTable": [
+        "input"
       ],
-      "isRequired": false,
-      "description": "The sample function internally maps the size to sample fractions, which are then used for generating the sample data. As a result, the size of the sample is approximate, not exact.",
-      "datatype": "INTEGER",
-      "allowsLists": true,
-      "rName": "approx.sample.size",
-      "useInR": true
-    },
-    {
       "checkDuplicate": true,
+      "allowedTypes": [],
       "allowedTypeGroups": [
         "GROUPTYPE"
       ],
       "requiredLength": 1,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "StratumColumn",
       "alternateNames": [
         "ConditionOnColumn"
       ],
       "isRequired": false,
-      "description": "Input columns cannot contain doubles or floats.",
+      "rDescription": "Specifies the name of the column that contains the sample conditions. If the function has only one input table (the data table), then condition_column is in the data table. If the function has two input tables, data and summary, then condition_column is in the summary table.",
+      "description": "Specifies the name of the column that contains the sample conditions. If the function has only one input table (the data table), then condition_column is in the data table. If the function has two input tables, data and summary, then condition_column is in the summary table.",
       "datatype": "COLUMNS",
       "allowsLists": false,
       "rName": "stratum.column",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 3
     },
     {
+      "lowerBound": 0,
+      "upperBound": 1,
+      "lowerBoundType": "INCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "SampleFraction",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "Specifies one or more fractions to use in sampling the data. (Syntax options that do not use sample.fraction require approx.sample.size.) If you specify only one fraction, then the function uses fraction for all strata defined by the sample conditions. If you specify more than one fraction, then the function uses each fraction for sampling a particular stratum defined by the condition arguments. Note: For conditional sampling with variable sample sizes, specify one fraction for each condition that you specify with the strata argument.",
+      "description": "Specifies one or more fractions to use in sampling the data. (Syntax options that do not use SampleFraction require ApproxSampleSize.) If you specify only one fraction, then the function uses fraction for all strata defined by the sample conditions. If you specify more than one fraction, then the function uses each fraction for sampling a particular stratum defined by the condition arguments. Note: For conditional sampling with variable sample sizes, specify one fraction for each condition that you specify with the Strata argument.",
+      "datatype": "DOUBLE",
+      "allowsLists": true,
+      "rName": "sample.fraction",
+      "useInR": true,
+      "rOrderNum": 5
+    },
+    {
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "ApproxSampleSize",
+      "alternateNames": [
+        "ApproximateSampleSize"
+      ],
+      "isRequired": false,
+      "rDescription": "Specifies one or more approximate sample sizes to use in sampling the data. (Syntax options that do not use approx.sample.size require sample.fraction.) Each sample size is approximate because the function maps the size to the sample fractions and then generates the sample data. If you specify only one size, then it represents the total sample size for the entire population. If you also specify the strata argument, then the function proportionally generates sample units for each stratum. If you specify more than one size, then each size corresponds to a stratum, and the function uses each size to generate sample units for the corresponding stratum. Note: For conditional sampling with variable approximate sample sizes, specify one size for each condition that you specify with the strata argument.",
+      "description": "Specifies one or more approximate sample sizes to use in sampling the data. (Syntax options that do not use ApproxSampleSize require SampleFraction.) Each sample size is approximate because the function maps the size to the sample fractions and then generates the sample data. If you specify only one size, then it represents the total sample size for the entire population. If you also specify the Strata argument, then the function proportionally generates sample units for each stratum. If you specify more than one size, then each size corresponds to a stratum, and the function uses each size to generate sample units for the corresponding stratum. Note: For conditional sampling with variable approximate sample sizes, specify one size for each condition that you specify with the Strata argument.",
+      "datatype": "INTEGER",
+      "allowsLists": true,
+      "rName": "approx.sample.size",
+      "useInR": true,
+      "rOrderNum": 6
+    },
+    {
+      "permittedValues": [],
       "isOutputColumn": false,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "Strata",
       "alternateNames": [
         "ConditionOn"
       ],
       "isRequired": false,
-      "description": "",
+      "rDescription": "Specifies the sample conditions that appear in the condition_column specified by stratum.column. If strata specifies a condition that does not appear in condition_column, then the function issues an error message.",
+      "description": "Specifies the sample conditions that appear in the condition_column specified by StratumColumn. If Strata specifies a condition that does not appear in condition_column, then the function issues an error message.",
       "datatype": "STRING",
       "allowsLists": true,
       "rName": "strata",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 4
     },
     {
+      "defaultValue": 0,
+      "lowerBound": -9223372036854775808,
+      "upperBound": 9223372036854775807,
+      "lowerBoundType": "INCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
       "allowNaN": false,
       "name": "Seed",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Specifies the random seed used to initialize the algorithm.",
+      "rDescription": "Specifies an integer to add to each task ID to create a real random seed for the task. The default value is 0.",
+      "description": "Specifies an integer to add to each task ID to create a real random seed for the task. The default value is 0.",
       "datatype": "LONG",
       "allowsLists": false,
       "rName": "seed",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 7
     }
   ]
 }

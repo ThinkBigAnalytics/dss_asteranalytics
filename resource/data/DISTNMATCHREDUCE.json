@@ -1,12 +1,14 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
   "function_name": "DistnmatchReduce",
-  "function_version": "1.1",
+  "function_version": "1.2",
   "function_type": "non-driver",
+  "ref_function_r_name": "aa.distnmatch",
   "short_description": "This function tests the hypothesis that thesample is drawn from the reference distribution.",
   "long_description": "This function tests the hypothesis that the sample is drawn from the reference distribution. It carries out up to four tests simultaneously: Anderson-Darling test, Kolmogorov-Smirnov test, Cramer-von Mises criterion, and Pearson's Chi-squared test. It gathers the intermediate results from the map function and computes the final statistics and p-values.",
+  "function_operation": "reduce",
   "input_tables": [
     {
       "requiredInputKind": [
@@ -14,26 +16,35 @@
       ],
       "isOrdered": false,
       "partitionByOne": false,
+      "name": "input",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "The table is the output DistnmatchMultipleinput",
       "description": "The table is the output DistnmatchMultipleinput",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 0
     }
   ],
   "argument_clauses": [
     {
       "defaultValue": 1,
       "lowerBound": 0,
+      "upperBound": 2147483647,
       "lowerBoundType": "EXCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
       "allowNaN": false,
       "name": "Top",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The number of the top matching distributions you want the function to output. Default value is 1 The input value must be greater than 0. The default value is 1.",
+      "rDescription": "Specifies the number of the top matching distributions you want the function to output. Default value is 1",
+      "description": "Specifies the number of the top matching distributions you want the function to output. Default value is 1",
       "datatype": "INTEGER",
       "allowsLists": false,
       "rName": "top",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 0
     }
   ]
 }

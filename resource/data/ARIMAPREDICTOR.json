@@ -1,142 +1,210 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
   "function_name": "ArimaPredictor",
-  "function_version": "1.1",
+  "function_version": "1.2",
   "function_type": "driver",
+  "function_r_name": "aa.arima.predict",
+  "ref_function_r_name": "aa.arima",
   "short_description": "Estimate the predict values based on given ARIMA model.",
   "long_description": "Estimate the predict values based on parameters of ARIMA model original sereis and the residuals of original series.",
   "argument_clauses": [
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "Domain",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The address of the Queen. The host parameter is the Aster Database Queen’s IP saddress or hostname.",
+      "rDescription": "The address of the Queen. The host parameter is the Aster Database Queen’s IP address or hostname.",
+      "description": "The address of the Queen. The host parameter is the Aster Database Queen’s IP address or hostname.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "Database",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The name of the database where the input table is located.",
       "description": "The name of the database where the input table is located.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "UserId",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The Aster Database user name of the user running this function.",
       "description": "The Aster Database user name of the user running this function.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "Password",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The Aster Database password of the user.",
       "description": "The Aster Database password of the user.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "SSLSettings",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "A string that includes all the SSL settings, except the password for the truststore.",
       "description": "A string that includes all the SSL settings, except the password for the truststore.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "SSLTrustStorePassword",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The password for the SSL truststore.",
       "description": "The password for the SSL truststore.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
       "isOutputTable": false,
       "name": "ModelTable",
+      "alternateNames": [],
       "isRequired": true,
-      "description": " The input table for arima model parameters.",
+      "rDescription": "Specifies the name of the table that contains the model. This table is the model table that is output by the ta.arima function.",
+      "description": "  Specifies the name of the table that contains the model. This table is the model table that is output by the Arima function.",
       "datatype": "TABLE_NAME",
       "allowsLists": false,
-      "rName": "model.table",
-      "useInR": true
+      "rName": "object",
+      "useInR": true,
+      "rOrderNum": 1
     },
     {
       "isOutputTable": false,
       "name": "ResidualTable",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "The input table that contains the original series and corresponding residuals.",
+      "rDescription": "Specifies the name of the table that contains the original input parameters and their residuals. This table is the residual table that is output by the ta.arima function.",
+      "description": "Specifies the name of the table that contains the original input parameters and their residuals. This table is the residual table that is output by the Arima function.",
       "datatype": "TABLE_NAME",
       "allowsLists": false,
       "rName": "residual.table",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 2
     },
     {
-      "targetTable": "ResidualTable",
+      "targetTable": [
+        "ResidualTable"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "TimestampColumns",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "A list of columns specify the sequence of the series in residuals table. The sequence should have uniform intervals.",
+      "rDescription": "Specifies the names of the residual_table columns that specify the sequence (time points) of the original input parameters. The sequence must have uniform intervals.",
+      "description": "Specifies the names of the residual_table columns that specify the sequence (time points) of the original input parameters. The sequence must have uniform intervals.",
       "datatype": "COLUMN_NAMES",
       "allowsLists": true,
       "rName": "timestamp.columns",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 3
     },
     {
-      "targetTable": "ResidualTable",
+      "targetTable": [
+        "ResidualTable"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
       "allowedTypeGroups": [
         "NUMERIC"
       ],
+      "defaultValues": [
+        "value"
+      ],
       "requiredLength": 1,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "ValueColumn",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Specify the name of the column containing the time series data in residuals table. The default name is value. Input columns must contain numeric SQL types.",
+      "rDescription": "Specify the name of the column containing the time series data in residuals table. The default name is value.",
+      "description": "Specify the name of the column containing the time series data in residuals table. The default name is value.",
       "datatype": "COLUMN_NAMES",
       "allowsLists": false,
       "rName": "value.column",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 4
     },
     {
-      "targetTable": "ResidualTable",
+      "targetTable": [
+        "ResidualTable"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
       "allowedTypeGroups": [
         "NUMERIC"
       ],
+      "defaultValues": [
+        "residual"
+      ],
       "requiredLength": 1,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "ResidualColumn",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Specify the name of the column containing the residual from  residuals table. The default name is residual. Input columns must contain numeric SQL types.",
+      "rDescription": "Specify the name of the column containing the residual from  residuals table. The default name is residual.",
+      "description": "Specify the name of the column containing the residual from  residuals table. The default name is residual.",
       "datatype": "COLUMN_NAMES",
       "allowsLists": false,
       "rName": "residual.column",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 5
     },
     {
+      "rDefaultValue": 1,
       "lowerBound": 0,
+      "upperBound": 2147483647,
       "lowerBoundType": "EXCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
       "allowNaN": false,
       "name": "StepAhead",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "The number of steps to forecast after the end of the time series. The input value must be greater than 0.",
+      "rDescription": "Specifies the number of steps to forecast after the end of the time series. This value must be a positive integer.",
+      "description": "Specifies the number of steps to forecast after the end of the time series. This value must be a positive integer.",
       "datatype": "INTEGER",
       "allowsLists": false,
-      "rName": "step.ahead",
-      "useInR": true
+      "rName": "n.ahead",
+      "useInR": true,
+      "rOrderNum": 6
     }
   ]
 }

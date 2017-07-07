@@ -1,10 +1,11 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
   "function_name": "Percentile",
   "function_version": "1.1",
   "function_type": "non-driver",
+  "function_r_name": "aa.percentile",
   "short_description": "This analytical function can be used to find percentiles on a per group basis.",
   "long_description": "This function generates the exact percentiles for a group of numbers. This function works well when the number of groups is big (in the order of > 100s of thousands) and each group is small enough to fit in memory (in the order of 10s of thousands). The exact number depends on the cluster configuration.",
   "input_tables": [
@@ -14,58 +15,80 @@
       ],
       "isOrdered": false,
       "partitionByOne": false,
+      "name": "input",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "The table defining the data on which percentages will be calculated.",
       "description": "The table defining the data on which percentages will be calculated.",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "useInR": true
+      "rName": "data",
+      "useInR": true,
+      "rOrderNum": 1
     }
   ],
   "argument_clauses": [
+    {
+      "targetTable": [
+        "input"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "NUMERIC"
+      ],
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "TargetColumns",
+      "alternateNames": [],
+      "isRequired": true,
+      "rDescription": " Specifies the names of the columns that contain the groups of numbers whose percentiles are to be generated.",
+      "description": " Specifies the names of the columns that contain the groups of numbers whose percentiles are to be generated.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "target.columns",
+      "useInR": true,
+      "rOrderNum": 3
+    },
+    {
+      "targetTable": [
+        "input"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "GroupColumns",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": " Specifies the names of the columns to copy to the output table. Typically, the list of group columns is the same as the list of partition columns.",
+      "description": " Specifies the names of the columns to copy to the output table. Typically, the list of group columns is the same as the list of partition columns.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "group.columns",
+      "useInR": true,
+      "rOrderNum": 4
+    },
     {
       "lowerBound": 0,
       "upperBound": 100,
       "lowerBoundType": "INCLUSIVE",
       "upperBoundType": "INCLUSIVE",
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "Percentile",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "The comma separated list of percentile values required. Each input value must be no less than 0.0 and no greater than 100.0.",
+      "rDescription": "Specifies the percentiles for the function to generate.",
+      "description": "Specifies the percentiles for the function to generate.",
       "datatype": "DOUBLE",
       "allowsLists": true,
       "rName": "percentile",
-      "useInR": true
-    },
-    {
-      "checkDuplicate": true,
-      "allowedTypeGroups": [
-        "NUMERIC"
-      ],
-      "allowPadding": true,
-      "name": "TargetColumns",
-      "alternateNames": [
-        "Target_Columns"
-      ],
-      "isRequired": true,
-      "description": "The comma separated list of column names for which percentile values need to be retrieved. Input columns must contain numeric SQL types.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "target.columns",
-      "useInR": true
-    },
-    {
-      "checkDuplicate": true,
-      "allowPadding": true,
-      "name": "GroupColumns",
-      "alternateNames": [
-        "Group_Columns"
-      ],
-      "isRequired": false,
-      "description": "The comma separated list of column names for which needs to be passed along.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "group.columns",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 2
     }
   ]
 }

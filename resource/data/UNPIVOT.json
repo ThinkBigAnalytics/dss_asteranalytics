@@ -1,10 +1,11 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
   "function_name": "Unpivot",
-  "function_version": "1.2",
+  "function_version": "1.3",
   "function_type": "non-driver",
+  "function_r_name": "aa.unpivot",
   "short_description": "This function is used to unpivot a range of columns into an atribute column and a value column.",
   "long_description": "This function is used to unpivot a range of columns into an atribute column and a value column.",
   "input_tables": [
@@ -14,16 +15,29 @@
       ],
       "isOrdered": false,
       "partitionByOne": false,
+      "name": "input",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "The table containing the data to be pivoted.",
       "description": "The table containing the data to be pivoted.",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "useInR": true
+      "rName": "data",
+      "useInR": true,
+      "rOrderNum": 1
     }
   ],
   "argument_clauses": [
     {
+      "targetTable": [
+        "input"
+      ],
       "checkDuplicate": false,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "Unpivot",
       "alternateNames": [
@@ -31,25 +45,37 @@
         "ColsToUnpivotRange"
       ],
       "isRequired": true,
-      "description": "The column containing the pivot keys.",
+      "rDescription": "Specifies the names of the unpivot columns—the input columns to unpivot (convert to rows).",
+      "description": "Specifies the names of the unpivot columns—the input columns to unpivot (convert to rows).",
       "datatype": "COLUMNS",
       "allowsLists": true,
       "rName": "unpivot",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 2
     },
     {
+      "targetTable": [
+        "input"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "Accumulate",
       "alternateNames": [
         "ColsToAccumulate"
       ],
       "isRequired": true,
-      "description": "Columns from the input table to be passed through from input to output.",
+      "rDescription": "Specifies the names of input columns—other than unpivot columns—to copy to the output table. You must specify these columns in the same order that they appear in the input table. No accumulate_column can be an unpivot column.",
+      "description": "Specifies the names of input columns—other than unpivot columns—to copy to the output table. You must specify these columns in the same order that they appear in the input table. No accumulate_column can be an unpivot column.",
       "datatype": "COLUMNS",
       "allowsLists": true,
       "rName": "accumulate",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 6
     },
     {
       "defaultValue": false,
@@ -58,39 +84,47 @@
         "KeepInputColumnTypes"
       ],
       "isRequired": false,
-      "description": "Indicates whether to keep the types of the input columns. The default value is false.",
+      "rDescription": " Specifies whether the unpivoted value column, in the output table, has the same data type as its corresponding unpivot column (if possible). The default value is 'false'—for each unpivoted column, the function outputs the values in a single VARCHAR column. If you specify 'true', the function outputs each unpivoted value column in a separate column. If the unpivot column has a real data type, the unpivoted value column has the data type DOUBLE PRECISION; if the unpivot column has an integer data type, the unpivoted value column has the data type LONG; if the unpivot column has any other data type, the unpivoted value column has the data type VARCHAR.",
+      "description": " Specifies whether the unpivoted value column, in the output table, has the same data type as its corresponding unpivot column (if possible). The default value is 'false'—for each unpivoted column, the function outputs the values in a single VARCHAR column. If you specify 'true', the function outputs each unpivoted value column in a separate column. If the unpivot column has a real data type, the unpivoted value column has the data type DOUBLE PRECISION; if the unpivot column has an integer data type, the unpivoted value column has the data type LONG; if the unpivot column has any other data type, the unpivoted value column has the data type VARCHAR.",
       "datatype": "BOOLEAN",
       "allowsLists": false,
       "rName": "input.types",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 3
     },
     {
+      "permittedValues": [],
       "defaultValue": "attribute",
-      "isOutputColumn": false,
+      "isOutputColumn": true,
       "name": "AttributeColumn",
       "alternateNames": [
         "AttributeColumnName"
       ],
       "isRequired": false,
-      "description": "Sets the name of the unpivoted attribute column. The default value is attribute.",
+      "rDescription": "Specifies the name of the unpivoted attribute column in the output table. The default value is 'attribute'.",
+      "description": "Specifies the name of the unpivoted attribute column in the output table. The default value is 'attribute'.",
       "datatype": "STRING",
       "allowsLists": false,
       "rName": "attribute.column",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 4
     },
     {
+      "permittedValues": [],
       "defaultValue": "value",
-      "isOutputColumn": false,
+      "isOutputColumn": true,
       "name": "ValueColumn",
       "alternateNames": [
         "ValueColumnName"
       ],
       "isRequired": false,
-      "description": "Sets the name of the unpivoted attribute column. The default value is value.",
+      "rDescription": "Specifies the name of the unpivoted value column in the output table. The default value is 'value'.",
+      "description": "Specifies the name of the unpivoted value column in the output table. The default value is 'value'.",
       "datatype": "STRING",
       "allowsLists": false,
       "rName": "value.column",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 5
     }
   ]
 }

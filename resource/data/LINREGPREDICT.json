@@ -1,0 +1,94 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "2",
+  "json_content_version": "1",
+  "function_name": "LinRegPredict",
+  "function_version": "1.0",
+  "function_type": "non-driver",
+  "function_r_name": "aa.lm.predict",
+  "ref_function_r_name": "aa.lm",
+  "short_description": "This function gives score according to linear regression model.",
+  "long_description": "This function gives score according to linear regression model.",
+  "input_tables": [
+    {
+      "requiredInputKind": [
+        "PartitionByAny"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "name": "input",
+      "alternateNames": [],
+      "isRequired": true,
+      "rDescription": "",
+      "description": "",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "rName": "newdata",
+      "useInR": true,
+      "rOrderNum": 2
+    },
+    {
+      "requiredInputKind": [
+        "Dimension"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "name": "model",
+      "alternateNames": [],
+      "isRequired": true,
+      "rDescription": "Specifies the model table from linreg for the prediction",
+      "description": "Specifies the model table from linreg for the prediction",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "rName": "object",
+      "useInR": true,
+      "rOrderNum": 1
+    }
+  ],
+  "argument_clauses": [
+    {
+      "targetTable": [
+        "input"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "NUMERIC"
+      ],
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "InputColumns",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "Specifies the names of the input table columns that contain the input variables.",
+      "description": "Specifies the names of the input table columns that contain the input variables.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "input.columns",
+      "useInR": true,
+      "rOrderNum": -1
+    },
+    {
+      "targetTable": [
+        "input"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "Accumulate",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "Specifies the names of input table columns to copy to the output table.",
+      "description": "Specifies the names of input table columns to copy to the output table.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "accumulate",
+      "useInR": true,
+      "rOrderNum": 3
+    }
+  ]
+}

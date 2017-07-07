@@ -1,10 +1,11 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
-  "function_name": "wmavg",
-  "function_version": "1.2",
+  "function_name": "WMAVG",
+  "function_version": "1.3",
   "function_type": "non-driver",
+  "function_r_name": "aa.wmavg",
   "short_description": "Computes Weighted Moving Averages",
   "long_description": "The weighted moving average computes the average overa number of points in a time series but applies a weighting to older values",
   "input_tables": [
@@ -14,60 +15,75 @@
       ],
       "isOrdered": true,
       "partitionByOne": false,
+      "name": "input",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "Input table.",
+      "rDescription": "Specifies the name of the table that contains the columns",
+      "description": "Specifies the name of the table that contains the columns",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "useInR": true
+      "rName": "data",
+      "useInR": true,
+      "rOrderNum": 1
     }
   ],
   "argument_clauses": [
     {
-      "defaultValue": 10,
-      "lowerBound": 3,
-      "lowerBoundType": "INCLUSIVE",
-      "allowNaN": false,
-      "name": "WindowSize",
-      "alternateNames": [
-        "Window_Size"
+      "targetTable": [
+        "input"
       ],
-      "isRequired": false,
-      "description": "Specifies the number of old values to be considered for calculating the new weighted moving average. The input value must be no less than 3. The default value is 10.",
-      "datatype": "INTEGER",
-      "allowsLists": false,
-      "rName": "window.size",
-      "useInR": true
-    },
-    {
-      "defaultValue": false,
-      "name": "IncludeFirst",
-      "alternateNames": [
-        "Return_All",
-		"ReturnAll"
-      ],
-      "isRequired": false,
-      "description": "Specifies whether the first START_ROWS rows should be included in the output or not. The default value is false.",
-      "datatype": "BOOLEAN",
-      "allowsLists": false,
-      "rName": "include.first",
-      "useInR": true
-    },
-    {
       "checkDuplicate": true,
+      "allowedTypes": [],
       "allowedTypeGroups": [
         "NUMERIC"
       ],
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "TargetColumns",
       "alternateNames": [
         "Columns"
       ],
       "isRequired": false,
-      "description": "Name of the column name for which the exponential moving average will be calculated. Input columns must contain numeric SQL types.",
+      "rDescription": "Specifies the input column names for which the moving average is to be computed. If you omit this argument, then the function copies every input column to the output table but does not compute moving average.",
+      "description": "Specifies the input column names for which the moving average is to be computed. If you omit this argument, then the function copies every input column to the output table but does not compute moving average.",
       "datatype": "COLUMNS",
       "allowsLists": true,
       "rName": "target.columns",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 2
+    },
+    {
+      "defaultValue": 10,
+      "lowerBound": 3,
+      "upperBound": 2147483647,
+      "lowerBoundType": "INCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
+      "allowNaN": false,
+      "name": "WindowSize",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "Specifies the number of old values to be considered for calculating the new weighted moving average.",
+      "description": "Specifies the number of old values to be considered for calculating the new weighted moving average.",
+      "datatype": "INTEGER",
+      "allowsLists": false,
+      "rName": "window.size",
+      "useInR": true,
+      "rOrderNum": 4
+    },
+    {
+      "defaultValue": false,
+      "name": "IncludeFirst",
+      "alternateNames": [
+        "ReturnAll"
+      ],
+      "isRequired": false,
+      "rDescription": "Specifies whether to include the starting rows in the output table. The default value is 'false'. If you specify 'true', the output columns for the starting rows contain NULL, because their exponential moving average is undefined.",
+      "description": "Specifies whether to include the starting rows in the output table. The default value is 'false'. If you specify 'true', the output columns for the starting rows contain NULL, because their exponential moving average is undefined.",
+      "datatype": "BOOLEAN",
+      "allowsLists": false,
+      "rName": "include.first",
+      "useInR": true,
+      "rOrderNum": 3
     }
   ]
 }

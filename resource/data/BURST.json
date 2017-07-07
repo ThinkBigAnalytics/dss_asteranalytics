@@ -1,10 +1,11 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
   "function_name": "Burst",
-  "function_version": "1.0",
+  "function_version": "1.1",
   "function_type": "non-driver",
+  "function_r_name": "aa.burst",
   "short_description": "It is used to split the time series into multiple contiguous intervals of given length.",
   "long_description": "It is used to split the time series into multiple contiguous intervals of given length.Time_table acts as an option if more specific time slots needed. The function achieves functionalities according to different combination of argument clauses.",
   "input_tables": [
@@ -15,12 +16,15 @@
       "isOrdered": false,
       "partitionByOne": false,
       "name": "input_table",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "",
+      "rDescription": "Specifies the table name which contains time series",
+      "description": "Specifies the table name which contains time series",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "rName": "input.table",
-      "useInR": true
+      "rName": "data",
+      "useInR": true,
+      "rOrderNum": 1
     },
     {
       "requiredInputKind": [
@@ -29,147 +33,207 @@
       "isOrdered": false,
       "partitionByOne": false,
       "name": "time_table",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "",
+      "rDescription": "Specifies the table name which contains time.",
+      "description": "Specifies the table name which contains time.",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "rName": "time.table",
-      "useInR": true
+      "rName": "time.data",
+      "useInR": true,
+      "rOrderNum": 2
     }
   ],
   "argument_clauses": [
     {
-      "targetTable": "input_table",
+      "targetTable": [
+        "input_table"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "TimeColumn",
-	  "alternateNames":["Time_Column"],
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "Specifies the names of the input_table columns that contain the start and end times of the time interval to be burst.",
       "description": "Specifies the names of the input_table columns that contain the start and end times of the time interval to be burst.",
       "datatype": "COLUMNS",
       "allowsLists": true,
       "rName": "time.column",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 3
     },
     {
-      "lowerBound": 0.0,
-      "lowerBoundType": "EXCLUSIVE",
-      "allowNaN": false,
-      "name": "TimeInterval",
-	  "alternateNames":["Time_Interval"],
-      "isRequired": false,
-      "description": "Specifies the length of each burst time interval. This value must be an INTEGER. The input value must be greater than 0. The input value must be greater than 0.0.",
-      "datatype": "DOUBLE",
-      "allowsLists": false,
-      "rName": "time.interval",
-      "useInR": true
-    },
-    {
-      "targetTable": "input_table",
+      "targetTable": [
+        "input_table"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "ValueColumns",
-	  "alternateNames":["Value_Columns"],
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "Specifies the names of input_table columns to copy to the output table.",
       "description": "Specifies the names of input_table columns to copy to the output table.",
       "datatype": "COLUMNS",
       "allowsLists": true,
       "rName": "value.columns",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 4
     },
     {
-      "isOutputColumn": false,
-      "name": "TimeDataType",
-	  "alternateNames":["Time_Data_Type"],
-      "isRequired": false,
-      "description": "Specifies the data type of the output columns that correspond to the input table columns that Time_Column specifies (start_time_column and end_time_column",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "time.data.type",
-      "useInR": true
-    },
-    {
-      "isOutputColumn": false,
-      "allowPadding": true,
-      "name": "ValueDataType",
-	  "alternateNames":["Value_Data_Type"],
-      "isRequired": false,
-      "description": "Specifies the data types of the output columns that correspond to the input table columns that Value_Columns specifies.",
-      "datatype": "STRING",
-      "allowsLists": true,
-      "rName": "value.data.type",
-      "useInR": true
-    },
-    {
-      "isOutputColumn": false,
-      "name": "StartTime",
-	  "alternateNames":["Start_Time"],
-      "isRequired": false,
-      "description": "Specifies the start time for the time interval to be burst. The default value is start_time_column.",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "start.time",
-      "useInR": true
-    },
-    {
-      "isOutputColumn": false,
-      "name": "EndTime",
-	  "alternateNames":["End_Time"],
-      "isRequired": false,
-      "description": "Specifies the end time for the time interval to be burst. The default value is end_time_column.",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "end.time",
-      "useInR": true
-    },
-    {
-      "lowerBound": 0,
-      "lowerBoundType": "EXCLUSIVE",
-      "allowNaN": false,
-      "name": "NumPoints",
-	  "alternateNames":["Num_Points"],
-      "isRequired": false,
-      "description": "Specifies the number of data points in each burst time interval. This value must be an INTEGER. The input value must be greater than 0. The input value must be greater than 0.",
-      "datatype": "INTEGER",
-      "allowsLists": false,
-      "rName": "num.points",
-      "useInR": true
-    },
-    {
-      "isOutputColumn": false,
-      "allowPadding": true,
-      "name": "ValuesBeforeFirst",
-	  "alternateNames":["Values_Before_First"],
-      "isRequired": false,
-      "description": "Specifies the values to use if start_time is before start_time_column. Each of these values must have the same data type as its corresponding value_column. Values of data type VARCHAR are case-insensitive.",
-      "datatype": "STRING",
-      "allowsLists": true,
-      "rName": "values.before.first",
-      "useInR": true
-    },
-    {
-      "isOutputColumn": false,
-      "allowPadding": true,
-      "name": "ValuesAfterLast",
-	  "alternateNames":["Values_After_Last"],
-      "isRequired": false,
-      "description": "Specifies the values to use if end_time is after end_time_column. Each of these values must have the same data type as its corresponding value_column. Values of data type VARCHAR are case-insensitive.",
-      "datatype": "STRING",
-      "allowsLists": true,
-      "rName": "values.after.last",
-      "useInR": true
-    },
-    {
-      "targetTable": "input_table",
+      "targetTable": [
+        "input_table"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "Accumulate",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Specifies the names of input_table columns (other than those specified by Time_Column and Value_Columns) to copy to the output table.",
+      "rDescription": "Specifies the names of input_table columns (other than those specified by time.column and value.columns) to copy to the output table. By default, the function copies to the output table only the columns specified by time.column and value.columns.",
+      "description": "Specifies the names of input_table columns (other than those specified by TimeColumn and ValueColumns) to copy to the output table. By default, the function copies to the output table only the columns specified by TimeColumn and ValueColumns.",
       "datatype": "COLUMNS",
       "allowsLists": true,
       "rName": "accumulate",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 13
+    },
+    {
+      "lowerBound": 0.0,
+      "upperBound": Infinity,
+      "lowerBoundType": "EXCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
+      "allowNaN": false,
+      "name": "TimeInterval",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "Specifies the length of each burst time interval. This value must be either INTEGER or DOUBLE PRECISION. Note: Specify exactly one of time_table, time.interval, or num.points.",
+      "description": "Specifies the length of each burst time interval. This value must be an INTEGER. Note: Specify exactly one of time_table, TimeInterval, or NumPoints.",
+      "datatype": "DOUBLE",
+      "allowsLists": false,
+      "rName": "time.interval",
+      "useInR": true,
+      "rOrderNum": 5
+    },
+    {
+      "permittedValues": [],
+      "isOutputColumn": false,
+      "name": "TimeDataType",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "Specifies the data type of the output columns that correspond to the input table columns that time.column specifies (start_time_column and end_time_column). If you omit this argument, then the function infers the data type of start_time_column and end_time_column from the input table and uses the inferred data type for the corresponding output table columns. If you specify this argument, then the function can transform the input data to the specified output data type only if both the input column data type and the specified output column data type are in this list: INTEGER, BIGINT, SMALLINT, DOUBLE PRECISION, DECIMAL(n,n), DECIMAL, NUMERIC, NUMERIC(n,n)",
+      "description": "Specifies the data type of the output columns that correspond to the input table columns that TimeColumn specifies (start_time_column and end_time_column). If you omit this argument, then the function infers the data type of start_time_column and end_time_column from the input table and uses the inferred data type for the corresponding output table columns. If you specify this argument, then the function can transform the input data to the specified output data type only if both the input column data type and the specified output column data type are in this list: INTEGER, BIGINT, SMALLINT, DOUBLE PRECISION, DECIMAL(n,n), DECIMAL, NUMERIC, NUMERIC(n,n)",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "time.datatype",
+      "useInR": true,
+      "rOrderNum": 6
+    },
+    {
+      "permittedValues": [],
+      "isOutputColumn": false,
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "ValueDataType",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "Specifies the data types of the output columns that correspond to the input table columns that value.columns specifies. If you omit this argument, then the function infers the data type of each value_column from the input table and uses the inferred data type for the corresponding output table column. If you specify value.data.type, then it must be the same size as value.columns. That is, if value.columns specifies n columns, then value.datatype must specify n data types. For i in [1, n], value_column_i has value_type_i. However, value_type_i can be empty; for example: value.columns (c1, c2, c3), value.datatype (INTEGER, ,VARCHAR) If you specify this argument, then the function can transform the input data to the specified output data type only if both the input column data type and the specified output column data type are in this list: INTEGER, BIGINT, SMALLINT, DOUBLE PRECISION, DECIMAL(n,n), DECIMAL, NUMERIC, NUMERIC(n,n)",
+      "description": "Specifies the data types of the output columns that correspond to the input table columns that ValueColumns specifies. If you omit this argument, then the function infers the data type of each value_column from the input table and uses the inferred data type for the corresponding output table column. If you specify ValueDataType, then it must be the same size as ValueColumns. That is, if ValueColumns specifies n columns, then ValueDataType must specify n data types. For i in [1, n], value_column_i has value_type_i. However, value_type_i can be empty; for example: ValueColumns (c1, c2, c3),ValueDataType (INTEGER, ,VARCHAR)  If you specify this argument, then the function can transform the input data to the specified output data type only if both the input column data type and the specified output column data type are in this list: INTEGER, BIGINT, SMALLINT, DOUBLE PRECISION, DECIMAL(n,n), DECIMAL, NUMERIC, NUMERIC(n,n)",
+      "datatype": "STRING",
+      "allowsLists": true,
+      "rName": "value.datatype",
+      "useInR": true,
+      "rOrderNum": 7
+    },
+    {
+      "permittedValues": [],
+      "isOutputColumn": false,
+      "name": "StartTime",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "Specifies the start time for the time interval to be burst. The default is the value in start_time_column.",
+      "description": "Specifies the start time for the time interval to be burst. The default is the value in start_time_column.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "start.time",
+      "useInR": true,
+      "rOrderNum": 8
+    },
+    {
+      "permittedValues": [],
+      "isOutputColumn": false,
+      "name": "EndTime",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "Specifies the end time for the time interval to be burst. The default is the value in end_time_column.",
+      "description": "Specifies the end time for the time interval to be burst. The default is the value in end_time_column.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "end.time",
+      "useInR": true,
+      "rOrderNum": 9
+    },
+    {
+      "lowerBound": 0,
+      "upperBound": 2147483647,
+      "lowerBoundType": "EXCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
+      "allowNaN": false,
+      "name": "NumPoints",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "Specifies the number of data points in each burst time interval.This value must be an INTEGER. Note: Specify exactly one of time_table, time.interval, or num.points.",
+      "description": "Specifies the number of data points in each burst time interval.This value must be an INTEGER. Note: Specify exactly one of time_table, TimeInterval, or NumPoints.",
+      "datatype": "INTEGER",
+      "allowsLists": false,
+      "rName": "num.points",
+      "useInR": true,
+      "rOrderNum": 10
+    },
+    {
+      "permittedValues": [],
+      "isOutputColumn": false,
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "ValuesBeforeFirst",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "Specifies the values to use if start_time is before start_time_column. Each of these values must have the same data type as its corresponding value_column. Values of data typeVARCHAR are case-insensitive. If you specify values.before.first, then it must be the same size as ValueColumns. That is, if value.columns specifies n columns, then values.before.first must specify n values. For i in [1, n], value_column_i has the value before_first_value_i. However, before_first_value_i can be empty; for example: value.columns (c1, c2, c3), values.before.first (1, ,'abc') If before_first_value_i is empty, then value_column_i has the value NULL. If you do not specify values.before.first, then value_column_i has the value NULL for i in [1, n].",
+      "description": "Specifies the values to use if start_time is before start_time_column. Each of these values must have the same data type as its corresponding value_column. Values of data typeVARCHAR are case-insensitive. If you specify ValuesBeforeFirst, then it must be the same size as ValueColumns. That is, if ValueColumns specifies n columns, then ValuesBeforeFirst must specify n values. For i in [1, n], value_column_i has the value before_first_value_i. However, before_first_value_i can be empty; for example: ValueColumns (c1, c2, c3), ValuesBeforeFirst (1, ,'abc') If before_first_value_i is empty, then value_column_i has the value NULL. If you do not specify values.before.first, then value_column_i has the value NULL for i in [1, n].",
+      "datatype": "STRING",
+      "allowsLists": true,
+      "rName": "values.before.first",
+      "useInR": true,
+      "rOrderNum": 11
+    },
+    {
+      "permittedValues": [],
+      "isOutputColumn": false,
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "ValuesAfterLast",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "Specifies the values to use if end_time is after end_time_column. Each of these values must have the same data type as its corresponding value_column. Values of data type VARCHAR are case-insensitive. If you specify ValuesAfterLast, then it must be the same size as value.columns. That is, if value.columns specifies n columns, then ValuesAfterLast must specify n values. For i in [1, n], value_column_i has the value after_last_value_i. However, after_last_value_i can be empty; for example:value.columns (c1, c2, c3), values.after.last (1, ,'abc') If after_last_value_i is empty, then value_column_i has the value NULL. If you do not specify Values_After_Last, then value_column_i has the value NULL for i in [1, n].",
+      "description": "Specifies the values to use if end_time is after end_time_column. Each of these values must have the same data type as its corresponding value_column. Values of data type VARCHAR are case-insensitive. If you specify ValuesAfterLast, then it must be the same size as ValueColumns. That is, if ValueColumns specifies n columns, then ValuesAfterLast must specify n values. For i in [1, n], value_column_i has the value after_last_value_i. However, after_last_value_i can be empty; for example: ValueColumns (c1, c2, c3), ValuesAfterLast (1, ,'abc') If after_last_value_i is empty, then value_column_i has the value NULL. If you do not specify Values_After_Last, then value_column_i has the value NULL for i in [1, n].",
+      "datatype": "STRING",
+      "allowsLists": true,
+      "rName": "values.after.last",
+      "useInR": true,
+      "rOrderNum": 12
     }
   ]
 }

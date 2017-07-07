@@ -1,23 +1,72 @@
-{"json_schema_major_version":"1","json_schema_minor_version":"1",
-  "json_content_version":"1","function_name":"approxdcountmap",
-  "function_version":"1.0","function_type":"non-driver","short_description":
-  "This function estimates the number of distinct values.",
-  "long_description":
-  "This function estimates the number of distinct values in a column or combinations of columns, while scanning the table only once.",
-  "input_tables":[{"isOrdered":false,"partitionByOne":false,"name":
-      "InputTable","isRequired":true,"description":
-      "Specifies the table containing the input data.","datatype":
-      "TABLE_ALIAS","allowsLists":false,"rName":"input.table","useInR":
-      true}],"argument_clauses":[{"isOutputColumn":false,"allowPadding":
-      true,"name":"InputColumns","alternateNames":["Columns"],"isRequired":
-      true,"description":
-      "Specifies the name(s) of the column or columns for which an approximate distinct count will be calculated.",
-      "datatype":"STRING","allowsLists":true,"rName":"input.columns",
-      "useInR":true},{"defaultValue":10,"lowerBound":0.05,"upperBound":10,
-      "lowerBoundType":"INCLUSIVE","upperBoundType":"INCLUSIVE","allowNaN":
-      false,"name":"ErrorRate","alternateNames":["Error"],"isRequired":
-      false,"description":
-      "Specifies the acceptable error rate, expressed using decimal representation. The input value must be no less than 0.05 and no greater than 10.0. The default value is 10.0.",
-      "datatype":"DOUBLE","allowsLists":false,"rName":"error.rate","useInR":
-      true}]}
-
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "2",
+  "json_content_version": "1",
+  "function_name": "ApproxDCountMap",
+  "function_version": "1.1",
+  "function_type": "non-driver",
+  "function_r_name": "aa.approx.dcount",
+  "short_description": "This function estimates the number of distinct values.",
+  "long_description": "This function estimates the number of distinct values in a column or combinations of columns, while scanning the table only once.",
+  "function_operation": "map",
+  "partner_function": "ApproxDCountReduce",
+  "input_tables": [
+    {
+      "requiredInputKind": [
+        "PartitionByAny"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "name": "InputTable",
+      "alternateNames": [],
+      "isRequired": true,
+      "rDescription": "Specifies the table containing the input data.",
+      "description": "Specifies the table containing the input data.",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "rName": "input.table",
+      "useInR": true,
+      "rOrderNum": 0
+    }
+  ],
+  "argument_clauses": [
+    {
+      "permittedValues": [],
+      "isOutputColumn": false,
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "InputColumns",
+      "alternateNames": [
+        "Columns"
+      ],
+      "isRequired": true,
+      "rDescription": "Specifies the columns for which to estimate the number of distinct values.",
+      "description": "Specifies the columns for which to estimate the number of distinct values.",
+      "datatype": "STRING",
+      "allowsLists": true,
+      "rName": "input.columns",
+      "useInR": true,
+      "rOrderNum": 0
+    },
+    {
+      "defaultValue": 10,
+      "lowerBound": 0.05,
+      "upperBound": 10,
+      "lowerBoundType": "INCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
+      "allowNaN": false,
+      "name": "ErrorRate",
+      "alternateNames": [
+        "Error"
+      ],
+      "isRequired": false,
+      "rDescription": "Specifies the acceptable error rate, expressed as a decimal (for example, if error_tolerance is 10, then the acceptable error rate is 10%). The error_tolerance must be in the range (5.0E-4, 10]. The default value is 10.",
+      "description": "Specifies the acceptable error rate, expressed as a decimal (for example, if error_tolerance is 10, then the acceptable error rate is 10%). The error_tolerance must be in the range (5.0E-4, 10]. The default value is 10.",
+      "datatype": "DOUBLE",
+      "allowsLists": false,
+      "rName": "error.rate",
+      "useInR": true,
+      "rOrderNum": 0
+    }
+  ]
+}

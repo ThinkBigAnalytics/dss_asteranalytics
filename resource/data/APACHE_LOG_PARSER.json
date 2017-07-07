@@ -1,10 +1,11 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
-  "function_name": "apache_log_parser",
-  "function_version": "2.3",
+  "function_name": "Apache_Log_Parser",
+  "function_version": "2.4",
   "function_type": "non-driver",
+  "function_r_name": "aa.apache.log.parser",
   "short_description": "Parse Apache web server logs.",
   "long_description": "Parse Apache web server logs,  extracting log items in accordance with given format string.",
   "input_tables": [
@@ -14,79 +15,94 @@
       ],
       "isOrdered": false,
       "partitionByOne": false,
+      "name": "input",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "",
+      "rDescription": "Input table, must have a column that contains the information to be parsed",
+      "description": "Input table, must have a column that contains the information to be parsed",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "useInR": true
+      "rName": "data",
+      "useInR": true,
+      "rOrderNum": 1
     }
   ],
   "argument_clauses": [
     {
+      "targetTable": [
+        "input"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
       "allowedTypeGroups": [
         "STRING"
       ],
       "requiredLength": 1,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "TargetColumn",
       "alternateNames": [
-        "Log_Column",
-		"LogColumn"
+        "LogColumn"
       ],
       "isRequired": true,
-      "description": "Name of the column whose contents will be parsed. Input columns must contain string SQL types.",
+      "rDescription": "Specifies the name of the input column that contains the information to be parsed",
+      "description": "Specifies the name of the input column that contains the information to be parsed",
       "datatype": "COLUMNS",
       "allowsLists": false,
       "rName": "target.column",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 2
     },
     {
+      "permittedValues": [],
       "defaultValue": "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\"",
       "isOutputColumn": false,
       "name": "LogFormat",
-	  "alternateNames": [
-        "Log_Format"
-      ],
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The Apache Log Format string is used to generate the server access logs. This format string can be found in the apache server configuration file. The default value is %h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\".",
+      "rDescription": "String that specifies the format used to generate the server access logs, which you can find in the Apache server configuration file. For each log item in the format string, the function builds an output table column built from the input table columns. The default log format is NCSA extended/combined format, which is: \"%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\"\"",
+      "description": "String that specifies the format used to generate the server access logs, which you can find in the Apache server configuration file. For each log item in the format string, the function builds an output table column built from the input table columns. The default log format is NCSA extended/combined format, which is: \"%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\"\"",
       "datatype": "STRING",
       "allowsLists": false,
       "rName": "log.format",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 3
     },
     {
+      "permittedValues": [],
       "defaultValue": [
         ".png",
         ".xml",
         ".js"
       ],
       "isOutputColumn": false,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "ExcludeFiles",
-      "alternateNames": [
-        "Exclude_Files"
-      ],
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Comma separated file suffixes to exclude. The default value is [.png, .xml, .js].",
+      "rDescription": "Specifies the types of files to exclude, by suffix. The default value is '.png', '.xml', '.js'. If an input row contains a file of an excluded type, then the function does not generate an output file row for that input row.",
+      "description": "Specifies the types of files to exclude, by suffix. The default value is '.png', '.xml', '.js'. If an input row contains a file of an excluded type, then the function does not generate an output file row for that input row.",
       "datatype": "STRING",
       "allowsLists": true,
       "rName": "exclude.files",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 4
     },
     {
       "defaultValue": false,
       "name": "SearchInfoFlag",
       "alternateNames": [
-        "Return_Search_Info",
-		"ReturnSearchInfo"
+        "ReturnSearchInfo"
       ],
       "isRequired": false,
-      "description": "A true or false value that specifies whether to return search information. If 'true', the search engine and the search terms, if existing, are extracted into two output columns. Three search engines are supported for identifying search activities: Google, Bing, and Yahoo. More complete parsing capabilities are provided for Google. The default value is false.",
+      "rDescription": "Specifies whether to return search information. The default value is 'false'. If you specify 'true', the function extracts the search engine and search terms (if they exist) into two output columns. The supported search engines are Google, Bing, and Yahoo. The function provides more complete parsing capabilities for Google.",
+      "description": "Specifies whether to return search information. The default value is 'false'. If you specify 'true', the function extracts the search engine and search terms (if they exist) into two output columns. The supported search engines are Google, Bing, and Yahoo. The function provides more complete parsing capabilities for Google.",
       "datatype": "BOOLEAN",
       "allowsLists": false,
       "rName": "search.info.flag",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 5
     }
   ]
 }

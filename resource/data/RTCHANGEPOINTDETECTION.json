@@ -1,10 +1,11 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
   "function_name": "RtChangePointDetection",
   "function_version": "1.1",
   "function_type": "non-driver",
+  "function_r_name": "aa.rt.changepoint.detection",
   "short_description": "RtChangePointDetection function detects change point for real time data.",
   "long_description": "RtChangePointDetection function detects change point for real time data.",
   "input_tables": [
@@ -14,14 +15,64 @@
       ],
       "isOrdered": true,
       "partitionByOne": false,
+      "name": "input",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "This table defining the input time series data.",
       "description": "This table defining the input time series data.",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "useInR": true
+      "rName": "data",
+      "useInR": true,
+      "rOrderNum": 1
     }
   ],
   "argument_clauses": [
+    {
+      "targetTable": [
+        "input"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "NUMERIC"
+      ],
+      "requiredLength": 1,
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "ValueColumn",
+      "alternateNames": [],
+      "isRequired": true,
+      "rDescription": "Specifies the name of the input table column that contains the time series data.",
+      "description": "Specifies the name of the input table column that contains the time series data.",
+      "datatype": "COLUMNS",
+      "allowsLists": false,
+      "rName": "value.column",
+      "useInR": true,
+      "rOrderNum": 2
+    },
+    {
+      "targetTable": [
+        "input"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "Accumulate",
+      "alternateNames": [],
+      "isRequired": true,
+      "rDescription": "Specifies the names of the input table columns to copy to the output table. Tip: To identify change points in the output table, specify the columns that appear in partition_exp and order_by_exp",
+      "description": "Specifies the names of the input table columns to copy to the output table. Tip: To identify change points in the output table, specify the columns that appear in partition_exp and order_by_exp",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "accumulate",
+      "useInR": true,
+      "rOrderNum": 3
+    },
     {
       "permittedValues": [
         "normal_distribution"
@@ -29,64 +80,51 @@
       "defaultValue": "normal_distribution",
       "isOutputColumn": false,
       "name": "SegmentationMethod",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The fitting method for each segmentation.  The only permitted input value is normal_distribution. The default value is normal_distribution.",
+      "rDescription": "Specifies the segmentation method, normal distribution (in each segment, the data is in a normal distribution). This is the default and only possible value.",
+      "description": "Specifies the segmentation method, normal distribution (in each segment, the data is in a normal distribution). This is the default and only possible value.",
       "datatype": "STRING",
       "allowsLists": false,
       "rName": "segmentation.method",
-      "useInR": true
-    },
-    {
-      "checkDuplicate": true,
-      "allowedTypeGroups": [
-        "NUMERIC"
-      ],
-      "requiredLength": 1,
-      "allowPadding": true,
-      "name": "ValueColumn",
-      "isRequired": true,
-      "description": "The column with time series data to process. Input columns must contain numeric SQL types.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "value.column",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 4
     },
     {
       "defaultValue": 10,
       "lowerBound": 2,
+      "upperBound": 2147483647,
       "lowerBoundType": "EXCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
       "allowNaN": false,
       "name": "WindowSize",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Size of the sliding window. The input value must be greater than 2. The default value is 10.",
+      "rDescription": "Specifies the size of the sliding window. The ideal window size depends heavily on the data. You might need to experiment with this value. The default value is 10.",
+      "description": "Specifies the size of the sliding window. The ideal window size depends heavily on the data. You might need to experiment with this value. The default value is 10.",
       "datatype": "INTEGER",
       "allowsLists": false,
-      "rName": "window.size",
-      "useInR": true
+      "rName": " window.size",
+      "useInR": true,
+      "rOrderNum": 5
     },
     {
-      "defaultValue": 10.0,
+      "defaultValue": 10,
       "lowerBound": 0,
+      "upperBound": Infinity,
       "lowerBoundType": "EXCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
       "allowNaN": false,
       "name": "Threshold",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "A double threshold value. The difference of max likehood will be compared with this value directly. The input value must be greater than 0.0. The default value is 10.0.",
+      "rDescription": "A double threshold value. Specifies a DOUBLE PRECISION value that the function compares to ln(L1)−ln(L0). The definition of Log(L1) and Log(L0) are in “Background”. They are the logarithms of L1 and L2. The default value is 10.",
+      "description": "A double threshold value. Specifies a DOUBLE PRECISION value that the function compares to ln(L1)−ln(L0). The definition of Log(L1) and Log(L0) are in “Background”. They are the logarithms of L1 and L2. The default value is 10.",
       "datatype": "DOUBLE",
       "allowsLists": false,
       "rName": "threshold",
-      "useInR": true
-    },
-    {
-      "checkDuplicate": true,
-      "allowPadding": true,
-      "name": "Accumulate",
-      "isRequired": true,
-      "description": "Additional columns which will be appended to output table.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "accumulate",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 6
     },
     {
       "permittedValues": [
@@ -94,15 +132,18 @@
         "segment",
         "verbose"
       ],
-      "defaultValue": "changepoint",
+      "defaultValue": "CHANGEPOINT",
       "isOutputColumn": false,
       "name": "OutputOption",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Output columns option. The permitted input values are [changepoint, segment, verbose]. The default value is changepoint.",
+      "rDescription": " Specifies the output table columns. The default value is 'CHANGEPOINT'.",
+      "description": " Specifies the output table columns. The default value is 'CHANGEPOINT'.",
       "datatype": "STRING",
       "allowsLists": false,
       "rName": "output.option",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 7
     }
   ]
 }

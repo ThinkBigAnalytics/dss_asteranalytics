@@ -1,10 +1,11 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
   "function_name": "LocalClusteringCoefficient",
-  "function_version": "1.1",
+  "function_version": "1.2",
   "function_type": "graph",
+  "function_r_name": "aa.local.clustering.coefficient",
   "short_description": "Graph function to calculate the local clustering coefficient of a network.",
   "long_description": "Graph function to calculate the local clustering coefficient of a network.",
   "input_tables": [
@@ -15,12 +16,15 @@
       "isOrdered": false,
       "partitionByOne": false,
       "name": "vertices",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "The input table contains vertices in the graph. ",
       "description": "The input table contains vertices in the graph. ",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "rName": "vertices",
-      "useInR": true
+      "rName": "vertices.data",
+      "useInR": true,
+      "rOrderNum": 1
     },
     {
       "requiredInputKind": [
@@ -29,74 +33,111 @@
       "isOrdered": false,
       "partitionByOne": false,
       "name": "edges",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "The input table contains edges in the graph.",
       "description": "The input table contains edges in the graph.",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "rName": "edges",
-      "useInR": true
+      "rName": "edges.data",
+      "useInR": true,
+      "rOrderNum": 2
     }
   ],
   "argument_clauses": [
     {
-      "targetTable": "edges",
+      "targetTable": [
+        "edges"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "TargetKey",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "The names of the target key columns in the edges table. The number of attributes and their types should correspond to those of the vertex_key SQL clause.",
+      "rDescription": "Specifies the key of the target vertex of an edge. The key consists of one or more edges table column names.",
+      "description": "Specifies the key of the target vertex of an edge. The key consists of one or more edges table column names.",
       "datatype": "COLUMNS",
       "allowsLists": true,
       "rName": "target.key",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 3
     },
     {
-      "targetTable": "edges",
+      "targetTable": [
+        "edges"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
       "allowedTypeGroups": [
         "NUMERIC"
       ],
       "requiredLength": 1,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "EdgeWeight",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The column name in edges table that indicates the edge weight. The weight is a positive non-zero value that is less than or equal to 1 (0...1). The default is the function takes the input as an unweighted graph. Input columns must contain numeric SQL types.",
+      "rDescription": "Specifies the name of the edges table column that contains the edge weights. Each edge weight is a positive value in the range (0-1]. By default, the function treats the input graph as unweighted. ",
+      "description": "Specifies the name of the edges table column that contains the edge weights. Each edge weight is a positive value in the range (0-1]. By default, the function treats the input graph as unweighted. ",
       "datatype": "COLUMNS",
       "allowsLists": false,
       "rName": "edge.weight",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 5
+    },
+    {
+      "targetTable": [
+        "vertices"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "Accumulate",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "Specifies the names of the vertices table columns to copy to the output table.",
+      "description": "Specifies the names of the vertices table columns to copy to the output table.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "accumulate",
+      "useInR": true,
+      "rOrderNum": 7
     },
     {
       "defaultValue": false,
       "name": "Directed",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Whether the graph is directed or undirected (bi-directed). The default is 'false'. The default value is false.",
+      "rDescription": "Specifies whether the graph is directed. The default value is 'false'. ",
+      "description": "Specifies whether the graph is directed. The default value is 'false'. ",
       "datatype": "BOOLEAN",
       "allowsLists": false,
       "rName": "directed",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 4
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "DegreeRange",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Edge degree range (positive integer). Format: {'[min:max]'|'[min:]'|'[:max]'}. Only the nodes with degrees within the range are output",
+      "rDescription": "Specifies the edge degree range—at least min and at most max ([min:max]), at least min ([min:]), or at most max ([:max]). The min and max must be positive integers. The function outputs only nodes with degrees in the specified range. By default, the function outputs all nodes.",
+      "description": "Specifies the edge degree range—at least min and at most max ([min:max]), at least min ([min:]), or at most max ([:max]). The min and max must be positive integers. The function outputs only nodes with degrees in the specified range. By default, the function outputs all nodes.",
       "datatype": "STRING",
       "allowsLists": false,
       "rName": "degree.range",
-      "useInR": true
-    },
-    {
-      "targetTable": "vertices",
-      "checkDuplicate": true,
-      "allowPadding": true,
-      "name": "Accumulate",
-      "isRequired": false,
-      "description": "Columns from the input table to be passed through from input to output.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "accumulate",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 6
     }
   ]
 }

@@ -1,10 +1,12 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
   "function_name": "TextClassifier",
-  "function_version": "1.2",
+  "function_version": "1.3",
   "function_type": "non-driver",
+  "function_r_name": "aa.text.classifier.predict",
+  "ref_function_r_name": "aa.text.classifier.train",
   "short_description": "Text classification SQL/MR function",
   "long_description": "Predict the category of the document in each text column",
   "input_tables": [
@@ -12,48 +14,79 @@
       "requiredInputKind": [
         "PartitionByAny"
       ],
-      "isOrdered": false,
+      "isOrdered": true,
       "partitionByOne": false,
+      "name": "input",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "The relation contains the text to be classified",
       "description": "The relation contains the text to be classified",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "useInR": true
+      "rName": "newdata",
+      "useInR": true,
+      "rOrderNum": 2
     }
   ],
   "argument_clauses": [
     {
+      "targetTable": [
+        "input"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
       "requiredLength": 1,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "TextColumn",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "The input table column that contains the text to be used for predicting classification",
+      "rDescription": "Specifies the column of the input table that contains the text to be used for predicting classification.",
+      "description": "Specifies the column of the input table that contains the text to be used for predicting classification.",
       "datatype": "COLUMNS",
       "allowsLists": false,
       "rName": "text.column",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 3
     },
     {
-      "isOutputColumn": false,
-      "name": "Model",
-      "isRequired": true,
-      "description": "The model filename that will be used to perform prediction. The model file must be installed",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "model",
-      "useInR": true
-    },
-    {
+      "targetTable": [
+        "input"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "Accumulate",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Columns from the input table to be passed through from input to output.",
+      "rDescription": "Specifies the names of the input columns to copy to the output table.",
+      "description": "Specifies the names of the input columns to copy to the output table.",
       "datatype": "COLUMNS",
       "allowsLists": true,
       "rName": "accumulate",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 4
+    },
+    {
+      "permittedValues": [],
+      "isOutputColumn": false,
+      "name": "Model",
+      "alternateNames": [],
+      "isRequired": true,
+      "rDescription": "Specifies the model (which you must install in the database before calling the function).",
+      "description": "Specifies the model (which you must install in the database before calling the function).",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "model.file",
+      "useInR": true,
+      "rOrderNum": 1
     }
   ]
 }

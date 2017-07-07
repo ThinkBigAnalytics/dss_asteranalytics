@@ -1,10 +1,11 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
-  "function_name": "ngram",
-  "function_version": "1.5",
+  "function_name": "nGram",
+  "function_version": "1.6",
   "function_type": "non-driver",
+  "function_r_name": "aa.ngram",
   "short_description": "Generates n-grams and their counts from specified input column.",
   "long_description": "Tokenizes the specified column and returns each unique n-gram with its associated count.",
   "input_tables": [
@@ -14,99 +15,152 @@
       ],
       "isOrdered": false,
       "partitionByOne": false,
+      "name": "input",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "Each row of the input table contains a document to be tokenized. The input table can have additional rows, some or all of which the function returns in the output table.",
       "description": "Each row of the input table contains a document to be tokenized. The input table can have additional rows, some or all of which the function returns in the output table.",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "useInR": true
+      "rName": "data",
+      "useInR": true,
+      "rOrderNum": 1
     }
   ],
   "argument_clauses": [
     {
+      "targetTable": [
+        "input"
+      ],
       "checkDuplicate": false,
+      "allowedTypes": [],
       "allowedTypeGroups": [
         "STRING"
       ],
       "requiredLength": 1,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "TextColumn",
-      "alternateNames": [
-        "Text_Column"
-      ],
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "The name of the column that contains the input text. Input columns must contain string SQL types.",
       "description": "The name of the column that contains the input text. Input columns must contain string SQL types.",
       "datatype": "COLUMNS",
       "allowsLists": false,
       "rName": "text.column",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 2
     },
     {
+      "targetTable": [
+        "input"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "Accumulate",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "The names of the columns to return for each n-gram. These columns cannot have the same names as those specified by the arguments ngram, num.grams.column, and total.count.column. By default, the function returns all input columns for each n-gram.",
+      "description": "The names of the columns to return for each n-gram. These columns cannot have the same names as those specified by the arguments NGramColumn, NumGramsColum, and TotalCountColumn. By default, the function returns all input columns for each n-gram.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "accumulate",
+      "useInR": true,
+      "rOrderNum": 11
+    },
+    {
+      "permittedValues": [],
       "isOutputColumn": false,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "Grams",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "A list of integers or ranges of integers that specify the length, in words, of each ngram (that is, the value of n).",
+      "rDescription": "A list of integers or ranges of integers that specify the length, in words, of each ngram (that is, the value of n). A range_of_values has the syntax integer1- integer2, where integer1 <= integer2. The values of n, integer1, and integer2 must be positive.",
+      "description": "A list of integers or ranges of integers that specify the length, in words, of each ngram (that is, the value of n). A range_of_values has the syntax integer1- integer2, where integer1 <= integer2. The values of n, integer1, and integer2 must be positive.",
       "datatype": "STRING",
       "allowsLists": true,
       "rName": "grams",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 4
     },
     {
       "defaultValue": true,
       "name": "OverLapping",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "A Boolean value that specifies whether the function allows overlapping n-grams. The default value is true.",
+      "rDescription": "A Boolean value that specifies whether the function allows overlapping n-grams. When this value is 'true' (the default), each word in each sentence starts an n-gram, if enough words follow it (in the same sentence) to form a whole n-gram of the specified size. For information on sentences, see the description of the reset argument.",
+      "description": "A Boolean value that specifies whether the function allows overlapping n-grams. When this value is 'true' (the default), each word in each sentence starts an n-gram,if enough words follow it (in the same sentence) to form a whole n-gram of the specified size. For information on sentences, see the description of the Reset argument",
       "datatype": "BOOLEAN",
       "allowsLists": false,
-      "rName": "over.lapping",
-      "useInR": true
+      "rName": "overlapping",
+      "useInR": true,
+      "rOrderNum": 5
     },
     {
       "defaultValue": true,
       "name": "ToLowerCase",
       "alternateNames": [
-        "Case_Insensitive",
-		"CaseInsensitive"
+        "CaseInsensitive"
       ],
       "isRequired": false,
-      "description": "A Boolean value that specifies whether the function converts all letters in the input text to lowercase. The default value is true.",
+      "rDescription": "A Boolean value that specifies whether the function converts all letters in the input text to lowercase. The default value is 'true'.",
+      "description": "A Boolean value that specifies whether the function converts all letters in the input text to lowercase. The default value is 'true'.",
       "datatype": "BOOLEAN",
       "allowsLists": false,
       "rName": "to.lower.case",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 6
     },
     {
-      "defaultValue": "[\\s]+",
+      "permittedValues": [],
+      "defaultValue": " ",
       "isOutputColumn": false,
       "name": "Delimiter",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "A regular expression that specifies the character or string that separates words in the input text The default value is [\\s]+.",
+      "rDescription": "A regular expression that specifies the character or string that separates words in the input text. The default value is the space character (' ').",
+      "description": "A regular expression that specifies the character or string that separates words in the input text. The default value is the space character (' ').",
       "datatype": "STRING",
       "allowsLists": false,
       "rName": "delimiter",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 3
     },
     {
+      "permittedValues": [],
       "defaultValue": "[`~#^&*()-]",
       "isOutputColumn": false,
       "name": "Punctuation",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "A regular expression that specifies the punctuation characters for the function to remove before evaluating the input text. The default value is [`~#^&*()-].",
+      "rDescription": "A regular expression that specifies the punctuation characters for the function to remove before evaluating the input text. The default characters to remove are: `~#^&*()-",
+      "description": "A regular expression that specifies the punctuation characters for the function to remove before evaluating the input text. The default characters to remove are: `~#^&*()-",
       "datatype": "STRING",
       "allowsLists": false,
       "rName": "punctuation",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 7
     },
     {
+      "permittedValues": [],
       "defaultValue": "[.,?!]",
       "isOutputColumn": false,
       "name": "Reset",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "A regular expression that specifies the character or string that ends a sentence. The default value is [.,?!].",
+      "rDescription": "A regular expression that specifies the character or string that ends a sentence. The default sentence-ending characters are: .,?! At the end of a sentence, the function discards any partial n-grams and searches for the next n-gram at the beginning of the next sentence. An n-gram cannot span two sentences.",
+      "description": "A regular expression that specifies the character or string that ends a sentence. The default sentence-ending characters are: .,?! At the end of a sentence, the function discards any partial n-grams and searches for the next n-gram at the beginning of the next sentence. An n-gram cannot span two sentences.",
       "datatype": "STRING",
       "allowsLists": false,
       "rName": "reset",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 8
     },
     {
       "defaultValue": false,
@@ -115,82 +169,81 @@
         "Total"
       ],
       "isRequired": false,
-      "description": "A Boolean value that specifies whether the function returns the total number of ngrams in the document (that is, in the row). The default value is false.",
+      "rDescription": "A Boolean value that specifies whether the function returns the total number of ngrams in the document (that is, in the row). The default value is 'false'. If you specify 'true', then the name of the returned column is specified by the total.count.column argument. Note: The total number of n-grams is not necessarily the number of unique ngrams.",
+      "description": " A Boolean value that specifies whether the function returns the total number of ngrams in the document (that is, in the row). The default value is 'false'. If you specify 'true', then the name of the returned column is specified by the TotalCountColumn argument. Note: The total number of n-grams is not necessarily the number of unique ngrams.",
       "datatype": "BOOLEAN",
       "allowsLists": false,
       "rName": "total.gram.count",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 9
     },
     {
-      "checkDuplicate": true,
-      "allowPadding": true,
-      "name": "Accumulate",
-      "isRequired": false,
-      "description": "The names of the columns to return for each n-gram.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "accumulate",
-      "useInR": true
-    },
-    {
+      "permittedValues": [],
       "defaultValue": "ngram",
       "isOutputColumn": true,
       "name": "NGramColumn",
       "alternateNames": [
-        "NGram_Column_Name",
-		"NGramColumnName"
+        "NGramColumnName"
       ],
       "isRequired": false,
-      "description": "The name of the column that is to contain the generated n-grams. The default value is ngram.",
+      "rDescription": "The name of the column that is to contain the generated n-grams. The default value is 'ngram'.",
+      "description": "The name of the column that is to contain the generated n-grams. The default value is 'ngram'.",
       "datatype": "STRING",
       "allowsLists": false,
       "rName": "n.gram.column",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 12
     },
     {
+      "permittedValues": [],
       "defaultValue": "n",
       "isOutputColumn": true,
       "name": "NumGramsColumn",
       "alternateNames": [
-        "NumGrams_Column_Name",
-		"NumGramsColumnName"
+        "NumGramsColumnName"
       ],
       "isRequired": false,
-      "description": "The name of the column that is to contain the length of n-gram (in words). The default value is n.",
+      "rDescription": "The name of the column that is to contain the length of n-gram (in words). The default value is 'n'.",
+      "description": "The name of the column that is to contain the length of n-gram (in words). The default value is 'n'.",
       "datatype": "STRING",
       "allowsLists": false,
       "rName": "num.grams.column",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 13
     },
     {
+      "permittedValues": [],
       "defaultValue": "frequency",
       "isOutputColumn": true,
       "name": "FrequencyColumn",
       "alternateNames": [
-        "Count_Column_Name",
-		"CountColumnName"
+        "CountColumnName"
       ],
       "isRequired": false,
-      "description": "The name of the column that is to contain the count of each unique n-gram. The default value is frequency.",
+      "rDescription": " The name of the column that is to contain the count of each unique n-gram (that is, the number of times that each unique n-gram appears in the document). The default value is 'frequency'.",
+      "description": " The name of the column that is to contain the count of each unique n-gram (that is, the number of times that each unique n-gram appears in the document). The default value is 'frequency'.",
       "datatype": "STRING",
       "allowsLists": false,
       "rName": "frequency.column",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 14
     },
     {
+      "permittedValues": [],
       "defaultValue": "totalcnt",
       "isOutputColumn": true,
       "name": "TotalCountColumn",
       "alternateNames": [
-        "Total_Count_Column_Name",
-		"TotalCountColumnName"
+        "TotalCountColumnName"
       ],
       "isRequired": false,
-      "description": "The name of the column to return if the value of the Total argument is 'true'. The default value is totalcnt.",
+      "rDescription": "The name of the column to return if the value of the total.gram.count argument is 'true'. The default value is 'totalcnt'.",
+      "description": "The name of the column to return if the value of the TotalGramCount argument is 'true'. The default value is 'totalcnt'.",
       "datatype": "STRING",
       "allowsLists": false,
       "rName": "total.count.column",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 10
     }
   ]
 }

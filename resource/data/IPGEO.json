@@ -1,68 +1,108 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
-  "function_name": "IpGeo",
-  "function_version": "2.1",
+  "function_name": "IPGeo",
+  "function_version": "2.2",
   "function_type": "non-driver",
+  "function_r_name": "aa.ipgeo",
   "short_description": "SQL/MR function to convert ip address to geolocation information.",
   "long_description": "SQL/MR function to convert ip address to geolocation information.",
   "input_tables": [
     {
+      "requiredInputKind": [
+        "PartitionByAny"
+      ],
       "isOrdered": false,
       "partitionByOne": false,
+      "name": "input",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "The input table contains the ip addresses.",
       "description": "The input table contains the ip addresses.",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "useInR": true
+      "rName": "data",
+      "useInR": true,
+      "rOrderNum": 1
     }
   ],
   "argument_clauses": [
     {
+      "targetTable": [
+        "input"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
       "requiredLength": 1,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "IpAddressColumn",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "The input table column whose content is a IP address.",
+      "rDescription": "Specifies the name of the input table column that contains the IP addresses.",
+      "description": "Specifies the name of the input table column that contains the IP addresses.",
       "datatype": "COLUMNS",
       "allowsLists": false,
-      "rName": "ip.address.column",
-      "useInR": true
+      "rName": "ipaddress.column",
+      "useInR": true,
+      "rOrderNum": 2
     },
     {
-      "isOutputColumn": false,
-      "requiredLength": 2,
-      "allowPadding": false,
-      "name": "Converter",
-      "isRequired": false,
-      "description": "The JAR filename and the name of the class that converts the IP address to location information. The input list must contain 2 values.",
-      "datatype": "STRING",
-      "allowsLists": true,
-      "rName": "converter",
-      "useInR": true
-    },
-    {
-      "isOutputColumn": false,
-      "name": "IpDatabaseLocation",
-      "isRequired": false,
-      "description": "The location of the IP database that matches IP addresses to locations.",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "ip.database.location",
-      "useInR": true
-    },
-    {
+      "targetTable": [
+        "input"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "Accumulate",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Columns from the input table to be passed through from input to output.",
+      "rDescription": "Specifies the names of input table columns to copy to the output table.",
+      "description": "Specifies the names of input table columns to copy to the output table.",
       "datatype": "COLUMNS",
       "allowsLists": true,
       "rName": "accumulate",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 5
+    },
+    {
+      "permittedValues": [],
+      "isOutputColumn": false,
+      "requiredLength": 2,
+      "matchLengthOfArgument": "",
+      "allowPadding": false,
+      "name": "Converter",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "The JAR filename and the name of the class that converts the IP address to location information. The JAR file must be installed on the Aster Database and the class name must be the full name, which includes the package information. The file and class parameters are case-sensitive. The ta.ipgeo function is a special case and needs a user-defined class. This is why you need to use the converter argument. Only the JAR file declared by this argument can be used by the function. The JAR file should contain all the classes needed by the user-defined converter. In Aster Database, all of the installed files are stored in the database. When a function is invoked, only a ZIP/JAR file consistent with the SQL-MapReduce function name is temporally downloaded to the file system to be executed. ",
+      "description": "The JAR filename and the name of the class that converts the IP address to location information. The JAR file must be installed on the Aster Database and the class name must be the full name, which includes the package information. The file and class parameters are case-sensitive. The IPGeo function is a special case and needs a user-defined class. This is why you need to use the Converter argument. Only the JAR file declared by this argument can be used by the function. The JAR file should contain all the classes needed by the user-defined converter. In Aster Database, all of the installed files are stored in the database. When a function is invoked, only a ZIP/JAR file consistent with the SQL-MapReduce function name is temporally downloaded to the file system to be executed. ",
+      "datatype": "STRING",
+      "allowsLists": true,
+      "rName": "converter",
+      "useInR": true,
+      "rOrderNum": 3
+    },
+    {
+      "permittedValues": [],
+      "isOutputColumn": false,
+      "name": "IpDatabaseLocation",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "The location of the IP database that matches IP addresses to locations. The IP databases can be stored in the file system or in Aster Database. If the data is stored in a file system, each worker must have the same path, and the absolute path must be set in this parameter. If the data is installed in Aster Database, this argument is ignored.",
+      "description": "The location of the IP database that matches IP addresses to locations. The IP databases can be stored in the file system or in Aster Database. If the data is stored in a file system, each worker must have the same path, and the absolute path must be set in this parameter. If the data is installed in Aster Database, this argument is ignored.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "ipdatabase.location",
+      "useInR": true,
+      "rOrderNum": 4
     }
   ]
 }

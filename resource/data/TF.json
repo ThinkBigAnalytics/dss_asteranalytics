@@ -1,10 +1,11 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
-  "function_name": "tf",
-  "function_version": "1.1",
+  "function_name": "TF",
+  "function_version": "1.2",
   "function_type": "non-driver",
+  "function_r_name": "aa.tf",
   "short_description": "SQL/MR function for Term Frequency",
   "long_description": "Compute the term frequency. The input table should be of schema (docid datatype, term varchar) or (docid datatype, term varchar, count int). Four values are supported in 'FORMULA': bool, log, augment, normal. They are corresponding to four kinds of term frequency: boolean frequency, logarithmically scaled frequency, augmented frequency, and normalized frequency. Default value is normal. ",
   "input_tables": [
@@ -14,11 +15,16 @@
       ],
       "isOrdered": false,
       "partitionByOne": false,
+      "name": "input",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "The input table that contains the document id and the term.",
       "description": "The input table that contains the document id and the term.",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "useInR": true
+      "rName": "data",
+      "useInR": true,
+      "rOrderNum": 1
     }
   ],
   "argument_clauses": [
@@ -32,12 +38,15 @@
       "defaultValue": "normal",
       "isOutputColumn": false,
       "name": "Formula",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The formula to compute the 'TF' value.  The permitted input values are [bool, log, augment, normal]. The default value is normal.",
+      "rDescription": "Specifies the formula for calculating the term frequency (tf) of term t in document d: • normal: Normalized frequency (default): tf (t, d) = f ((t, d) / sum { w,w ∈ d } This value is rf divided by the number of terms in the document. • bool: Boolean frequency: tf ((t, d) = 1 if t occurs in d; otherwise, tf ((t, d) = 0. • log: Logarithmically-scaled frequency: tf ((t, d) = log (f ((t, d) + 1) where f ((t, d) is the number of times t occurs in d (that is, the raw frequency, rf). • augment: Augmented frequency (to prevent bias towards longer documents): tf ((t, d) = 0.5 + (0.5 × f ((t, d) / max { f (w, d) : w ∈ d }) This value is rf divided by the maximum raw frequency of any term in the document. Note: When using the output of a previous run of the tf_idf function on a training document set to predict ta.tf_idf scores on an input document set, use the same Formula value for the input document set that you used for the training document set.",
+      "description": "Specifies the formula for calculating the term frequency (tf) of term t in document d: • normal: Normalized frequency (default): tf (t, d) = f ((t, d) / sum { w,w ∈ d } This value is rf divided by the number of terms in the document. • bool: Boolean frequency: tf ((t, d) = 1 if t occurs in d; otherwise, tf ((t, d) = 0. • log: Logarithmically-scaled frequency: tf ((t, d) = log (f ((t, d) + 1) where f ((t, d) is the number of times t occurs in d (that is, the raw frequency, rf). • augment: Augmented frequency (to prevent bias towards longer documents): tf ((t, d) = 0.5 + (0.5 × f ((t, d) / max { f (w, d) : w ∈ d }) This value is rf divided by the maximum raw frequency of any term in the document. Note: When using the output of a previous run of the TF_IDF function on a training document set to predict TF_IDF scores on an input document set, use the same Formula value for the input document set that you used for the training document set.",
       "datatype": "STRING",
       "allowsLists": false,
       "rName": "formula",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 2
     }
   ]
 }

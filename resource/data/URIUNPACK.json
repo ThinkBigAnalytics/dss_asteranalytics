@@ -1,52 +1,93 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
   "function_name": "URIUnpack",
-  "function_version": "1.1",
+  "function_version": "1.2",
   "function_type": "non-driver",
+  "function_r_name": "aa.uri.unpack",
   "short_description": "SQL/MR function for combining URI components into a single encoded URI.",
   "long_description": "Given a column of URIs, split each URI into its constituent parts: scheme (e.g., http), host (e.g., www.teradata.com), path (e.g., /dir/file), query parameters and query values (?param=value), and fragments (#fragment). The input table should contain a column URI_COLUMN of valid URIs - malformed URIs in this column will produce no output. The output table contains columns for each ofthe query parameters included in the argument QUERIES,each of the URI components included in the argument OUTPUT, and each of the input columns in the argument ACCUMULATE. If a URI does not contain any of the query parameters listed in QUERIES, it will not be output unless PRINT_NULL_QUERIES is set to true. The string 'null' is written to the output table for URI components that do not exist. Unpacked URIs can be reassembled using the function URIPACK.",
   "input_tables": [
     {
+      "requiredInputKind": [
+        "PartitionByAny"
+      ],
       "isOrdered": false,
       "partitionByOne": false,
+      "name": "input",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "The table containing the URIs to be unpacked.",
       "description": "The table containing the URIs to be unpacked.",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "useInR": true
+      "rName": "data",
+      "useInR": true,
+      "rOrderNum": 1
     }
   ],
   "argument_clauses": [
     {
+      "targetTable": [
+        "input"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
       "allowedTypeGroups": [
         "STRING"
       ],
       "requiredLength": 1,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "URIColumn",
-      "alternateNames": [
-        "URI_Column"
-      ],
+      "alternateNames": [],
       "isRequired": true,
-      "description": "The input table column that contains the hierarchical URIs to be decoded Input columns must contain string SQL types.",
+      "rDescription": "Specifies the name of the input table column that contains the URIs to unpack. Malformed URIs are ignored.",
+      "description": "Specifies the name of the input table column that contains the URIs to unpack. Malformed URIs are ignored.",
       "datatype": "COLUMNS",
       "allowsLists": false,
       "rName": "uri.column",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 2
     },
     {
+      "targetTable": [
+        "input"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "Accumulate",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "Specifies the names of the input table columns to copy to the output table.",
+      "description": "Specifies the names of the input table columns to copy to the output table.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "accumulate",
+      "useInR": true,
+      "rOrderNum": 6
+    },
+    {
+      "permittedValues": [],
       "isOutputColumn": false,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "Queries",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The query parameters (for example, par1 and par2) to be extracted from the hierarchical URIs",
+      "rDescription": "Specifies the names of the query parameters whose values are to be extracted from the URIs.",
+      "description": "Specifies the names of the query parameters whose values are to be extracted from the URIs.",
       "datatype": "STRING",
       "allowsLists": true,
       "rName": "queries",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 3
     },
     {
       "permittedValues": [
@@ -62,38 +103,31 @@
         "fragment"
       ],
       "isOutputColumn": false,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "Output",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The permitted input values are [SCHEME, HOST, PATH, FRAGMENT]. The default value is [scheme, host, path, fragment].",
+      "rDescription": " Specifies the URI components (outside the query) to output. By default, the function outputs all four components. If you specify 'path', the function outputs the URI path in normalized form (for example, it reduces /./bar/baz to /bar/baz.",
+      "description": " Specifies the URI components (outside the query) to output. By default, the function outputs all four components. If you specify 'path', the function outputs the URI path in normalized form (for example, it reduces /./bar/baz to /bar/baz.",
       "datatype": "STRING",
       "allowsLists": true,
       "rName": "output",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 4
     },
     {
       "defaultValue": true,
       "name": "PrintNullQueries",
-      "alternateNames": [
-        "Print_Null_Queries"
-      ],
+      "alternateNames": [],
       "isRequired": false,
-      "description": "If 'true' URIs that doe not contain any of the query parameters are added to the output table. The default value is true.",
+      "rDescription": "Specifies whether to output URIs that contain none of the parameters specified by the queries argument. The default value is 'true'.",
+      "description": "Specifies whether to output URIs that contain none of the parameters specified by the Queries argument. The default value is 'true'.",
       "datatype": "BOOLEAN",
       "allowsLists": false,
-      "rName": "print.null.queries",
-      "useInR": true
-    },
-    {
-      "checkDuplicate": true,
-      "allowPadding": true,
-      "name": "Accumulate",
-      "isRequired": false,
-      "description": "Columns from the input table to be passed through from input to output.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "accumulate",
-      "useInR": true
+      "rName": "print.null.query",
+      "useInR": true,
+      "rOrderNum": 5
     }
   ]
 }

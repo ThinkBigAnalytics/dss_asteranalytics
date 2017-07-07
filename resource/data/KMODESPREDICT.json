@@ -1,0 +1,101 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "2",
+  "json_content_version": "1",
+  "function_name": "KModesPredict",
+  "function_version": "1.1",
+  "function_type": "non-driver",
+  "function_r_name": "aa.kmodes.predict",
+  "ref_function_r_name": "aa.kmodes",
+  "short_description": "Implements the KModesPredict SQL-MR function.",
+  "long_description": "KModesPredict is a SQL-MR function for assigning data points to KModes clusters.",
+  "input_tables": [
+    {
+      "requiredInputKind": [
+        "PartitionByAny"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "name": "input",
+      "alternateNames": [],
+      "isRequired": true,
+      "rDescription": "Table containing the points on which to cluster the data. ",
+      "description": "Table containing the points on which to cluster the data. ",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "rName": "newdata",
+      "useInR": true,
+      "rOrderNum": 2
+    },
+    {
+      "requiredInputKind": [
+        "Dimension"
+      ],
+      "isOrdered": false,
+      "partitionByOne": false,
+      "name": "model",
+      "alternateNames": [],
+      "isRequired": true,
+      "rDescription": "The table which contains the centroids trained, from the kmeans function.",
+      "description": "The table which contains the centroids trained, from the kmeans function.",
+      "datatype": "TABLE_ALIAS",
+      "allowsLists": false,
+      "rName": "object",
+      "useInR": true,
+      "rOrderNum": 1
+    }
+  ],
+  "argument_clauses": [
+    {
+      "targetTable": [
+        "input"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "Accumulate",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": " Columns from the input table to be passed through to the output table.",
+      "description": " Columns from the input table to be passed through to the output table.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "accumulate",
+      "useInR": true,
+      "rOrderNum": 5
+    },
+    {
+      "permittedValues": [],
+      "isOutputColumn": false,
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "TestModels",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "Specifies which model IDs will be used for prediction. The default behavior is to use all models.",
+      "description": "Specifies which model IDs will be used for prediction. The default behavior is to use all models.",
+      "datatype": "STRING",
+      "allowsLists": true,
+      "rName": "test.models",
+      "useInR": true,
+      "rOrderNum": 3
+    },
+    {
+      "defaultValue": false,
+      "name": "PrintDistance",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "Specifies whether or not the distance from each observation to its closest centroid should be printed to the output table. The default value is false.",
+      "description": "Specifies whether or not the distance from each observation to its closest centroid should be printed to the output table. The default value is false.",
+      "datatype": "BOOLEAN",
+      "allowsLists": false,
+      "rName": "print.distance",
+      "useInR": true,
+      "rOrderNum": 4
+    }
+  ]
+}

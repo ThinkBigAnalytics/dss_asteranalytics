@@ -1,10 +1,12 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
   "function_name": "KMeansPlot",
-  "function_version": "1.2",
+  "function_version": "1.0",
   "function_type": "non-driver",
+  "function_r_name": "aa.kmeans.plot",
+  "ref_function_r_name": "aa.kmeans",
   "short_description": "Implements the KMeansPlot SQL-MR function.",
   "long_description": "KMeansPlot is a SQL-GR for assigning data points to Kmeans clusters.",
   "input_tables": [
@@ -14,11 +16,16 @@
       ],
       "isOrdered": false,
       "partitionByOne": false,
+      "name": "input1",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "Table containing the points on which to cluster the data. If an input row in the input table contains a null value, aa.kmeans.plot sets the corresponding cluster ID in the output to -1.",
       "description": "Table containing the points on which to cluster the data. If an input row in the input table contains a null value, KMeansPlot sets the corresponding cluster ID in the output to -1.",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "useInR": true
+      "rName": "data",
+      "useInR": true,
+      "rOrderNum": 2
     },
     {
       "requiredInputKind": [
@@ -26,33 +33,45 @@
       ],
       "isOrdered": false,
       "partitionByOne": false,
+      "name": "input2",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "The table which contains the centroids trained, from the kmeans function.",
       "description": "The table which contains the centroids trained, from the kmeans function.",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "useInR": true
+      "rName": "object",
+      "useInR": true,
+      "rOrderNum": 1
     }
   ],
   "argument_clauses": [
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "CentroidsTable",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The table which contains the centroids trained, from the kmeans function. This argument does nothing and is preserved for backward compatability.",
+      "rDescription": "Specifies the name of the table of cluster centroids output by the aa.kmeans function.",
+      "description": "Specifies the name of the table of cluster centroids output by the KMeans function.",
       "datatype": "STRING",
       "allowsLists": false,
       "rName": "centroids.table",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 2
     },
     {
       "defaultValue": false,
       "name": "PrintDistance",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Specifies whether or not the distance from each observation to its closest centroid should be printed to the output table The default value is false.",
+      "rDescription": "Specifies whether to print the distance between each data point and the nearest cluster. The default value is 'false'.",
+      "description": "Specifies whether to print the distance between each data point and the nearest cluster. The default value is 'false'.",
       "datatype": "BOOLEAN",
       "allowsLists": false,
       "rName": "print.distance",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 3
     }
   ]
 }

@@ -1,144 +1,204 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
   "function_name": "Arima",
-  "function_version": "1.1",
+  "function_version": "1.2",
   "function_type": "driver",
+  "function_r_name": "aa.arima",
   "short_description": "Estimate the parameters for given ARIMA model.",
   "long_description": "Estimate the parameters for given ARIMA model based on conditional sum of squares method. User should provide the orders (number of parameters for each part) and period of the model, the function will estimate the parameters with least CSS accordingly.",
   "argument_clauses": [
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "Domain",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The address of the Queen. The host parameter is the Aster Database Queen’s IP saddress or hostname.",
+      "rDescription": "The address of the Queen. The host parameter is the Aster Database Queen’s IP address or hostname.",
+      "description": "The address of the Queen. The host parameter is the Aster Database Queen’s IP address or hostname.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "Database",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The name of the database where the input table is located.",
       "description": "The name of the database where the input table is located.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "UserId",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The Aster Database user name of the user running this function.",
       "description": "The Aster Database user name of the user running this function.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "Password",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The Aster Database password of the user.",
       "description": "The Aster Database password of the user.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "SSLSettings",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "A string that includes all the SSL settings, except the password for the truststore.",
       "description": "A string that includes all the SSL settings, except the password for the truststore.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "SSLTrustStorePassword",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The password for the SSL truststore.",
       "description": "The password for the SSL truststore.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
       "isOutputTable": false,
       "name": "InputTable",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "The table or view stores the input sequence.",
+      "rDescription": "Specifies the name of the table or view that contains the input parameters.",
+      "description": "Specifies the name of the table or view that contains the input parameters.",
       "datatype": "TABLE_NAME",
       "allowsLists": false,
-      "rName": "input.table",
-      "useInR": true
+      "rName": "data",
+      "useInR": true,
+      "rOrderNum": 1
     },
     {
       "isOutputTable": true,
       "name": "ModelTable",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "The output table for arima model parameters.",
+      "rDescription": "Specifies the name of the table where the function outputs the coefficients of the input parameters; that is, the model.",
+      "description": "Specifies the name of the table where the function outputs the coefficients of the input parameters; that is, the model.",
       "datatype": "TABLE_NAME",
       "allowsLists": false,
-      "rName": "model.table",
-      "useInR": true
+      "rName": "coefficient",
+      "useInR": true,
+      "rOrderNum": 100
     },
     {
       "isOutputTable": true,
       "name": "ResidualTable",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The output table for residuals of the input sequence. It should be provided if ArimaPredictor will be invoked later.",
+      "rDescription": "Specifies the name of the table where the function outputs the residuals of the input parameters. Note: Specify this argument if you will input the model to the ta.arimapredict function.",
+      "description": " Specifies the name of the table where the function outputs the residuals of the input parameters. Note: Specify this argument if you will input the model to the ArimaPredictor function.",
       "datatype": "TABLE_NAME",
       "allowsLists": false,
       "rName": "residual.table",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 101
     },
     {
-      "targetTable": "InputTable",
+      "targetTable": [
+        "InputTable"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "TimestampColumns",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "A list of columns specify the sequence of the series in residuals table. The sequence should have uniform intervals.",
+      "rDescription": "Specifies the names of the input_table columns that specify the sequence (time points) of the input parameters. The sequence must have uniform intervals.",
+      "description": "Specifies the names of the input_table columns that specify the sequence (time points) of the input parameters. The sequence must have uniform intervals.",
       "datatype": "COLUMN_NAMES",
       "allowsLists": true,
       "rName": "timestamp.columns",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 4
     },
     {
-      "targetTable": "InputTable",
+      "targetTable": [
+        "InputTable"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
       "allowedTypeGroups": [
         "NUMERIC"
       ],
       "requiredLength": 1,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "ValueColumn",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "Specify the name of the column containing the time series data in inputtable. Input columns must contain numeric SQL types.",
+      "rDescription": "Specifies the name of the column that contains the time series data in input_table.",
+      "description": "Specifies the name of the column that contains the time series data in input_table.",
       "datatype": "COLUMN_NAMES",
       "allowsLists": false,
       "rName": "value.column",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 2
     },
     {
+      "permittedValues": [],
+      "rDefaultValue": "0,0,0",
       "isOutputColumn": false,
       "name": "Orders",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "Specify the parameters p,d,q for ARIMA model. It should be three non-negative int values separated by commas. Those values should be between 0 and 20 inclusive.",
+      "rDescription": "Specifies the values of the nonseasonal parameters p, d, and q for the ta.arima model. Each value must be an INT between 0 and 20, inclusive.",
+      "description": "Specifies the values of the nonseasonal parameters p, d, and q for the ARIMA model. Each value must be an INT between 0 and 20, inclusive.",
       "datatype": "STRING",
       "allowsLists": false,
-      "rName": "orders",
-      "useInR": true
+      "rName": "order",
+      "useInR": true,
+      "rOrderNum": 3
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "SeasonalOrders",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Specify seasonal parameters sp,sd,sq for ARIMA model. It should be three non-negative integer values separated by commas. Those values should be between 0 and 20 inclusive.",
+      "rDescription": " Specifies the values of the seasonal parameters sp, sd, and sq for the ta.arima model. Each value must be an INT between 0 and 20, inclusive.",
+      "description": "Specifies the values of the seasonal parameters sp, sd, and sq for the ARIMA model. Each value must be an INT between 0 and 20, inclusive.",
       "datatype": "STRING",
       "allowsLists": false,
-      "rName": "seasonal.orders",
-      "useInR": true
+      "rName": "seasonal",
+      "useInR": true,
+      "rOrderNum": 5
     },
     {
       "lowerBound": 0,
@@ -147,55 +207,74 @@
       "upperBoundType": "INCLUSIVE",
       "allowNaN": false,
       "name": "Period",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Specify the period of each season. If argument seasonalorders is given, period should be provided as well. The input value must be greater than 0 but no greater than 1000000.",
+      "rDescription": "Specifies the period of a season (m in the formula). This value must be a positive integer value. If you specify seasonal, then you must also specify period.",
+      "description": " Specifies the period of a season (m in the formula). This value must be a positive integer value. If you specify SeasonalOrders, then you must also specify Period",
       "datatype": "INTEGER",
       "allowsLists": false,
       "rName": "period",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 6
     },
     {
       "defaultValue": false,
       "name": "IncludeMean",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Specify whether mean value of the data series (constant c in the formula) is added in the ARIMA model. If IncludeMean is true, diff orders d and seasonal diff orders sd must be zero. The default value is false.",
+      "rDescription": "Specifies whether the function adds the mean value (c in the formula) to the ta.arima model. The default value is 'false'. Note: If include.mean is 'true', then both d in Orders and sd in seasonal must be 0.",
+      "description": "Specifies whether the function adds the mean value (c in the formula) to the ARIMA model. The default value is 'false'. Note: If IncludeMean is 'true', then both d in Orders and sd in SeasonalOrders must be 0.",
       "datatype": "BOOLEAN",
       "allowsLists": false,
       "rName": "include.mean",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 7
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "Fixed",
+      "alternateNames": [],
       "isRequired": false,
-      "description": " A numeric vector of the same length as the total number of parameters. Each value represents a parameter in order.",
+      "rDescription": " Specifies the values of the parameters. The numeric vector fixed_params must have a value for each parameter (for the correspondence between values and parameters, see the note that follows this table). If you specify include.mean('true'), then you must add the mean value to the end of fixed_params. If a value in fixed_params is non-NaN, then the corresponding parameter is fixed at that value; otherwise, the function optimizes the value of that parameter",
+      "description": " Specifies the values of the parameters. The numeric vector fixed_params must have a value for each parameter (for the correspondence between values and parameters, see the note that follows this table). If you specify IncludeMean('true'), then you must add the mean value to the end of fixed_params. If a value in fixed_params is non-NaN, then the corresponding parameter is fixed at that value; otherwise, the function optimizes the value of that parameter.",
       "datatype": "STRING",
       "allowsLists": false,
       "rName": "fixed",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 8
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "InitValues",
+      "alternateNames": [],
       "isRequired": false,
-      "description": " A numeric vector of the same length as the total number of parameters. Each value represents the init values for a parameter in order.",
+      "rDescription": "Specifies the initial values of the parameters. The numeric vector init_params must have a value for each parameter (for the correspondence between values and parameters, see the note that follows this table). If you specify include.mean('true'), then you must add the initial mean value to the end of init_params. If a value is NaN, then the corresponding parameter has the initial value 0.",
+      "description": "Specifies the initial values of the parameters. The numeric vector init_params must have a value for each parameter (for the correspondence between values and parameters, see the note that follows this table). If you specify IncludeMean('true'), then you must add the initial mean value to the end of init_params. If a value is NaN, then the corresponding parameter has the initial value 0.",
       "datatype": "STRING",
       "allowsLists": false,
-      "rName": "init.values",
-      "useInR": true
+      "rName": "init",
+      "useInR": true,
+      "rOrderNum": 9
     },
     {
       "defaultValue": 100,
       "lowerBound": 0,
+      "upperBound": 2147483647,
       "lowerBoundType": "EXCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
       "allowNaN": false,
       "name": "MaxIterNum",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The max iteration number to estimate the parameters. The input value must be greater than 0. The default value is 100.",
+      "rDescription": "Specifies the maximum iteration number for estimating the parameters. This value must be a positive integer. The default value is 100.",
+      "description": "Specifies the maximum iteration number for estimating the parameters. This value must be a positive integer. The default value is 100.",
       "datatype": "INTEGER",
       "allowsLists": false,
-      "rName": "max.iter.num",
-      "useInR": true
+      "rName": "max.iterations",
+      "useInR": true,
+      "rOrderNum": 10
     }
   ]
 }

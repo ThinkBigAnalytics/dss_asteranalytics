@@ -1,74 +1,98 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
   "function_name": "IdentityMatch",
-  "function_version": "1.1",
+  "function_version": "1.2",
   "function_type": "non-driver",
+  "function_r_name": "aa.identity.match",
   "short_description": "SQL/MR function to match the identities",
   "long_description": "SQL/MR function to match the identities",
   "input_tables": [
     {
-      "isOrdered": false,
+      "requiredInputKind": [
+        "PartitionByAny",
+        "PartitionByKey"
+      ],
+      "isOrdered": true,
       "partitionByOne": false,
       "name": "a",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "'a' input contains the objects.",
+      "rDescription": "Source input",
+      "description": "Source input",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
       "rName": "a",
       "useInR": true,
-      "requiredInputKind": [
-        "PartitionByAny"
-      ]
+      "rOrderNum": 1
     },
     {
-      "isOrdered": false,
+      "requiredInputKind": [
+        "PartitionByKey",
+        "Dimension"
+      ],
+      "isOrdered": true,
       "partitionByOne": false,
       "name": "b",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "another input contains the objects",
+      "rDescription": "Reference input",
+      "description": "Reference input",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
       "rName": "b",
       "useInR": true,
-      "requiredInputKind": [
-        "Dimension"
-      ]
+      "rOrderNum": 2
     }
   ],
   "argument_clauses": [
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "IdColumn",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "A pair that contains an input 1 column and an input 2 column",
+      "rDescription": "Specifies the names of the columns in the source and reference input tables that contain row identifiers. The function copies these columns to the output table.",
+      "description": "Specifies the names of the columns in the source and reference input tables that contain row identifiers. The function copies these columns to the output table.",
       "datatype": "STRING",
       "allowsLists": false,
       "rName": "id.column",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 3
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
+      "requiredLength": 1,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "NominalMatchColumns",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The columns used for exact matching. It can contains more than one pair",
+      "rDescription": "specifies pairs of columns (attributes) to check for exact matching (a.columnx and b.columny are column names). if any pair matches exactly, then their records are considered to be exact matches. *required if you omit fuzzymatchcolumns.",
+      "description": "Specifies pairs of columns (attributes) to check for exact matching (a.columnX and b.columnY are column names). If any pair matches exactly, then their records are considered to be exact matches. *Required if you omit FuzzyMatchColumns.",
       "datatype": "STRING",
-      "allowsLists": true,
-      "rName": "nominal.match.columns",
-      "useInR": true
+      "allowsLists": false,
+      "rName": "nominalmatch.columns",
+      "useInR": true,
+      "rOrderNum": 4
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "FuzzyMatchColumns",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The columns used in fuzzy matching. In addition, this argument specifies these parameters: similarity metric type, match weight, and synonyms dictionary. The format is: {'<a.columnX: b.columnY, match_metric, match_weight [,synonym__file]>'}",
+      "rDescription": "Specifies pairs of columns (attributes) to check for fuzzy matching (a.columnX and b.columnY are column names) and the fuzzy matching parameters match_metric, match_weight, and synonym_file (whose descriptions follow). If any pair is a fuzzy match, then their records are considered to be fuzzy matches. *Required if you omit nominalmatch.columns.The parameter match_metric specifies the similarity metric, which is a function that returns the similarity score of two strings (a value between 0 and 1). The possible values of match_metric are: EQUAL: If strings a and b are equal, then their similarity score is 1.0; otherwise it 0.0, LD: The similarity score of strings a and b is f(a,b)=LD(a,b)/max(len(a),len(b)), where LD(a,b) is the Levenshtein distance between a with b, D-LD: Like LD except that LD is the Damerau–Levenshtein distance between a with b, JARO: The similarity score of strings a and b is the Jaro distance between them, JARO-WINKLER: The similarity score of strings a and b is the Jaro-Winkler distance between them, NEEDLEMAN-WUNSCH: The similarity score of strings a and b is the Needleman-Wunsch distance between them, JD: The similarity score of strings a and b is the Jaccard distance between them. The function converts the strings a and b to sets s and t by splitting them by space and then uses the formula f(s,t)=|s∩t|/|s∪t|, COSINE: The similarity score of strings a and b is calculated with their term frequency–inverse document frequency (ta.tf_idf) and cosine similarity. Note: The function calculates IDF only on the input relation stored in memory. The parameter match_weight specifies the weight (relative importance) of the attribute represented by a.columnX and b.columnY. The match_weight must be a positive number. The function normalizes each match_weight to a value in the range [0, 1]. Given match_weight values, w1, w2, ..., wn, the normalized value of wi is: wi /(w1+w2+ ...+ wn) For example, given two pairs of columns, whose match weights are 3 and 7, the function uses the weights 3/(3+7)=0.3 and 7/(3+7)=0.7 to compute the similarity score. The parameter synonym_file specifies the dictionary that the function uses to check the two strings for semantic equality. In the dictionary, each line is a commaseparated list of synonyms. Note: You must install the dictionary before running the function.",
+      "description": "Specifies pairs of columns (attributes) to check for fuzzy matching (a.columnX and b.columnY are column names) and the fuzzy matching parameters match_metric, match_weight, and synonym_file (whose descriptions follow). If any pair is a fuzzy match, then their records are considered to be fuzzy matches. *Required if you omit NominalMatchColumns.The parameter match_metric specifies the similarity metric, which is a function that returns the similarity score of two strings (a value between 0 and 1). The possible values of match_metric are: EQUAL: If strings a and b are equal, then their similarity score is 1.0; otherwise it 0.0, LD: The similarity score of strings a and b is f(a,b)=LD(a,b)/max(len(a),len(b)), where LD(a,b) is the Levenshtein distance between a with b, D-LD: Like LD except that LD is the Damerau–Levenshtein distance between a with b, JARO: The similarity score of strings a and b is the Jaro distance between them, JARO-WINKLER: The similarity score of strings a and b is the Jaro-Winkler distance between them, NEEDLEMAN-WUNSCH: The similarity score of strings a and b is the Needleman-Wunsch distance between them, JD: The similarity score of strings a and b is the Jaccard distance between them. The function converts the strings a and b to sets s and t by splitting them by space and then uses the formula f(s,t)=|s∩t|/|s∪t|, COSINE: The similarity score of strings a and b is calculated with their term frequency–inverse document frequency (TF-IDF) and cosine similarity. Note: The function calculates IDF only on the input relation stored in memory. The parameter match_weight specifies the weight (relative importance) of the attribute represented by a.columnX and b.columnY. The match_weight must be a positive number. The function normalizes each match_weight to a value in the range [0, 1]. Given match_weight values, w1, w2, ..., wn, the normalized value of wi is: wi /(w1+w2+ ...+ wn) For example, given two pairs of columns, whose match weights are 3 and 7, the function uses the weights 3/(3+7)=0.3 and 7/(3+7)=0.7 to compute the similarity score. The parameter synonym_file specifies the dictionary that the function uses to check the two strings for semantic equality. In the dictionary, each line is a commaseparated list of synonyms. Note: You must install the dictionary before running the function.",
       "datatype": "STRING",
       "allowsLists": true,
-      "rName": "fuzzy.match.columns",
-      "useInR": true
+      "rName": "fuzzymatch.columns",
+      "useInR": true,
+      "rOrderNum": 5
     },
     {
       "defaultValue": 0.5,
@@ -78,23 +102,31 @@
       "upperBoundType": "INCLUSIVE",
       "allowNaN": false,
       "name": "Threshold",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Only output items with a matching score greater than this value are outputted. The range is a real number between '0' and '1'. The default is '0.5' The input value must be no less than 0.0 and no greater than 1.0. The default value is 0.5.",
+      "rDescription": "Specifies the threshold similarity score, a DOUBLE PRECISION value between 0 and 1. The default value is 0.5. The function outputs only the records whose similarity score exceeds threshold.",
+      "description": "Specifies the threshold similarity score, a DOUBLE PRECISION value between 0 and 1. The default value is 0.5. The function outputs only the records whose similarity score exceeds threshold.",
       "datatype": "DOUBLE",
       "allowsLists": false,
       "rName": "threshold",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 6
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "Accumulate",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Columns from the 'a' or 'b' input tables to include in the output. The format is 'a.<column_name', 'b.<column_name'. The default is the columns 'a.id', 'b.id'",
+      "rDescription": "Specifies input table columns to copy to the output table.",
+      "description": "Specifies input table columns to copy to the output table.",
       "datatype": "STRING",
       "allowsLists": true,
       "rName": "accumulate",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 7
     }
   ]
 }

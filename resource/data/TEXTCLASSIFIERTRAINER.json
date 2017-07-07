@@ -1,102 +1,150 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
   "function_name": "TextClassifierTrainer",
-  "function_version": "1.4",
+  "function_version": "1.5",
   "function_type": "driver",
+  "function_r_name": "aa.text.classifier.train",
   "short_description": "SQL/MR function for training a text classifier",
   "long_description": "SQL/MR function for training a text classification model. Current implementation supports maximum entropy model and KNN model",
   "argument_clauses": [
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "Domain",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The address of the Queen. The host parameter is the Aster Database Queen’s IP saddress or hostname.",
+      "rDescription": "The address of the Queen. The host parameter is the Aster Database Queen’s IP address or hostname.",
+      "description": "The address of the Queen. The host parameter is the Aster Database Queen’s IP address or hostname.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "Database",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The name of the database where the input table is located.",
       "description": "The name of the database where the input table is located.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "UserId",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The Aster Database user name of the user running this function.",
       "description": "The Aster Database user name of the user running this function.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "Password",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The Aster Database password of the user.",
       "description": "The Aster Database password of the user.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "SSLSettings",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "A string that includes all the SSL settings, except the password for the truststore.",
       "description": "A string that includes all the SSL settings, except the password for the truststore.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "SSLTrustStorePassword",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The password for the SSL truststore.",
       "description": "The password for the SSL truststore.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
       "isOutputTable": false,
       "name": "InputTable",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "The table or view that holds the documents to use for training the model",
+      "rDescription": "Specifies the name of the table that contains the documents to use to train the model.",
+      "description": "Specifies the name of the table that contains the documents to use to train the model.",
       "datatype": "TABLE_NAME",
       "allowsLists": false,
-      "rName": "input.table",
-      "useInR": true
+      "rName": "data",
+      "useInR": true,
+      "rOrderNum": 1
     },
     {
-      "targetTable": "InputTable",
+      "targetTable": [
+        "InputTable"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
       "requiredLength": 1,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "TextColumn",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "The input table column whose content will be scanned",
+      "rDescription": "Specifies the name of the column that contains the text of the training documents.",
+      "description": "Specifies the name of the column that contains the text of the training documents.",
       "datatype": "COLUMN_NAMES",
       "allowsLists": false,
       "rName": "text.column",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 2
     },
     {
-      "targetTable": "InputTable",
+      "targetTable": [
+        "InputTable"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
       "requiredLength": 1,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "CategoryColumn",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "The input table column that contains the category of the training documents",
+      "rDescription": "Specifies the name of the column that contains the category of the training documents.",
+      "description": "Specifies the name of the column that contains the category of the training documents.",
       "datatype": "COLUMN_NAMES",
       "allowsLists": false,
       "rName": "category.column",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 3
     },
     {
       "permittedValues": [
@@ -106,57 +154,77 @@
       "defaultValue": "maxEnt",
       "isOutputColumn": false,
       "name": "ClassifierType",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "One of '{ MaxEnt | KNN }' classifier type The permitted input values are [maxEnt, knn]. The default value is maxEnt.",
+      "rDescription": "Specifies the classifier type of the model, KNN algorithm or maximum entropy model.",
+      "description": "Specifies the classifier type of the model, KNN algorithm or maximum entropy model.",
       "datatype": "STRING",
       "allowsLists": false,
       "rName": "classifier.type",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 4
     },
     {
-      "isOutputColumn": false,
-      "allowPadding": true,
-      "name": "ClassifierParameters",
-      "isRequired": false,
-      "description": "If the CLASSIFIERTYPE is KNN, the 'compress' parameter can be specified. Range 0..1 . The default is not specified",
-      "datatype": "STRING",
-      "allowsLists": true,
-      "rName": "classifier.parameters",
-      "useInR": true
-    },
-    {
-      "isOutputColumn": false,
-      "allowPadding": true,
-      "name": "NlpParameters",
-      "isRequired": false,
-      "description": "Used to pass in the parameters for pre-processing. Format: 'name:value','name:value',...",
-      "datatype": "STRING",
-      "allowsLists": true,
-      "rName": "nlp.parameters",
-      "useInR": true
-    },
-    {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "ModelFile",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "The name of the model file to be generated",
+      "rDescription": "The name of the model file to be generated.",
+      "description": "The name of the model file to be generated.",
       "datatype": "STRING",
       "allowsLists": false,
       "rName": "model.file",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 8
     },
     {
+      "permittedValues": [],
+      "isOutputColumn": false,
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "ClassifierParameters",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "Applies only if the classifier type of the model is KNN. Specifies parameters for the classifier. The name must be 'compress' and value must be in the range (0, 1). The n training documents are clustered into value*n groups (for example, if there are 100 training documents, then ClassifierParameters('compress:0.6') clusters them into 60 groups), and the model uses the center of each group as the feature vector.",
+      "description": "Applies only if the classifier type of the model is KNN. Specifies parameters for the classifier. The name must be 'compress' and value must be in the range (0, 1). The n training documents are clustered into value*n groups (for example, if there are 100 training documents, then ClassifierParameters('compress:0.6') clusters them into 60 groups), and the model uses the center of each group as the feature vector.",
+      "datatype": "STRING",
+      "allowsLists": true,
+      "rName": "classifier.parameters",
+      "useInR": true,
+      "rOrderNum": 5
+    },
+    {
+      "permittedValues": [],
+      "isOutputColumn": false,
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "NlpParameters",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "Specifies natural language processing (NLP) parameters for preprocessing the text data and produce tokens. Each name:value pair must be one of the following:  tokenDictFile: token_file where token_file is the name of an Aster Database file in which each line contains a phrase, followed by a space, followed by the token for the phrase (and nothing else).  stopwordsFile:stopword_file where stopword_file is the name of an Aster Database file in which each line contains exactly one stop word (a word to ignore during tokenization, such as a, an, or the).  useStem:{true|false} which specifies whether the function stems the tokens. The default value is 'false'.  stemIgnoreFile:stem_ignore_file where stem_ignore_file is the name of an Aster Database file in which each line contains exactly one word to ignore during stemming. Specifying this parameter with 'useStem:false' causes an exception.  useBgram:{ true | false } which specifies whether the function uses Bigram, which considers the proximity of adjacent tokens when analyzing them. The default value is 'false'.  language:{ en | zh_CN | zh_TW } which specifies the language of the input text—English (en), Simplified Chinese (zh_CN), or Traditional Chinese (zh_TW). The default value is en. For the values zh_CN and zh_TW, the function ignores the parameters useStem and stemIgnoreFile. Example: nlp.parameters ('tokenDictFile:token_dict.txt', 'stopwordsFile:fileName', 'useStem:true', 'stemIgnoreFile:fileName', 'useBgram:true', 'language:zh_CN')",
+      "description": "Specifies natural language processing (NLP) parameters for preprocessing the text data and produce tokens. Each name:value pair must be one of the following:  tokenDictFile: token_file where token_file is the name of an Aster Database file in which each line contains a phrase, followed by a space, followed by the token for the phrase (and nothing else).  stopwordsFile:stopword_file where stopword_file is the name of an Aster Database file in which each line contains exactly one stop word (a word to ignore during tokenization, such as a, an, or the).  useStem:{true|false} which specifies whether the function stems the tokens. The default value is 'false'.  stemIgnoreFile:stem_ignore_file where stem_ignore_file is the name of an Aster Database file in which each line contains exactly one word to ignore during stemming. Specifying this parameter with 'useStem:false' causes an exception.  useBgram:{ true | false } which specifies whether the function uses Bigram, which considers the proximity of adjacent tokens when analyzing them. The default value is 'false'.  language:{ en | zh_CN | zh_TW } which specifies the language of the input text—English (en), Simplified Chinese (zh_CN), or Traditional Chinese (zh_TW). The default value is en. For the values zh_CN and zh_TW, the function ignores the parameters useStem and stemIgnoreFile. Example: NLPParameters ('tokenDictFile:token_dict.txt', 'stopwordsFile:fileName', 'useStem:true', 'stemIgnoreFile:fileName', 'useBgram:true', 'language:zh_CN')",
+      "datatype": "STRING",
+      "allowsLists": true,
+      "rName": "nlp.parameters",
+      "useInR": true,
+      "rOrderNum": 6
+    },
+    {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "FeatureSelectionMethod",
       "alternateNames": [
         "FeatureSelection"
       ],
       "isRequired": false,
-      "description": "Specifies the feature selection method to use. This version of the function supports DF selector (document Frequency). Format: 'DF:[<min_value>:<max_value>], where min_value, max_value are values in the range 0..1 or 'minValue', 'maxValue'",
+      "rDescription": "Specifies the feature selection method, DF (document frequency). The values min and max must be in the range (0, 1). The function selects only the tokens that appear in at least min*n documents and at most max*n documents, where n is the number of training documents. For example, FeatureSelection ('DF:[0.1:0.9]') causes the function to select only the tokens that appear in at least 10% but no more than 90% of the training documents. If min exceeds max, the function uses min as max and max as min.",
+      "description": "Specifies the feature selection method, DF (document frequency). The values min and max must be in the range (0, 1). The function selects only the tokens that appear in at least min*n documents and at most max*n documents, where n is the number of training documents. For example, FeatureSelection ('DF:[0.1:0.9]') causes the function to select only the tokens that appear in at least 10% but no more than 90% of the training documents. If min exceeds max, the function uses min as max and max as min.",
       "datatype": "STRING",
       "allowsLists": false,
-      "rName": "feature.selection.method",
-      "useInR": true
+      "rName": "feature.selection",
+      "useInR": true,
+      "rOrderNum": 7
     }
   ]
 }

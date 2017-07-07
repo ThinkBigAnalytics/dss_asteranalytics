@@ -1,65 +1,94 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
   "function_name": "GeometryLoader",
-  "function_version": "1.1",
+  "function_version": "1.2",
   "function_type": "non-driver",
+  "function_r_name": "aa.geometry.loader",
   "short_description": "This function is adopted to convert geometry formats.",
   "long_description": "This function is adopted to fetch various file-based geospatial from AFS, parse the format and output them into database relations.",
   "input_tables": [
     {
+      "requiredInputKind": [
+        "PartitionByAny"
+      ],
       "isOrdered": false,
       "partitionByOne": false,
+      "name": "input",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "An empty fact table used to run the function.",
       "description": "An empty fact table used to run the function.",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "useInR": true
+      "rName": "data",
+      "useInR": true,
+      "rOrderNum": 1
     }
   ],
   "argument_clauses": [
     {
+      "permittedValues": [],
       "isOutputColumn": false,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "Path",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "The AFS directory or file name to fetch the geometry files from. Regular expressions are allowed in the argument.",
+      "rDescription": "The AFS directory or file name to fetch the geometry files from (for example, /test or /test/ testfile.xml or /test/*.xml). Regular expressions are allowed in the argument. Before calling this function, make sure that the directories and files you want to specify are available on the AFS system. Note: A zip file is treated as a directory.",
+      "description": "The AFS directory or file name to fetch the geometry files from (for example, /test or /test/ testfile.xml or /test/*.xml). Regular expressions are allowed in the argument. Before calling this function, make sure that the directories and files you want to specify are available on the AFS system. Note: A zip file is treated as a directory.",
       "datatype": "STRING",
       "allowsLists": true,
       "rName": "path",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 2
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "Host",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The hostname/ipaddress of the AFS server",
       "description": "The hostname/ipaddress of the AFS server",
       "datatype": "STRING",
       "allowsLists": false,
       "rName": "host",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 3
     },
     {
       "defaultValue": 2601,
+      "lowerBound": -2147483648,
+      "upperBound": 2147483647,
+      "lowerBoundType": "INCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
       "allowNaN": false,
       "name": "Port",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The port on the AFS server to connect to. The default value is 2601.",
+      "rDescription": "The port on the AFS server to connect to. The default is 2601.",
+      "description": "The port on the AFS server to connect to. The default is 2601.",
       "datatype": "INTEGER",
       "allowsLists": false,
       "rName": "port",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 4
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "InputFormat",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The format of the geospatial data in the specified files. The supported formats are kml, geojson, shp, mapinfo, and csv. The default is the function tries to determine the format automatically",
+      "rDescription": "The format of the geospatial data in the specified files. By default, the function determines the format.",
+      "description": "The format of the geospatial data in the specified files. By default, the function determines the format.",
       "datatype": "STRING",
       "allowsLists": false,
       "rName": "input.format",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 5
     },
     {
       "permittedValues": [
@@ -71,23 +100,31 @@
       "defaultValue": "wkt",
       "isOutputColumn": false,
       "name": "OutputFormat",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The representation format of geospatial output data. The permitted input values are [wkt, json, kml, gml]. The default value is wkt.",
+      "rDescription": "The representation format of geospatial output data. The default value is wkt. Note: Only WKT is supported by the ta.pointinpolygon and ta.geometry.overlay functions.",
+      "description": "The representation format of geospatial output data. The default value is wkt. Note: Only WKT is supported by the PointInPolygon and GeometryOverlay functions.",
       "datatype": "STRING",
       "allowsLists": false,
       "rName": "output.format",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 6
     },
     {
-      "isOutputColumn": false,
+      "permittedValues": [],
+      "isOutputColumn": true,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "OutputAttributes",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The output column names and types. The supported column types are varchar, int, and double.",
+      "rDescription": "The output column names and types. The supported column types are VARCHAR, INT, and DOUBLE PRECISION. The default column type is VARCHAR.",
+      "description": "The output column names and types. The supported column types are VARCHAR, INT, and DOUBLE PRECISION. The default column type is VARCHAR.",
       "datatype": "STRING",
       "allowsLists": true,
       "rName": "output.attributes",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 7
     }
   ]
 }

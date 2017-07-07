@@ -1,10 +1,11 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
   "function_name": "Pack",
-  "function_version": "1.2",
+  "function_version": "1.3",
   "function_type": "non-driver",
+  "function_r_name": "aa.pack",
   "short_description": "Packs data across several columns into a single data column.",
   "long_description": "Reverse of the unpack function.  Packs data across several columns into a single data column.",
   "input_tables": [
@@ -14,70 +15,88 @@
       ],
       "isOrdered": false,
       "partitionByOne": false,
+      "name": "input",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "The table containing the input attributes.",
       "description": "The table containing the input attributes.",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "useInR": true
+      "rName": "data",
+      "useInR": true,
+      "rOrderNum": 1
     }
   ],
   "argument_clauses": [
     {
+      "targetTable": [
+        "input"
+      ],
       "checkDuplicate": false,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "InputColumns",
       "alternateNames": [
-        "Column_Names",
-		"ColumnNames"
+        "ColumnNames"
       ],
       "isRequired": false,
-      "description": "Names of the input columns to be packed. The name of each input column that you pack becomes its virtual column name. Columns that are present in the input but not listed in InputColumns are passed through to the output as regular columns. If you do not include a ColumnNames clause, all input columns are packed, and no columns are passed through as-is.",
+      "rDescription": "Specifies the names of the input columns to pack into a single output column. These names become the column names of the virtual columns. By default, all input table columns are packed into a single output column. If you specify this argument, but do not specify all input table columns, the function copies the unspecified input tablecolumns to the output table.",
+      "description": "Specifies the names of the input columns to pack into a single output column. These names become the column names of the virtual columns. By default, all input table columns are packed into a single output column. If you specify this argument, but do not specify all input table columns, the function copies the unspecified input tablecolumns to the output table.",
       "datatype": "COLUMNS",
       "allowsLists": true,
       "rName": "input.columns",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 2
     },
     {
+      "permittedValues": [],
+      "isOutputColumn": true,
+      "name": "OutputColumn",
+      "alternateNames": [
+        "PackedColumnName"
+      ],
+      "isRequired": true,
+      "rDescription": " Specifies the name to give to the packed output column.",
+      "description": " Specifies the name to give to the packed output column.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "output.column",
+      "useInR": true,
+      "rOrderNum": 3
+    },
+    {
+      "permittedValues": [],
       "defaultValue": ",",
       "isOutputColumn": false,
       "name": "Delimiter",
       "alternateNames": [
-        "Column_Delimiter",
-		"ColumnDelimiter"
+        "ColumnDelimiter"
       ],
       "isRequired": false,
-      "description": "Character string that will be used to delimit each packed data value (and virtual column name if present) from the next. If the column delimiter is a pipe character (that is, '|' ), you need to double escape it (that is, '\\|' ). The default value is ,.",
+      "rDescription": "Specifies the delimiter (a string) that separates the virtual columns in the packed data. The default delimiter is comma (,).",
+      "description": "Specifies the delimiter (a string) that separates the virtual columns in the packed data. The default delimiter is comma (,).",
       "datatype": "STRING",
       "allowsLists": false,
       "rName": "delimiter",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 4
     },
     {
       "defaultValue": true,
       "name": "IncludeColumnName",
-      "alternateNames": [
-        "Include_Column_Name"
-      ],
+      "alternateNames": [],
       "isRequired": false,
-      "description": "A true or false value that specifies whether or not to pre-pend each packed value with its virtual column name. The default value is true.",
+      "rDescription": " Specifies whether to label each virtual column value with its column name (making the virtual column 'input_column:value'). The default value is 'true'.",
+      "description": " Specifies whether to label each virtual column value with its column name (making the virtual column 'input_column:value'). The default value is 'true'.",
       "datatype": "BOOLEAN",
       "allowsLists": false,
-      "rName": "include.column.name",
-      "useInR": true
-    },
-    {
-      "isOutputColumn": true,
-      "name": "OutputColumn",
-      "alternateNames": [
-        "Packed_Column_Name",
-		"PackedColumnName"
-      ],
-      "isRequired": true,
-      "description": "Name of the output column that will hold the packed data.",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "output.column",
-      "useInR": true
+      "rName": " include.column.name",
+      "useInR": true,
+      "rOrderNum": 5
     }
   ]
 }

@@ -1,40 +1,80 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
   "function_name": "ApproxPercentileMap",
-  "function_version": "1.1",
+  "function_version": "1.2",
   "function_type": "non-driver",
+  "function_r_name": "aa.approx.percentile.R",
   "short_description": "Outputs a summary of approximate percentiles on values of a column and grouped by one or more columns.",
   "long_description": "Outputs a summary of approximate percentiles on values given by a column and grouped by one or more columns. The rank of each output value is guaranteed to be within <N * relative_error / 100> of the rank of the corresponding percentile, where <N> is the number of summarized values.",
+  "function_operation": "map",
+  "partner_function": "ApproxPercentileReduce",
   "input_tables": [
     {
+      "requiredInputKind": [
+        "PartitionByAny"
+      ],
       "isOrdered": false,
       "partitionByOne": false,
       "name": "InputTable",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "Specifies the table containing the input data.",
       "description": "Specifies the table containing the input data.",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
       "rName": "input.table",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 0
     }
   ],
   "argument_clauses": [
     {
-      "targetTable": "InputTable",
+      "targetTable": [
+        "InputTable"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
       "allowPadding": true,
-      "name": "TargetColumn",
+      "name": "TargetColumns",
       "alternateNames": [
-        "Target_Column"
+        "TargetColumn"
       ],
       "isRequired": true,
-      "description": "Specifies the column for which we want to compute the quantile summary. ",
+      "rDescription": "Specifies the names of the input columns for which to compute approximate percentiles. If you specify only one target_column in the ApproxPercentileMap function, then you can omit this argument in the ApproxPercentileReduce function. If you specify more than one target_column in the ApproxPercentileMap function, then you must specify this argument in the ApproxPercentileReduce function. In ApproxPercentileReduce, this argument must specify at least one target_column that it specifies in ApproxPercentileMap. Only the target columns specified in ApproxPercentileReduce appear in the output table.",
+      "description": "Specifies the names of the input columns for which to compute approximate percentiles. If you specify only one target_column in the ApproxPercentileMap function, then you can omit this argument in the ApproxPercentileReduce function. If you specify more than one target_column in the ApproxPercentileMap function, then you must specify this argument in the ApproxPercentileReduce function. In ApproxPercentileReduce, this argument must specify at least one target_column that it specifies in ApproxPercentileMap. Only the target columns specified in ApproxPercentileReduce appear in the output table.",
       "datatype": "COLUMNS",
       "allowsLists": true,
-      "rName": "target.column",
-      "useInR": true
+      "rName": "target.columns",
+      "useInR": true,
+      "rOrderNum": 0
+    },
+    {
+      "targetTable": [
+        "InputTable"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "GroupColumns",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "Specifies the names of the input columns by which to group the data. If you specify this argument, the function computes the approximate percentile for each group in each column. If you omit this argument, the function computes the approximate percentile for the entire column. For example, suppose that the target columns are State, Town, and Population. If you specify GroupColumns('State'), the function computes the approximate percentile for the population of each state. If you omit this argument, the function computes the approximate percentile for the population across all towns. To specify this argument, you must do so in both the ApproxPercentileMap and the ApproxPercentileReduce functions, and specify each group_column in the PARTITION BY clause. If you omit this argument, specify PARTITION BY 1. ",
+      "description": "Specifies the names of the input columns by which to group the data. If you specify this argument, the function computes the approximate percentile for each group in each column. If you omit this argument, the function computes the approximate percentile for the entire column. For example, suppose that the target columns are State, Town, and Population. If you specify GroupColumns('State'), the function computes the approximate percentile for the population of each state. If you omit this argument, the function computes the approximate percentile for the population across all towns. To specify this argument, you must do so in both the ApproxPercentileMap and the ApproxPercentileReduce functions, and specify each group_column in the PARTITION BY clause. If you omit this argument, specify PARTITION BY 1. ",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "group.columns",
+      "useInR": true,
+      "rOrderNum": 0
     },
     {
       "defaultValue": 1,
@@ -48,26 +88,13 @@
         "Error"
       ],
       "isRequired": false,
-      "description": "Specifies the acceptable error rate, expressed using decimal representation. The input value must be no less than 0.01 and no greater than 50.0. The default value is 1.0.",
+      "rDescription": "Specifies the approximate percentiles to compute. Each percentile is an INTEGER. By default, the function computes the percentiles 0, 25, 50, 75, and 100.",
+      "description": "Specifies the approximate percentiles to compute. Each percentile is an INTEGER. By default, the function computes the percentiles 0, 25, 50, 75, and 100.",
       "datatype": "DOUBLE",
       "allowsLists": false,
       "rName": "error.rate",
-      "useInR": true
-    },
-    {
-      "targetTable": "InputTable",
-      "checkDuplicate": true,
-      "allowPadding": true,
-      "name": "GroupColumns",
-      "alternateNames": [
-        "Group_Columns"
-      ],
-      "isRequired": false,
-      "description": "Specifies the columns to group the data by. ",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "group.columns",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 0
     }
   ]
 }

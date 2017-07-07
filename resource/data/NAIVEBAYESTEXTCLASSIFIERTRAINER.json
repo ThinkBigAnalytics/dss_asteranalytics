@@ -1,12 +1,14 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
   "function_name": "NaiveBayesTextClassifierTrainer",
-  "function_version": "1.1",
+  "function_version": "1.2",
   "function_type": "non-driver",
+  "function_r_name": "aa.naivebayes.textclassifier.train",
   "short_description": "Trains a naive Bayes text classifier model.",
   "long_description": "Trains a naive Bayes text classifier model.",
+  "partner_function": "NaiveBayesTextClassifierPredict",
   "input_tables": [
     {
       "requiredInputKind": [
@@ -14,11 +16,15 @@
       ],
       "isOrdered": false,
       "partitionByOne": true,
+      "name": "input",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "The table is the output of NaiveBayesTextClassifierInternal.",
       "description": "The table is the output of NaiveBayesTextClassifierInternal.",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 0
     }
   ]
 }

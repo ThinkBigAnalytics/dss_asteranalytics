@@ -1,100 +1,142 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
-  "function_name": "lars",
-  "function_version": "1.1",
+  "function_name": "LARS",
+  "function_version": "1.2",
   "function_type": "driver",
+  "function_r_name": "aa.lars",
   "short_description": "This is a driver function which does LARS.",
   "long_description": "This function does linear regression model selection. It has two options: Least Angle Regression (LAR), and LASSO. The variables enter into (or leave) the linear regression model 'one at a time'. For LAR, the algorithm takes at most p steps to compute the whole path, where p is the total number of variables. LASSO may take a few more steps to reach the full OLS estimates.",
   "argument_clauses": [
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "Domain",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The address of the Queen. The host parameter is the Aster Database Queen’s IP saddress or hostname.",
+      "rDescription": "The address of the Queen. The host parameter is the Aster Database Queen’s IP address or hostname.",
+      "description": "The address of the Queen. The host parameter is the Aster Database Queen’s IP address or hostname.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "Database",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The name of the database where the input table is located.",
       "description": "The name of the database where the input table is located.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "UserId",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The Aster Database user name of the user running this function.",
       "description": "The Aster Database user name of the user running this function.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "Password",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The Aster Database password of the user.",
       "description": "The Aster Database password of the user.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "SSLSettings",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "A string that includes all the SSL settings, except the password for the truststore.",
       "description": "A string that includes all the SSL settings, except the password for the truststore.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "SSLTrustStorePassword",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The password for the SSL truststore.",
       "description": "The password for the SSL truststore.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
       "isOutputTable": false,
       "name": "InputTable",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "Specifies the table containing the input data",
+      "rDescription": " Specifies the name of the input table.",
+      "description": " Specifies the name of the input table.",
       "datatype": "TABLE_NAME",
       "allowsLists": false,
-      "rName": "input.table",
-      "useInR": true
+      "rName": "data",
+      "useInR": true,
+      "rOrderNum": 1
     },
     {
       "isOutputTable": true,
       "name": "OutputTable",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "Specifies the output table",
+      "rDescription": " Specifies the name of the output table.",
+      "description": " Specifies the name of the output table.",
       "datatype": "TABLE_NAME",
       "allowsLists": false,
       "rName": "output.table",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 100
     },
     {
-      "isOutputColumn": false,
+      "targetTable": [
+        "InputTable"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "InputColumns",
       "alternateNames": [
         "ColumnNames"
       ],
       "isRequired": true,
-      "description": "Specifies the names of the columns of the input table that contain the response and predictors.",
-      "datatype": "STRING",
+      "rDescription": "Specifies the names of the columns of the input table that contain the response and predictors. The syntax of predictor_columns is: {col[,...] | [start_column:end_column]}[,...] where col is a column name and start_column and end_column are the column indexes of the first and last columns in a range of columns. The range includes start_column and end_column. The leftmost column has column index 0, the column to its immediate right has column index 1, and so on. Note: In a column range, brackets do not indicate optional elements. You must include the bracket characters (for example, '[2:6]'). Note: This function can take at most 799 response and predictor variables.",
+      "description": "Specifies the names of the columns of the input table that contain the response and predictors. The syntax of predictor_columns is: {col[,...] | [start_column:end_column]}[,...] where col is a column name and start_column and end_column are the column indexes of the first and last columns in a range of columns. The range includes start_column and end_column. The leftmost column has column index 0, the column to its immediate right has column index 1, and so on. Note: In a column range, brackets do not indicate optional elements. You must include the bracket characters (for example, '[2:6]'). Note: This function can take at most 799 response and predictor variables.",
+      "datatype": "COLUMN_NAMES",
       "allowsLists": true,
       "rName": "input.columns",
-      "useInR": true
+      "useInR": true,
+      "rFormulaUsage": true,
+      "rOrderNum": -1
     },
     {
       "permittedValues": [
@@ -104,44 +146,58 @@
       "defaultValue": "LASSO",
       "isOutputColumn": false,
       "name": "Method",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Specifies either 'lar' (least angle regression) or 'lasso' The permitted input values are [LAR, LASSO]. The default value is LASSO.",
+      "rDescription": " Specifies either 'lar' (least angle regression) or 'lasso'. The default value is 'lasso'.",
+      "description": " Specifies either 'lar' (least angle regression) or 'lasso'. The default value is 'lasso'.",
       "datatype": "STRING",
       "allowsLists": false,
-      "rName": "method",
-      "useInR": true
+      "rName": "type",
+      "useInR": true,
+      "rOrderNum": 2
     },
     {
       "lowerBound": 0,
+      "upperBound": 2147483647,
       "lowerBoundType": "EXCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
       "allowNaN": false,
       "name": "MaxIterNum",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Specifies the maximum number of steps the function executes The input value must be greater than 0.",
+      "rDescription": "Specifies the maximum number of steps the function executes. The default value is 8*min(number_of_predictors, sample_size - intercept). For example, if the number of predictors is 11, the sample size (number of rows in the input table) is 1532, and the intercept is 1, then the default value is 8*min(11, 1532 - 1) = 88.",
+      "description": "Specifies the maximum number of steps the function executes. The default value is 8*min(number_of_predictors, sample_size - intercept). For example, if the number of predictors is 11, the sample size (number of rows in the input table) is 1532, and the intercept is 1, then the default value is 8*min(11, 1532 - 1) = 88.",
       "datatype": "INTEGER",
       "allowsLists": false,
-      "rName": "max.iter.num",
-      "useInR": true
+      "rName": "max.steps ",
+      "useInR": true,
+      "rOrderNum": 3
     },
     {
       "defaultValue": true,
       "name": "Intercept",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Specifies whether an intercept is included in the model (and not penalized) The default value is true.",
+      "rDescription": "Specifies whether an intercept is included in the model (and not penalized). The default value is 'true'.",
+      "description": "Specifies whether an intercept is included in the model (and not penalized). The default value is 'true'.",
       "datatype": "BOOLEAN",
       "allowsLists": false,
       "rName": "intercept",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 5
     },
     {
       "defaultValue": true,
       "name": "Normalize",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Specifies whether each predictor is standardized to have unit L2 norm The default value is true.",
+      "rDescription": "Specifies whether each predictor is standardized to have unit L2 norm. The default value is 'true'.",
+      "description": "Specifies whether each predictor is standardized to have unit L2 norm. The default value is 'true'.",
       "datatype": "BOOLEAN",
       "allowsLists": false,
       "rName": "normalize",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 4
     }
   ]
 }

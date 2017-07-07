@@ -1,10 +1,11 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
   "function_name": "FMeasure",
-  "function_version": "1.3",
+  "function_version": "1.5",
   "function_type": "non-driver",
+  "function_r_name": "aa.fmeasure",
   "short_description": "Compute the F measure.",
   "long_description": "Compute the F measure, precision and recall, by comapring the ExpectColumn and PredictColumn.",
   "input_tables": [
@@ -14,53 +15,100 @@
       ],
       "isOrdered": false,
       "partitionByOne": true,
+      "name": "input",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "The relation that contains the output of a classifier",
       "description": "The relation that contains the output of a classifier",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "useInR": true
+      "rName": "data",
+      "useInR": true,
+      "rOrderNum": 1
     }
   ],
   "argument_clauses": [
     {
+      "targetTable": [
+        "input"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
       "requiredLength": 1,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "ObsColumn",
       "alternateNames": [
         "ExpectColumn"
       ],
       "isRequired": true,
-      "description": "The name of the column with the expected category",
+      "rDescription": "Specifies the name of the input table column that contains the observed class.",
+      "description": "Specifies the name of the input table column that contains the observed class.",
       "datatype": "COLUMNS",
       "allowsLists": false,
       "rName": "obs.column",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 2
     },
     {
+      "targetTable": [
+        "input"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
       "requiredLength": 1,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "PredictColumn",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "The name of the column with the result category",
+      "rDescription": "Specifies the name of the input table column that contains the predicted class.",
+      "description": "Specifies the name of the input table column that contains the predicted class.",
       "datatype": "COLUMNS",
       "allowsLists": false,
       "rName": "predict.column",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 3
     },
     {
       "defaultValue": 1.0,
       "lowerBound": 0.0,
+      "upperBound": Infinity,
       "lowerBoundType": "EXCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
       "allowNaN": false,
       "name": "Beta",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "A non-negative real value. Default is 1.0 The input value must be greater than 0.0. The default value is 1.0.",
+      "rDescription": "Specifies the value of β in the general formula in “Background”. The beta_value must be a positive DOUBLE PRECISION value. The default value is 1.0.",
+      "description": "Specifies the value of β in the general formula in “Background”. The beta_value must be a positive DOUBLE PRECISION value. The default value is 1.0.",
       "datatype": "DOUBLE",
       "allowsLists": false,
       "rName": "beta",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 5
+    },
+    {
+      "permittedValues": [],
+      "isOutputColumn": false,
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "classes",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "Specifies the class or classes to output in the result. The default is all classes.",
+      "description": "Specifies the class or classes to output in the result. The default is all classes.",
+      "datatype": "STRING",
+      "allowsLists": true,
+      "rName": "classes",
+      "useInR": true,
+      "rOrderNum": 4
     }
   ]
 }

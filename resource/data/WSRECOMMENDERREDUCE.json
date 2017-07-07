@@ -1,12 +1,15 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
   "function_name": "WSRecommenderReduce",
-  "function_version": "1.1",
+  "function_version": "1.2",
   "function_type": "SQL-MR",
+  "function_r_name": "aa.recommender",
   "short_description": "This function is used to create partial recommendation scores for users for each item.",
   "long_description": "This function is used to create partial recommendation scores for users for each item.",
+  "function_operation": "reduce",
+  "partner_function": "WSRecommender",
   "input_tables": [
     {
       "requiredInputKind": [
@@ -15,12 +18,15 @@
       "isOrdered": false,
       "partitionByOne": false,
       "name": "item_table",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "item table",
       "description": "item table",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
       "rName": "item.table",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 0
     },
     {
       "requiredInputKind": [
@@ -29,104 +35,217 @@
       "isOrdered": false,
       "partitionByOne": false,
       "name": "user_table",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "user table",
       "description": "user table",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
       "rName": "user.table",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 0
     }
   ],
   "argument_clauses": [
     {
-      "defaultValue": "usr",
-      "isOutputColumn": false,
+      "targetTable": [
+        "user_table"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "defaultValues": [
+        "usr"
+      ],
+      "requiredLength": 1,
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
       "name": "UserId",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The default value is usr.",
-      "datatype": "STRING",
+      "rDescription": "Specifies the name of the user_table column that contains the unique user identifiers. The default value is 'usr'.",
+      "description": "Specifies the name of the user_table column that contains the unique user identifiers. The default value is 'usr'.",
+      "datatype": "COLUMNS",
       "allowsLists": false,
       "rName": "user.id",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 0
     },
     {
-      "defaultValue": "item",
-      "isOutputColumn": false,
+      "targetTable": [
+        "user_table"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "defaultValues": [
+        "item"
+      ],
+      "requiredLength": 1,
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
       "name": "UserItem",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The default value is item.",
-      "datatype": "STRING",
+      "rDescription": "Specifies the name of the user_table column that contains the names of the items that the user viewed or purchased. The default value is 'item'.",
+      "description": "Specifies the name of the user_table column that contains the names of the items that the user viewed or purchased. The default value is 'item'.",
+      "datatype": "COLUMNS",
       "allowsLists": false,
       "rName": "user.item",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 0
     },
     {
-      "defaultValue": "preference",
-      "isOutputColumn": false,
+      "targetTable": [
+        "user_table"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "defaultValues": [
+        "preference"
+      ],
+      "requiredLength": 1,
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
       "name": "UserPref",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The default value is preference.",
-      "datatype": "STRING",
+      "rDescription": "Specifies the name of the user_table column that contains user preferences for an item, expressed as numeric values. The value 0 indicates no preference. The default value is 'preference'.",
+      "description": "Specifies the name of the user_table column that contains user preferences for an item, expressed as numeric values. The value 0 indicates no preference. The default value is 'preference'.",
+      "datatype": "COLUMNS",
       "allowsLists": false,
       "rName": "user.pref",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 0
     },
     {
-      "defaultValue": "col1_item1",
-      "isOutputColumn": false,
+      "targetTable": [
+        "item_table"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "defaultValues": [
+        "col1_item1"
+      ],
+      "requiredLength": 1,
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
       "name": "item1",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The default value is col1_item1.",
-      "datatype": "STRING",
+      "rDescription": "Specifies the name of the item_table column that contains the first item (item1). The default value is 'col1_item1'.",
+      "description": "Specifies the name of the item_table column that contains the first item (item1). The default value is 'col1_item1'.",
+      "datatype": "COLUMNS",
       "allowsLists": false,
       "rName": "item1",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 0
     },
     {
-      "defaultValue": "col1_item2",
-      "isOutputColumn": false,
+      "targetTable": [
+        "item_table"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "defaultValues": [
+        "col1_item2"
+      ],
+      "requiredLength": 1,
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
       "name": "item2",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The default value is col1_item2.",
-      "datatype": "STRING",
+      "rDescription": " Specifies the name of the item_table column that contains the second item (item2). The default value is 'col1_item2'.",
+      "description": " Specifies the name of the item_table column that contains the second item (item2). The default value is 'col1_item2'.",
+      "datatype": "COLUMNS",
       "allowsLists": false,
       "rName": "item2",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 0
     },
     {
-      "defaultValue": "cntb",
-      "isOutputColumn": false,
+      "targetTable": [
+        "item_table"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "defaultValues": [
+        "cntb"
+      ],
+      "requiredLength": 1,
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
       "name": "ItemSimilarity",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The default value is cntb.",
-      "datatype": "STRING",
+      "rDescription": "Specifies the name of the item_table column that contains the similarity score for item1 and item2. The default value is 'cntb'.",
+      "description": "Specifies the name of the item_table column that contains the similarity score for item1 and item2. The default value is 'cntb'.",
+      "datatype": "COLUMNS",
       "allowsLists": false,
       "rName": "item.similarity",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 0
     },
     {
-      "targetTable": "item_table",
+      "targetTable": [
+        "item_table"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "AccumulateItem",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "",
+      "rDescription": "Specifies the names of item_table columns to copy to the output table.",
+      "description": "Specifies the names of item_table columns to copy to the output table.",
       "datatype": "COLUMNS",
       "allowsLists": true,
       "rName": "accumulate.item",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 0
     },
     {
-      "targetTable": "user_table",
+      "targetTable": [
+        "user_table"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "AccumulateUser",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "",
+      "rDescription": " Specifies the names of user_table columns to copy to the output table.",
+      "description": " Specifies the names of user_table columns to copy to the output table.",
       "datatype": "COLUMNS",
       "allowsLists": true,
       "rName": "accumulate.user",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 0
     }
   ]
 }

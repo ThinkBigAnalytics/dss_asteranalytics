@@ -1,162 +1,233 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
-  "function_name": "cfilter",
-  "function_version": "1.7",
+  "function_name": "CFilter",
+  "function_version": "1.8",
   "function_type": "driver",
+  "function_r_name": "aa.cfilter",
   "short_description": "This function generates combinations of frequent baskets",
   "long_description": "This function is used for identifying the associations in two item-set. For every combination, this function generates the score, support, confidence and z-score associated with the combination",
   "argument_clauses": [
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "Domain",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The address of the Queen. The host parameter is the Aster Database Queen’s IP saddress or hostname.",
+      "rDescription": "The address of the Queen. The host parameter is the Aster Database Queen’s IP address or hostname.",
+      "description": "The address of the Queen. The host parameter is the Aster Database Queen’s IP address or hostname.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "Database",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The name of the database where the input table is located.",
       "description": "The name of the database where the input table is located.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "UserId",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The Aster Database user name of the user running this function.",
       "description": "The Aster Database user name of the user running this function.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "Password",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The Aster Database password of the user.",
       "description": "The Aster Database password of the user.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "SSLSettings",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "A string that includes all the SSL settings, except the password for the truststore.",
       "description": "A string that includes all the SSL settings, except the password for the truststore.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "SSLTrustStorePassword",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The password for the SSL truststore.",
       "description": "The password for the SSL truststore.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
       "isOutputTable": false,
       "name": "InputTable",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "Name of the input table containing the data to be filtered.",
+      "rDescription": "Specifies the name of the table that contains the data to filter.",
+      "description": "Specifies the name of the table that contains the data to filter.",
       "datatype": "TABLE_NAME",
       "allowsLists": false,
-      "rName": "input.table",
-      "useInR": true
+      "rName": "data",
+      "useInR": true,
+      "rOrderNum": 1
     },
     {
       "isOutputTable": true,
       "name": "OutputTable",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "Name of the output table into which the function writes the final results.",
+      "rDescription": "Specifies the name of the output table that the function creates. The table must not exist.",
+      "description": "Specifies the name of the output table that the function creates. The table must not exist.",
       "datatype": "TABLE_NAME",
       "allowsLists": false,
       "rName": "output.table",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 100
     },
     {
-      "targetTable": "InputTable",
+      "targetTable": [
+        "InputTable"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "InputColumns",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "A list of input columns to filter.",
+      "rDescription": "Specifies the names of the input table columns that contain the data to filter.",
+      "description": "Specifies the names of the input table columns that contain the data to filter.",
       "datatype": "COLUMN_NAMES",
       "allowsLists": true,
       "rName": "input.columns",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 2
     },
     {
-      "targetTable": "InputTable",
+      "targetTable": [
+        "InputTable"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "JoinColumns",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "A list of columns to join on.",
+      "rDescription": "Specifies the names of the input table columns to join.",
+      "description": "Specifies the names of the input table columns to join.",
       "datatype": "COLUMN_NAMES",
       "allowsLists": true,
       "rName": "join.columns",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 3
     },
     {
-      "defaultValue": "col1_item1",
-      "isOutputColumn": true,
-      "name": "PartitionKey",
-      "isRequired": false,
-      "description": "Single column used as partition key for the newly created output table. The default value is col1_item1.",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "partition.key",
-      "useInR": true
-    },
-    {
-      "targetTable": "InputTable",
+      "targetTable": [
+        "InputTable"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "AddColumns",
       "alternateNames": [
         "OtherColumns"
       ],
       "isRequired": false,
-      "description": "A comma-separated list of the names of other input columns to add to the output.",
+      "rDescription": "Specifies the names of the input columns to copy to the output table. The function partitions the input data and the output table on these columns. By default, the function treats the input data as belonging to one partition. Note: Specifying a column as both an add_column and a join_column causes incorrect counts in partitions.",
+      "description": "Specifies the names of the input columns to copy to the output table. The function partitions the input data and the output table on these columns. By default, the function treats the input data as belonging to one partition. Note: Specifying a column as both an add_column and a join_column causes incorrect counts in partitions.",
       "datatype": "COLUMN_NAMES",
       "allowsLists": true,
       "rName": "add.columns",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 4
+    },
+    {
+      "permittedValues": [],
+      "defaultValue": "col1_item1",
+      "isOutputColumn": false,
+      "name": "PartitionKey",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "Specifies the names of the output column to use as the partition key. The default value is 'col1_item1'.",
+      "description": "Specifies the names of the output column to use as the partition key. The default value is 'col1_item1'.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": " partition.key",
+      "useInR": true,
+      "rOrderNum": 5
     },
     {
       "defaultValue": 100,
       "lowerBound": 0,
+      "upperBound": 2147483647,
       "lowerBoundType": "INCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
       "allowNaN": false,
       "name": "MaxItemSet",
       "alternateNames": [
         "MaxSet"
       ],
       "isRequired": false,
-      "description": "Size of the maximum item set to be considered. The input value must be no less than 0. The default value is 100.",
+      "rDescription": "Specifies the maximum size of the item set. The default value is 100.",
+      "description": "Specifies the maximum size of the item set. The default value is 100.",
       "datatype": "INTEGER",
       "allowsLists": false,
-      "rName": "max.item.set",
-      "useInR": true
+      "rName": "max.itemset",
+      "useInR": true,
+      "rOrderNum": 6
     },
     {
       "defaultValue": false,
       "name": "DropTable",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "If you set this option to true, if the output table name already exists, the function drops the table. The default value is false.",
+      "rDescription": "Specifies whether to drop the output table if it exists. The default value is 'false'.",
+      "description": "Specifies whether to drop the output table if it exists. The default value is 'false'.",
       "datatype": "BOOLEAN",
       "allowsLists": false,
       "rName": "drop.table",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 7
     }
   ]
 }

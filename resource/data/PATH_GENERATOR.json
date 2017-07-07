@@ -1,10 +1,11 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
-  "function_name": "path_generator",
-  "function_version": "1.3",
+  "function_name": "Path_Generator",
+  "function_version": "1.4",
   "function_type": "non-driver",
+  "function_r_name": "aa.path.generator",
   "short_description": "Generates the subsequences for the paths provided",
   "long_description": " This function takes as input a sequence stored in row and generates all subsequences. This input could come from the result of an nPath query or if the data is already stored in a sequence",
   "input_tables": [
@@ -14,42 +15,58 @@
       ],
       "isOrdered": false,
       "partitionByOne": false,
+      "name": "input",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "The name of the table containing the input data.",
       "description": "The name of the table containing the input data.",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "useInR": true
+      "rName": "data",
+      "useInR": true,
+      "rOrderNum": 1
     }
   ],
   "argument_clauses": [
     {
+      "targetTable": [
+        "input"
+      ],
       "checkDuplicate": true,
       "allowedTypes": [
         "character varying"
       ],
+      "allowedTypeGroups": [],
       "requiredLength": 1,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "SeqColumn",
       "alternateNames": [
         "Seq"
       ],
       "isRequired": true,
-      "description": "Name of the column in the input relation that contains the paths to be analyzed. Input columns can be the following SQL types: character varying.",
+      "rDescription": "Specifies the name of the input table column that contains the paths.",
+      "description": "Specifies the name of the input table column that contains the paths.",
       "datatype": "COLUMNS",
       "allowsLists": false,
       "rName": "seq.column",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 2
     },
     {
+      "permittedValues": [],
       "defaultValue": ",",
       "isOutputColumn": false,
       "name": "Delimiter",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Single-character delimiter used in the path string. The default value is ,.",
+      "rDescription": " Specifies the single-character delimiter that separates symbols in the path string. The default value is comma (','). Note: Do not use any of the following characters as delimiter (they cause the function to fail): Asterisk (*), Plus (+), Left parenthesis ((), Right parenthesis ()), Single quotation mark ('), Escaped single quotation mark ('), Backslash ('')",
+      "description": " Specifies the single-character delimiter that separates symbols in the path string. The default value is comma (','). Note: Do not use any of the following characters as delimiter (they cause the function to fail): Asterisk (*), Plus (+), Left parenthesis ((), Right parenthesis ()), Single quotation mark ('), Escaped single quotation mark ('), Backslash ('')",
       "datatype": "STRING",
       "allowsLists": false,
       "rName": "delimiter",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 3
     }
   ]
 }

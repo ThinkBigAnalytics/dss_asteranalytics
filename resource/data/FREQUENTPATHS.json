@@ -1,146 +1,117 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
-  "function_name": "frequentpaths",
-  "function_version": "2.1",
+  "function_name": "FrequentPaths",
+  "function_version": "2.2",
   "function_type": "driver",
+  "function_r_name": "aa.frequent.paths",
   "short_description": "Compute frequent sequential patterns among a sequence table.",
   "long_description": "This function takes the input table and output the frequence sequential patterns according to a given threshold.",
   "argument_clauses": [
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "Domain",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The address of the Queen. The host parameter is the Aster Database Queen’s IP saddress or hostname.",
+      "rDescription": "The address of the Queen. The host parameter is the Aster Database Queen’s IP address or hostname.",
+      "description": "The address of the Queen. The host parameter is the Aster Database Queen’s IP address or hostname.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "Database",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The name of the database where the input table is located.",
       "description": "The name of the database where the input table is located.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "UserId",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The Aster Database user name of the user running this function.",
       "description": "The Aster Database user name of the user running this function.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "Password",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The Aster Database password of the user.",
       "description": "The Aster Database password of the user.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "SSLSettings",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "A string that includes all the SSL settings, except the password for the truststore.",
       "description": "A string that includes all the SSL settings, except the password for the truststore.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "SSLTrustStorePassword",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The password for the SSL truststore.",
       "description": "The password for the SSL truststore.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
       "isOutputTable": false,
       "name": "InputTable",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "The sequence table, where each row of record is one item belonging to a sequence.",
+      "rDescription": "Specifies the name of the table that contains the input sequences. Each row is one item in a sequence. If data does not include a schema, the function searches for it in the user’s search path. The function ignores rows that contain any NULL values.",
+      "description": "Specifies the name of the table that contains the input sequences. Each row is one item in a sequence. If input_table does not include a schema, the function searches for it in the user’s search path. The function ignores rows that contain any NULL values.",
       "datatype": "TABLE_NAME",
       "allowsLists": false,
-      "rName": "input.table",
-      "useInR": true
+      "rName": "data",
+      "useInR": true,
+      "rOrderNum": 1
     },
     {
       "isOutputTable": true,
       "name": "OutputTable",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "The name of the table in which the output patterns are stored.",
+      "rDescription": "Specifies the name of the table where the function outputs the subsequences.",
+      "description": "Specifies the name of the table where the function outputs the subsequences.",
       "datatype": "TABLE_NAME",
       "allowsLists": false,
-      "rName": "output.table",
-      "useInR": true
-    },
-    {
-      "targetTable": "InputTable",
-      "checkDuplicate": true,
-      "allowedTypes": [
-        "numeric",
-        "uuid",
-        "bytea"
-      ],
-      "allowedTypeGroups": [
-        "INTEGER",
-        "STRING"
-      ],
-      "allowPadding": true,
-      "name": "PartitionColumns",
-      "alternateNames": [
-        "PartitionColumn"
-      ],
-      "isRequired": true,
-      "description": "A list of columns that provide the partition keys of a sequence. Input columns must contain integer SQL types. Input columns must contain string SQL types. Input columns can be the following SQL types: [numeric, uuid, bytea].",
-      "datatype": "COLUMN_NAMES",
-      "allowsLists": true,
-      "rName": "partition.columns",
-      "useInR": true
-    },
-    {
-      "targetTable": "InputTable",
-      "checkDuplicate": true,
-      "requiredLength": 1,
-      "allowPadding": true,
-      "name": "TimeColumn",
-      "isRequired": false,
-      "description": "The column in INPUTTABLE that determines the order of items in a sequence.",
-      "datatype": "COLUMN_NAMES",
-      "allowsLists": false,
-      "rName": "time.column",
-      "useInR": true
-    },
-    {
-      "isOutputColumn": false,
-      "allowPadding": true,
-      "name": "PathFilters",
-      "isRequired": false,
-      "description": "A list of filters each of which comprises a set of constraints.",
-      "datatype": "STRING",
-      "allowsLists": true,
-      "rName": "path.filters",
-      "useInR": true
-    },
-    {
-      "targetTable": "InputTable",
-      "checkDuplicate": true,
-      "allowPadding": true,
-      "name": "GroupByColumns",
-      "isRequired": false,
-      "description": "If defined, the input table should be grouped by these columns, and the sequential patern mining will be done for each group spearately.",
-      "datatype": "COLUMN_NAMES",
-      "allowsLists": true,
-      "rName": "group.by.columns",
-      "useInR": true
+      "rName": "subsequence.data",
+      "useInR": true,
+      "rOrderNum": 100
     },
     {
       "isOutputTable": true,
@@ -149,98 +120,223 @@
         "SequencePatternRelation"
       ],
       "isRequired": false,
-      "description": "The name of table in which to store the sequence-pattern pairs.",
+      "rDescription": "Specifies the name of the table where the function outputs sequence-pattern pairs. For example, if a sequence has a partition value of \"1\" and contains 3 patterns with IDs 2, 9, and 10, then for that sequence the function outputs the sequence-pattern pairs (\"1\", 2), (\"1\", 9), and (\"1\", 10). If seq.pattern.table does not include a schema, the function creates it in the first schema in the user’s search path. If the function finds no sequence-pattern pairs, then it does not create seq.pattern.table.",
+      "description": "Specifies the name of the table where the function outputs sequence-pattern pairs. For example, if a sequence has a partition value of \"1\" and contains 3 patterns with IDs 2, 9, and 10, then for that sequence the function outputs the sequence-pattern pairs (\"1\", 2), (\"1\", 9), and (\"1\", 10). If sequence_pattern_table does not include a schema, the function creates it in the first schema in the user’s search path. If the function finds no sequence-pattern pairs, then it does not create sequence_pattern_table.",
       "datatype": "TABLE_NAME",
       "allowsLists": false,
       "rName": "seq.pattern.table",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 101
     },
     {
-      "targetTable": "InputTable",
+      "targetTable": [
+        "InputTable"
+      ],
       "checkDuplicate": true,
-      "requiredLength": 1,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "DISTRIBUTIONTYPE"
+      ],
+      "matchLengthOfArgument": "",
       "allowPadding": true,
-      "name": "ItemColumn",
+      "name": "PartitionColumns",
+      "alternateNames": [
+        "PartitionColumn"
+      ],
+      "isRequired": true,
+      "rDescription": "Specifies the names of the columns that comprise the partition key of the input sequences.",
+      "description": "Specifies the names of the columns that comprise the partition key of the input sequences.",
+      "datatype": "COLUMN_NAMES",
+      "allowsLists": true,
+      "rName": "partition.columns",
+      "useInR": true,
+      "rOrderNum": 12
+    },
+    {
+      "targetTable": [
+        "InputTable"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "requiredLength": 1,
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "TimeColumn",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The column name of the items in INPUTTABLE",
+      "rDescription": "Specifies the name of the input table column that determines the order of items in a sequence. Items in the same sequence that have the same time stamp belong to the same set. *Required when item.column or item.definition is specified.",
+      "description": "Specifies the name of the input table column that determines the order of items in a sequence. Items in the same sequence that have the same time stamp belong to the same set. *Required when ItemColumn or ItemDefinition is specified.",
       "datatype": "COLUMN_NAMES",
       "allowsLists": false,
-      "rName": "item.column",
-      "useInR": true
+      "rName": "time.column",
+      "useInR": true,
+      "rOrderNum": 3
     },
     {
-      "isOutputColumn": false,
-      "name": "ItemDefinition",
-      "isRequired": false,
-      "description": "The table name, index column name, definition column name, and item column name of the item definition table.",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "item.definition",
-      "useInR": true
-    },
-    {
-      "targetTable": "InputTable",
+      "targetTable": [
+        "InputTable"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "GroupByColumns",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "Specifies the names of the input table columns by which to group the input table sequences. If you specify this argument, then the function operates on each group separately and copies each group_by_column to the output table.",
+      "description": "Specifies the names of the input table columns by which to group the input table sequences. If you specify this argument, then the function operates on each group separately and copies each group_by_column to the output table.",
+      "datatype": "COLUMN_NAMES",
+      "allowsLists": true,
+      "rName": "groupby.columns",
+      "useInR": true,
+      "rOrderNum": 5
+    },
+    {
+      "targetTable": [
+        "InputTable"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "ItemColumn",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "Specifies the names of the input table columns that contain the items. *Required if you specify neither ItemDefinition nor path.column.",
+      "description": "Specifies the names of the input table columns that contain the items. *Required if you specify neither ItemDefinition nor PathColumn.",
+      "datatype": "COLUMN_NAMES",
+      "allowsLists": true,
+      "rName": "item.column",
+      "useInR": true,
+      "rOrderNum": 6
+    },
+    {
+      "targetTable": [
+        "InputTable"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
       "allowedTypeGroups": [
         "STRING"
       ],
       "requiredLength": 1,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "PathColumn",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "A column where each row is a sequence string in the format of '[A, B, C, D]' where A, B, C, D are items separated by commas. Input columns must contain string SQL types.",
+      "rDescription": "Specifies the name of the input table column that contains paths in the form of sequence strings. A sequence string has this syntax: '[item [, ...]]' In the sequence string syntax, you must type the outer brackets (bold). The sequence strings in this column can be generated by the nPath function. If you specify this argument, then each item set can have only one item. * Required if you specify neither item.column nor item.definition.",
+      "description": "Specifies the name of the input table column that contains paths in the form of sequence strings. A sequence string has this syntax: '[item [, ...]]' In the sequence string syntax, you must type the outer brackets (bold). The sequence strings in this column can be generated by the nPath function. If you specify this argument, then each item set can have only one item. * Required if you specify neither ItemColumn nor ItemDefinition.",
       "datatype": "COLUMN_NAMES",
       "allowsLists": false,
       "rName": "path.column",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 8
     },
     {
       "lowerBound": 0,
+      "upperBound": Infinity,
       "lowerBoundType": "EXCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
       "allowNaN": false,
       "name": "MinSupport",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "A positive real number that determines the threshold T for deciding whether a sequential pattern is frequent or not. The input value must be greater than 0.0.",
+      "rDescription": "Determines the threshold for whether a sequential pattern is frequent. The minimum must be a positive real number. If minimum is in the range (0,1], then it is a relative threshold: If N is the total number of input sequences, then the threshold is T=N*minimum. For example, if there are 1000 sequences in the input table and minimum is 0.05, then the threshold is 50. If minimum is in the range (1,+∞), then it is an absolute threshold: Regardless of N,  T=minimum. For example, if minimum is 50, then the threshold is 50, regardless of N. A pattern is frequent if its support value is at least T. Because the function outputs only frequent patterns, minimum controls the number of output patterns. If minimum is small, processing time increases exponentially; therefore, Teradata recommends starting the trial with a larger value.—for example, 5% of the total sequence number if you know N and 0.05 otherwise. If you specify a relative minimum and group.by.columns, then the function calculates N and T for each group. If you specify a relative minimum and path.filters, then N is the number of sequences that meet the constraints of the filters.",
+      "description": "Determines the threshold for whether a sequential pattern is frequent. The minimum must be a positive real number. If minimum is in the range (0,1], then it is a relative threshold: If N is the total number of input sequences, then the threshold is T=N*minimum. For example, if there are 1000 sequences in the input table and minimum is 0.05, then the threshold is 50. If minimum is in the range (1,+∞), then it is an absolute threshold: Regardless of N,  T=minimum. For example, if minimum is 50, then the threshold is 50, regardless of N. A pattern is frequent if its support value is at least T. Because the function outputs only frequent patterns, minimum controls the number of output patterns. If minimum is small, processing time increases exponentially; therefore, Teradata recommends starting the trial with a larger value.—for example, 5% of the total sequence number if you know N and 0.05 otherwise. If you specify a relative minimum and GroupByColumns, then the function calculates N and T for each group. If you specify a relative minimum and PathFilters, then N is the number of sequences that meet the constraints of the filters.",
       "datatype": "DOUBLE",
       "allowsLists": false,
       "rName": "min.support",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 2
+    },
+    {
+      "permittedValues": [],
+      "isOutputColumn": false,
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "PathFilters",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "Specifies the filters to use on the input table sequences. Only input table sequences that satisfy all constraints of at least one filter are input to the function. Each filter has one or more constraints, which are separated by spaces. Each constraint has this syntax: constraint (item [symbol ...]) By default, symbol is comma (,). If you specify symbol, it applies to all filters. The constraint is one of the following: STW (start-with constraint): The first item set of the sequence must contain at least one item. For example, STW(c,d) requires the first item set of the sequence to contain c or d. Sequence “(a, c), e, (f, d)” meets this constraint because the first item set, (a,c), contains c, EDW (end-with constraint): The last item set of the sequence must contain at least one item. For example, EDW(f,g) requires the last item set of the sequence to contain f or g. Sequence “(a, b), e, (f, d)” meets this constraint because the last item set, (f,d), contains f, CTN (containing constraint): The sequence must contain at least one item. For example, CTN(a,b) requires the sequence to contain a or b. The sequence “(a,c), d, (e,f)” meets this constraint but the sequence “d, (e,f)” does not. Constraints in the same filter must be different. For example, the filter 'STW(c,d) EDW(g,k) CTN(e)' is valid, but 'STW(c,d) STW(e,h)' is invalid. This argument specifies a separator and uses it in two filters: path.filters('Separator(#)', 'STW(c#d) EDW(g#k) CTN(e)', 'CTN(h#k)')",
+      "description": "Specifies the filters to use on the input table sequences. Only input table sequences that satisfy all constraints of at least one filter are input to the function. Each filter has one or more constraints, which are separated by spaces. Each constraint has this syntax: constraint (item [symbol ...]) By default, symbol is comma (,). If you specify symbol, it applies to all filters. The constraint is one of the following: STW (start-with constraint): The first item set of the sequence must contain at least one item. For example, STW(c,d) requires the first item set of the sequence to contain c or d. Sequence “(a, c), e, (f, d)” meets this constraint because the first item set, (a,c), contains c, EDW (end-with constraint): The last item set of the sequence must contain at least one item. For example, EDW(f,g) requires the last item set of the sequence to contain f or g. Sequence “(a, b), e, (f, d)” meets this constraint because the last item set, (f,d), contains f, CTN (containing constraint): The sequence must contain at least one item. For example, CTN(a,b) requires the sequence to contain a or b. The sequence “(a,c), d, (e,f)” meets this constraint but the sequence “d, (e,f)” does not. Constraints in the same filter must be different. For example, the filter 'STW(c,d) EDW(g,k) CTN(e)' is valid, but 'STW(c,d) STW(e,h)' is invalid. This argument specifies a separator and uses it in two filters: PathFilters('Separator(#)', 'STW(c#d) EDW(g#k) CTN(e)', 'CTN(h#k)')",
+      "datatype": "STRING",
+      "allowsLists": true,
+      "rName": "path.filters",
+      "useInR": true,
+      "rOrderNum": 4
+    },
+    {
+      "permittedValues": [],
+      "isOutputColumn": false,
+      "name": "ItemDefinition",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "Specifies the name of the item definition table and the names of its index, definition, and item columns. If item_definition_table does not include a schema, the function searches for it in the schema in the user’s search path. *Required if you specify neither item.column nor path.column.",
+      "description": "Specifies the name of the item definition table and the names of its index, definition, and item columns. If item_definition_table does not include a schema, the function searches for it in the schema in the user’s search path. *Required if you specify neither ItemColumn nor PathColumn.",
+      "datatype": "STRING",
+      "allowsLists": false,
+      "rName": "item.definition",
+      "useInR": true,
+      "rOrderNum": 7
     },
     {
       "defaultValue": 2147483647,
       "lowerBound": 0,
+      "upperBound": 2147483647,
       "lowerBoundType": "EXCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
       "allowNaN": false,
       "name": "MaxLength",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The maximum length of the output sequential patterns. Defaultly there is no upper limitation on the length of patterns. The input value must be greater than 0. The default value is 2147483647.",
+      "rDescription": "Specifies the maximum length of the output sequential patterns. The length of a pattern is its number of sets. By default, there is no maximum length.",
+      "description": "Specifies the maximum length of the output sequential patterns. The length of a pattern is its number of sets. By default, there is no maximum length.",
       "datatype": "INTEGER",
       "allowsLists": false,
       "rName": "max.length",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 9
     },
     {
       "defaultValue": 1,
       "lowerBound": 0,
+      "upperBound": 2147483647,
       "lowerBoundType": "EXCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
       "allowNaN": false,
       "name": "MinLength",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The minimum length of the outputted sequential patterns. The input value must be greater than 0. The default value is 1.",
+      "rDescription": "Specifies the minimum length of the output sequential patterns. The default value is 1.",
+      "description": "Specifies the minimum length of the output sequential patterns. The default value is 1.",
       "datatype": "INTEGER",
       "allowsLists": false,
       "rName": "min.length",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 10
     },
     {
       "defaultValue": false,
       "name": "ClosedPattern",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "If true, only a closed pattern is outputted. The default value is false.",
+      "rDescription": "Specifies whether to output only closed patterns. The default value is 'false'.",
+      "description": "Specifies whether to output only closed patterns. The default value is 'false'.",
       "datatype": "BOOLEAN",
       "allowsLists": false,
       "rName": "closed.pattern",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 11
     }
   ]
 }

@@ -1,25 +1,37 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
-  "function_name": "xmlparser",
-  "function_version": "1.7",
+  "function_name": "XMLParser",
+  "function_version": "1.8",
   "function_type": "non-driver",
+  "function_r_name": "aa.xml.parser",
   "short_description": "Implements the XMLParser SQL/MR function.",
   "long_description": "The output column number and name are depend on the input NODES/SIBLING/ANCESTOR parameters. The nodeid, and parent_node column is default output columns. User can indicate the name of the column by OUTPUTCOLUMN_NODEID/OUTPUTCOLUMN_PARENT_NODE_NAME parameters. The other output columns includes out_grandparent_node and names of its attributes, names of siblings and their attributes, names of childrens and their attributes, name of ancestor attributes. The format of the name of an attribute is ElementName:AttributeName.",
   "input_tables": [
     {
+      "requiredInputKind": [
+        "PartitionByAny"
+      ],
       "isOrdered": false,
       "partitionByOne": false,
+      "name": "input",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "The input table that contains XML documents. ",
       "description": "The input table that contains XML documents. ",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "useInR": true
+      "rName": "data",
+      "useInR": true,
+      "rOrderNum": 1
     }
   ],
   "argument_clauses": [
     {
+      "targetTable": [
+        "input"
+      ],
       "checkDuplicate": true,
       "allowedTypes": [
         "bytea"
@@ -28,157 +40,197 @@
         "STRING"
       ],
       "requiredLength": 1,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "TextColumn",
-      "alternateNames": [
-        "Text_Column"
-      ],
+      "alternateNames": [],
       "isRequired": true,
-      "description": "The input table column containing the input XML data.  Input columns must contain string SQL types. Input columns can be the following SQL types: bytea.",
+      "rDescription": " Specifies the name of the input table column that contains the XML documents. The function skips malformed XML documents.",
+      "description": " Specifies the name of the input table column that contains the XML documents. The function skips malformed XML documents.",
       "datatype": "COLUMNS",
       "allowsLists": false,
-      "rName": "text.column",
-      "useInR": true
+      "rName": " text.column",
+      "useInR": true,
+      "rOrderNum": 2
     },
     {
+      "targetTable": [
+        "input"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "Accumulate",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "Specifies the names of input column names to copy to the output table. No accumulate_column can be specified by the argument output.column.node.id, output.column.parent.node.name, or output.column.grandparent.node.name. By default, the function copies all input columns to the output table.",
+      "description": "Specifies the names of input column names to copy to the output table. No accumulate_column can be specified by the argument OutputColumnNodeID, OutputColumnParentNodeName, or OutputColumnGrandparentNodeName. By default, the function copies all input columns to the output table.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "accumulate",
+      "useInR": true,
+      "rOrderNum": 13
+    },
+    {
+      "permittedValues": [],
       "isOutputColumn": false,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "Nodes",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "A list of the [grandparent/]parent/child node-pair strings from which the function extracts data. ",
+      "rDescription": "Specifies the node-pair strings from which the function extracts data. The simplest syntax for node_pair_string is:[grandparent/]parent/child[,...] where grandparent, parent, and child are node names. For each grandparent, parent, and child, you can specify one or more attributes to extract: {grandparent|parent|child}[:attribute[,...]] For each node_pair_string, the function generates a row in the output table and adds a column for each specified attribute. Note: nodes and attribute names are case-sensitive. A grandparent or parent without attributes can contain wildcards. The wildcards can follow the rules of either the SQL LIKE statement or the Java regular expression. The SQL LIKE statement syntax is 'like(expression)', where expression can include these wildcards:  Percent (%), which matches any sequence of zero or more characters, Underscore (_), which matches any single character, Backslash(''), which “escapes” the wildcard character that follows it, causing that wildcard character to be treated as an ordinary character For example, 'like(%a_c''_)/d' matches the XML fragment <123abc_><d>text</d></123abc_>. The Java Regular Expression syntax is 'regex(expression)', where expression follows the rules for a Java regular expression. If no node_pair_string contains a parent node, or no node_pair_string contains a grandparent node, the function outputs nothing. If no node_pair_string contains a child node, the function outputs NULL child node values. If the argument specifies no attributes, the function outputs NULL attribute values.",
+      "description": "Specifies the node-pair strings from which the function extracts data. The simplest syntax for node_pair_string is:[grandparent/]parent/child[,...] where grandparent, parent, and child are node names. For each grandparent, parent, and child, you can specify one or more attributes to extract: {grandparent|parent|child}[:attribute[,...]] For each node_pair_string, the function generates a row in the output table and adds a column for each specified attribute. Note: nodes and attribute names are case-sensitive. A grandparent or parent without attributes can contain wildcards. The wildcards can follow the rules of either the SQL LIKE statement or the Java regular expression. The SQL LIKE statement syntax is 'like(expression)', where expression can include these wildcards:  Percent (%), which matches any sequence of zero or more characters, Underscore (_), which matches any single character, Backslash(''), which “escapes” the wildcard character that follows it, causing that wildcard character to be treated as an ordinary character For example, 'like(%a_c''_)/d' matches the XML fragment <123abc_><d>text</d></123abc_>. The Java Regular Expression syntax is 'regex(expression)', where expression follows the rules for a Java regular expression. If no node_pair_string contains a parent node, or no node_pair_string contains a grandparent node, the function outputs nothing. If no node_pair_string contains a child node, the function outputs NULL child node values. If the argument specifies no attributes, the function outputs NULL attribute values.",
       "datatype": "STRING",
       "allowsLists": true,
       "rName": "nodes",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 3
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "Sibling",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "A list of the sibling nodes and attributes of one of the parent nodes specified in the NODES argument. ",
+      "rDescription": "Specifies the sibling nodes of one parent node specified in the nodes argument. The syntax for sibling_node_string is: sibling_node_name[:attribute[,...]] The function includes the values from the sibling nodes in every output row and adds a column to the output table for every sibling node and every specified attribute. If no sibling_node_string contains a sibling node, the function outputs NULL sibling node values. If the argument specifies no attributes, the function outputs NULL attribute values. ",
+      "description": "Specifies the sibling nodes of one parent node specified in the Nodes argument. The syntax for sibling_node_string is: sibling_node_name[:attribute[,...]] The function includes the values from the sibling nodes in every output row and adds a column to the output table for every sibling node and every specified attribute. If no sibling_node_string contains a sibling node, the function outputs NULL sibling node values. If the argument specifies no attributes, the function outputs NULL attribute values. ",
       "datatype": "STRING",
       "allowsLists": true,
       "rName": "sibling",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 4
     },
     {
+      "permittedValues": [],
       "defaultValue": ",",
       "isOutputColumn": false,
       "name": "Delimiter",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The delimiter that separates multiple child node values in the output.  The default value is ,.",
+      "rDescription": " Specifies the delimiter that separates multiple child node values in the output. The default value is comma (,).",
+      "description": " Specifies the delimiter that separates multiple child node values in the output. The default value is comma (,).",
       "datatype": "STRING",
       "allowsLists": false,
       "rName": "delimiter",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 5
     },
     {
+      "permittedValues": [],
+      "defaultValue": ",",
       "isOutputColumn": false,
       "name": "SiblingDelimiter",
-      "alternateNames": [
-        "Sibling_Delimiter"
-      ],
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The delimiter that separates multiple sibling node values in the output. The default value is comma ','. ",
+      "rDescription": "Specifies the delimiter that separates multiple sibling node values in the output. The default value is comma (,).",
+      "description": "Specifies the delimiter that separates multiple sibling node values in the output. The default value is comma (,).",
       "datatype": "STRING",
       "allowsLists": false,
       "rName": "sibling.delimiter",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 6
     },
     {
       "defaultValue": 10,
       "lowerBound": 0,
+      "upperBound": 2147483647,
       "lowerBoundType": "EXCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
       "allowNaN": false,
       "name": "MaxItemNum",
       "alternateNames": [
-        "Max_Item_Number",
-		"MaxItemNumber"
+        "MaxItemNumber"
       ],
       "isRequired": false,
-      "description": "The maximum number of children/sibling nodes with the same name to be returned. This should be a positive integer.  The input value must be greater than 0. The default value is 10.",
+      "rDescription": "Specifies the maximum number of sibling nodes with the same name to be returned. This value must be a positive integer. The default value is 10.",
+      "description": "Specifies the maximum number of sibling nodes with the same name to be returned. This value must be a positive integer. The default value is 10.",
       "datatype": "INTEGER",
       "allowsLists": false,
       "rName": "max.item.num",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 7
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "Ancestor",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "One or more ancestor node paths for all the parent nodes specified in the NODES argument. The default value is the root of the XML document. ",
+      "rDescription": " Specifies the ancestor paths for all parent nodes specified in the nodes argument. The simplest syntax for nodes_path is: node[/node]... For each node, you can specify one or more attributes: node[:attribute[,...]] The default ancestor path is the root of the XML document. A node without attributes can contain wildcards. The wildcards can follow the rules of either the SQL LIKE statement or the Java regular expression. For details, see the description of the node argument. If you specify multiple ancestor paths, then the function parses each XML document to get results for each ancestor path. If different ancestor paths contain duplicate node names, as in the following example, then the result might be ambiguous: SELECT * FROM xmlparser ( ON xml_inputstext_column ('xml') nodes ('parent1/child1') ancestor ('A/B:attr/C:attr','A/C:attr/B:attr') ); If different ancestor paths contain duplicate node names, the function does not check for duplicate node names in the ancestor paths when constructing the output. Instead, the function maintains a list of column names for all ancestor paths in the output schema. For each result, the function fills the values of its ancestor path in the list and generates the output for the ancestor part.If no nodes_path is an ancestor path, the function outputs nothing. If the argument specifies no attributes, the function outputs NULL attribute values.",
+      "description": " Specifies the ancestor paths for all parent nodes specified in the Nodes argument. The simplest syntax for nodes_path is: node[/node]... For each node, you can specify one or more attributes: node[:attribute[,...]] The default ancestor path is the root of the XML document. A node without attributes can contain wildcards. The wildcards can follow the rules of either the SQL LIKE statement or the Java regular expression. For details, see the description of the Node argument. If you specify multiple ancestor paths, then the function parses each XML document to get results for each ancestor path. If different ancestor paths contain duplicate node names, as in the following example, then the result might be ambiguous: SELECT * FROM xmlparser ( ON xml_inputstext_column ('xml') Nodes ('parent1/child1') Ancestor ('A/B:attr/C:attr','A/C:attr/B:attr') ); If different ancestor paths contain duplicate node names, the function does not check for duplicate node names in the ancestor paths when constructing the output. Instead, the function maintains a list of column names for all ancestor paths in the output schema. For each result, the function fills the values of its ancestor path in the list and generates the output for the ancestor part. If no nodes_path is an ancestor path, the function outputs nothing. If the argument specifies no attributes, the function outputs NULL attribute values.",
       "datatype": "STRING",
       "allowsLists": true,
       "rName": "ancestor",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 8
     },
     {
+      "permittedValues": [],
       "defaultValue": "out_nodeid",
       "isOutputColumn": true,
       "name": "OutputColumnNodeId",
-      "alternateNames": [
-        "OutputColumn_NodeID"
-      ],
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The output table column name that contains the ID of each node the XMLParser function has extracted.  The default value is out_nodeid.",
+      "rDescription": "Specifies the name of the output table column where the function stores the IDs of the extracted nodes. The default name is out_nodeid.",
+      "description": "Specifies the name of the output table column where the function stores the IDs of the extracted nodes. The default name is out_nodeid.",
       "datatype": "STRING",
       "allowsLists": false,
       "rName": "output.column.node.id",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 9
     },
     {
+      "permittedValues": [],
       "defaultValue": "out_parent_node",
       "isOutputColumn": true,
       "name": "OutputColumnParentNodeName",
-      "alternateNames": [
-        "OutputColumn_Parent_Node_Name"
-      ],
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The output table column name to store the tag names of the extracted parent nodes.  The default value is out_parent_node.",
+      "rDescription": "Specifies the name of the output table column where the function stores the names of the extracted parent nodes. The default name is out_parent_node.",
+      "description": "Specifies the name of the output table column where the function stores the names of the extracted parent nodes. The default name is out_parent_node.",
       "datatype": "STRING",
       "allowsLists": false,
       "rName": "output.column.parent.node.name",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 10
     },
     {
+      "permittedValues": [],
       "isOutputColumn": true,
       "name": "OutputColumnGrandparentNodeName",
-      "alternateNames": [
-        "OutputColumn_Grandparent_Node_Name"
-      ],
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The output table column name to store the tag names of the extracted grandparent nodes. The default value is 'out_grandparent_node'. ",
+      "rDescription": "Specifies the name of the output table column where the function stores the tag names of the extracted grandparent nodes. The default name is out_grandparent_node.",
+      "description": "Specifies the name of the output table column where the function stores the tag names of the extracted grandparent nodes. The default name is out_grandparent_node.",
       "datatype": "STRING",
       "allowsLists": false,
       "rName": "output.column.grandparent.node.name",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 11
     },
     {
+      "permittedValues": [],
       "defaultValue": "false",
       "isOutputColumn": false,
       "name": "ErrorHandler",
-      "alternateNames": [
-        "Error_Handler"
-      ],
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Error handler for handling the errors that occur when parsing an XML document.  The default value is false.",
+      "rDescription": "Specifies whether the function handles errors that occur when parsing an XML document. The default value is 'false' (the function aborts and throws an exception). If you specify 'true':  If an error occurs while parsing a row, the function skips that row. When the function completes the parsing, it outputs only the nodes that were error-free.  You can tell the function to output an additional column named output_column_name and populate it with the values of the specified columns. In the output column, the values of the specified columns are separated with semicolons. For example, the following argument adds the column error_info to the output table and populates it with the values of input columns col1 and col2 (with a semicolon after each value): error.handler('true;error_info:col1,col2') The default output_column_name is error.handler.",
+      "description": "Specifies whether the function handles errors that occur when parsing an XML document. The default value is 'false' (the function aborts and throws an exception). If you specify 'true':  If an error occurs while parsing a row, the function skips that row. When the function completes the parsing, it outputs only the nodes that were error-free.  You can tell the function to output an additional column named output_column_name and populate it with the values of the specified columns. In the output column, the values of the specified columns are separated with semicolons. For example, the following argument adds the column error_info to the output table and populates it with the values of input columns col1 and col2 (with a semicolon after each value): ErrorHandler('true;error_info:col1,col2') The default output_column_name is ErrorHandler.",
       "datatype": "STRING",
       "allowsLists": false,
       "rName": "error.handler",
-      "useInR": true
-    },
-    {
-      "checkDuplicate": true,
-      "allowPadding": true,
-      "name": "Accumulate",
-      "isRequired": false,
-      "description": "Columns from the input table to be passed through from input to output.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "accumulate",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 12
     }
   ]
 }

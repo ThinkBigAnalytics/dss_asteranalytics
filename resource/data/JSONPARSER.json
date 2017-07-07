@@ -1,126 +1,191 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
   "function_name": "JSONParser",
-  "function_version": "1.5",
+  "function_version": "1.6",
   "function_type": "SQL-MR",
+  "function_r_name": "aa.json.parser",
   "short_description": "Parses JSON string and produces a flattened table.",
   "long_description": "Parses JSON string and produces a flattened table. ",
   "input_tables": [
     {
+      "requiredInputKind": [
+        "PartitionByAny"
+      ],
       "isOrdered": false,
       "partitionByOne": false,
+      "name": "input",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "vertex table",
+      "rDescription": "Input table that contains JSON data",
+      "description": "Input table that contains JSON data",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "useInR": true
+      "rName": "data",
+      "useInR": true,
+      "rOrderNum": 1
     }
   ],
   "argument_clauses": [
     {
+      "targetTable": [
+        "input"
+      ],
       "checkDuplicate": true,
+      "allowedTypes": [],
       "allowedTypeGroups": [
         "STRING"
       ],
+      "matchLengthOfArgument": "",
       "allowPadding": true,
-      "name": "TEXT_COLUMN",
+      "name": "TextColumn",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "Specifies the column name from the input table which contains the JSON string. Input columns must contain string SQL types.",
+      "rDescription": "Specifies the column name from the input table which contains the JSON string.",
+      "description": "Specifies the column name from the input table which contains the JSON string.",
       "datatype": "COLUMNS",
       "allowsLists": true,
-      "rName": "t.e.x.t..c.o.l.u.m.n",
-      "useInR": true
+      "rName": "text.column",
+      "useInR": true,
+      "rOrderNum": 2
     },
     {
-      "isOutputColumn": false,
+      "targetTable": [
+        "input"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
       "allowPadding": true,
-      "name": "nodes",
+      "name": "Accumulate",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "",
+      "rDescription": "Specifies the input table columns to copy to the output table.",
+      "description": "Specifies the input table columns to copy to the output table.",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "accumulate",
+      "useInR": true,
+      "rOrderNum": 9
+    },
+    {
+      "permittedValues": [],
+      "isOutputColumn": false,
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "Nodes",
+      "alternateNames": [],
+      "isRequired": true,
+      "rDescription": "Specifies the parent/children pair. Should contain at least one parent/child pair, and all pairs specified must be in the same format. Multiple children can be specified as parent/{child1,child2,...}.",
+      "description": "Specifies the parent/children pair. Should contain at least one parent/child pair, and all pairs specified must be in the same format. Multiple children can be specified as parent/{child1,child2,...}.",
       "datatype": "STRING",
       "allowsLists": true,
       "rName": "nodes",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 3
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
-      "name": "search_path",
+      "name": "SearchPath",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "",
+      "rDescription": "Specifies the path to find the direct value of the child. To reach the parent of the parent, include the parent of the parent in this path. When a path to the parent of the parent is supplied, all the siblings of the parent can be printed by including them in the nodes argument. If anything from root is to be parsed, then supply this argument as '/' (or leave it as an empty string).",
+      "description": "Specifies the path to find the direct value of the child. To reach the parent of the parent, include the parent of the parent in this path. When a path to the parent of the parent is supplied, all the siblings of the parent can be printed by including them in the NODES argument. If anything from root is to be parsed, then supply this argument as '/' (or leave it as an empty string).",
       "datatype": "STRING",
       "allowsLists": true,
       "rName": "search.path",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 4
     },
     {
+      "permittedValues": [],
       "defaultValue": ",",
       "isOutputColumn": false,
-      "name": "delimiter",
+      "name": "Delimiter",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The default value is ,.",
+      "rDescription": "Specifies the delimiter used to separate multiple child values with the same name and which have the same parent node in the JSON String. If not defined, defaults to comma ','. Note: The delimiter cannot include '#'",
+      "description": "Specifies the delimiter used to separate multiple child values with the same name and which have the same parent node in the JSON String. If not defined, defaults to comma ','. Note: The delimiter cannot include '#'",
       "datatype": "STRING",
       "allowsLists": false,
       "rName": "delimiter",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 5
     },
     {
       "defaultValue": 10,
       "lowerBound": 1,
+      "upperBound": 2147483647,
       "lowerBoundType": "INCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
       "allowNaN": false,
-      "name": "MAX_ITEM_NUMBER",
+      "name": "MaxItemNum",
+      "alternateNames": [
+        "MAX_ITEM_NUMBER"
+      ],
       "isRequired": false,
-      "description": "The number of hidden states must be greater than 1, inclusive. The input value must be no less than 1. The default value is 10.",
+      "rDescription": "The maximum number of nodes with the same name that will be displayed in the output. The default value is 10.",
+      "description": "The maximum number of nodes with the same name that will be displayed in the output. The default value is 10.",
       "datatype": "INTEGER",
       "allowsLists": false,
-      "rName": "m.a.x..i.t.e.m..n.u.m.b.e.r",
-      "useInR": true
+      "rName": "max.item.num",
+      "useInR": true,
+      "rOrderNum": 6
     },
     {
+      "permittedValues": [],
       "defaultValue": "out_nodeid",
-      "isOutputColumn": false,
-      "name": "NODEID_OUTPUTCOLUMN_NAME",
+      "isOutputColumn": true,
+      "name": "NodeIdOutputColumn",
+      "alternateNames": [
+        "NODEID_OUTPUTCOLUMN_NAME"
+      ],
       "isRequired": false,
-      "description": "The default value is out_nodeid.",
+      "rDescription": " The name of the column to use in the result schema to contain the identifier (from the input table) of the each node extracted. If not defined, defaults to 'out_nodeid'.",
+      "description": " The name of the column to use in the result schema to contain the identifier (from the input table) of the each node extracted. If not defined, defaults to 'out_nodeid'.",
       "datatype": "STRING",
       "allowsLists": false,
-      "rName": "n.o.d.e.i.d..o.u.t.p.u.t.c.o.l.u.m.n..n.a.m.e",
-      "useInR": true
+      "rName": "nodeid.output.column",
+      "useInR": true,
+      "rOrderNum": 7
     },
     {
+      "permittedValues": [],
       "defaultValue": "out_parent_node",
-      "isOutputColumn": false,
-      "name": "PARENTNODE_OUTPUTCOLUMN_NAME",
+      "isOutputColumn": true,
+      "name": "ParentNodeOutputColumn",
+      "alternateNames": [
+        "PARENTNODE_OUTPUTCOLUMN_NAME"
+      ],
       "isRequired": false,
-      "description": "The default value is out_parent_node.",
+      "rDescription": "The name of column to use in the result schema to contain the tag name of the parent node extracted. If not defined, defaults to 'out_parent_node'.",
+      "description": "The name of column to use in the result schema to contain the tag name of the parent node extracted. If not defined, defaults to 'out_parent_node'.",
       "datatype": "STRING",
       "allowsLists": false,
-      "rName": "p.a.r.e.n.t.n.o.d.e..o.u.t.p.u.t.c.o.l.u.m.n..n.a.m.e",
-      "useInR": true
+      "rName": "parentnode.output.column",
+      "useInR": true,
+      "rOrderNum": 8
     },
     {
-      "checkDuplicate": true,
-      "allowPadding": true,
-      "name": "Accumulate",
-      "isRequired": false,
-      "description": "Accumulate columns from input table.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "accumulate",
-      "useInR": true
-    },
-    {
+      "permittedValues": [],
       "isOutputColumn": false,
-      "name": "ERROR_HANDLER",
+      "name": "ErrorHandler",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "",
+      "rDescription": "Specifies how the function acts when it encounters a data problem. If not specified, the function aborts if the input table contains bad data (for example, invalid UTF-8 characters). ErrorHandler lets you specify an “additional” column to hold any rows that were rejected as having bad data, also referred to as the output column, in the output table. The log information in the additional column lets you easily identify which input table row contains unexpected data. There are two parameters you can pass to error.handler: The first parameter tells the function whether to continue processing if bad data is encountered. 'true' means continue the processing without aborting. 'false' means abort the process when an error occurs, The second group of parameters designates the output and input columns. The parameters in this group, output_col_name: input_col_name1, input_col_name2, input_col_name3,... are optional. If you specify an output column, it will be added to the output, and bad rows are logged there. If you do not specify output_col_name, the function uses “ERROR_HANDLER” as the name of the output column. The error output column includes the data from the input columns specified using input_col_namex, when an error occurs. The data inserted into the output column will be merged from input columns and delimited by column using a semicolon. Using error.handler('true') without specifying input columns does not add any data to the output column.",
+      "description": "Specifies how the function acts when it encounters a data problem. If not specified, the function aborts if the input table contains bad data (for example, invalid UTF-8 characters). ErrorHandler lets you specify an “additional” column to hold any rows that were rejected as having bad data, also referred to as the output column, in the output table. The log information in the additional column lets you easily identify which input table row contains unexpected data. There are two parameters you can pass to ErrorHandler: The first parameter tells the function whether to continue processing if bad data is encountered. 'true' means continue the processing without aborting. 'false' means abort the process when an error occurs, The second group of parameters designates the output and input columns. The parameters in this group, output_col_name: input_col_name1, input_col_name2, input_col_name3,... are optional. If you specify an output column, it will be added to the output, and bad rows are logged there. If you do not specify output_col_name, the function uses “ERROR_HANDLER” as the name of the output column. The error output column includes the data from the input columns specified using input_col_namex, when an error occurs. The data inserted into the output column will be merged from input columns and delimited by column using a semicolon. Using ErrorHandler('true') without specifying input columns does not add any data to the output column.",
       "datatype": "STRING",
       "allowsLists": false,
-      "rName": "e.r.r.o.r..h.a.n.d.l.e.r",
-      "useInR": true
+      "rName": "error.handler",
+      "useInR": true,
+      "rOrderNum": 10
     }
   ]
 }

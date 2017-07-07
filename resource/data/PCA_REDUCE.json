@@ -1,10 +1,11 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
-  "function_name": "Pca_Reduce",
-  "function_version": "1.2",
+  "function_name": "PCA_Reduce",
+  "function_version": "1.3",
   "function_type": "non-driver",
+  "function_r_name": "aa.pca",
   "short_description": "Computes the principal components of an input matrix.",
   "long_description": "Computes the principal components of an input matrix.",
   "function_operation": "reduce",
@@ -17,27 +18,34 @@
       ],
       "isOrdered": false,
       "partitionByOne": true,
-      "name": "InputTable",
+      "name": "input",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "The tables contains the attributes that the PCA algorithm will analyze.",
       "description": "The tables contains the attributes that the PCA algorithm will analyze.",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "rName": "input.table",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 0
     }
   ],
   "argument_clauses": [
     {
       "lowerBound": 1,
+      "upperBound": 2147483647,
       "lowerBoundType": "INCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
       "allowNaN": false,
       "name": "Components",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The number of principal components that PCA will output. The input value must be no less than 1.",
+      "rDescription": "Specifies the number of principal components to return (an integer). If num_components is k, then the function returns the top k components. By default, the function returns every principle component.",
+      "description": "Specifies the number of principal components to return (an integer). If num_components is k, then the function returns the top k components. By default, the function returns every principle component.",
       "datatype": "INTEGER",
       "allowsLists": false,
       "rName": "components",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 0
     }
   ]
 }

@@ -1,10 +1,11 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
-  "function_name": "texttagging",
-  "function_version": "1.3",
+  "function_name": "TextTagging",
+  "function_version": "1.4",
   "function_type": "non-driver",
+  "function_r_name": "aa.text.tagging",
   "short_description": "Tag the documents based on the rules defined by user.",
   "long_description": "Tag the documents based on the rules defined by user. The rule definitions should be input by either ON clause or Rules argument. The rule table should follow the schema: tablename(tagname varchar, definition varchar). Five text operators are supported: equal(columnname,str), contain(columnname,str,lower,upper), dist(columnname,str1,str2,lower,upper), dict(columnname,dictionaryname,lower,upper), and superdist(columnname,str1,str2,NW/NR/PARA/SENT,str3,NW/NR/PARA/SENT). These operators can be connected by logic operators: and, or, not.",
   "input_tables": [
@@ -14,11 +15,16 @@
       ],
       "isOrdered": false,
       "partitionByOne": false,
+      "name": "input",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "The input table that contains the texts.",
       "description": "The input table that contains the texts.",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "useInR": true
+      "rName": "data",
+      "useInR": true,
+      "rOrderNum": 1
     },
     {
       "requiredInputKind": [
@@ -27,25 +33,55 @@
       "isOrdered": false,
       "partitionByOne": false,
       "name": "rules",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The input table that contains the rules.",
       "description": "The input table that contains the rules.",
       "datatype": "TABLE_ALIAS",
       "allowsLists": false,
-      "rName": "rules",
-      "useInR": true
+      "rName": "rules.data",
+      "useInR": true,
+      "rOrderNum": 2
     }
   ],
   "argument_clauses": [
     {
+      "targetTable": [
+        "input"
+      ],
+      "checkDuplicate": true,
+      "allowedTypes": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "matchLengthOfArgument": "",
+      "allowPadding": true,
+      "name": "Accumulate",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "Specifies the names of text table columns to copy to the output table. Note: Do not use the name 'tag' for an accumulate_column, because the function uses that name for the output table column that contains the tags. ",
+      "description": "Specifies the names of text table columns to copy to the output table. Note: Do not use the name 'tag' for an accumulate_column, because the function uses that name for the output table column that contains the tags. ",
+      "datatype": "COLUMNS",
+      "allowsLists": true,
+      "rName": "accumulate",
+      "useInR": true,
+      "rOrderNum": 8
+    },
+    {
+      "permittedValues": [],
       "isOutputColumn": false,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "Rules",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "If you do not specify a rules table, use this argument to specify the tagging rules. Must specify either rules table or rules argument.",
+      "rDescription": "Specifies the tag names and tagging rules. Use this argument if and only if you do not specify a rules table. For information about defining tagging rules, refer to “/Defining Tagging Rules”/ ",
+      "description": "Specifies the tag names and tagging rules. Use this argument if and only if you do not specify a rules table. For information about defining tagging rules, refer to “/Defining Tagging Rules”/ ",
       "datatype": "STRING",
       "allowsLists": true,
       "rName": "rules",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 4
     },
     {
       "permittedValues": [
@@ -56,12 +92,15 @@
       "defaultValue": "en",
       "isOutputColumn": false,
       "name": "Language",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The language of the input text. If USETOKENIZER is set to 'true', this function uses the value of this argument to create the word tokenizer. The permitted input values are [en, zh_CN, zh_TW]. The default value is en.",
+      "rDescription": "Specifies the language of the input text:  'en': English (default),  'zh_cn': Simple Chinese,  'zh_tw': Traditional Chinese, If UseTokenizer specifies 'true', then the function uses the value of Language to create the word tokenizer.",
+      "description": "Specifies the language of the input text:  'en': English (default),  'zh_cn': Simple Chinese,  'zh_tw': Traditional Chinese, If UseTokenizer specifies 'true', then the function uses the value of Language to create the word tokenizer.",
       "datatype": "STRING",
       "allowsLists": false,
       "rName": "language",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 3
     },
     {
       "defaultValue": false,
@@ -70,43 +109,41 @@
         "UseTokenizer"
       ],
       "isRequired": false,
-      "description": "Specifies whether to perform word segmentation if RULES are defined. If true the text string parameter in a RULES rule definition is tokenized and the input data is also tokenized before evaluating the rule. This argument is dependent on the LANGUAGE argument. The default value is false.",
+      "rDescription": "Specifies whether the function tokenizes the input text before evaluating the rules and tokenizes the text string parameter in the rule definition when parsing a rule. If you specify 'true', then you must also specify the Language argument. The default value is 'false'.",
+      "description": "Specifies whether the function tokenizes the input text before evaluating the rules and tokenizes the text string parameter in the rule definition when parsing a rule. If you specify 'true', then you must also specify the Language argument. The default value is 'false'.",
       "datatype": "BOOLEAN",
       "allowsLists": false,
       "rName": "tokenize",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 5
     },
     {
       "defaultValue": false,
       "name": "OutputbyTag",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "If 'true', each matched tag produces a tuple in the output when one document matches multiple tags. If 'false', one tuple in the output stands for one document and the matched tags are combined with the delimiter and shown in the 'tag' column. The default value is false.",
+      "rDescription": "Specifies whether the function outputs a tuple when a text document matches multiple tags. The default value is 'false', which means that one tuple in the output stands for one document and the matched tags are listed in the output column tag.",
+      "description": "Specifies whether the function outputs a tuple when a text document matches multiple tags. The default value is 'false', which means that one tuple in the output stands for one document and the matched tags are listed in the output column tag.",
       "datatype": "BOOLEAN",
       "allowsLists": false,
       "rName": "outputby.tag",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 6
     },
     {
+      "permittedValues": [],
       "defaultValue": ",",
       "isOutputColumn": false,
       "name": "TagDelimiter",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The delimiter that separates multiple tag values in the output. Note that TAGDELIMITER can be defined only if the OUTPUTBYTAG argument is set to 'false'. The default value is ,.",
+      "rDescription": "Specifies the delimiter that separates multiple tags in the output column tag if outputby.tag has the value 'false' (the default). The default value is the comma (,). If outputby.tag has the value 'true', specifying this argument causes an error.",
+      "description": "Specifies the delimiter that separates multiple tags in the output column tag if OutputByTag has the value 'false' (the default). The default value is the comma (,). If OutputByTag has the value 'true', specifying this argument causes an error.",
       "datatype": "STRING",
       "allowsLists": false,
       "rName": "tag.delimiter",
-      "useInR": true
-    },
-    {
-      "checkDuplicate": true,
-      "allowPadding": true,
-      "name": "Accumulate",
-      "isRequired": false,
-      "description": "Columns from the input table to be passed through from input to output.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "accumulate",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 7
     }
   ]
 }

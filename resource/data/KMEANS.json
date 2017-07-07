@@ -1,183 +1,247 @@
 {
   "json_schema_major_version": "1",
-  "json_schema_minor_version": "1",
+  "json_schema_minor_version": "2",
   "json_content_version": "1",
   "function_name": "KMeans",
-  "function_version": "1.6",
+  "function_version": "1.7",
   "function_type": "driver",
+  "function_r_name": "aa.kmeans",
   "short_description": "Performs K-Means clustering on a data set",
   "long_description": "Finds cluster centroids and assigns data points to clusters using the k-means algorithm.",
   "argument_clauses": [
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "Domain",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "The address of the Queen. The host parameter is the Aster Database Queen’s IP saddress or hostname.",
+      "rDescription": "The address of the Queen. The host parameter is the Aster Database Queen’s IP address or hostname.",
+      "description": "The address of the Queen. The host parameter is the Aster Database Queen’s IP address or hostname.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "Database",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The name of the database where the input table is located.",
       "description": "The name of the database where the input table is located.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "UserId",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The Aster Database user name of the user running this function.",
       "description": "The Aster Database user name of the user running this function.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "Password",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The Aster Database password of the user.",
       "description": "The Aster Database password of the user.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "SSLSettings",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "A string that includes all the SSL settings, except the password for the truststore.",
       "description": "A string that includes all the SSL settings, except the password for the truststore.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
       "name": "SSLTrustStorePassword",
+      "alternateNames": [],
       "isRequired": false,
+      "rDescription": "The password for the SSL truststore.",
       "description": "The password for the SSL truststore.",
       "datatype": "DRIVER",
       "allowsLists": false,
-      "useInR": false
+      "useInR": false,
+      "rOrderNum": 0
     },
     {
       "isOutputTable": false,
       "name": "InputTable",
+      "alternateNames": [],
       "isRequired": true,
+      "rDescription": "Input table is the table containing the list of features by which we are clustering the data.",
       "description": "Input table is the table containing the list of features by which we are clustering the data.",
       "datatype": "TABLE_NAME",
       "allowsLists": false,
-      "rName": "input.table",
-      "useInR": true
+      "rName": "data",
+      "useInR": true,
+      "rOrderNum": 1
+    },
+    {
+      "isOutputTable": false,
+      "name": "CentroidsTable",
+      "alternateNames": [],
+      "isRequired": false,
+      "rDescription": "The table that contains the initial seed means for the clusters. The schema of the centroids table depends on the value of the unpack.columns argument. Note: With centroids.table, the function uses a deterministic algorithm and the function supports up to 1596 dimensions.",
+      "description": "The table that contains the initial seed means for the clusters. The schema of the centroids table depends on the value of the UnpackColumns argument. Note: With CentroidsTable, the function uses a deterministic algorithm and the function supports up to 1596 dimensions.",
+      "datatype": "TABLE_NAME",
+      "allowsLists": false,
+      "rName": "centroids.table",
+      "useInR": true,
+      "rOrderNum": 7
     },
     {
       "isOutputTable": true,
       "name": "OutputTable",
+      "alternateNames": [],
       "isRequired": true,
-      "description": "Output table is the table where output is stored. The output table contains the centroids of the clusters.",
+      "rDescription": "Specifies the name of the table in which to output the centroids of the clusters.",
+      "description": "Specifies the name of the table in which to output the centroids of the clusters.",
       "datatype": "TABLE_NAME",
       "allowsLists": false,
-      "rName": "output.table",
-      "useInR": true
+      "rName": "clusters.centroids",
+      "useInR": true,
+      "rOrderNum": 100
     },
     {
       "isOutputTable": true,
       "name": "ClusteredOutput",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "An output table containing the assigned cluster id for each data point.",
+      "rDescription": " Specifies the name of the table in which to store the clustered output. If you omit this argument, the function does not generate a table of clustered output.",
+      "description": " Specifies the name of the table in which to store the clustered output. If you omit this argument, the function does not generate a table of clustered output.",
       "datatype": "TABLE_NAME",
       "allowsLists": false,
       "rName": "clustered.output",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 101
     },
     {
+      "permittedValues": [],
       "isOutputColumn": false,
+      "matchLengthOfArgument": "",
       "allowPadding": true,
       "name": "InitialSeeds",
       "alternateNames": [
         "Means"
       ],
       "isRequired": false,
-      "description": "Specifies the list of initial seed means (otherwise, a random choice is made as specified in algorithm description). Must be provided as strings of underscore delimited (_) double values.",
+      "rDescription": "Specifies the initial seed means as strings of underscore-delimited DOUBLE PRECISION values. For example, this clause initializes eight clusters in eight-dimensional space: Means('50_50_50_50_50_50_50_50', '150_150_150_150_150_150_150_150', '250_250_250_250_250_250_250_250', '350_350_350_350_350_350_350_350', '450_450_450_450_450_450_450_450', '550_550_550_550_550_550_550_550', '650_650_650_650_650_650_650_650', '750_750_750_750_750_750_750_750') The dimensionality of the means must match the dimensionality of the data (that is, each mean must have n numbers in it, where n is the number of input columns minus one). By default, the algorithm chooses the initial seed means randomly. Note: With initial.seeds, the function uses a deterministic algorithm and the function supports up to 1596 dimensions.",
+      "description": "Specifies the initial seed means as strings of underscore-delimited DOUBLE PRECISION values. For example, this clause initializes eight clusters in eight-dimensional space: Means('50_50_50_50_50_50_50_50', '150_150_150_150_150_150_150_150', '250_250_250_250_250_250_250_250', '350_350_350_350_350_350_350_350', '450_450_450_450_450_450_450_450', '550_550_550_550_550_550_550_550', '650_650_650_650_650_650_650_650', '750_750_750_750_750_750_750_750') The dimensionality of the means must match the dimensionality of the data (that is, each mean must have n numbers in it, where n is the number of input columns minus one). By default, the algorithm chooses the initial seed means randomly. Note: With InitialSeeds, the function uses a deterministic algorithm and the function supports up to 1596 dimensions.",
       "datatype": "STRING",
       "allowsLists": true,
       "rName": "initial.seeds",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 4
     },
     {
       "lowerBound": 0,
+      "upperBound": 2147483647,
       "lowerBoundType": "EXCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
       "allowNaN": false,
       "name": "NumClusters",
       "alternateNames": [
         "NumberK"
       ],
       "isRequired": false,
-      "description": "Specifies the number of clusters to generate from the data. The input value must be greater than 0.",
+      "rDescription": " Specifies the number of clusters to generate from the data. Note: With centers, the function uses a nondeterministic algorithm and the function supports up to 1543 dimensions.",
+      "description": "Specifies the number of clusters to generate from the data. Note: With NumClusters, the function uses a nondeterministic algorithm and the function supports up to 1543 dimensions.",
       "datatype": "INTEGER",
       "allowsLists": false,
-      "rName": "num.clusters",
-      "useInR": true
-    },
-    {
-      "isOutputTable": false,
-      "name": "CentroidsTable",
-      "isRequired": false,
-      "description": "The table that contains the initial seed means for the clusters.",
-      "datatype": "TABLE_NAME",
-      "allowsLists": false,
-      "rName": "centroids.table",
-      "useInR": true
+      "rName": "centers",
+      "useInR": true,
+      "rOrderNum": 2
     },
     {
       "defaultValue": 0.0395,
       "lowerBound": 0,
+      "upperBound": Infinity,
       "lowerBoundType": "INCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
       "allowNaN": false,
       "name": "Threshold",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "This is the convergence threshold. When the centroids move by less than this amount, the algorithm has converged. The input value must be no less than 0.0. The default value is 0.0395.",
+      "rDescription": " Specifies the convergence threshold. When the centroids move by less than this amount, the algorithm has converged. The default value is 0.0395.",
+      "description": " Specifies the convergence threshold. When the centroids move by less than this amount, the algorithm has converged. The default value is 0.0395.",
       "datatype": "DOUBLE",
       "allowsLists": false,
       "rName": "threshold",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 8
     },
     {
       "defaultValue": 10,
+      "rDefaultValue": 10,
       "lowerBound": 0,
+      "upperBound": 2147483647,
       "lowerBoundType": "EXCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
       "allowNaN": false,
       "name": "MaxIterNum",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "This is the maximum number of iterations that the algorithm will run before quitting if the convergence threshold has not been met. The input value must be greater than 0. The default value is 10.",
+      "rDescription": "Specifies the maximum number of iterations that the algorithm runs before quitting if the convergence threshold has not been met. The default value is 10.",
+      "description": "Specifies the maximum number of iterations that the algorithm runs before quitting if the convergence threshold has not been met. The default value is 10.",
       "datatype": "INTEGER",
       "allowsLists": false,
-      "rName": "max.iter.num",
-      "useInR": true
+      "rName": "iter.max",
+      "useInR": true,
+      "rOrderNum": 3
     },
     {
       "defaultValue": false,
       "name": "UnpackColumns",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Indicates whether the cluster centroids should be output as one column per dimension or as a single column. The default value is false.",
+      "rDescription": "Specifies whether the means for each centroid appear unpacked (that is, in separate columns) in output_table. By default, the function concatenates the means for the centroids and outputs the result in a single VARCHAR column.",
+      "description": "Specifies whether the means for each centroid appear unpacked (that is, in separate columns) in output_table. By default, the function concatenates the means for the centroids and outputs the result in a single VARCHAR column.",
       "datatype": "BOOLEAN",
       "allowsLists": false,
       "rName": "unpack.columns",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 6
     },
     {
       "lowerBound": 0,
+      "upperBound": 2147483647,
       "lowerBoundType": "INCLUSIVE",
+      "upperBoundType": "INCLUSIVE",
       "allowNaN": false,
       "name": "Seed",
+      "alternateNames": [],
       "isRequired": false,
-      "description": "Sets a random seed for the algorithm. The input value must be no less than 0.",
+      "rDescription": "Sets a random seed for the algorithm.",
+      "description": "Sets a random seed for the algorithm.",
       "datatype": "INTEGER",
       "allowsLists": false,
       "rName": "seed",
-      "useInR": true
+      "useInR": true,
+      "rOrderNum": 5
     }
   ]
 }
