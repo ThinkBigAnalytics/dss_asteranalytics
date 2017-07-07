@@ -35,6 +35,7 @@
      * A private variable containing the function metadata.
      */
     let functionVersion = '';
+    let functionType = '';
 
     /**
      * A private variable containing the function to run the given recipe.
@@ -152,7 +153,12 @@
             functionMetadata = data;
             console.log(functionMetadata);
             functionVersion = functionMetadata.function_version;
+            // functionType = functionMetadata.function_type.toLowerCase();
+            // $scope.config.function.function_type = functionMetadata.function_type.toLowerCase();
             console.log(functionVersion);
+            // console.log(functionType);
+            // console.log($scope.config.function_type);
+
             // //console.log('Function Metadata');
             // //console.log(data);
             // //console.log($scope.config);
@@ -217,6 +223,25 @@
         // })
       },
 
+      /**
+       * Checks if function is a driver function
+       */
+      checkIfDriverFunction: function () {
+        // $delay(() => {
+        // console.log($scope.config.function.function_version ? $scope.config.function.function_version : '');
+        // console.log(functionVersion);
+        console.log('Checking if  driver function');
+        console.log(functionMetadata.function_type.toUpperCase());
+        if (functionMetadata.function_type.toUpperCase() == 'DRIVER') {
+          console.log('true');
+          return true;
+        } else {
+          console.log('false')
+          return false;
+        }
+
+        // })
+      },
 
       /**
        * Gets the description of the given argument from the static JSON metadata.

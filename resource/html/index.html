@@ -8,263 +8,270 @@
 
   <div ng-controller="TeradataController">
 
-     <div class="control-group">
+    <div class="control-group">
       <label class="control-label">Function Name</label>
       <div class="controls">
         <select ng-model="config.function" ng-options="cleanName(choice.name) for choice in choices track by choice.name" ng-change="refresh(config.function.name)">
           <option value="" disabled selected>Select an Aster function...</option>
         </select>
       </div>
-  </div>
-
-  <div class="control-group" ng-if="config.function">
-    <label class="control-label">Description</label>
-    <div class="controls" style="max-width: 40%; text-align: justify">
-      {{ getFunctionDescription() }}
     </div>
-  </div>
 
-  <div class="control-group">
-    <label class="control-label">Distribution Type</label>
-    <div class="controls">
-      <select ng-model="config.distribution">
+    <div class="control-group" ng-if="config.function">
+      <label class="control-label">Description</label>
+      <div class="controls" style="max-width: 40%; text-align: justify">
+        {{ getFunctionDescription() }}
+      </div>
+    </div>
+
+    <div class="control-group" ng-if="checkIfDriverFunction()">
+      <label class="control-label">Drop Output Table If Exists</label>
+      <div class="controls">
+        <input type="checkbox" ng-model="config.function.dropIfExists"></input>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label">Distribution Type</label>
+      <div class="controls">
+        <select ng-model="config.distribution">
           <option value="" disabled selected>Select a Distribution Type...</option>
           <option value="fact">Fact</option>
           <option value="dimension">Dimension</option>
         </select>
-    </div>
-  </div>
-
-  <!--<div><p >Test</p></div>-->
-  <div class="control-group" ng-if="config.distribution == 'fact'">
-    <label class="control-label">Distribution Key</label>
-    <div class="controls" style="max-width: 40%; text-align: justify">
-      <input required type="text" ng-model="config.distribution_key" data-toggle="tooltip" data-container="body" data-html="false"
-        title="distribution_key" data-placement="right" />
-    </div>
-  </div>
-
-
-  <hr ng-if="config.function">
-
-  <div class="warning-div" ng-if="checkVersionMismatch()">
-    <span class="label label-warning" >Function version mismatch! Some argument values may not be transferred.</span>
-  </div>
-
-  <div class="control-group" ng-if="config.function">
-
-    <div id="tabs">
-      <ul>
-        <li><a href="#tabs-required">Required Arguments</a></li>
-        <li><a href="#tabs-optional" ng-if="hasOptionalArguments()">Optional Arguments</a></li>
-      </ul>
-
-      <div id="tabs-required">
-
-        <table class="table table-condensed table-hover" ng-model-options="{ debounce: 200 }">
-
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Value</th>
-              <!--<th>Message</th>-->
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr ng-if="shouldShowPartitionOrderFields(config.function.unaliased_inputs)">
-              <td>Unaliased Input Tables</td>
-              <td>
-                <select required multiple size="8" ng-model="config.function.unaliased_inputs.values" ng-options="t.fullName.split('.')[1] as t.fullName.split('.')[1] for t in inputs"
-                  data-toggle="tooltip" data-container="body" data-placement="right" data-html="true" title="<b>(Ctrl+Click to multi-select)</b>">
-                      <option value="" selected>--No Selection--</option>
-                  </select>
-              </td>
-            </tr>
-
-            <tr ng-repeat="item in config.function.required_input" ng-model="config.function.required_input" ng-if="item.hasOwnProperty('name') && item.isRequired">
-              <td style="text-transform: capitalize">{{ cleanName(item.name) }} {{ cleanKind(item.kind) }}</td>
-              <td>
-                <select required ng-model="item.value" ng-options="t.fullName.split('.')[1] as t.fullName.split('.')[1] for t in inputs">
-                      <option value="" selected>--No Selection--</option>
-                  </select>
-
-                <div class="inner-cell" ng-show="'PartitionByKey' == item.kind">
-                  <p class="inner-label">Partition by </p>
-                  <select multiple size="4" ng-model="item.partitionAttributes" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]">
-                        <option value="" selected>--No Selection--</option>
-                    </select>
-                </div>
-
-                <div class="inner-cell" ng-show="item.isOrdered">
-                  <p class="inner-label">Order by </p>
-                  <select multiple size="4" ng-model="item.orderByColumn" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]">
-                        <option value="" selected>--No Selection--</option>
-                    </select>
-                </div>
-
-              </td>
-            </tr>
-
-            <tr ng-if="config.function.isOrdered && shouldShowPartitionOrderFields(config.function.unaliased_inputs)">
-              <td>ORDER BY Column</td>
-              <td>
-                <select required ng-model="config.function.orderByColumn" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in getSchemaOfUnaliasedInputs(config.function.unaliased_inputs)">
-                    <option value="" selected>--No Selection--</option>
-                  </select>
-              </td>
-              <!--<td>{{ validation_message('orderByColumn') }}</td>-->
-            </tr>
-
-            <tr ng-if="shouldShowPartitionOrderFields(config.function.unaliased_inputs) && config.function.partitionInputKind.indexOf('PartitionByAny') !== -1 && config.function.partitionInputKind.length > 1">
-              <td>PARTITION BY ANY</td>
-              <td>
-                <input type="checkbox" ng-model="config.function.partitionByAny"></input>
-              </td>
-            </tr>
-
-            <tr ng-if="shouldShowPartitionOrderFields(config.function.unaliased_inputs) && config.function.partitionInputKind.indexOf('PartitionByKey') !== -1">
-              <td>PARTITION BY Column</td>
-              <td>
-                <select required ng-disabled="config.function.partitionByAny" multiple size="8" ng-model="config.function.partitionAttributes"
-                  ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in getSchemaOfUnaliasedInputs(config.function.unaliased_inputs)"
-                  data-html="true" title="<b>(Ctrl+Click to multi-select)</b>" data-toggle="tooltip" data-container="body"
-                  data-placement="right">
-                    <option value="" selected>--No Selection--</option>
-                  </select>
-              </td>
-            </tr>
-
-
-            <tr ng-repeat="item in config.function.arguments" ng-model="config.function.arguments" ng-if="item.isRequired">
-              <td style="text-transform: capitalize">{{ cleanName(item.name) }}</td>
-              <td>
-                <input required type="text" ng-model="item.value" ng-if="(['STRING','DOUBLE','INTEGER','DRIVER','SQLEXPR', 'LONG'].indexOf(item.datatype) >= 0 || (item.datatype == 'TABLE_NAME' && isArgumentOutputTable(item))) && !item.allowsLists && !getPermittedValues(item.i)"
-                  data-toggle="tooltip" data-container="body" data-html="true" title="{{ getArgumentDescription(item.i) }}"
-                  data-placement="right" />
-
-                <input required class="teradata-tags" ng-model="item.value" type="text" ng-if="['STRING','DOUBLE','INTEGER','DRIVER','SQLEXPR', 'LONG'].indexOf(item.datatype) >= 0 && item.allowsLists && !getPermittedValues(item.i)"
-                  data-toggle="tooltip" data-container="body" data-html="true" title="{{ getArgumentDescription(item.i) }}"
-                  data-placement="right"></input>
-
-                <input required type="checkbox" ng-model="item.value" ng-if="item.datatype == 'BOOLEAN'" data-toggle="tooltip" data-container="body"
-                  data-html="true" title="{{ getArgumentDescription(item.i) }}" data-placement="right" />
-
-                <select required ng-if="(item.datatype == 'COLUMN_NAMES' || item.datatype == 'COLUMNS') && !item.allowsLists && !getPermittedValues(item.i)"
-                  ng-model="item.value" data-toggle="tooltip" data-container="body" data-html="true" title="{{ getArgumentDescription(item.i) }}"
-                  data-placement="right" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in getSchema(item, config.function.required_input, config.function.unaliased_inputs, config.function.arguments)">
-                    <option value="" selected>--No Selection--</option>
-                  </select>
-
-                <select required multiple size="8" ng-if="(item.datatype == 'COLUMN_NAMES' || item.datatype == 'COLUMNS') && item.allowsLists && !getPermittedValues(item.i)"
-                  ng-model="item.value" data-toggle="tooltip" data-html="true" title="{{ getArgumentDescription(item.i) }}<br><br><b>(Ctrl+Click to multi-select)</b>"
-                  data-placement="right" data-container="body" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in getSchema(item, config.function.required_input, config.function.unaliased_inputs, config.function.arguments)">
-                    <option value="" selected>--No Selection--</option>
-                  </select>
-
-                <select required ng-if="item.datatype == 'TABLE_NAME' && !isArgumentOutputTable(item) && !getPermittedValues(item.i)" ng-model="item.value"
-                  data-toggle="tooltip" data-container="body" data-html="true" title="{{ getArgumentDescription(item.i) }}"
-                  data-placement="right" ng-options="t.fullName.split('.')[1] as t.fullName.split('.')[1] for t in inputs">
-                    <option value="" selected>--No Selection--</option>
-                  </select>
-
-                <select required ng-if="getPermittedValues(item.i)" ng-model="item.value" data-toggle="tooltip" data-container="body" data-html="true"
-                  title="{{ getArgumentDescription(item.i) }}" data-placement="right" ng-options="t as t for t in getPermittedValues(item.i)">
-                    <option value="" selected>--No Selection--</option>
-                  </select>
-              </td>
-            </tr>
-
-          </tbody>
-        </table>
-
       </div>
+    </div>
 
-      <div id="tabs-optional" ng-if="hasOptionalArguments()">
+    <!--<div><p >Test</p></div>-->
+    <div class="control-group" ng-if="config.distribution == 'fact'">
+      <label class="control-label">Distribution Key</label>
+      <div class="controls" style="max-width: 40%; text-align: justify">
+        <input required type="text" ng-model="config.distribution_key" data-toggle="tooltip" data-container="body" data-html="false"
+          title="distribution_key" data-placement="right" />
+      </div>
+    </div>
 
-        <table class="table table-condensed table-hover" ng-model-options="{ debounce: 200 }">
 
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Value</th>
-            </tr>
-          </thead>
+    <hr ng-if="config.function">
 
-          <tbody>
-            <tr ng-repeat="item in config.function.required_input" ng-model="config.function.required_input" ng-if="item.hasOwnProperty('name') && !item.isRequired">
-              <td style="text-transform: capitalize">{{ cleanName(item.name) }} {{ cleanKind(item.kind) }}</td>
-              <td>
-                <select ng-model="item.value" ng-options="inputtable.fullName.split('.')[1] as inputtable.fullName.split('.')[1] for inputtable in inputs">
-                    <option value="" selected>--No Selection--</option>
+    <div class="warning-div" ng-if="checkVersionMismatch()">
+      <span class="label label-warning">Function version mismatch! Some argument values may not be transferred.</span>
+    </div>
+
+    <div class="control-group" ng-if="config.function">
+
+      <div id="tabs">
+        <ul>
+          <li><a href="#tabs-required">Required Arguments</a></li>
+          <li><a href="#tabs-optional" ng-if="hasOptionalArguments()">Optional Arguments</a></li>
+        </ul>
+
+        <div id="tabs-required">
+
+          <table class="table table-condensed table-hover" ng-model-options="{ debounce: 200 }">
+
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Value</th>
+                <!--<th>Message</th>-->
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr ng-if="shouldShowPartitionOrderFields(config.function.unaliased_inputs)">
+                <td>Unaliased Input Tables</td>
+                <td>
+                  <select required multiple size="8" ng-model="config.function.unaliased_inputs.values" ng-options="t.fullName.split('.')[1] as t.fullName.split('.')[1] for t in inputs"
+                    data-toggle="tooltip" data-container="body" data-placement="right" data-html="true" title="<b>(Ctrl+Click to multi-select)</b>">
+                      <option value="" selected>--No Selection--</option>
+                  </select>
+                </td>
+              </tr>
+
+              <tr ng-repeat="item in config.function.required_input" ng-model="config.function.required_input" ng-if="item.hasOwnProperty('name') && item.isRequired">
+                <td style="text-transform: capitalize">{{ cleanName(item.name) }} {{ cleanKind(item.kind) }}</td>
+                <td>
+                  <select required ng-model="item.value" ng-options="t.fullName.split('.')[1] as t.fullName.split('.')[1] for t in inputs">
+                      <option value="" selected>--No Selection--</option>
                   </select>
 
-                <div class="inner-cell" ng-show="'PartitionByKey' == item.kind">
-                  <p class="inner-label">Partition by</p>
-                  <select multiple size="4" ng-model="item.partitionAttributes" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]">
+                  <div class="inner-cell" ng-show="'PartitionByKey' == item.kind">
+                    <p class="inner-label">Partition by </p>
+                    <select multiple size="4" ng-model="item.partitionAttributes" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]">
                         <option value="" selected>--No Selection--</option>
                     </select>
-                </div>
+                  </div>
 
-                <div class="inner-cell" ng-show="item.isOrdered">
-                  <p class="inner-label">Order by</p>
-                  <select multiple size="4" ng-model="item.orderByColumn" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]">
+                  <div class="inner-cell" ng-show="item.isOrdered">
+                    <p class="inner-label">Order by </p>
+                    <select multiple size="4" ng-model="item.orderByColumn" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]">
                         <option value="" selected>--No Selection--</option>
                     </select>
-                </div>
-              </td>
-            </tr>
-            <tr ng-repeat="item in config.function.arguments" ng-model="config.function.arguments" ng-if="!item.isRequired">
-              <td style="text-transform: capitalize">{{ cleanName(item.name) }}</td>
-              <td>
-                <input type="text" ng-model="item.value" ng-if="(['STRING','DOUBLE','INTEGER','DRIVER','SQLEXPR', 'LONG'].indexOf(item.datatype) >= 0 || (item.datatype == 'TABLE_NAME' && isArgumentOutputTable(item))) && !item.allowsLists && !getPermittedValues(item.i)"
-                  data-toggle="tooltip" data-container="body" data-html="true" title="{{ getArgumentDescription(item.i) }}"
-                  data-placement="right" />
+                  </div>
 
-                <input class="teradata-tags" ng-model="item.value" type="text" ng-if="['STRING','DOUBLE','INTEGER','DRIVER','SQLEXPR', 'LONG'].indexOf(item.datatype) >= 0 && item.allowsLists && !getPermittedValues(item.i)"
-                  data-toggle="tooltip" data-container="body" data-html="true" title="{{ getArgumentDescription(item.i) }}"
-                  data-placement="right"></input>
+                </td>
+              </tr>
 
-                <input type="checkbox" ng-model="item.value" ng-if="item.datatype == 'BOOLEAN' && !getPermittedValues(item.i)" data-toggle="tooltip"
-                  data-container="body" data-html="true" title="{{ getArgumentDescription(item.i) }}" data-placement="right"
-                />
+              <tr ng-if="config.function.isOrdered && shouldShowPartitionOrderFields(config.function.unaliased_inputs)">
+                <td>ORDER BY Column</td>
+                <td>
+                  <select required ng-model="config.function.orderByColumn" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in getSchemaOfUnaliasedInputs(config.function.unaliased_inputs)">
+                    <option value="" selected>--No Selection--</option>
+                  </select>
+                </td>
+                <!--<td>{{ validation_message('orderByColumn') }}</td>-->
+              </tr>
 
-                <select ng-if="(item.datatype == 'COLUMN_NAMES' || item.datatype == 'COLUMNS') && !item.allowsLists && !getPermittedValues(item.i)"
-                  ng-model="item.value" data-toggle="tooltip" data-container="body" data-html="true" title="{{ getArgumentDescription(item.i) }}"
-                  data-placement="right" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in getSchema(item, config.function.required_input, config.function.unaliased_inputs, config.function.arguments)">
+              <tr ng-if="shouldShowPartitionOrderFields(config.function.unaliased_inputs) && config.function.partitionInputKind.indexOf('PartitionByAny') !== -1 && config.function.partitionInputKind.length > 1">
+                <td>PARTITION BY ANY</td>
+                <td>
+                  <input type="checkbox" ng-model="config.function.partitionByAny"></input>
+                </td>
+              </tr>
+
+              <tr ng-if="shouldShowPartitionOrderFields(config.function.unaliased_inputs) && config.function.partitionInputKind.indexOf('PartitionByKey') !== -1">
+                <td>PARTITION BY Column</td>
+                <td>
+                  <select required ng-disabled="config.function.partitionByAny" multiple size="8" ng-model="config.function.partitionAttributes"
+                    ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in getSchemaOfUnaliasedInputs(config.function.unaliased_inputs)"
+                    data-html="true" title="<b>(Ctrl+Click to multi-select)</b>" data-toggle="tooltip" data-container="body"
+                    data-placement="right">
+                    <option value="" selected>--No Selection--</option>
+                  </select>
+                </td>
+              </tr>
+
+
+              <tr ng-repeat="item in config.function.arguments" ng-model="config.function.arguments" ng-if="item.isRequired">
+                <td style="text-transform: capitalize">{{ cleanName(item.name) }}</td>
+                <td>
+                  <input required type="text" ng-model="item.value" ng-if="(['STRING','DOUBLE','INTEGER','DRIVER','SQLEXPR', 'LONG'].indexOf(item.datatype) >= 0 || (item.datatype == 'TABLE_NAME' && isArgumentOutputTable(item))) && !item.allowsLists && !getPermittedValues(item.i)"
+                    data-toggle="tooltip" data-container="body" data-html="true" title="{{ getArgumentDescription(item.i) }}"
+                    data-placement="right" />
+
+                  <input required class="teradata-tags" ng-model="item.value" type="text" ng-if="['STRING','DOUBLE','INTEGER','DRIVER','SQLEXPR', 'LONG'].indexOf(item.datatype) >= 0 && item.allowsLists && !getPermittedValues(item.i)"
+                    data-toggle="tooltip" data-container="body" data-html="true" title="{{ getArgumentDescription(item.i) }}"
+                    data-placement="right"></input>
+
+                  <input required type="checkbox" ng-model="item.value" ng-if="item.datatype == 'BOOLEAN'" data-toggle="tooltip" data-container="body"
+                    data-html="true" title="{{ getArgumentDescription(item.i) }}" data-placement="right" />
+
+                  <select required ng-if="(item.datatype == 'COLUMN_NAMES' || item.datatype == 'COLUMNS') && !item.allowsLists && !getPermittedValues(item.i)"
+                    ng-model="item.value" data-toggle="tooltip" data-container="body" data-html="true" title="{{ getArgumentDescription(item.i) }}"
+                    data-placement="right" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in getSchema(item, config.function.required_input, config.function.unaliased_inputs, config.function.arguments)">
                     <option value="" selected>--No Selection--</option>
                   </select>
 
-                <select multiple size="8" ng-if="(item.datatype == 'COLUMN_NAMES' || item.datatype == 'COLUMNS') && item.allowsLists && !getPermittedValues(item.i)"
-                  ng-model="item.value" data-toggle="tooltip" data-html="true" title="{{ getArgumentDescription(item.i) }}<br><br><b>(Ctrl+Click to multi-select)</b>"
-                  data-placement="right" data-container=body ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in getSchema(item, config.function.required_input, config.function.unaliased_inputs, config.function.arguments)">
+                  <select required multiple size="8" ng-if="(item.datatype == 'COLUMN_NAMES' || item.datatype == 'COLUMNS') && item.allowsLists && !getPermittedValues(item.i)"
+                    ng-model="item.value" data-toggle="tooltip" data-html="true" title="{{ getArgumentDescription(item.i) }}<br><br><b>(Ctrl+Click to multi-select)</b>"
+                    data-placement="right" data-container="body" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in getSchema(item, config.function.required_input, config.function.unaliased_inputs, config.function.arguments)">
                     <option value="" selected>--No Selection--</option>
                   </select>
 
-                <select ng-if="item.datatype == 'TABLE_NAME' && !isArgumentOutputTable(item) && !getPermittedValues(item.i)" ng-model="item.value"
-                  data-toggle="tooltip" data-container="body" data-html="true" title="{{ getArgumentDescription(item.i) }}"
-                  data-placement="right" ng-options="t.fullName.split('.')[1] as t.fullName.split('.')[1] for t in inputs">
+                  <select required ng-if="item.datatype == 'TABLE_NAME' && !isArgumentOutputTable(item) && !getPermittedValues(item.i)" ng-model="item.value"
+                    data-toggle="tooltip" data-container="body" data-html="true" title="{{ getArgumentDescription(item.i) }}"
+                    data-placement="right" ng-options="t.fullName.split('.')[1] as t.fullName.split('.')[1] for t in inputs">
                     <option value="" selected>--No Selection--</option>
                   </select>
 
-                <select required ng-if="getPermittedValues(item.i)" ng-model="item.value" data-toggle="tooltip" data-container="body" data-html="true"
-                  title="{{ getArgumentDescription(item.i) }}" data-placement="right" ng-options="t as t for t in getPermittedValues(item.i)">
+                  <select required ng-if="getPermittedValues(item.i)" ng-model="item.value" data-toggle="tooltip" data-container="body" data-html="true"
+                    title="{{ getArgumentDescription(item.i) }}" data-placement="right" ng-options="t as t for t in getPermittedValues(item.i)">
+                    <option value="" selected>--No Selection--</option>
+                  </select>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+
+        </div>
+
+        <div id="tabs-optional" ng-if="hasOptionalArguments()">
+
+          <table class="table table-condensed table-hover" ng-model-options="{ debounce: 200 }">
+
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Value</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr ng-repeat="item in config.function.required_input" ng-model="config.function.required_input" ng-if="item.hasOwnProperty('name') && !item.isRequired">
+                <td style="text-transform: capitalize">{{ cleanName(item.name) }} {{ cleanKind(item.kind) }}</td>
+                <td>
+                  <select ng-model="item.value" ng-options="inputtable.fullName.split('.')[1] as inputtable.fullName.split('.')[1] for inputtable in inputs">
+                    <option value="" selected>--No Selection--</option>
+                  </select>
+
+                  <div class="inner-cell" ng-show="'PartitionByKey' == item.kind">
+                    <p class="inner-label">Partition by</p>
+                    <select multiple size="4" ng-model="item.partitionAttributes" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]">
+                        <option value="" selected>--No Selection--</option>
+                    </select>
+                  </div>
+
+                  <div class="inner-cell" ng-show="item.isOrdered">
+                    <p class="inner-label">Order by</p>
+                    <select multiple size="4" ng-model="item.orderByColumn" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]">
+                        <option value="" selected>--No Selection--</option>
+                    </select>
+                  </div>
+                </td>
+              </tr>
+              <tr ng-repeat="item in config.function.arguments" ng-model="config.function.arguments" ng-if="!item.isRequired">
+                <td style="text-transform: capitalize">{{ cleanName(item.name) }}</td>
+                <td>
+                  <input type="text" ng-model="item.value" ng-if="(['STRING','DOUBLE','INTEGER','DRIVER','SQLEXPR', 'LONG'].indexOf(item.datatype) >= 0 || (item.datatype == 'TABLE_NAME' && isArgumentOutputTable(item))) && !item.allowsLists && !getPermittedValues(item.i)"
+                    data-toggle="tooltip" data-container="body" data-html="true" title="{{ getArgumentDescription(item.i) }}"
+                    data-placement="right" />
+
+                  <input class="teradata-tags" ng-model="item.value" type="text" ng-if="['STRING','DOUBLE','INTEGER','DRIVER','SQLEXPR', 'LONG'].indexOf(item.datatype) >= 0 && item.allowsLists && !getPermittedValues(item.i)"
+                    data-toggle="tooltip" data-container="body" data-html="true" title="{{ getArgumentDescription(item.i) }}"
+                    data-placement="right"></input>
+
+                  <input type="checkbox" ng-model="item.value" ng-if="item.datatype == 'BOOLEAN' && !getPermittedValues(item.i)" data-toggle="tooltip"
+                    data-container="body" data-html="true" title="{{ getArgumentDescription(item.i) }}" data-placement="right"
+                  />
+
+                  <select ng-if="(item.datatype == 'COLUMN_NAMES' || item.datatype == 'COLUMNS') && !item.allowsLists && !getPermittedValues(item.i)"
+                    ng-model="item.value" data-toggle="tooltip" data-container="body" data-html="true" title="{{ getArgumentDescription(item.i) }}"
+                    data-placement="right" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in getSchema(item, config.function.required_input, config.function.unaliased_inputs, config.function.arguments)">
+                    <option value="" selected>--No Selection--</option>
+                  </select>
+
+                  <select multiple size="8" ng-if="(item.datatype == 'COLUMN_NAMES' || item.datatype == 'COLUMNS') && item.allowsLists && !getPermittedValues(item.i)"
+                    ng-model="item.value" data-toggle="tooltip" data-html="true" title="{{ getArgumentDescription(item.i) }}<br><br><b>(Ctrl+Click to multi-select)</b>"
+                    data-placement="right" data-container=body ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in getSchema(item, config.function.required_input, config.function.unaliased_inputs, config.function.arguments)">
+                    <option value="" selected>--No Selection--</option>
+                  </select>
+
+                  <select ng-if="item.datatype == 'TABLE_NAME' && !isArgumentOutputTable(item) && !getPermittedValues(item.i)" ng-model="item.value"
+                    data-toggle="tooltip" data-container="body" data-html="true" title="{{ getArgumentDescription(item.i) }}"
+                    data-placement="right" ng-options="t.fullName.split('.')[1] as t.fullName.split('.')[1] for t in inputs">
+                    <option value="" selected>--No Selection--</option>
+                  </select>
+
+                  <select required ng-if="getPermittedValues(item.i)" ng-model="item.value" data-toggle="tooltip" data-container="body" data-html="true"
+                    title="{{ getArgumentDescription(item.i) }}" data-placement="right" ng-options="t as t for t in getPermittedValues(item.i)">
                     <option ng-if="!item.value" value="" selected>--No Selection--</option>
                   </select>
-              </td>
-            </tr>
-          </tbody>
+                </td>
+              </tr>
+            </tbody>
 
-        </table>
+          </table>
+
+        </div>
 
       </div>
 
+
     </div>
 
-
   </div>
-
-</div>
 
 </div>
 
