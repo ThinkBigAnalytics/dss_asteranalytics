@@ -15,6 +15,8 @@ def do(payload, config, plugin_config, inputs):
     
     choices = []
     for fle in files:
+        print('====================================')
+        print(fle)
         try:
             f = json.loads(open('%s/data/%s' % (os.getenv("DKU_CUSTOM_RESOURCE_FOLDER"), fle)).read())
             d = {"name":"",
@@ -42,7 +44,7 @@ def do(payload, config, plugin_config, inputs):
                     if 'isRequired' in input_tab.keys():
                         required_input_dict['isRequired'] = input_tab['isRequired']
                     if 'requiredInputKind' in input_tab.keys():
-                        partitionByKey = input_tab['requiredInputKind'][0]
+                        partitionByKey = next(iter(x for x in input_tab.get('requiredInputKind',[])), '')
                         if 'partitionByOne' in input_tab.keys() and input_tab['partitionByOne']:
                             partitionByKey = "PartitionByOne"
                         required_input_dict['kind'] = partitionByKey
@@ -65,6 +67,7 @@ def do(payload, config, plugin_config, inputs):
                     arg = {"name":"","isRequired":"","value":"", "datatype": "", "allowsLists":True}
                     if 'alternateNames' in argument.keys():
                         arg["name"]=argument['alternateNames'][0].upper()
+                        arg["name"] = next(iter(x for x in argument.get('alternateNames', [])), '').upper()
                     elif 'name' in argument.keys():
                         arg["name"]=argument['name'].upper()  
                     if 'isRequired' in argument.keys():
