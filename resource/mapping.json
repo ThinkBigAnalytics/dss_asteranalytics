@@ -542,12 +542,12 @@
   {
     "category": "Neural Net",
     "function_name": "NeuralNet",
-    "file_name": "NEURALNET"
+    "file_name": "NEURALNET.json"
   },
   {
     "category": "Neural Net",
-    "function_name": "NeuralPredict",
-    "file_name": "NEURALPREDICT"
+    "function_name": "NeuralNetPredict",
+    "file_name": "NEURALNETPREDICT.json"
   },
   {
     "category": "Text Analysis",

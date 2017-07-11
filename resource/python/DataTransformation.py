@@ -15,8 +15,6 @@ def do(payload, config, plugin_config, inputs):
     
     choices = []
     for fle in files:
-        print('====================================')
-        print(fle)
         try:
             f = json.loads(open('%s/data/%s' % (os.getenv("DKU_CUSTOM_RESOURCE_FOLDER"), fle)).read())
             d = {"name":"",
@@ -65,9 +63,8 @@ def do(payload, config, plugin_config, inputs):
                 arg_lst = f['argument_clauses']
                 for argument in arg_lst:
                     arg = {"name":"","isRequired":"","value":"", "datatype": "", "allowsLists":True}
-                    if 'alternateNames' in argument.keys():
-                        arg["name"]=argument['alternateNames'][0].upper()
-                        arg["name"] = next(iter(x for x in argument.get('alternateNames', [])), '').upper()
+                    if argument.get('alternateNames', []):
+                        arg["name"] = argument.get('alternateNames', [''])[0].upper()
                     elif 'name' in argument.keys():
                         arg["name"]=argument['name'].upper()  
                     if 'isRequired' in argument.keys():

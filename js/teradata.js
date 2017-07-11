@@ -147,10 +147,20 @@
         }
 
         const promise = $http
-          .get(`${FUNCTION_METADATA_PATH}${selectedFunction}.json`)
+          .get(`${FUNCTION_METADATA_PATH}${selectedFunction}.json`, {transformResponse: [function(data) {
+        if (typeof data === 'string') {
+        // strip json vulnerability protection prefix
+        data = data.replace(")]}',\n", '');
+        data = data.replace(/: Infinity/g, ': "Infinity"');
+        console.log(data);
+        data = data.replace(/: -Infinity/g, ': "-Infinity"');
+        data = JSON.parse(data, function censor(key, value) {
+            return value == Infinity ? "Infinity" : value;});
+      }
+      return data;
+    }]})
           .success(data => {
             functionMetadata = data;
-            console.log(functionMetadata);
             functionVersion = functionMetadata.function_version;
             console.log(functionVersion);
             // //console.log('Function Metadata');
@@ -240,10 +250,10 @@
       getPermittedValues: function (i) {
 
         try {
-
           return (functionMetadata
             && functionMetadata.argument_clauses[i]
-            && functionMetadata.argument_clauses[i].permittedValues)
+            && functionMetadata.argument_clauses[i].permittedValues
+            && functionMetadata.argument_clauses[i].permittedValues.length)
             ? functionMetadata.argument_clauses[i].permittedValues
             : null;
 
@@ -280,13 +290,14 @@
         //Get alternate names
         var tableNameAliases = [];
         tableNameAliases.push(tableNameAlias);
+        if (!functionMetadata) {
+            return '';
+        }
         functionMetadata.argument_clauses.map(argument => {
           if(argument.name.toUpperCase() === tableNameAlias){
             if(KEYS.ALTERNATE_NAMES in argument){
               argument.alternateNames.map(function(altname) {tableNameAliases.push(altname);})
             }
-            console.log('tableNameAliases');
-            console.log(tableNameAliases);
             // tableNameAliases.push(argument.name.toUpperCase());
             
           }
@@ -295,11 +306,7 @@
             .filter(arg => tableNameAliases.includes(arg.name.toUpperCase()));
         // .filter(arg => tableNameAlias.toUpperCase() === arg.name.toUpperCase());
           // .filter(arg => [KEYS.INPUT_TABLE, KEYS.INPUT_TABLE_ALTERNATIVE].includes(arg.name.toUpperCase()));
-        console.log('Find tablename');
-        console.log(potentialMatches);
-        console.log(argumentsList);
         if (potentialMatches.length) {
-          console.log(potentialMatches);
           //console.log('We finally got here');
           return potentialMatches[0].value;
         }
@@ -327,8 +334,7 @@
         var isInAliasedInputsList = false;
         var y = false;
         if (hasTargetTable) {
-          //console.log('hasTargetTable');
-          const targetTableAlias = functionArgument.targetTable.toUpperCase();
+          const targetTableAlias = (functionArgument.targetTable[0] || '').toUpperCase();
           // if (KEYS.ALTERNATE_NAMES in func)
           // var tableAliasList = 
           console.log('Table name');
