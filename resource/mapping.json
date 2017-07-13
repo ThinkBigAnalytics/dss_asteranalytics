@@ -206,11 +206,6 @@
   },
   {
     "category": "Statistical Analysis",
-    "function_name": "RandomSample",
-    "file_name": "RANDOMSAMPLE.json"
-  },
-  {
-    "category": "Statistical Analysis",
     "function_name": "FMeasure",
     "file_name": "FMEASURE.json"
   },
