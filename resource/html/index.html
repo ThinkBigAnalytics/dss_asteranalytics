@@ -96,6 +96,13 @@
                       <option value="" selected>--No Selection--</option>
                   </select>
 
+                  <div class="inner-cell" ng-if="item.inputKindChoices.length > 1">
+                    <p class="inner-label">Partition Type </p>
+                  <select required ng-model="item.kind" ng-options="kind for kind in item.inputKindChoices">
+                      <option value="" selected>--No Selection--</option>
+                  </select>
+                  </div>
+
                   <div class="inner-cell" ng-show="'PartitionByKey' == item.kind">
                     <p class="inner-label">Partition by </p>
                     <select multiple size="4" ng-model="item.partitionAttributes" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]">
