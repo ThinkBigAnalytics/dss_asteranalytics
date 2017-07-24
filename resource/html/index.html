@@ -1,7 +1,10 @@
 <link rel="stylesheet" href="/plugins/AsterAnalytics/resource/css/aster-ui.css">
 <link rel="stylesheet" href="/plugins/AsterAnalytics/resource/css/jquery-ui.css">
+<link rel="stylesheet" href="/plugins/AsterAnalytics/resource/css/selectize.default.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-tagsinput/1.3.6/jquery.tagsinput.min.css" />
+
 <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
+<script src="/plugins/AsterAnalytics/resource/js/selectize.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-tagsinput/1.3.6/jquery.tagsinput.min.js"></script>
 
 <div id="main-container">
@@ -98,16 +101,19 @@
 
                   <div class="inner-cell" ng-if="item.inputKindChoices.length > 1">
                     <p class="inner-label">Partition Type </p>
-                  <select required ng-model="item.kind" ng-options="kind for kind in item.inputKindChoices">
+                    <select required ng-model="item.kind" ng-options="kind for kind in item.inputKindChoices">
                       <option value="" selected>--No Selection--</option>
                   </select>
                   </div>
 
                   <div class="inner-cell" ng-show="'PartitionByKey' == item.kind">
                     <p class="inner-label">Partition by </p>
-                    <select multiple size="4" ng-model="item.partitionAttributes" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]">
+                    <select multiple class="selectize" selectize size="4" ng-model="item.partitionAttributes" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]">
                         <option value="" selected>--No Selection--</option>
+                    
+                        
                     </select>
+                    <p> Selected {{item.partitionAttributes}} </p>
                   </div>
 
                   <div class="inner-cell" ng-show="item.isOrdered">
@@ -140,11 +146,15 @@
               <tr ng-if="shouldShowPartitionOrderFields(config.function.unaliased_inputs) && config.function.partitionInputKind.indexOf('PartitionByKey') !== -1">
                 <td>PARTITION BY Column</td>
                 <td>
-                  <select required ng-disabled="config.function.partitionByAny" multiple size="8" ng-model="config.function.partitionAttributes"
+                  <select required class="selectize" selectize ng-disabled="config.function.partitionByAny" multiple size="8" ng-model="config.function.partitionAttributes"
                     ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in getSchemaOfUnaliasedInputs(config.function.unaliased_inputs)"
                     data-html="true" title="<b>(Ctrl+Click to multi-select)</b>" data-toggle="tooltip" data-container="body"
                     data-placement="right">
                     <option value="" selected>--No Selection--</option>
+                    <!--<option value="a" selected>ayy</option>
+                    <option value="b" selected>bee</option>
+                    <option value="c" selected>cee</option>
+                    <option value="d" selected>dee</option>-->
                   </select>
                 </td>
               </tr>
@@ -215,9 +225,11 @@
 
                   <div class="inner-cell" ng-show="'PartitionByKey' == item.kind">
                     <p class="inner-label">Partition by</p>
-                    <select multiple size="4" ng-model="item.partitionAttributes" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]">
-                        <option value="" selected>--No Selection--</option>
+                    <select multiple class="selectize" selectize size="4" ng-model="item.partitionAttributes" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]">
+                        <option value="" selected>--No Selection--</option>                    
                     </select>
+                        <p> Selected {{item.partitionAttributes}} </p>
+                    
                   </div>
 
                   <div class="inner-cell" ng-show="item.isOrdered">
