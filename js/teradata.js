@@ -210,6 +210,7 @@
        */
       checkVersionMismatch: function () {
         // $delay(() => {
+        var previousVersion = $scope.config.function.function_version ? $scope.config.function.function_version : ''
         console.log($scope.config.function.function_version ? $scope.config.function.function_version : '');
         // console.log(functionVersion);
         if (($scope.config.function.function_version ? $scope.config.function.function_version : '') === functionVersion || ($scope.config.function.function_version ? $scope.config.function.function_version : '') === '') {
@@ -217,6 +218,9 @@
           return false;
         } else {
           console.log('True')
+          console.log('Function version mismatch');
+          console.log('Previous Version:', previousVersion)
+          console.log('Installed Version:', functionVersion)
           return true;
         }
 
