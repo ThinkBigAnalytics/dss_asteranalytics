@@ -218,9 +218,9 @@
           return false;
         } else {
           console.log('True')
-          console.log('Function version mismatch');
-          console.log('Previous Version:', previousVersion)
-          console.log('Installed Version:', functionVersion)
+          console.warn('Function version mismatch');
+          console.warn('Previous Version:', previousVersion)
+          console.warn('Installed Version:', functionVersion)
           return true;
         }
 
