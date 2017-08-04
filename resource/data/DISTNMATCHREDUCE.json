@@ -20,20 +20,5 @@
       "allowsLists": false,
       "useInR": true
     }
-  ],
-  "argument_clauses": [
-    {
-      "defaultValue": 1,
-      "lowerBound": 0,
-      "lowerBoundType": "EXCLUSIVE",
-      "allowNaN": false,
-      "name": "Top",
-      "isRequired": false,
-      "description": "The number of the top matching distributions you want the function to output. Default value is 1 The input value must be greater than 0. The default value is 1.",
-      "datatype": "INTEGER",
-      "allowsLists": false,
-      "rName": "top",
-      "useInR": true
-    }
   ]
 }
