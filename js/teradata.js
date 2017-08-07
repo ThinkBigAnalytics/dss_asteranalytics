@@ -211,6 +211,7 @@
        */
       checkVersionMismatch: function () {
         // $delay(() => {
+    	 var previousVersion = $scope.config.function.function_version ? $scope.config.function.function_version : '';
         console.log($scope.config.function.function_version ? $scope.config.function.function_version : '');
         // console.log(functionVersion);
         if (($scope.config.function.function_version ? $scope.config.function.function_version : '') === functionVersion || ($scope.config.function.function_version ? $scope.config.function.function_version : '') === '') {

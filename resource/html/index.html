@@ -114,7 +114,7 @@
 
                 <div class="inner-cell" ng-show="item.isOrdered">
                   <p class="inner-label">Order by </p>
-                  <select multiple size="4" ng-model="item.orderByColumn" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]">
+                  <select multiple class="selectize" selectize size="4" ng-model="item.orderByColumn" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]">
                         <option value="" selected>--No Selection--</option>
                     </select>
                     <p> Selected {{item.partitionAttributes}} </p>
@@ -126,7 +126,7 @@
             <tr ng-if="config.function.isOrdered && shouldShowPartitionOrderFields(config.function.unaliased_inputs)">
               <td>ORDER BY Column</td>
               <td>
-                <select required ng-model="config.function.orderByColumn" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in getSchemaOfUnaliasedInputs(config.function.unaliased_inputs)">
+                <select required multiple class="selectize" selectize ng-model="config.function.orderByColumn" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in getSchemaOfUnaliasedInputs(config.function.unaliased_inputs)">
                     <option value="" selected>--No Selection--</option>
                   </select>
               </td>
@@ -233,7 +233,7 @@
 
                 <div class="inner-cell" ng-show="item.isOrdered">
                   <p class="inner-label">Order by</p>
-                  <select multiple size="4" ng-model="item.orderByColumn" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]">
+                  <select multiple class="selectize" selectize size="4" ng-model="item.orderByColumn" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]">
                         <option value="" selected>--No Selection--</option>
                     </select>
                 </div>
