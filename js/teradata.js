@@ -35,6 +35,7 @@
      * A private variable containing the function metadata.
      */
     let functionVersion = '';
+    let functionType = '';
 
     /**
      * A private variable containing the function to run the given recipe.
@@ -162,11 +163,7 @@
           .success(data => {
             functionMetadata = data;
             functionVersion = functionMetadata.function_version;
-            console.log(functionVersion);
-            // //console.log('Function Metadata');
-            // //console.log(data);
-            // //console.log($scope.config);
-
+            
             $scope.preprocessDescriptions();
             $scope.preprocessMetadata();
             $scope.activateTabs();
@@ -226,6 +223,19 @@
 
         // })
       },
+      
+      /**
+       * Checks if function is a driver function
+       */
+      checkIfDriverFunction: function () {
+        if (functionMetadata.function_type.toUpperCase() == 'DRIVER') {
+          console.log('true');
+          return true;
+        } else {
+          console.log('false')
+          return false;
+        }
+     },
 
 
       /**
