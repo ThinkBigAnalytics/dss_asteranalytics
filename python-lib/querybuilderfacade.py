@@ -17,8 +17,16 @@ def getCreateQuery(dss_function, inputTables, outputTable):
                        outputTable.hashKey and DISTRIBUTE_BY_HASH.format(outputTable.hashKey),
                        getSelectClause(dss_function, inputTables))
 
+def getDropOutputTableArgumentsStatements(args):
+    return ['BEGIN TRANSACTION;'] + [DROP_QUERY.format(outputTablename=x.get('value', ''))\
+            for x in args if x.get('isOutputTable', False) and x.get('value','')] + ['COMMIT;']
+
+def getBeginDropCreateQueries(dss_function, inputTables, outputTable):
+     return [BEGIN_TRANSACTION_QUERY,
+                    DROP_QUERY.format(outputTablename=outputTable.tablename),
+                    getCreateQuery(dss_function, inputTables, outputTable),
+                    COMMIT_QUERY]
+
 def getFunctionsQuery(dss_function, inputTables, outputTable):
-    return [BEGIN_TRANSACTION_QUERY,
-                   DROP_QUERY.format(outputTablename=outputTable.tablename),
-                   getCreateQuery(dss_function, inputTables, outputTable),
-                   COMMIT_QUERY]
+    return getBeginDropCreateQueries(dss_function, inputTables, outputTable)
+
