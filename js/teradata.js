@@ -148,22 +148,25 @@
         }
 
         const promise = $http
-          .get(`${FUNCTION_METADATA_PATH}${selectedFunction}.json`, {transformResponse: [function(data) {
-        if (typeof data === 'string') {
-        // strip json vulnerability protection prefix
-        data = data.replace(")]}',\n", '');
-        data = data.replace(/: Infinity/g, ': "Infinity"');
-        console.log(data);
-        data = data.replace(/: -Infinity/g, ': "-Infinity"');
-        data = JSON.parse(data, function censor(key, value) {
-            return value == Infinity ? "Infinity" : value;});
-      }
-      return data;
-    }]})
+          .get(`${FUNCTION_METADATA_PATH}${selectedFunction}.json`, {
+            transformResponse: [function (data) {
+              if (typeof data === 'string') {
+                // strip json vulnerability protection prefix
+                data = data.replace(")]}',\n", '');
+                data = data.replace(/: Infinity/g, ': "Infinity"');
+                console.log(data);
+                data = data.replace(/: -Infinity/g, ': "-Infinity"');
+                data = JSON.parse(data, function censor(key, value) {
+                  return value == Infinity ? "Infinity" : value;
+                });
+              }
+              return data;
+            }]
+          })
           .success(data => {
             functionMetadata = data;
             functionVersion = functionMetadata.function_version;
-            
+
             $scope.preprocessDescriptions();
             $scope.preprocessMetadata();
             $scope.activateTabs();
@@ -211,7 +214,7 @@
        */
       checkVersionMismatch: function () {
         // $delay(() => {
-    	 var previousVersion = $scope.config.function.function_version ? $scope.config.function.function_version : '';
+        var previousVersion = $scope.config.function.function_version ? $scope.config.function.function_version : '';
         console.log($scope.config.function.function_version ? $scope.config.function.function_version : '');
         // console.log(functionVersion);
         if (($scope.config.function.function_version ? $scope.config.function.function_version : '') === functionVersion || ($scope.config.function.function_version ? $scope.config.function.function_version : '') === '') {
@@ -227,7 +230,7 @@
 
         // })
       },
-      
+
       /**
        * Checks if function is a driver function
        */
@@ -239,7 +242,7 @@
           console.log('false')
           return false;
         }
-     },
+      },
 
 
       /**
@@ -303,28 +306,38 @@
       findTableNameInArgumentsList: function (argumentsList, tableNameAlias) {
         //Get alternate names
         var tableNameAliases = [];
-        tableNameAliases.push(tableNameAlias);
+        // tableNameAliases.push(tableNameAlias);
+        //TODO: Change naming
+        tableNameAliases = tableNameAlias;
         if (!functionMetadata) {
-            return '';
+          return [''];
         }
         functionMetadata.argument_clauses.map(argument => {
-          if(argument.name.toUpperCase() === tableNameAlias){
-            if(KEYS.ALTERNATE_NAMES in argument){
-              argument.alternateNames.map(function(altname) {tableNameAliases.push(altname);})
+          if (argument.name.toUpperCase() === tableNameAlias) {
+            if (KEYS.ALTERNATE_NAMES in argument) {
+              argument.alternateNames.map(function (altname) { tableNameAliases.push(altname); })
             }
             // tableNameAliases.push(argument.name.toUpperCase());
-            
+
           }
         })
         let potentialMatches = argumentsList
-            .filter(arg => tableNameAliases.includes(arg.name.toUpperCase()));
+          .filter(arg => tableNameAliases.includes(arg.name.toUpperCase()));
         // .filter(arg => tableNameAlias.toUpperCase() === arg.name.toUpperCase());
-          // .filter(arg => [KEYS.INPUT_TABLE, KEYS.INPUT_TABLE_ALTERNATIVE].includes(arg.name.toUpperCase()));
+        // .filter(arg => [KEYS.INPUT_TABLE, KEYS.INPUT_TABLE_ALTERNATIVE].includes(arg.name.toUpperCase()));
         if (potentialMatches.length) {
-          //console.log('We finally got here');
-          return potentialMatches[0].value;
+          console.log('Potential matches');
+          // 
+          console.log(potentialMatches)
+          if (tableNameAlias.length > 1) {
+            return potentialMatches.map(function (match) {
+              return match.value
+            });
+          } else {
+            return [potentialMatches[0].value];
+          }
         }
-        return ''
+        return ['']
 
       },
 
@@ -348,19 +361,32 @@
         var isInAliasedInputsList = false;
         var y = false;
         if (hasTargetTable) {
-          const targetTableAlias = (functionArgument.targetTable[0] || '').toUpperCase();
+          var targetTableAlias;
+          if (typeof functionArgument.targetTable === 'string') {
+            targetTableAlias = [(functionArgument.targetTable || '').toUpperCase()];
+            console.log('Table name');
+            console.log(targetTableAlias);
+          } else {
+            targetTableAlias = functionArgument.targetTable.map(function (table_name) {
+
+              return (table_name || '').toUpperCase();
+            })
+            console.log('Table name');
+            console.log(targetTableAlias);
+          }
+
           // if (KEYS.ALTERNATE_NAMES in func)
           // var tableAliasList = 
-          console.log('Table name');
-          console.log(targetTableAlias);
+
           // const isAliased = KEYS.INPUT_TABLE !== targetTableAlias;
-          if (aliasedInputsList !== []){
+          if (aliasedInputsList !== []) {
             isAliasedInputsPopulated = true;
             aliasedInputsList.map((input) => {
-              if (input.name.toUpperCase() === targetTableAlias.toUpperCase()) {
+              // if (input.name.toUpperCase() === targetTableAlias.toUpperCase()) {
+              if (targetTableAlias.includes(input.name.toUpperCase())) {
                 console.log('true');
                 isInAliasedInputsList = true;
-              }                            
+              }
             }
             )
           } else {
@@ -373,12 +399,15 @@
 
           if (isAliased) {
             console.log('isAliased');
-            let matchingInputs = aliasedInputsList.filter(input => targetTableAlias === input.name.toUpperCase());
+            // let matchingInputs = aliasedInputsList.filter(input => targetTableAlias === input.name.toUpperCase());
+            let matchingInputs = aliasedInputsList.filter(input => targetTableAlias.includes(input.name.toUpperCase()));
             if (matchingInputs.length > 0) {
               //console.log('Matching inputs > 0');
-              targetTableName = matchingInputs[0].value;
+              // targetTableName = matchingInputs[0].value;
+              targetTableName = matchingInputs[targetTableAlias.length - 1].value;
             } else {
               //console.log('Matching inputs < 0');
+              console.log('Does Matching <= 0 happen?')
               targetTableName = $scope.findTableNameInArgumentsList(argumentsList, targetTableAlias);
             }
 
@@ -388,7 +417,7 @@
             //console.log(unaliasedInputsList);
             if (unaliasedInputsList.count && unaliasedInputsList.values && unaliasedInputsList.values.length) {
               console.log('Went to unaliased');
-              
+
               targetTableName = unaliasedInputsList.values[0];
               //console.log(targetTableName);
             }
@@ -418,10 +447,18 @@
         }
 
 
-        if (targetTableName && targetTableName in $scope.inputschemas) {
+        if (targetTableName) {
           //console.log('Schemas');
           //console.log($scope.inputschemas[targetTableName]);
-          return $scope.inputschemas[targetTableName];
+          var forReturnInputSchemas = [];
+          for (var i = 0; i < targetTableName.length; i++) {
+            if (targetTableName[i] in $scope.inputschemas) {
+              forReturnInputSchemas.push.apply(forReturnInputSchemas, $scope.inputschemas[targetTableName[i]])
+            }
+          }
+          console.log('Schema');
+          console.log(forReturnInputSchemas)
+          return forReturnInputSchemas;
 
         }
 
@@ -786,13 +823,13 @@
       }
 
     })
-    
+
     $scope.reloader = false;
     $scope.initialLoading = true;
     $scope.initialize();
 
   });
-  
+
   angular.module('selectize', [])
 
     .directive('selectize', ['$parse', '$timeout', function ($parse, $timeout) {
@@ -847,18 +884,18 @@
                 if (newModelValue == undefined || modelValue.length < newModelValue.length) {
                   console.log('That if Statement');
                   newModelValue = modelValue;
-                                  modelUpdate = true;
-                if (!updateTimer) {
-                scheduleUpdate();
-                }
+                  modelUpdate = true;
+                  if (!updateTimer) {
+                    scheduleUpdate();
+                  }
 
+                }
               }
-              }
-              
-              
+
+
             });
           }
-   
+
           function watchParentOptions() {
             scope.$parent.$watchCollection(optionsExpression, function (options) {
               console.log('OPTIONS?!?!')
@@ -912,7 +949,7 @@
                 console.log(model);
                 var selectedItems = getSelectedItems(model);
                 console.log('SELECTED ITEMS?!!?!?!');
-                console.log(selectedItems); 
+                console.log(selectedItems);
                 if (scope.multiple || selectedItems.length === 0) {
                   selectize.clear();
                   //clear can set the model to null
