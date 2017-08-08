@@ -296,6 +296,9 @@
         //Get alternate names
         var tableNameAliases = [];
         tableNameAliases.push(tableNameAlias);
+        if (!functionMetadata) {
+        	return '';
+        }
         functionMetadata.argument_clauses.map(argument => {
           if (argument.name.toUpperCase() === tableNameAlias) {
             if (KEYS.ALTERNATE_NAMES in argument) {
