@@ -5,7 +5,7 @@
     "file_name": "ADABOOST_DRIVE.json"
   },
   {
-    "category": "Statistical Analysis",
+    "category": "Ensemble",
     "function_name": "Adaboost_predict",
     "file_name": "ADABOOST_PREDICT.json"
   },
@@ -103,6 +103,11 @@
     "category": "Time Series Analysis",
     "function_name": "ChangePointDetection",
     "file_name": "CHANGEPOINTDETECTION.json"
+  },
+  {
+    "category": "Graph Analysis",
+    "function_name": "Betweenness",
+    "file_name": "BETWEENNESS.json"
   },
   {
     "category": "Graph Analysis",
@@ -238,6 +243,11 @@
     "category": "Time Series Analysis",
     "function_name": "FFT",
     "file_name": "FFT.json"
+  },
+  {
+    "category": "Time Series Analysis",
+    "function_name": "IFFT",
+    "file_name": "IFFT.json"
   },
   {
     "category": "Statistical Analysis",
@@ -400,17 +410,17 @@
     "file_name": "KMODES.json"
   },
   {
-    "category": "Statistical Analysis",
+    "category": "Cluster Analysis",
     "function_name": "KModesPredict",
     "file_name": "KMODESPREDICT.json"
   },
   {
-    "category": "Cluster Analysis",
+    "category": "Association Analysis",
     "function_name": "KnnRecommenderPredict",
     "file_name": "KNNRECOMMENDERPREDICT.json"
   },
   {
-    "category": "Statistical Analysis",
+    "category": "Association Analysis",
     "function_name": "KnnRecommenderTrain",
     "file_name": "KNNRECOMMENDERTRAIN.json"
   },
