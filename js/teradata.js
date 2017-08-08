@@ -232,13 +232,7 @@
        * Checks if function is a driver function
        */
       checkIfDriverFunction: function () {
-        if (functionMetadata.function_type.toUpperCase() == 'DRIVER') {
-          console.log('true');
-          return true;
-        } else {
-          console.log('false')
-          return false;
-        }
+        return functionMetadata && 'DRIVER' == functionMetadata.function_type.toUpperCase();
      },
 
 
