@@ -235,7 +235,13 @@
        * Checks if function is a driver function
        */
       checkIfDriverFunction: function () {
-        return functionMetadata && 'DRIVER' == functionMetadata.function_type.toUpperCase();
+        if (functionMetadata.function_type.toUpperCase() == 'DRIVER') {
+          console.log('true');
+          return true;
+        } else {
+          console.log('false')
+          return false;
+        }
       },
 
 
@@ -398,7 +404,10 @@
             if (matchingInputs.length > 0) {
               //console.log('Matching inputs > 0');
               // targetTableName = matchingInputs[0].value;
-              targetTableName = matchingInputs[targetTableAlias.length - 1].value;
+              // matchingInputs[targetTableAlias.length - 1].value
+              targetTableName = matchingInputs.map(function(input) {
+                return input.value
+              });
             } else {
               //console.log('Matching inputs < 0');
               console.log('Does Matching <= 0 happen?')
@@ -412,7 +421,7 @@
             if (unaliasedInputsList.count && unaliasedInputsList.values && unaliasedInputsList.values.length) {
               console.log('Went to unaliased');
 
-              targetTableName = unaliasedInputsList.values[0];
+              targetTableName = [unaliasedInputsList.values[0]];
               //console.log(targetTableName);
             }
 
@@ -427,7 +436,7 @@
 
         } else if (unaliasedInputsList.values && unaliasedInputsList.values.length > 0) {
 
-          targetTableName = unaliasedInputsList.values[0]
+          targetTableName = [unaliasedInputsList.values[0]];
           //console.log('This else if');
           //console.log(targetTableName);
 
@@ -447,7 +456,13 @@
           var forReturnInputSchemas = [];
           for (var i = 0; i < targetTableName.length; i++) {
             if (targetTableName[i] in $scope.inputschemas) {
-              forReturnInputSchemas.push.apply(forReturnInputSchemas, $scope.inputschemas[targetTableName[i]])
+              var currentInputSchemas = $scope.inputschemas[targetTableName[i]]
+              currentInputSchemas = currentInputSchemas.map(function (eachInput) {
+                return $.extend(eachInput, { "tableName": targetTableName[i] });
+              })
+              console.log('Current');
+              console.log(currentInputSchemas);
+              forReturnInputSchemas.push.apply(forReturnInputSchemas, currentInputSchemas)
             }
           }
           console.log('Schema');
