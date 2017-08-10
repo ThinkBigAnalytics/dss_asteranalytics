@@ -227,6 +227,22 @@
         // })
       },
 
+      validityChanger: function () {
+        console.log('Validity changer happened');
+        console.log($('#selectize-selectized').parent().parent());
+        console.log($('#selectize-selectized'))
+        // $('#selectize-selectized').parent().parent().removeClass("ng-invalid");
+        // if (!$('div.ng-invalid').hasClass('invalid')) {
+        $('div.ng-invalid').removeClass('ng-invalid')
+        // }
+        $('#selectize-selectized').removeClass('ng-invalid');
+        $('div.invalid').addClass('ng-invalid')
+        console.log($('#selectize-selectized').parent().parent());
+        console.log($('#selectize-selectized'))
+
+        return true;
+      },
+
       /**
        * Checks if function is a driver function
        */
@@ -297,15 +313,15 @@
         var tableNameAliases = [];
         tableNameAliases.push(tableNameAlias);
         if (!functionMetadata) {
-        	return '';
+          return '';
         }
         functionMetadata.argument_clauses.map(argument => {
           if (argument.name.toUpperCase() === tableNameAlias) {
             if (KEYS.ALTERNATE_NAMES in argument) {
               argument.alternateNames.map(function (altname) { tableNameAliases.push(altname); })
             }
-            console.log('tableNameAliases');
-            console.log(tableNameAliases);
+            // console.log('tableNameAliases');
+            // console.log(tableNameAliases);
             // tableNameAliases.push(argument.name.toUpperCase());
 
           }
@@ -314,11 +330,11 @@
           .filter(arg => tableNameAliases.includes(arg.name.toUpperCase()));
         // .filter(arg => tableNameAlias.toUpperCase() === arg.name.toUpperCase());
         // .filter(arg => [KEYS.INPUT_TABLE, KEYS.INPUT_TABLE_ALTERNATIVE].includes(arg.name.toUpperCase()));
-        console.log('Find tablename');
-        console.log(potentialMatches);
-        console.log(argumentsList);
+        // console.log('Find tablename');
+        // console.log(potentialMatches);
+        // console.log(argumentsList);
         if (potentialMatches.length) {
-          console.log(potentialMatches);
+          // console.log(potentialMatches);
           //console.log('We finally got here');
           return potentialMatches[0].value;
         }
@@ -502,7 +518,7 @@
       validate: function () {
 
         const invalids = []
-        $('.ng-invalid:not(form,.ng-hide)').each((i, x) => invalids.push($(x).parent().prev().text()))
+        $('.ng-invalid:not(form,.ng-hide,div,#selectize-selectized)').each((i, x) => invalids.push($(x).parent().prev().text()))
 
         if (invalids.length) {
           $scope.validationDialog(`Please amend the following fields: <ul>${invalids.map(x => `<li>${x}</li>`).join('')}</ul>`)
@@ -674,6 +690,9 @@
         $('.dss-page,#main-container').css('display', 'block');
         $('select:first, select:first > option').css('text-transform', 'capitalize');
         $('form').attr('novalidate', 'novalidate');
+
+
+
 
       },
 
@@ -886,37 +905,37 @@
 
           function watchModel() {
             scope.$watchCollection(function () {
-              console.log('Watch collection');
+              // console.log('Watch collection');
               //TO TEST
               // console.log(newModelValue);
-              console.log(ngModelCtrl.$modelValue);
+              // console.log(ngModelCtrl.$modelValue);
               return ngModelCtrl.$modelValue;
             }, function (modelValue) {
-              console.log('MODEL EFFIN VALUE');
-              console.log(newModelValue);
-              console.log(modelValue);
+              // console.log('MODEL EFFIN VALUE');
+              // console.log(newModelValue);
+              // console.log(modelValue);
               //experimental code
               if (modelValue != undefined) {
-                console.log('Outer if statement');
+                // console.log('Outer if statement');
                 if (newModelValue == undefined || modelValue.length < newModelValue.length) {
-                  console.log('That if Statement');
+                  // console.log('That if Statement');
                   newModelValue = modelValue;
-                                  modelUpdate = true;
-                if (!updateTimer) {
-                scheduleUpdate();
-                }
+                  modelUpdate = true;
+                  if (!updateTimer) {
+                    scheduleUpdate();
+                  }
 
+                }
               }
-              }
-              
-              
+
+
             });
           }
 
           function watchParentOptions() {
             scope.$parent.$watchCollection(optionsExpression, function (options) {
-              console.log('OPTIONS?!?!')
-              console.log(options);
+              // console.log('OPTIONS?!?!')
+              // console.log(options);
               newOptions = options || [];
               optionsUpdate = true;
               if (!updateTimer) {
@@ -934,7 +953,7 @@
           }
 
           function scheduleUpdate() {
-            console.log('ScheduleUpdate?');
+            // console.log('ScheduleUpdate?');
             if (!selectize) {
               if (!initializing) {
                 initSelectize();
@@ -962,11 +981,11 @@
               }
 
               if (modelUpdate || optionsUpdate) {
-                console.log('MODEL PLS');
-                console.log(model);
+                // console.log('MODEL PLS');
+                // console.log(model);
                 var selectedItems = getSelectedItems(model);
-                console.log('SELECTED ITEMS?!!?!?!');
-                console.log(selectedItems); 
+                // console.log('SELECTED ITEMS?!!?!?!');
+                // console.log(selectedItems); 
                 if (scope.multiple || selectedItems.length === 0) {
                   selectize.clear();
                   //clear can set the model to null
@@ -995,7 +1014,7 @@
               selectize = element[0].selectize;
               if (attrs.ngOptions) {
                 if (scope.multiple) {
-                  console.log('Initializing');
+                  // console.log('Initializing');
                   selectize.on('item_add', onItemAddMultiSelect);
                   selectize.on('item_remove', onItemRemoveMultiSelect);
                 } else if (opts.create) {
@@ -1011,11 +1030,11 @@
             var options = optionsFn(scope.$parent);
             var option = options[value];
             value = option ? getOptionValue(option) : value;
-            console.log('Does it get reset here?');
+            // console.log('Does it get reset here?');
             console.log(model);
             if (model.indexOf(value) === -1) {
               model.push(value);
-              console.log('What about here?');
+              // console.log('What about here?');
               console.log(model);
               if (!option && opts.create && options.indexOf(value) === -1) {
                 options.push(value);
@@ -1030,7 +1049,7 @@
             var model = ngModelCtrl.$viewValue;
             var options = optionsFn(scope.$parent);
             var option = options[value];
-            console.log('Single happens?');
+            // console.log('Single happens?');
             value = option ? getOptionValue(option) : value;
 
             if (model !== value) {
@@ -1046,31 +1065,31 @@
           }
 
           function onItemRemoveMultiSelect(value) {
-            console.log('What about onItemRemoveMultiSelect');
+            // console.log('What about onItemRemoveMultiSelect');
             var model = ngModelCtrl.$viewValue;
             var options = optionsFn(scope.$parent);
             var option = options[value];
-            console.log('First model check');
-            console.log(model);
+            // console.log('First model check');
+            // console.log(model);
             value = option ? getOptionValue(option) : value;
 
             var index = model.indexOf(value);
             if (index >= 0) {
               model.splice(index, 1);
-              console.log('After splicing');
-              console.log(model);
+              // console.log('After splicing');
+              // console.log(model);
               scope.$evalAsync(function () {
                 ngModelCtrl.$setViewValue(model);
-                console.log('After set view value');
-                console.log(model);
+                // console.log('After set view value');
+                // console.log(model);
               });
             }
           }
 
           function getSelectedItems(model) {
             model = angular.isArray(model) ? model : [model] || [];
-            console.log('What about getSelectedItems');
-            console.log(model);
+            // console.log('What about getSelectedItems');
+            // console.log(model);
             if (!attrs.ngOptions) {
               return model.map(function (i) { return selectize.options[i] ? selectize.options[i].value : '' });
             }
@@ -1086,12 +1105,12 @@
               if (model.indexOf(optionValue) >= 0) {
                 selected[optionValue] = index;
               }
-              console.log('selected');
-              console.log(selected);
+              // console.log('selected');
+              // console.log(selected);
               return selected;
             }, {});
-            console.log('Selections');
-            console.log(selections);
+            // console.log('Selections');
+            // console.log(selections);
             return Object
               .keys(selections)
               .map(function (key) {
@@ -1102,20 +1121,20 @@
           function getOptionValue(option) {
             var optionContext = {};
             optionContext[valueName] = option;
-            console.log('What about getOptionValue');
+            // console.log('What about getOptionValue');
             return valueFn(optionContext);
           }
 
           function getOptionLabel(option) {
             var optionContext = {};
             optionContext[valueName] = option;
-            console.log('What about getOptionLabel');
+            // console.log('What about getOptionLabel');
             return displayFn(optionContext);
           }
 
           scope.$on('$destroy', function () {
             if (updateTimer) {
-              console.log('What about destroy?');
+              // console.log('What about destroy?');
               $timeout.cancel(updateTimer);
             }
           });
