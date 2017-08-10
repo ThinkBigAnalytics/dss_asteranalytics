@@ -10,6 +10,8 @@
 <div id="main-container">
 
   <div ng-controller="TeradataController">
+  
+     
 
     <div class="control-group">
       <label class="control-label">Function Name</label>
@@ -56,6 +58,25 @@
 
 
     <hr ng-if="config.function">
+    
+    <a href="#" class="link1" data-toggle="modal" data-target="#basicModal">Show Documentation!</a>
+    
+    <div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true" data-backdrop="false">
+  			<div class="modal-dialog">
+    			<div class="modal-content">
+      				<div class="modal-header">
+        				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        				<h4 class="modal-title" id="myModalLabel">Database Settings</h4>
+      				</div>
+      				<div class="modal-body">
+      					This is where documentation should go
+      				</div>
+      				<div class="modal-footer">
+        				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      				</div>
+    			</div>
+  			</div>
+		</div>
 
     <div class="warning-div" ng-if="checkVersionMismatch()">
       <span class="label label-warning">Function version mismatch! Some argument values may not be transferred.</span>

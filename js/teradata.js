@@ -210,6 +210,9 @@
        */
       checkVersionMismatch: function () {
         // $delay(() => {
+    	if (!$scope.config.function) {
+    		return false;
+    	}
         var previousVersion = $scope.config.function.function_version ? $scope.config.function.function_version : ''
         console.log($scope.config.function.function_version ? $scope.config.function.function_version : '');
         // console.log(functionVersion);
@@ -731,13 +734,18 @@
        * Preprocess function metadata.
        */
       preprocessMetadata: function () {
+    	  
+    	 console.log('preprocessMetadata');
 
         if (
           !functionMetadata
           || !$scope.config
           || !$scope.config.function
           || !$scope.config.function.arguments
-          || !$scope.config.function.arguments.length) return;
+          || !$scope.config.function.arguments.length) {
+        	console.log('preprocessMetadata - return right away');
+        	return;
+        }
 
         $delay(() => {
 
