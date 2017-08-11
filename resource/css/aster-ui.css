@@ -5,6 +5,38 @@
     min-height: 50vh !important;
 }
 
+.modal.fade {
+    position: fixed !important;
+    z-index: -1050 !important;
+    left: 50% !important;
+    top: 50% !important;
+    margin-left: -390px !important;
+    margin-top: -200px !important;
+    width: 800px !important;
+    max-width: 900px !important;
+    height: 400px !important;
+}
+
+.modal.fade.in {
+z-index: 1050 !important;
+top: 50% !important;
+}
+
+.modal-body {
+    overflow-y: hidden;
+    min-height: 0px;
+    height: 19em;
+}
+
+.link1 {
+  color : orange !important;
+}
+
+.link1:hover,
+.link1:active {
+	color: brown !important;
+}
+
 .recipe-settings-section1 {
     padding: 1% !important;
     background: rgba(255,255,255,0.965) !important;
@@ -65,6 +97,8 @@
 .recipe-settings-section1-title {
     font-weight: bold !important;
 }
+
+
 
 ::-webkit-scrollbar-thumb {
     background: orange !important;
@@ -231,6 +265,14 @@ div.inner-cell {
     margin-top: 6vh;
 }
 
+@media screen and (min-width: 768px) {
+    .custom-class {
+        width: 90% !important;
+        max-width: 90% !important;
+        /* either % (e.g. 60%) or px (400px) */
+    }
+}
+
 .warning-div {
     margin-bottom: 0.5em
 }
@@ -248,3 +290,4 @@ div.inner-cell {
     vertical-align: baseline;
     border-radius: .25em;
 }
+

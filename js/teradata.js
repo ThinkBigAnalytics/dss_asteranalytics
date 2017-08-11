@@ -217,10 +217,8 @@
         console.log($scope.config.function.function_version ? $scope.config.function.function_version : '');
         // console.log(functionVersion);
         if (($scope.config.function.function_version ? $scope.config.function.function_version : '') === functionVersion || ($scope.config.function.function_version ? $scope.config.function.function_version : '') === '') {
-          console.log('False');
           return false;
         } else {
-          console.log('True')
           console.warn('Function version mismatch');
           console.warn('Previous Version:', previousVersion)
           console.warn('Installed Version:', functionVersion)
@@ -735,7 +733,7 @@
        */
       preprocessMetadata: function () {
     	  
-    	 console.log('preprocessMetadata');
+    	 console.warn('preprocessMetadata');
 
         if (
           !functionMetadata
@@ -757,6 +755,8 @@
           // Properly bind default arguments.
           let i = 0;
           $scope.config.function.arguments.forEach(argument => {
+        	  console.warn('foreach preprocess metadata delay')
+        	  console.warn($scope.config);
 
             // Index each argument for easy access.
             argument.i = i;
@@ -808,6 +808,7 @@
 
         $scope.getFunctionMetadata(selectedFunction);
         $scope.preprocessMetadata();
+        console.warn('refresh - ');
         // //console.log($scope);
       }
 

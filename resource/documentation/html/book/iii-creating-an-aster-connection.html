@@ -1,0 +1,349 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>III. Creating an Aster Connection · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="iv-creating-a-user.html" />
+    
+    
+    <link rel="prev" href="ii-requirements.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    I. Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="ii-requirements.html">
+            
+                <a href="ii-requirements.html">
+            
+                    
+                    II. Requirements
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.3" data-path="iii-creating-an-aster-connection.html">
+            
+                <a href="iii-creating-an-aster-connection.html">
+            
+                    
+                    III. Creating an Aster Connection
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="iv-creating-a-user.html">
+            
+                <a href="iv-creating-a-user.html">
+            
+                    
+                    IV. Creating a User
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="v-aster-analytics-plugin-installation.html">
+            
+                <a href="v-aster-analytics-plugin-installation.html">
+            
+                    
+                    V. Aster Analytics Plugin Installation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="vi-aster-analytics-plugin-usage.html">
+            
+                <a href="vi-aster-analytics-plugin-usage.html">
+            
+                    
+                    VI. Aster Analytics Plugin Usage
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="vii-limitations.html">
+            
+                <a href="vii-limitations.html">
+            
+                    
+                    VII. Limitations
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="authors.html">
+            
+                <a href="authors.html">
+            
+                    
+                    Authors
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >III. Creating an Aster Connection</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="iii-creating-an-aster-connection">III. Creating an Aster Connection</h1>
+<hr>
+<ol>
+<li><p>Follow the instructions in the Dataiku Reference Doc for Installing Database Drivers.
+In summary, one needs to:</p>
+<p>  a.    Stop the Data Science Studio server, where DATA_DIR is the data directory where Data Science Studio is installed.</p>
+<p>  &#xA0;    <code>DATA_DIR/bin/dss stop</code></p>
+<p>  b.    Copy the Aster JDBC driver to DATA_DIR/lib/jdbc directory.
+  &#xA0;    </p>
+<p>  c.    Restart Data Science Studio<br>  &#xA0;    <code>DATA_DIR/bin/dss start</code></p>
+</li>
+<li><p>In the Dataiku DSS home page, click on Admin Tools (gear icon). Alternatively, you can go to <a href="http://dataikuhost:port/admin/" target="_blank">http://dataikuhost:port/admin/</a>.        </p>
+<p><img src="assets/1.png" alt=""></p>
+</li>
+<li><p>In the DSS settings page, Connections tab, Click on NEW CONNECTION. From the options that will be presented, choose Other SQL databases.</p>
+<p><img src="assets/2.png" alt=""></p>
+</li>
+<li><p>Fill up the following fields as appropriate:    </p>
+<p>  <strong>JDBC driver class</strong>: com.asterdata.ncluster.Driver<br>  <strong>JDBC URL</strong>: jdbc:ncluster://<queen host="">:<port>/<database><br>  <strong>JDBC properties</strong>:
+  user:       username
+  password:     password
+  <strong>SQL dialect (experimental)</strong>: Aster Data
+  <strong>Naming rules for new datasets</strong>:
+  Schema:    schema_name</database></port></queen></p>
+</li>
+<li><p>Click on Test button to verify that connection details provided in step 3 are valid.</p>
+</li>
+<li>Finally, click on Save button.</li>
+</ol>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="ii-requirements.html" class="navigation navigation-prev " aria-label="Previous page: II. Requirements">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="iv-creating-a-user.html" class="navigation navigation-next " aria-label="Next page: IV. Creating a User">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"III. Creating an Aster Connection","level":"1.3","depth":1,"next":{"title":"IV. Creating a User","level":"1.4","depth":1,"path":"iv-creating-a-user.md","ref":"iv-creating-a-user.md","articles":[]},"previous":{"title":"II. Requirements","level":"1.2","depth":1,"path":"ii-requirements.md","ref":"ii-requirements.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"iii-creating-an-aster-connection.md","mtime":"2017-08-02T06:18:14.186Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-08-02T06:52:08.168Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
