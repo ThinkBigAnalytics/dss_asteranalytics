@@ -140,7 +140,7 @@
                     <select multiple id="selectize" class="selectize" selectize size="4" ng-model="item.partitionAttributes" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]">
                         <option value="" selected>--No Selection--</option>                        
                     </select>
-                    <p> Selected {{item.partitionAttributes}} </p>
+                    <!-- <p> Selected {{item.partitionAttributes}} </p> -->
                   </div>
 
                   <div class="inner-cell" ng-show="item.isOrdered">
@@ -183,7 +183,7 @@
                     <option value="c" selected>cee</option>
                     <option value="d" selected>dee</option>-->
                   </select>
-                  <p> Selected {{config.function.partitionAttributes}} </p>
+                  <!-- <p> Selected {{config.function.partitionAttributes}} </p> -->
                 </td>
               </tr>
 
@@ -256,7 +256,7 @@
                     <select multiple id="selectize" class="selectize" selectize ng-if="validityChanger()" size="4" ng-model="item.partitionAttributes" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]">
                         <option value="" selected>--No Selection--</option>                    
                     </select>
-                        <p> Selected {{item.partitionAttributes}} </p>
+                        <!-- <p> Selected {{item.partitionAttributes}} </p> -->
                     
                   </div>
 
