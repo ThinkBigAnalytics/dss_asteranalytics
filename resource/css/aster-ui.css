@@ -30,6 +30,7 @@ top: 50% !important;
 
 .link1 {
   color : orange !important;
+  float:right;
 }
 
 .link1:hover,
@@ -63,7 +64,8 @@ top: 50% !important;
 }
 
 .dss-page {
-    background: url(/plugins/AsterAnalytics/resource/img/chart2.jpg) !important;
+    background: url(/plugins/AsterAnalytics/resource/img/aster.jpg) !important;
+    background-size: cover !important;
 }
 
 .dss-page.cluster-analysis {

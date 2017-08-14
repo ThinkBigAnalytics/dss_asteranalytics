@@ -248,7 +248,8 @@
        * Checks if function is a driver function
        */
       checkIfDriverFunction: function () {
-        return (functionMetadata && 'DRIVER' == functionMetadata.function_type.toUpperCase());
+          return functionMetadata && functionMetadata.argument_clauses &&
+              functionMetadata.argument_clauses.filter(arg => arg.isOutputTable).length;
       },
 
       /**
@@ -683,9 +684,10 @@
 
         const $a = $('.mainPane > div:first > div:first > div.recipe-settings-section2 > a');
         $a
-          .text('Learn more about Teradata Aster')
+          .text('Aster Analytics Foundation 6.20\nLearn more about Teradata Aster')
           .css('color', 'orange')
           .attr('target', '_blank');
+        $a.html($a.html().replace(/\n/g,'<br/>'));
         $a.parent().css('text-align', 'center');
         $('#main-container > div > div:nth-child(1) > div > select')[0].value = '';
         $('.dss-page,#main-container').css('display', 'block');
@@ -732,16 +734,12 @@
        * Preprocess function metadata.
        */
       preprocessMetadata: function () {
-    	  
-    	 console.warn('preprocessMetadata');
-
         if (
           !functionMetadata
           || !$scope.config
           || !$scope.config.function
           || !$scope.config.function.arguments
           || !$scope.config.function.arguments.length) {
-        	console.log('preprocessMetadata - return right away');
         	return;
         }
 
@@ -755,9 +753,6 @@
           // Properly bind default arguments.
           let i = 0;
           $scope.config.function.arguments.forEach(argument => {
-        	  console.warn('foreach preprocess metadata delay')
-        	  console.warn($scope.config);
-
             // Index each argument for easy access.
             argument.i = i;
 
@@ -808,8 +803,6 @@
 
         $scope.getFunctionMetadata(selectedFunction);
         $scope.preprocessMetadata();
-        console.warn('refresh - ');
-        // //console.log($scope);
       }
 
     })

@@ -45,6 +45,7 @@
         <select ng-model="config.function" ng-options="cleanName(choice.name) for choice in choices track by choice.name" ng-change="refresh(config.function.name)">
           <option value="" disabled selected>Select an Aster function...</option>
         </select>
+        <a href="#" class="link1" data-toggle="modal" data-target="#basicModal"><span class="glyphicon glyphicon-question-sign"></span></a>
       </div>
     </div>
 
@@ -83,8 +84,7 @@
     </div>
 
 
-    <hr ng-if="config.function">    
-    <a href="#" class="link1" data-toggle="modal" data-target="#basicModal"><span class="glyphicon glyphicon-question-sign"></span></a>
+    <hr ng-if="config.function">
 
     <div class="warning-div" ng-if="checkVersionMismatch()">
       <span class="label label-warning">Function version mismatch! Some argument values may not be transferred.</span>

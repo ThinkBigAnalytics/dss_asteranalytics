@@ -11,7 +11,7 @@
     // Meta data for display purposes
     "meta" : {
         // Name of this plugin that appears in the interface.
-        "label" : "Aster Analytics",
+        "label" : "Aster Analytics (AAF 6.20)",
 
         "description" : "Plugin to execute Aster SQL-MR functions from DSS.",
         "author" : "dt186022",
