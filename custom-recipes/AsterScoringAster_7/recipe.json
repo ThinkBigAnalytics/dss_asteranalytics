@@ -65,6 +65,6 @@
     "readable" : true,
     "writable" : false,
     "paramsTemplate": "html/index.html",
-    "paramsModule" : "teradata.module",
+    "paramsModule" : "teradata-7.module",
     "paramsPythonSetup" : "python/DataTransformation.py"
 }
