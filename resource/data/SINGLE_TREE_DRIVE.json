@@ -468,25 +468,6 @@
       "rName": "output.response.probdist",
       "useInR": true,
       "rOrderNum": 19
-    },
-    {
-      "permittedValues": [
-        "Laplace",
-        "Frequency",
-        "RawCount"
-      ],
-      "defaultValue": "Laplace",
-      "isOutputColumn": false,
-      "name": "ResponseProbDistType",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "Specifies the type of algorithm to use to generate output probability distribution for output labels. Uses one of Laplace, Frequency or RawCounts to generate Probability Estimation Trees (PET) based distributions.",
-      "description": "Specifies the type of algorithm to use to generate output probability distribution for output labels. Uses one of Laplace, Frequency or RawCounts to generate Probability Estimation Trees (PET) based distributions.",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "response.probdist.type",
-      "useInR": true,
-      "rOrderNum": 20
     }
   ]
 }
