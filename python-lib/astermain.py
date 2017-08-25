@@ -44,12 +44,11 @@ def asterDo():
         
     # actual query
     query = getFunctionsQuery(dss_function, inputTables, outputTable)
-    print(query[-2])
     print('\n'.join(query))
     executor = SQLExecutor2(dataset=input_dataset)   
     if dss_function.get('dropIfExists', False):
         dropAllQuery = getDropOutputTableArgumentsStatements(dss_function.get('arguments', []))
-        return executor.query_to_df('END TRANSACTION;', dropAllQuery)                
+        executor.query_to_df('END TRANSACTION;', dropAllQuery)
     executor.query_to_df("END TRANSACTION;", pre_queries=query)
     
     # write table schema
