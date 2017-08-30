@@ -235,7 +235,8 @@
        * Checks if function is a driver function
        */
       checkIfDriverFunction: function () {
-        return functionMetadata && 'DRIVER' == functionMetadata.function_type.toUpperCase();
+          return functionMetadata && functionMetadata.argument_clauses &&
+              functionMetadata.argument_clauses.filter(arg => arg.isOutputTable).length;
       },
 
 
@@ -1109,3 +1110,4 @@
       };
     }]);
 })(window, document, angular, jQuery);
+
