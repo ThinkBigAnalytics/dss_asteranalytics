@@ -14,7 +14,7 @@
       "requiredInputKind": [
         "PartitionByKey"
       ],
-      "isOrdered": false,
+      "isOrdered": true,
       "partitionByOne": false,
       "name": "AttributeTable",
       "alternateNames": [],
