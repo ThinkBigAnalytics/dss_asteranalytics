@@ -55,7 +55,7 @@
     /**
      * Function metadata path - this path contains the JSON metadata of each function.
      */
-    const FUNCTION_METADATA_PATH = '/plugins/AsterAnalytics/resource/data/';
+    const FUNCTION_METADATA_PATH = '/plugins/AsterAnalytics7_0/resource/data/';
 
     /**
      * Parameters to use for the dialog box.
