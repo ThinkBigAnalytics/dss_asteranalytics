@@ -213,7 +213,9 @@
        * Checks if there is a version mismatch in function_version
        */
       checkVersionMismatch: function () {
-        // $delay(() => {
+    	  if (!$scope.config.function) {
+            return false;
+            }
         var previousVersion = $scope.config.function.function_version ? $scope.config.function.function_version : '';
         console.log($scope.config.function.function_version ? $scope.config.function.function_version : '');
         // console.log(functionVersion);
@@ -708,9 +710,10 @@
 
         const $a = $('.mainPane > div:first > div:first > div.recipe-settings-section2 > a');
         $a
-          .text('Learn more about Teradata Aster')
+          .text('Aster Analytics Foundation 7.00\nLearn more about Teradata Aster')
           .css('color', 'orange')
           .attr('target', '_blank');
+        $a.html($a.html().replace(/\n/g,'<br/>'));
         $a.parent().css('text-align', 'center');
         $('#main-container > div > div:nth-child(1) > div > select')[0].value = '';
         $('.dss-page,#main-container').css('display', 'block');

@@ -5,6 +5,35 @@
     min-height: 50vh !important;
 }
 
+.modal.fade {		
+    position: fixed !important;		
+    z-index: -1050 !important;		
+    left: 50% !important;		
+    top: 50% !important;		
+    margin-left: -390px !important;		
+    margin-top: -200px !important;		
+    width: 800px !important;		
+    max-width: 900px !important;		
+    height: 400px !important;		
+}		
+.modal.fade.in {		
+z-index: 1050 !important;		
+top: 50% !important;		
+}		
+.modal-body {		
+    overflow-y: hidden;		
+    min-height: 0px;		
+    height: 19em;		
+}		
+.link1 {		
+  color : orange !important;
+  float:right;	
+}		
+.link1:hover,		
+.link1:active {		
+	color: brown !important;		
+}
+
 .recipe-settings-section1 {
     padding: 1% !important;
     background: rgba(255,255,255,0.965) !important;
@@ -31,7 +60,8 @@
 }
 
 .dss-page {
-    background: url(/plugins/AsterAnalytics/resource/img/chart2.jpg) !important;
+    background: url(/plugins/AsterAnalytics/resource/img/aster.jpg) !important;
+    background-size: cover !important;
 }
 
 .dss-page.cluster-analysis {
