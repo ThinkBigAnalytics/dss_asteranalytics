@@ -229,8 +229,13 @@
           console.warn('Installed Version:', functionVersion)
           return true;
         }
+      },
 
-        // })
+      validityChanger: function () {
+        $('div.ng-invalid').removeClass('ng-invalid')
+        $('#selectize-selectized').removeClass('ng-invalid');
+        $('div.invalid').addClass('ng-invalid')
+        return true;
       },
 
       /**
@@ -314,18 +319,11 @@
             if (KEYS.ALTERNATE_NAMES in argument) {
               argument.alternateNames.map(function (altname) { tableNameAliases.push(altname); })
             }
-            // tableNameAliases.push(argument.name.toUpperCase());
-
           }
         })
         let potentialMatches = argumentsList
           .filter(arg => tableNameAliases.includes(arg.name.toUpperCase()));
-        // .filter(arg => tableNameAlias.toUpperCase() === arg.name.toUpperCase());
-        // .filter(arg => [KEYS.INPUT_TABLE, KEYS.INPUT_TABLE_ALTERNATIVE].includes(arg.name.toUpperCase()));
         if (potentialMatches.length) {
-          console.log('Potential matches');
-          // 
-          console.log(potentialMatches)
           if (tableNameAlias.length > 1) {
             return potentialMatches.map(function (match) {
               return match.value
@@ -546,7 +544,7 @@
       validate: function () {
 
         const invalids = []
-        $('.ng-invalid:not(form,.ng-hide)').each((i, x) => invalids.push($(x).parent().prev().text()))
+        $('.ng-invalid:not(form,.ng-hide,div,#selectize-selectized)').each((i, x) => invalids.push($(x).parent().prev().text()))
 
         if (invalids.length) {
           $scope.validationDialog(`Please amend the following fields: <ul>${invalids.map(x => `<li>${x}</li>`).join('')}</ul>`)
@@ -876,20 +874,10 @@
 
           function watchModel() {
             scope.$watchCollection(function () {
-              console.log('Watch collection');
-              //TO TEST
-              // console.log(newModelValue);
-              console.log(ngModelCtrl.$modelValue);
               return ngModelCtrl.$modelValue;
             }, function (modelValue) {
-              console.log('MODEL EFFIN VALUE');
-              console.log(newModelValue);
-              console.log(modelValue);
-              //experimental code
               if (modelValue != undefined) {
-                console.log('Outer if statement');
                 if (newModelValue == undefined || modelValue.length < newModelValue.length) {
-                  console.log('That if Statement');
                   newModelValue = modelValue;
                   modelUpdate = true;
                   if (!updateTimer) {
@@ -905,8 +893,6 @@
 
           function watchParentOptions() {
             scope.$parent.$watchCollection(optionsExpression, function (options) {
-              console.log('OPTIONS?!?!')
-              console.log(options);
               newOptions = options || [];
               optionsUpdate = true;
               if (!updateTimer) {
@@ -924,7 +910,6 @@
           }
 
           function scheduleUpdate() {
-            console.log('ScheduleUpdate?');
             if (!selectize) {
               if (!initializing) {
                 initSelectize();
@@ -952,11 +937,7 @@
               }
 
               if (modelUpdate || optionsUpdate) {
-                console.log('MODEL PLS');
-                console.log(model);
                 var selectedItems = getSelectedItems(model);
-                console.log('SELECTED ITEMS?!!?!?!');
-                console.log(selectedItems);
                 if (scope.multiple || selectedItems.length === 0) {
                   selectize.clear();
                   //clear can set the model to null
@@ -985,7 +966,6 @@
               selectize = element[0].selectize;
               if (attrs.ngOptions) {
                 if (scope.multiple) {
-                  console.log('Initializing');
                   selectize.on('item_add', onItemAddMultiSelect);
                   selectize.on('item_remove', onItemRemoveMultiSelect);
                 } else if (opts.create) {
@@ -1001,12 +981,8 @@
             var options = optionsFn(scope.$parent);
             var option = options[value];
             value = option ? getOptionValue(option) : value;
-            console.log('Does it get reset here?');
-            console.log(model);
             if (model.indexOf(value) === -1) {
               model.push(value);
-              console.log('What about here?');
-              console.log(model);
               if (!option && opts.create && options.indexOf(value) === -1) {
                 options.push(value);
               }
@@ -1020,7 +996,6 @@
             var model = ngModelCtrl.$viewValue;
             var options = optionsFn(scope.$parent);
             var option = options[value];
-            console.log('Single happens?');
             value = option ? getOptionValue(option) : value;
 
             if (model !== value) {
@@ -1036,31 +1011,22 @@
           }
 
           function onItemRemoveMultiSelect(value) {
-            console.log('What about onItemRemoveMultiSelect');
             var model = ngModelCtrl.$viewValue;
             var options = optionsFn(scope.$parent);
             var option = options[value];
-            console.log('First model check');
-            console.log(model);
             value = option ? getOptionValue(option) : value;
 
             var index = model.indexOf(value);
             if (index >= 0) {
               model.splice(index, 1);
-              console.log('After splicing');
-              console.log(model);
               scope.$evalAsync(function () {
                 ngModelCtrl.$setViewValue(model);
-                console.log('After set view value');
-                console.log(model);
               });
             }
           }
 
           function getSelectedItems(model) {
             model = angular.isArray(model) ? model : [model] || [];
-            console.log('What about getSelectedItems');
-            console.log(model);
             if (!attrs.ngOptions) {
               return model.map(function (i) { return selectize.options[i] ? selectize.options[i].value : '' });
             }
@@ -1076,12 +1042,8 @@
               if (model.indexOf(optionValue) >= 0) {
                 selected[optionValue] = index;
               }
-              console.log('selected');
-              console.log(selected);
               return selected;
             }, {});
-            console.log('Selections');
-            console.log(selections);
             return Object
               .keys(selections)
               .map(function (key) {
@@ -1092,20 +1054,17 @@
           function getOptionValue(option) {
             var optionContext = {};
             optionContext[valueName] = option;
-            console.log('What about getOptionValue');
             return valueFn(optionContext);
           }
 
           function getOptionLabel(option) {
             var optionContext = {};
             optionContext[valueName] = option;
-            console.log('What about getOptionLabel');
             return displayFn(optionContext);
           }
 
           scope.$on('$destroy', function () {
             if (updateTimer) {
-              console.log('What about destroy?');
               $timeout.cancel(updateTimer);
             }
           });
