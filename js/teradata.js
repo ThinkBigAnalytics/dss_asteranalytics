@@ -419,7 +419,7 @@
 
           }
 
-        } else if (unaliasedInputsList.values && unaliasedInputsList.values.length > 0) {
+        } else if (unaliasedInputsList && unaliasedInputsList.values && unaliasedInputsList.values.length > 0) {
 
           targetTableName = unaliasedInputsList.values[0]
           //console.log('This else if');
