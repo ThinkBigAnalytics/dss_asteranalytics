@@ -230,7 +230,7 @@
       "rDescription": "Specifies the argument clause value for the function to be used in scoring. The value in this clause corresponds to the clause mentioned in request.arg.name for the same value of n. These clause values are the same as mentioned in the documentation for the corresponding SQL-MapReduce function. The request.arg.val should start from 1 in a sequential manner, and follows the same format as request.arg.name. The maximum value of n is 30.",
       "description": "Specifies the argument clause value for the function to be used in scoring. The value in this clause corresponds to the clause mentioned in RequestArgName for the same value of n. These clause values are the same as mentioned in the documentation for the corresponding SQL-MapReduce function. The RequestArgVal should start from 1 in a sequential manner, and follows the same format as RequestArgName. The maximum value of n is 30.",
       "datatype": "STRING",
-      "allowsLists": false,
+      "allowsLists": true,
       "rName": "request.arg.val1",
       "useInR": true,
       "rOrderNum": 10
@@ -258,7 +258,7 @@
       "rDescription": "Specifies the argument clause value for the function to be used in scoring. The value in this clause corresponds to the clause mentioned in request.arg.name for the same value of n. These clause values are the same as mentioned in the documentation for the corresponding SQL-MapReduce function. The request.arg.val should start from 1 in a sequential manner, and follows the same format as request.arg.name. The maximum value of n is 30.",
       "description": "Specifies the argument clause value for the function to be used in scoring. The value in this clause corresponds to the clause mentioned in RequestArgName for the same value of n. These clause values are the same as mentioned in the documentation for the corresponding SQL-MapReduce function. The RequestArgVal should start from 1 in a sequential manner, and follows the same format as RequestArgName. The maximum value of n is 30.",
       "datatype": "STRING",
-      "allowsLists": false,
+      "allowsLists": true,
       "rName": "request.arg.val2",
       "useInR": true,
       "rOrderNum": 12
@@ -286,7 +286,7 @@
       "rDescription": "Specifies the argument clause value for the function to be used in scoring. The value in this clause corresponds to the clause mentioned in request.arg.name for the same value of n. These clause values are the same as mentioned in the documentation for the corresponding SQL-MapReduce function. The request.arg.val should start from 1 in a sequential manner, and follows the same format as request.arg.name. The maximum value of n is 30.",
       "description": "Specifies the argument clause value for the function to be used in scoring. The value in this clause corresponds to the clause mentioned in RequestArgName for the same value of n. These clause values are the same as mentioned in the documentation for the corresponding SQL-MapReduce function. The RequestArgVal should start from 1 in a sequential manner, and follows the same format as RequestArgName. The maximum value of n is 30.",
       "datatype": "STRING",
-      "allowsLists": false,
+      "allowsLists": true,
       "rName": "request.arg.val3",
       "useInR": true,
       "rOrderNum": 14
@@ -314,7 +314,7 @@
       "rDescription": "Specifies the argument clause value for the function to be used in scoring. The value in this clause corresponds to the clause mentioned in request.arg.name for the same value of n. These clause values are the same as mentioned in the documentation for the corresponding SQL-MapReduce function. The request.arg.val should start from 1 in a sequential manner, and follows the same format as request.arg.name. The maximum value of n is 30.",
       "description": "Specifies the argument clause value for the function to be used in scoring. The value in this clause corresponds to the clause mentioned in RequestArgName for the same value of n. These clause values are the same as mentioned in the documentation for the corresponding SQL-MapReduce function. The RequestArgVal should start from 1 in a sequential manner, and follows the same format as RequestArgName. The maximum value of n is 30.",
       "datatype": "STRING",
-      "allowsLists": false,
+      "allowsLists": true,
       "rName": "request.arg.val4",
       "useInR": true,
       "rOrderNum": 16
@@ -342,7 +342,7 @@
       "rDescription": "Specifies the argument clause value for the function to be used in scoring. The value in this clause corresponds to the clause mentioned in request.arg.name for the same value of n. These clause values are the same as mentioned in the documentation for the corresponding SQL-MapReduce function. The request.arg.val should start from 1 in a sequential manner, and follows the same format as request.arg.name. The maximum value of n is 30.",
       "description": "Specifies the argument clause value for the function to be used in scoring. The value in this clause corresponds to the clause mentioned in RequestArgName for the same value of n. These clause values are the same as mentioned in the documentation for the corresponding SQL-MapReduce function. The RequestArgVal should start from 1 in a sequential manner, and follows the same format as RequestArgName. The maximum value of n is 30.",
       "datatype": "STRING",
-      "allowsLists": false,
+      "allowsLists": true,
       "rName": "request.arg.val5",
       "useInR": true,
       "rOrderNum": 18
@@ -370,7 +370,7 @@
       "rDescription": "Specifies the argument clause value for the function to be used in scoring. The value in this clause corresponds to the clause mentioned in request.arg.name for the same value of n. These clause values are the same as mentioned in the documentation for the corresponding SQL-MapReduce function. The request.arg.val should start from 1 in a sequential manner, and follows the same format as request.arg.name. The maximum value of n is 30.",
       "description": "Specifies the argument clause value for the function to be used in scoring. The value in this clause corresponds to the clause mentioned in RequestArgName for the same value of n. These clause values are the same as mentioned in the documentation for the corresponding SQL-MapReduce function. The RequestArgVal should start from 1 in a sequential manner, and follows the same format as RequestArgName. The maximum value of n is 30.",
       "datatype": "STRING",
-      "allowsLists": false,
+      "allowsLists": true,
       "rName": "request.arg.val6",
       "useInR": true,
       "rOrderNum": 20
@@ -398,7 +398,7 @@
       "rDescription": "Specifies the argument clause value for the function to be used in scoring. The value in this clause corresponds to the clause mentioned in request.arg.name for the same value of n. These clause values are the same as mentioned in the documentation for the corresponding SQL-MapReduce function. The request.arg.val should start from 1 in a sequential manner, and follows the same format as request.arg.name. The maximum value of n is 30.",
       "description": "Specifies the argument clause value for the function to be used in scoring. The value in this clause corresponds to the clause mentioned in RequestArgName for the same value of n. These clause values are the same as mentioned in the documentation for the corresponding SQL-MapReduce function. The RequestArgVal should start from 1 in a sequential manner, and follows the same format as RequestArgName. The maximum value of n is 30.",
       "datatype": "STRING",
-      "allowsLists": false,
+      "allowsLists": true,
       "rName": "request.arg.val7",
       "useInR": true,
       "rOrderNum": 22
@@ -426,7 +426,7 @@
       "rDescription": "Specifies the argument clause value for the function to be used in scoring. The value in this clause corresponds to the clause mentioned in request.arg.name for the same value of n. These clause values are the same as mentioned in the documentation for the corresponding SQL-MapReduce function. The request.arg.val should start from 1 in a sequential manner, and follows the same format as request.arg.name. The maximum value of n is 30.",
       "description": "Specifies the argument clause value for the function to be used in scoring. The value in this clause corresponds to the clause mentioned in RequestArgName for the same value of n. These clause values are the same as mentioned in the documentation for the corresponding SQL-MapReduce function. The RequestArgVal should start from 1 in a sequential manner, and follows the same format as RequestArgName. The maximum value of n is 30.",
       "datatype": "STRING",
-      "allowsLists": false,
+      "allowsLists": true,
       "rName": "request.arg.val8",
       "useInR": true,
       "rOrderNum": 24
@@ -454,7 +454,7 @@
       "rDescription": "Specifies the argument clause value for the function to be used in scoring. The value in this clause corresponds to the clause mentioned in request.arg.name for the same value of n. These clause values are the same as mentioned in the documentation for the corresponding SQL-MapReduce function. The request.arg.val should start from 1 in a sequential manner, and follows the same format as request.arg.name. The maximum value of n is 30.",
       "description": "Specifies the argument clause value for the function to be used in scoring. The value in this clause corresponds to the clause mentioned in RequestArgName for the same value of n. These clause values are the same as mentioned in the documentation for the corresponding SQL-MapReduce function. The RequestArgVal should start from 1 in a sequential manner, and follows the same format as RequestArgName. The maximum value of n is 30.",
       "datatype": "STRING",
-      "allowsLists": false,
+      "allowsLists": true,
       "rName": "request.arg.val9",
       "useInR": true,
       "rOrderNum": 26
@@ -482,7 +482,7 @@
       "rDescription": "Specifies the argument clause value for the function to be used in scoring. The value in this clause corresponds to the clause mentioned in request.arg.name for the same value of n. These clause values are the same as mentioned in the documentation for the corresponding SQL-MapReduce function. The request.arg.val should start from 1 in a sequential manner, and follows the same format as request.arg.name. The maximum value of n is 30.",
       "description": "Specifies the argument clause value for the function to be used in scoring. The value in this clause corresponds to the clause mentioned in RequestArgName for the same value of n. These clause values are the same as mentioned in the documentation for the corresponding SQL-MapReduce function. The RequestArgVal should start from 1 in a sequential manner, and follows the same format as RequestArgName. The maximum value of n is 30.",
       "datatype": "STRING",
-      "allowsLists": false,
+      "allowsLists": true,
       "rName": "request.arg.val10",
       "useInR": true,
       "rOrderNum": 28
