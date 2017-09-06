@@ -677,6 +677,7 @@
         try {
 
           $('input.teradata-tags').tagsInput({
+            unique: false,
             onChange: x => $(x).trigger('change'),
             defaultText: 'add param',
             delimiter: SEPARATOR
