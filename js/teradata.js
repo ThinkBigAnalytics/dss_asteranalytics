@@ -141,7 +141,7 @@
       /**
        * Gets the static JSON metadata of the given function.
        */
-      getFunctionMetadata: function (selectedFunction) {
+      getFunctionMetadata: function (selectedFunction, shouldSetDefaults) {
 
         if (typeof selectedFunction === 'undefined') {
           return;
@@ -154,7 +154,6 @@
                 // strip json vulnerability protection prefix
                 data = data.replace(")]}',\n", '');
                 data = data.replace(/: Infinity/g, ': "Infinity"');
-                console.log(data);
                 data = data.replace(/: -Infinity/g, ': "-Infinity"');
                 data = JSON.parse(data, function censor(key, value) {
                   return value == Infinity ? "Infinity" : value;
@@ -168,7 +167,7 @@
             functionVersion = functionMetadata.function_version;
 
             $scope.preprocessDescriptions();
-            $scope.preprocessMetadata();
+            $scope.preprocessMetadata(shouldSetDefaults);
             $scope.activateTabs();
             $scope.activateMultiTagsInput();
             $scope.activateTooltips();
@@ -674,16 +673,18 @@
        * Activates the multi-string input boxes.
        */
       activateMultiTagsInput: function () {
+        $delay(() => {
         try {
 
-          $('input.teradata-tags').tagsInput({
-            unique: false,
-            onChange: x => $(x).trigger('change'),
-            defaultText: 'add param',
-            delimiter: SEPARATOR
-          });
-
-        } catch (e) { }
+            $('input.teradata-tags').tagsInput({
+              interactive: true,
+              unique: false,
+              onChange: x => $(x).trigger('change'),
+              defaultText: 'add param',
+              delimiter: SEPARATOR
+            });
+          } catch (e) {console.error('activateMultiTagsInput: ' + e); }
+        });
       },
 
       /** 
@@ -755,7 +756,7 @@
       /**
        * Preprocess function metadata.
        */
-      preprocessMetadata: function () {
+      preprocessMetadata: function (shouldBindDefaults) {
 
         if (
           !functionMetadata
@@ -771,7 +772,7 @@
             $scope.choices = $scope.choices.sort((a, b) => a.name.localeCompare(b.name))
           }
 
-          // Properly bind default arguments.
+          if ( shouldBindDefaults ) {
           let i = 0;
           $scope.config.function.arguments.forEach(argument => {
 
@@ -788,11 +789,10 @@
             } catch (e) {
 
             }
-
             ++i;
-
           });
 
+          }
           // Re-arrange argument order.
           $scope.config.function.arguments = [
             ...$scope.config.function.arguments.filter(x => x.datatype === 'TABLE_NAME'),
@@ -807,13 +807,11 @@
        * Initializes this plugin.
        */
       initialize: function () {
-
         $scope.communicateWithBackend();
         if ($scope.config.function) {
-          $scope.getFunctionMetadata($scope.config.function.name);
+          $scope.getFunctionMetadata($scope.config.function.name, !$scope.config.function);
         }
-
-        $scope.preprocessMetadata();
+        $scope.preprocessMetadata(false);
         $scope.activateUi();
 
       },
@@ -823,9 +821,8 @@
        */
       refresh: function (selectedFunction) {
 
-        $scope.getFunctionMetadata(selectedFunction);
-        $scope.preprocessMetadata();
-        // //console.log($scope);
+        $scope.getFunctionMetadata(selectedFunction, true);
+        $scope.preprocessMetadata(true);
       }
 
     })
