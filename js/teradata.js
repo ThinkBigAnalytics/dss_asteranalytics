@@ -771,7 +771,7 @@
           if ($scope.choices) {
             $scope.choices = $scope.choices.sort((a, b) => a.name.localeCompare(b.name))
           }
-
+/*
           if ( shouldBindDefaults ) {
           let i = 0;
           $scope.config.function.arguments.forEach(argument => {
@@ -793,6 +793,7 @@
           });
 
           }
+          */
           // Re-arrange argument order.
           $scope.config.function.arguments = [
             ...$scope.config.function.arguments.filter(x => x.datatype === 'TABLE_NAME'),

@@ -78,6 +78,8 @@ def do(payload, config, plugin_config, inputs):
                         arg["targetTable"] = argument['targetTable']
                     if 'isOutputTable' in argument and argument['isOutputTable']:
                         arg["isOutputTable"] = argument['isOutputTable']
+                    if 'defaultValue' in argument:
+                        arg["value"] = defaultValuesFromArg(argument)
                     a.append(arg)
                 d["arguments"]=a
             if 'cascaded_functions' in keys:
@@ -99,3 +101,17 @@ def do(payload, config, plugin_config, inputs):
         
 
     return {'choices' : choices, 'schema': schema, 'inputs': inputs, 'inputschemas': inputschemas}
+
+def isMultipleTagsInput(item):
+    # if argument datatype is not column or table, and if it allows lists and it has no permitted value,
+    # then argument values must be delimited by the null character
+    return item.get('datatype', 'STRING') in ['STRING','DOUBLE','INTEGER','DRIVER','SQLEXPR', 'LONG']\
+        and item.get('allowsLists', False)\
+        and not item.get('permittedValues', [])
+
+def defaultValuesFromArg(item):
+    defaultvalues = item.get('defaultValue', '')
+    if isMultipleTagsInput(item) and isinstance(item.get, (list, tuple)):
+        DELIMITER = chr(0)
+        return DELIMITER.join(defaultvalues)
+    return defaultvalues
