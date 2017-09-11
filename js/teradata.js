@@ -751,27 +751,6 @@
             $scope.choices = $scope.choices.sort((a, b) => a.name.localeCompare(b.name))
           }
 
-          // Properly bind default arguments.
-          let i = 0;
-          $scope.config.function.arguments.forEach(argument => {
-            // Index each argument for easy access.
-            argument.i = i;
-
-            try {
-
-              if (functionMetadata.argument_clauses[i]
-                && typeof functionMetadata.argument_clauses[i].defaultValue != 'undefined') {
-                argument.value = functionMetadata.argument_clauses[i].defaultValue;
-              }
-
-            } catch (e) {
-
-            }
-
-            ++i;
-
-          });
-
           // Re-arrange argument order.
           $scope.config.function.arguments = [
             ...$scope.config.function.arguments.filter(x => x.datatype === 'TABLE_NAME'),
