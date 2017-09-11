@@ -111,7 +111,7 @@ def isMultipleTagsInput(item):
 
 def defaultValuesFromArg(item):
     defaultvalues = item.get('defaultValue', '')
-    if isMultipleTagsInput(item) and isinstance(item.get, (list, tuple)):
+    if isMultipleTagsInput(item) and isinstance(defaultvalues, (list, tuple)):
         DELIMITER = chr(0)
-        return DELIMITER.join(defaultvalues)
+        return DELIMITER.join(str(x) for x in defaultvalues)
     return defaultvalues
