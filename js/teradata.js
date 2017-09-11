@@ -673,7 +673,6 @@
        * Activates the multi-string input boxes.
        */
       activateMultiTagsInput: function () {
-        $delay(() => {
         try {
 
             $('input.teradata-tags').tagsInput({
@@ -684,7 +683,6 @@
               delimiter: SEPARATOR
             });
           } catch (e) {console.error('activateMultiTagsInput: ' + e); }
-        });
       },
 
       /** 
@@ -771,15 +769,14 @@
           if ($scope.choices) {
             $scope.choices = $scope.choices.sort((a, b) => a.name.localeCompare(b.name))
           }
-/*
-          if ( shouldBindDefaults ) {
+
           let i = 0;
           $scope.config.function.arguments.forEach(argument => {
 
             // Index each argument for easy access.
             argument.i = i;
 
-            try {
+           /* try {
 
               if (functionMetadata.argument_clauses[i]
                 && typeof functionMetadata.argument_clauses[i].defaultValue != 'undefined') {
@@ -788,12 +785,10 @@
 
             } catch (e) {
 
-            }
+            }*/
             ++i;
           });
 
-          }
-          */
           // Re-arrange argument order.
           $scope.config.function.arguments = [
             ...$scope.config.function.arguments.filter(x => x.datatype === 'TABLE_NAME'),
