@@ -750,6 +750,13 @@
           if ($scope.choices) {
             $scope.choices = $scope.choices.sort((a, b) => a.name.localeCompare(b.name))
           }
+          
+          let i = 0;
+          $scope.config.function.arguments.forEach(argument => {
+        	  // Index each argument for easy access.
+        	  argument.i = i;
+        	  ++i;
+          });
 
           // Re-arrange argument order.
           $scope.config.function.arguments = [
