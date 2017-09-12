@@ -271,6 +271,22 @@
 
       },
 
+      getArgumentWithName: function (name) {
+        return (functionMetadata && functionMetadata.argument_clauses) ?
+                functionMetadata.argument_clauses.find(argument => name === argument.name) :
+                    null;
+      },
+
+      getPermittedValuesWithName: function (name) {
+          argument = getArgumentWithName(name);
+          return argument ? argument.permittedValues : null;
+      },
+
+      getArgumentDescriptionWithName: function (name) {
+        argument = getArgumentWithName(name);
+        return argument ? argument.description : null;
+      },
+
       getPermittedValues: function (i) {
 
         try {
