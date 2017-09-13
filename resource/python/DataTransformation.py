@@ -16,6 +16,7 @@ def do(payload, config, plugin_config, inputs):
     choices = []
     for fle in files:
         try:
+            print('=====================================' + fle + '================================')
             f = json.loads(open('%s/data/%s' % (os.getenv("DKU_CUSTOM_RESOURCE_FOLDER"), fle)).read())
             d = {"name":"",
                  "arguments":"",
@@ -80,6 +81,8 @@ def do(payload, config, plugin_config, inputs):
                         arg["isOutputTable"] = argument['isOutputTable']
                     if 'defaultValue' in argument:
                         arg["value"] = defaultValuesFromArg(argument)
+                    if 'permittedValues' in argument:
+                        arg["permittedValues"] = argument['permittedValues']
                     a.append(arg)
                 d["arguments"]=a
             if 'cascaded_functions' in keys:
@@ -87,17 +90,23 @@ def do(payload, config, plugin_config, inputs):
             choices.append(d);
         except ValueError, e:
             logging.info("file is not valid json");
+            
+    print('=====================================end of ' + fle + '================================')
 
     # Get input table metadata.
     input_table_name = inputs[0]['fullName'].split('.')[1]
     input_dataset =  dataiku.Dataset(input_table_name)
     schema = input_dataset.read_schema()
     
+    print('was able to obtain input schemas')
+    
     inputschemas = {}
     for inputdataset in inputs:
         inputtablename = inputdataset['fullName'].split('.')[1]
         inputdataset = dataiku.Dataset(inputtablename)
         inputschemas[inputtablename] = inputdataset.read_schema()
+        
+    print('was able to forloop input schemas')
         
 
     return {'choices' : choices, 'schema': schema, 'inputs': inputs, 'inputschemas': inputschemas}
@@ -110,8 +119,11 @@ def isMultipleTagsInput(item):
         and not item.get('permittedValues', [])
 
 def defaultValuesFromArg(item):
+    print('A - returning defaultvalues from ' + item.get('name', ''))
     defaultvalues = item.get('defaultValue', '')
     if isMultipleTagsInput(item) and isinstance(defaultvalues, (list, tuple)):
         DELIMITER = chr(0)
         return DELIMITER.join(str(x) for x in defaultvalues)
+        print('B - returning defaultvalues from ' + item.get('name', ''))
+    print('C - returning defaultvalues from ' + item.get('name', ''))
     return defaultvalues

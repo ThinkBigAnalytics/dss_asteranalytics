@@ -20,6 +20,8 @@
      * running the given function f.
      */
     const $delay = f => $timeout(f, 100);
+    
+    const $twicedelay = g =>$timeout(g,200);
 
     /**
      * Default separator for list-like objects.
@@ -263,6 +265,28 @@
 
         }
 
+      },
+
+      getArgumentWithName: function (name) {
+          return (functionMetadata && functionMetadata.argument_clauses) ?
+                  functionMetadata.argument_clauses.find(argument => argument.name.toUpperCase() === name.toUpperCase()) :
+                      null;
+      },
+
+      getPermittedValuesWithName: function (item) {
+    	  let name = item.name;
+          let argument = $scope.getArgumentWithName(name);
+          let permittedvalues = argument && argument.permittedValues && argument.permittedValues.length ?
+        		  argument.permittedValues : null;
+          //if (permittedvalues && item.allowsLists && (typeof item.value === 'string')) {
+        	//  item.value = item.value.split(',');
+          //}
+          return permittedvalues;
+      },
+
+      getArgumentDescriptionWithName: function (name) {
+          let argument = $scope.getArgumentWithName(name);
+          return argument ? argument.description : null;
       },
 
       getPermittedValues: function (i) {
@@ -673,6 +697,7 @@
        * Activates the multi-string input boxes.
        */
       activateMultiTagsInput: function () {
+    	  $delay(() => {
         try {
 
             $('input.teradata-tags').tagsInput({
@@ -683,6 +708,7 @@
               delimiter: SEPARATOR
             });
           } catch (e) {console.error('activateMultiTagsInput: ' + e); }
+    	  });
       },
 
       /** 
@@ -775,6 +801,14 @@
 
             // Index each argument for easy access.
             argument.i = i;
+            let permittedValues = $scope.getPermittedValuesWithName(argument);
+            if (permittedValues && argument.allowsLists) {
+            	let curvalue = argument.value;
+            	if (typeof curvalue === 'string') {
+            		argument.value = argument.value.split(',');
+            	}
+            }
+            
 
            /* try {
 
@@ -810,6 +844,10 @@
         $scope.preprocessMetadata(false);
         $scope.activateUi();
 
+      },
+      
+      shouldRender: function () {
+    	  return functionMetadata ? true : false;
       },
 
       /**
