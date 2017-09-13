@@ -272,38 +272,25 @@
       },
 
       getArgumentWithName: function (name) {
-        return (functionMetadata && functionMetadata.argument_clauses) ?
-                functionMetadata.argument_clauses.find(argument => name === argument.name) :
-                    null;
+          return (functionMetadata && functionMetadata.argument_clauses) ?
+                  functionMetadata.argument_clauses.find(argument => argument.name.toUpperCase() === name.toUpperCase()) :
+                      null;
       },
 
-      getPermittedValuesWithName: function (name) {
-          argument = getArgumentWithName(name);
-          return argument ? argument.permittedValues : null;
+      getPermittedValuesWithName: function (item) {
+    	  let name = item.name;
+          let argument = $scope.getArgumentWithName(name);
+          let permittedvalues = argument && argument.permittedValues && argument.permittedValues.length ?
+        		  argument.permittedValues : null;
+          //if (permittedvalues && item.allowsLists && (typeof item.value === 'string')) {
+        	//  item.value = item.value.split(',');
+          //}
+          return permittedvalues;
       },
 
       getArgumentDescriptionWithName: function (name) {
-        argument = getArgumentWithName(name);
-        return argument ? argument.description : null;
-      },
-
-      getPermittedValues: function (i) {
-
-        try {
-
-          return (functionMetadata
-            && functionMetadata.argument_clauses[i]
-            && functionMetadata.argument_clauses[i].permittedValues)
-            ? functionMetadata.argument_clauses[i].permittedValues
-            : null;
-
-        } catch (error) {
-
-          return null;
-
-        }
-
-
+          let argument = $scope.getArgumentWithName(name);
+          return argument ? argument.description : null;
       },
 
       /**
@@ -666,6 +653,7 @@
        * Activates the multi-string input boxes.
        */
       activateMultiTagsInput: function () {
+    	  $delay(() => {
         try {
 
           $('input.teradata-tags').tagsInput({
@@ -676,6 +664,7 @@
           });
 
         } catch (e) { }
+    	  });
       },
 
       /** 
@@ -772,6 +761,14 @@
         	  // Index each argument for easy access.
         	  argument.i = i;
         	  ++i;
+        	  
+        	  let permittedValues = $scope.getPermittedValuesWithName(argument);
+        	              if (permittedValues && argument.allowsLists) {
+        	              	let curvalue = argument.value;
+        	              	if (typeof curvalue === 'string') {
+        	              		argument.value = argument.value.split(',');
+        	              	}
+        	              }
           });
 
           // Re-arrange argument order.
