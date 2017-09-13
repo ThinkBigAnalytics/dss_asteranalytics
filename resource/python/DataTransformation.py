@@ -3,7 +3,6 @@ from dataiku import os
 import json
 import os
 import logging
-from AsterAnalytics.resource.python.DataTransformation import defaultValuesFromArg
 
 FUNCTION_CATEGORY="Data Transformation"
 
