@@ -215,7 +215,6 @@
     	}
         var previousVersion = $scope.config.function.function_version ? $scope.config.function.function_version : ''
         console.log($scope.config.function.function_version ? $scope.config.function.function_version : '');
-        // console.log(functionVersion);
         if (($scope.config.function.function_version ? $scope.config.function.function_version : '') === functionVersion || ($scope.config.function.function_version ? $scope.config.function.function_version : '') === '') {
           return false;
         } else {
@@ -273,7 +272,10 @@
 
       getArgumentWithName: function (name) {
           return (functionMetadata && functionMetadata.argument_clauses) ?
-                  functionMetadata.argument_clauses.find(argument => argument.name.toUpperCase() === name.toUpperCase()) :
+                  functionMetadata.argument_clauses.find(argument => (argument.
+                          name.toUpperCase() === name.toUpperCase()) ||
+                          (argument.alternateNames && argument.alternateNames.
+                                  findIndex(x=> x.toUpperCase() === name.toUpperCase() ) != -1)) :
                       null;
       },
 
