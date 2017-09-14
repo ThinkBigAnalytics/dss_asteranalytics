@@ -113,7 +113,7 @@
       "rOrderNum": 6
     },
     {
-      "defaultValue": false,
+      "defaultValue": true,
       "name": "PadNonPowerOfTwoLengths",
       "alternateNames": [],
       "isRequired": false,
