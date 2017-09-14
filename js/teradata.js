@@ -269,7 +269,10 @@
 
       getArgumentWithName: function (name) {
           return (functionMetadata && functionMetadata.argument_clauses) ?
-                  functionMetadata.argument_clauses.find(argument => argument.name.toUpperCase() === name.toUpperCase()) :
+                  functionMetadata.argument_clauses.find(argument => (argument.
+                          name.toUpperCase() === name.toUpperCase()) ||
+                          (argument.alternateNames && argument.alternateNames.
+                                  findIndex(x=> x.toUpperCase() === name.toUpperCase() ) != -1)) :
                       null;
       },
 
