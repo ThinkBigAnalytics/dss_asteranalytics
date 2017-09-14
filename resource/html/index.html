@@ -192,7 +192,7 @@
                   data-toggle="tooltip" data-container="body" data-html="true" title="{{ getArgumentDescriptionWithName(item.name) }}"
                   data-placement="right"></input>
 
-                <input required type="checkbox" ng-model="item.value" ng-if="item.datatype == 'BOOLEAN'" data-toggle="tooltip" data-container="body"
+                <input type="checkbox" ng-model="item.value" ng-if="item.datatype == 'BOOLEAN'" data-toggle="tooltip" data-container="body"
                   data-html="true" title="{{ getArgumentDescriptionWithName(item.name) }}" data-placement="right" />
 
                 <select required ng-if="(item.datatype == 'COLUMN_NAMES' || item.datatype == 'COLUMNS') && !item.allowsLists && !getPermittedValuesWithName(item)"
