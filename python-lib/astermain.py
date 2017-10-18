@@ -30,17 +30,27 @@ def asterDo():
     projectkey = main_input_name.split('.')[0]
     project = client.get_project(projectkey)
 
-    # output dataset
-    outputTable = outputtableinfo(output_dataset.get_location_info()['info'], main_output_name,
+    try:
+        # output dataset
+        outputTable = outputtableinfo(output_dataset.get_location_info()['info'], main_output_name,
                                   get_recipe_config() or {})
+    except Exception as error:
+        raise RuntimeError("""Error obtaining connection settings for output table."""
+                           """ Make sure connection setting is set to 'Read a database table'."""
+                           """ This plugin only supports Aster tables.""")
 
     # input datasets
-    main_input_names = get_input_names_for_role('main')
-    inputTables = []
-    for inputname in main_input_names:
-        inconnectioninfo = dataiku.Dataset(inputname).get_location_info()['info']
-        inTable = inputtableinfo(inconnectioninfo, inputname, dss_function)
-        inputTables.append(inTable)
+    try:
+        main_input_names = get_input_names_for_role('main')
+        inputTables = []
+        for inputname in main_input_names:
+            inconnectioninfo = dataiku.Dataset(inputname).get_location_info()['info']
+            inTable = inputtableinfo(inconnectioninfo, inputname, dss_function)
+            inputTables.append(inTable)
+    except Exception as error:
+        raise RuntimeError("""Error obtaining connection settings from one of the input tables."""
+                           """ Make sure connection setting is set to 'Read a database table'."""
+                           """ This plugin only supports Aster tables.""")
         
     # actual query
     query = getFunctionsQuery(dss_function, inputTables, outputTable)
