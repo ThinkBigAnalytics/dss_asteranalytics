@@ -22,7 +22,7 @@
         "licenseInfo" : "Apache Software License",
 
         // URL where the user can learn more about the plugin
-        "url" : "http://www.teradata.com/products-and-services/analytics-from-aster-overview/",
+        "url" : "https://info.teradata.com/download.cfm?ItemID=1007396",
 
         // List of tags for filtering the list of plugins
         "tags" : ["Aster", "Analytics", "Teradata", "SQL-MR", "Database", "SQL", "Big Data", "Data Science"]
