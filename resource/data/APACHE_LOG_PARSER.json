@@ -10,99 +10,99 @@
   "long_description": "Parse Apache web server logs,  extracting log items in accordance with given format string.",
   "input_tables": [
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "input",
+      "rName": "data",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 1,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "Input table, must have a column that contains the information to be parsed",
       "requiredInputKind": [
         "PartitionByAny"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "input",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "Input table, must have a column that contains the information to be parsed",
-      "description": "Input table, must have a column that contains the information to be parsed",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "data",
-      "useInR": true,
-      "rOrderNum": 1
+      "description": "Input table, must have a column that contains the information to be parsed"
     }
   ],
   "argument_clauses": [
     {
+      "name": "TargetColumn",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "target.column",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "input"
       ],
+      "rOrderNum": 2,
       "checkDuplicate": true,
-      "allowedTypes": [],
-      "allowedTypeGroups": [
-        "STRING"
-      ],
+      "isRequired": true,
+      "rDescription": "Specifies the name of the input column that contains the information to be parsed",
       "requiredLength": 1,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "TargetColumn",
       "alternateNames": [
         "LogColumn"
       ],
-      "isRequired": true,
-      "rDescription": "Specifies the name of the input column that contains the information to be parsed",
-      "description": "Specifies the name of the input column that contains the information to be parsed",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "target.column",
-      "useInR": true,
-      "rOrderNum": 2
+      "allowedTypeGroups": [
+        "STRING"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the input column that contains the information to be parsed"
     },
     {
-      "permittedValues": [],
-      "defaultValue": "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\"",
-      "isOutputColumn": false,
       "name": "LogFormat",
-      "alternateNames": [],
+      "allowsLists": false,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "defaultValue": "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\"",
+      "rOrderNum": 3,
+      "rName": "log.format",
       "isRequired": false,
       "rDescription": "String that specifies the format used to generate the server access logs, which you can find in the Apache server configuration file. For each log item in the format string, the function builds an output table column built from the input table columns. The default log format is NCSA extended/combined format, which is: \"%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\"\"",
-      "description": "String that specifies the format used to generate the server access logs, which you can find in the Apache server configuration file. For each log item in the format string, the function builds an output table column built from the input table columns. The default log format is NCSA extended/combined format, which is: \"%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\"\"",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "log.format",
-      "useInR": true,
-      "rOrderNum": 3
+      "alternateNames": [],
+      "permittedValues": [],
+      "description": "String that specifies the format used to generate the server access logs, which you can find in the Apache server configuration file. For each log item in the format string, the function builds an output table column built from the input table columns. The default log format is NCSA extended/combined format, which is: \"%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\"\""
     },
     {
-      "permittedValues": [],
+      "name": "ExcludeFiles",
+      "allowsLists": true,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
       "defaultValue": [
         ".png",
         ".xml",
         ".js"
       ],
-      "isOutputColumn": false,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "ExcludeFiles",
-      "alternateNames": [],
+      "rOrderNum": 4,
+      "rName": "exclude.files",
       "isRequired": false,
       "rDescription": "Specifies the types of files to exclude, by suffix. The default value is '.png', '.xml', '.js'. If an input row contains a file of an excluded type, then the function does not generate an output file row for that input row.",
-      "description": "Specifies the types of files to exclude, by suffix. The default value is '.png', '.xml', '.js'. If an input row contains a file of an excluded type, then the function does not generate an output file row for that input row.",
-      "datatype": "STRING",
-      "allowsLists": true,
-      "rName": "exclude.files",
-      "useInR": true,
-      "rOrderNum": 4
+      "alternateNames": [],
+      "permittedValues": [],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the types of files to exclude, by suffix. The default value is '.png', '.xml', '.js'. If an input row contains a file of an excluded type, then the function does not generate an output file row for that input row."
     },
     {
-      "defaultValue": false,
       "name": "SearchInfoFlag",
+      "allowsLists": false,
+      "useInR": true,
+      "datatype": "BOOLEAN",
+      "defaultValue": false,
+      "rOrderNum": 5,
+      "rName": "search.info.flag",
+      "isRequired": false,
+      "rDescription": "Specifies whether to return search information. The default value is 'false'. If you specify 'true', the function extracts the search engine and search terms (if they exist) into two output columns. The supported search engines are Google, Bing, and Yahoo. The function provides more complete parsing capabilities for Google.",
       "alternateNames": [
         "ReturnSearchInfo"
       ],
-      "isRequired": false,
-      "rDescription": "Specifies whether to return search information. The default value is 'false'. If you specify 'true', the function extracts the search engine and search terms (if they exist) into two output columns. The supported search engines are Google, Bing, and Yahoo. The function provides more complete parsing capabilities for Google.",
-      "description": "Specifies whether to return search information. The default value is 'false'. If you specify 'true', the function extracts the search engine and search terms (if they exist) into two output columns. The supported search engines are Google, Bing, and Yahoo. The function provides more complete parsing capabilities for Google.",
-      "datatype": "BOOLEAN",
-      "allowsLists": false,
-      "rName": "search.info.flag",
-      "useInR": true,
-      "rOrderNum": 5
+      "description": "Specifies whether to return search information. The default value is 'false'. If you specify 'true', the function extracts the search engine and search terms (if they exist) into two output columns. The supported search engines are Google, Bing, and Yahoo. The function provides more complete parsing capabilities for Google."
     }
   ]
 }

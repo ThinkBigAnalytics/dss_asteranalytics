@@ -10,98 +10,98 @@
   "long_description": "The exponential moving average computes the average over a number of points in a time series but applies a weighting to older values",
   "input_tables": [
     {
+      "isOrdered": true,
+      "useInR": true,
+      "name": "input",
+      "rName": "data",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 1,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "Specifies the name of the table that contains the columns",
       "requiredInputKind": [
         "PartitionByKey"
       ],
-      "isOrdered": true,
-      "partitionByOne": false,
-      "name": "input",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "Specifies the name of the table that contains the columns",
-      "description": "Specifies the name of the table that contains the columns",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "data",
-      "useInR": true,
-      "rOrderNum": 1
+      "description": "Specifies the name of the table that contains the columns"
     }
   ],
   "argument_clauses": [
     {
+      "name": "TargetColumns",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "target.columns",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "input"
       ],
+      "rOrderNum": 2,
       "checkDuplicate": true,
-      "allowedTypes": [],
-      "allowedTypeGroups": [
-        "NUMERIC"
-      ],
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "TargetColumns",
+      "isRequired": false,
+      "rDescription": "Specifies the input column names for which the moving average is to be computed. If you omit this argument, then the function copies every input column to the output table but does not compute moving average.",
       "alternateNames": [
         "Columns"
       ],
-      "isRequired": false,
-      "rDescription": "Specifies the input column names for which the moving average is to be computed. If you omit this argument, then the function copies every input column to the output table but does not compute moving average.",
-      "description": "Specifies the input column names for which the moving average is to be computed. If you omit this argument, then the function copies every input column to the output table but does not compute moving average.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "target.columns",
-      "useInR": true,
-      "rOrderNum": 2
+      "allowedTypeGroups": [
+        "NUMERIC"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the input column names for which the moving average is to be computed. If you omit this argument, then the function copies every input column to the output table but does not compute moving average."
     },
     {
-      "defaultValue": 0.1,
+      "name": "Alpha",
+      "upperBoundType": "INCLUSIVE",
       "lowerBound": 0,
+      "useInR": true,
+      "rName": "alpha",
+      "datatype": "DOUBLE",
+      "defaultValue": 0.1,
+      "rOrderNum": 3,
+      "allowsLists": false,
       "upperBound": 1,
       "lowerBoundType": "INCLUSIVE",
-      "upperBoundType": "INCLUSIVE",
-      "allowNaN": true,
-      "name": "Alpha",
-      "alternateNames": [],
       "isRequired": false,
       "rDescription": "Specifies the damping factor, a value in the range [0, 1], which represents a percentage in the range [0, 100]. For example, if alpha is 0.2, then the damping factor is 20%. A higher alpha discounts older observations faster. The default value is 0.1.",
-      "description": "Specifies the damping factor, a value in the range [0, 1], which represents a percentage in the range [0, 100]. For example, if alpha is 0.2, then the damping factor is 20%. A higher alpha discounts older observations faster. The default value is 0.1.",
-      "datatype": "DOUBLE",
-      "allowsLists": false,
-      "rName": "alpha",
-      "useInR": true,
-      "rOrderNum": 3
+      "alternateNames": [],
+      "allowNaN": true,
+      "description": "Specifies the damping factor, a value in the range [0, 1], which represents a percentage in the range [0, 100]. For example, if alpha is 0.2, then the damping factor is 20%. A higher alpha discounts older observations faster. The default value is 0.1."
     },
     {
-      "defaultValue": 2,
+      "name": "StartRows",
+      "upperBoundType": "INCLUSIVE",
       "lowerBound": 1,
+      "useInR": true,
+      "rName": "start.rows",
+      "datatype": "INTEGER",
+      "defaultValue": 2,
+      "rOrderNum": 4,
+      "allowsLists": false,
       "upperBound": 2147483647,
       "lowerBoundType": "INCLUSIVE",
-      "upperBoundType": "INCLUSIVE",
-      "allowNaN": false,
-      "name": "StartRows",
-      "alternateNames": [],
       "isRequired": false,
       "rDescription": "Specifies the number of rows at the beginning of the time series that the function \"skips\" before it begins the calculation of the exponential moving average. The function uses the arithmetic average of these rows as the initial value of the exponential moving average. The value n must be an integer. The default value of n is 2.",
-      "description": "Specifies the number of rows at the beginning of the time series that the function \"skips\" before it begins the calculation of the exponential moving average. The function uses the arithmetic average of these rows as the initial value of the exponential moving average. The value n must be an integer. The default value of n is 2.",
-      "datatype": "INTEGER",
-      "allowsLists": false,
-      "rName": "start.rows",
-      "useInR": true,
-      "rOrderNum": 4
+      "alternateNames": [],
+      "allowNaN": false,
+      "description": "Specifies the number of rows at the beginning of the time series that the function \"skips\" before it begins the calculation of the exponential moving average. The function uses the arithmetic average of these rows as the initial value of the exponential moving average. The value n must be an integer. The default value of n is 2."
     },
     {
-      "defaultValue": false,
       "name": "IncludeFirst",
+      "allowsLists": false,
+      "useInR": true,
+      "datatype": "BOOLEAN",
+      "defaultValue": false,
+      "rOrderNum": 5,
+      "rName": "include.first",
+      "isRequired": false,
+      "rDescription": "Specifies whether to include the starting rows in the output table. The default value is 'false'. If you specify 'true', the output columns for the starting rows contain NULL, because their exponential moving average is undefined.",
       "alternateNames": [
         "ReturnAll"
       ],
-      "isRequired": false,
-      "rDescription": "Specifies whether to include the starting rows in the output table. The default value is 'false'. If you specify 'true', the output columns for the starting rows contain NULL, because their exponential moving average is undefined.",
-      "description": "Specifies whether to include the starting rows in the output table. The default value is 'false'. If you specify 'true', the output columns for the starting rows contain NULL, because their exponential moving average is undefined.",
-      "datatype": "BOOLEAN",
-      "allowsLists": false,
-      "rName": "include.first",
-      "useInR": true,
-      "rOrderNum": 5
+      "description": "Specifies whether to include the starting rows in the output table. The default value is 'false'. If you specify 'true', the output columns for the starting rows contain NULL, because their exponential moving average is undefined."
     }
   ]
 }

@@ -10,161 +10,161 @@
   "long_description": "Predict the category of the document in each text column",
   "input_tables": [
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "input",
+      "rName": "data",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 1,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "The relation contains the text to be scanned",
       "requiredInputKind": [
         "PartitionByAny"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "input",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "The relation contains the text to be scanned",
-      "description": "The relation contains the text to be scanned",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "data",
-      "useInR": true,
-      "rOrderNum": 1
+      "description": "The relation contains the text to be scanned"
     },
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "dict",
+      "rName": "dict.data",
+      "isRequired": false,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 2,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "The relation that contains the dictionary for segementing words.",
       "requiredInputKind": [
         "Dimension"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "dict",
       "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "The relation that contains the dictionary for segementing words.",
-      "description": "The relation that contains the dictionary for segementing words.",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "dict.data",
-      "useInR": true,
-      "rOrderNum": 2
+      "description": "The relation that contains the dictionary for segementing words."
     }
   ],
   "argument_clauses": [
     {
+      "name": "TextColumn",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "text.column",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "input"
       ],
+      "rOrderNum": 3,
       "checkDuplicate": true,
-      "allowedTypes": [],
-      "allowedTypeGroups": [
-        "ALL"
-      ],
-      "requiredLength": 1,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "TextColumn",
-      "alternateNames": [],
       "isRequired": true,
       "rDescription": "Specifies the name of the input table column that contains the text to tokenize",
-      "description": "Specifies the name of the input table column that contains the text to tokenize",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "text.column",
-      "useInR": true,
-      "rOrderNum": 3
-    },
-    {
-      "targetTable": [
-        "input"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
+      "requiredLength": 1,
+      "alternateNames": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "matchLengthOfArgument": "",
       "allowPadding": true,
-      "name": "Accumulate",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": " Specifies the names of the input table columns to copy to the output table.",
-      "description": " Specifies the names of the input table columns to copy to the output table.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "accumulate",
-      "useInR": true,
-      "rOrderNum": 9
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the input table column that contains the text to tokenize"
     },
     {
+      "name": "Accumulate",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "accumulate",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "input"
+      ],
+      "rOrderNum": 9,
+      "checkDuplicate": true,
+      "isRequired": false,
+      "rDescription": " Specifies the names of the input table columns to copy to the output table.",
+      "alternateNames": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": " Specifies the names of the input table columns to copy to the output table."
+    },
+    {
+      "name": "Language",
+      "allowsLists": false,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "defaultValue": "en",
+      "rOrderNum": 4,
+      "rName": "language",
+      "isRequired": false,
+      "rDescription": "Specifies the language of the text in text_column:  en (English, the default),  zh_CN (Simplified Chinese),  zh_TW (Traditional Chinese),  jp (Japanese)",
+      "alternateNames": [],
       "permittedValues": [
         "en",
         "zh_CN",
         "zh_TW",
         "jp"
       ],
-      "defaultValue": "en",
-      "isOutputColumn": false,
-      "name": "Language",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "Specifies the language of the text in text_column:  en (English, the default),  zh_CN (Simplified Chinese),  zh_TW (Traditional Chinese),  jp (Japanese)",
-      "description": "Specifies the language of the text in text_column:  en (English, the default),  zh_CN (Simplified Chinese),  zh_TW (Traditional Chinese),  jp (Japanese)",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "language",
-      "useInR": true,
-      "rOrderNum": 4
+      "description": "Specifies the language of the text in text_column:  en (English, the default),  zh_CN (Simplified Chinese),  zh_TW (Traditional Chinese),  jp (Japanese)"
     },
     {
-      "permittedValues": [],
-      "defaultValue": "/",
-      "isOutputColumn": false,
       "name": "OutputDelimiter",
-      "alternateNames": [],
+      "allowsLists": false,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "defaultValue": "/",
+      "rOrderNum": 6,
+      "rName": "output.delimiter",
       "isRequired": false,
       "rDescription": "Specifies the delimiter for separating tokens in the output. The default value is slash (/).",
-      "description": "Specifies the delimiter for separating tokens in the output. The default value is slash (/).",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "output.delimiter",
-      "useInR": true,
-      "rOrderNum": 6
+      "alternateNames": [],
+      "permittedValues": [],
+      "description": "Specifies the delimiter for separating tokens in the output. The default value is slash (/)."
     },
     {
-      "defaultValue": false,
       "name": "OutputByWord",
-      "alternateNames": [],
+      "allowsLists": false,
+      "useInR": true,
+      "datatype": "BOOLEAN",
+      "defaultValue": false,
+      "rOrderNum": 7,
+      "rName": "output.byword ",
       "isRequired": false,
       "rDescription": "Specifies whether to output one token in each row. The default value is 'false' (output one line of text in each row).",
-      "description": "Specifies whether to output one token in each row. The default value is 'false' (output one line of text in each row).",
-      "datatype": "BOOLEAN",
-      "allowsLists": false,
-      "rName": "output.byword ",
-      "useInR": true,
-      "rOrderNum": 7
+      "alternateNames": [],
+      "description": "Specifies whether to output one token in each row. The default value is 'false' (output one line of text in each row)."
     },
     {
-      "permittedValues": [],
-      "isOutputColumn": false,
       "name": "userDictionaryFile",
-      "alternateNames": [],
+      "allowsLists": false,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "rOrderNum": 8,
+      "rName": "user.dictionary",
       "isRequired": false,
       "rDescription": "Specifies the name of the user dictionary to use to correct results specified by the model. If you specify both this argument and a dictionary table (dict), then the function uses the union of user_dictionary_file and dict as its dictionary. That describes the format of user_dictionary_file and dict. Note: If the function finds more than one matched term, it selects the longest term for the first match.",
-      "description": "Specifies the name of the user dictionary to use to correct results specified by the model. If you specify both this argument and a dictionary table (dict), then the function uses the union of user_dictionary_file and dict as its dictionary. That describes the format of user_dictionary_file and dict. Note: If the function finds more than one matched term, it selects the longest term for the first match.",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "user.dictionary",
-      "useInR": true,
-      "rOrderNum": 8
+      "alternateNames": [],
+      "permittedValues": [],
+      "description": "Specifies the name of the user dictionary to use to correct results specified by the model. If you specify both this argument and a dictionary table (dict), then the function uses the union of user_dictionary_file and dict as its dictionary. That describes the format of user_dictionary_file and dict. Note: If the function finds more than one matched term, it selects the longest term for the first match."
     },
     {
-      "permittedValues": [],
-      "isOutputColumn": false,
       "name": "Model",
-      "alternateNames": [],
+      "allowsLists": false,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "rOrderNum": 5,
+      "rName": "model",
       "isRequired": false,
       "rDescription": "Specifies the name of model file that the function uses for tokenizing. The model must be a conditional random-fields model and model_file must already be installed on the database. If you omit this argument, or if model_file is not installed on the database, then the function uses white spaces to separate English words and an embedded dictionary to tokenize Chinese text. Note: If you specify Language('jp'), the function ignores this argument.",
-      "description": "Specifies the name of model file that the function uses for tokenizing. The model must be a conditional random-fields model and model_file must already be installed on the database. If you omit this argument, or if model_file is not installed on the database, then the function uses white spaces to separate English words and an embedded dictionary to tokenize Chinese text. Note: If you specify Language('jp'), the function ignores this argument.",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "model",
-      "useInR": true,
-      "rOrderNum": 5
+      "alternateNames": [],
+      "permittedValues": [],
+      "description": "Specifies the name of model file that the function uses for tokenizing. The model must be a conditional random-fields model and model_file must already be installed on the database. If you omit this argument, or if model_file is not installed on the database, then the function uses white spaces to separate English words and an embedded dictionary to tokenize Chinese text. Note: If you specify Language('jp'), the function ignores this argument."
     }
   ]
 }

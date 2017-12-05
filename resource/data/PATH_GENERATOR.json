@@ -3,70 +3,70 @@
   "json_schema_minor_version": "2",
   "json_content_version": "1",
   "function_name": "Path_Generator",
-  "function_version": "1.4",
+  "function_version": "1.5",
   "function_type": "non-driver",
   "function_r_name": "aa.path.generator",
   "short_description": "Generates the subsequences for the paths provided",
   "long_description": " This function takes as input a sequence stored in row and generates all subsequences. This input could come from the result of an nPath query or if the data is already stored in a sequence",
   "input_tables": [
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "input",
+      "rName": "data",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 1,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "The name of the table containing the input data.",
       "requiredInputKind": [
         "PartitionByAny"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "input",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "The name of the table containing the input data.",
-      "description": "The name of the table containing the input data.",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "data",
-      "useInR": true,
-      "rOrderNum": 1
+      "description": "The name of the table containing the input data."
     }
   ],
   "argument_clauses": [
     {
+      "name": "SeqColumn",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "seq.column",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "input"
       ],
+      "rOrderNum": 2,
       "checkDuplicate": true,
-      "allowedTypes": [
-        "character varying"
-      ],
-      "allowedTypeGroups": [],
+      "isRequired": true,
+      "rDescription": "Specifies the name of the input table column that contains the paths.",
       "requiredLength": 1,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "SeqColumn",
       "alternateNames": [
         "Seq"
       ],
-      "isRequired": true,
-      "rDescription": "Specifies the name of the input table column that contains the paths.",
-      "description": "Specifies the name of the input table column that contains the paths.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "seq.column",
-      "useInR": true,
-      "rOrderNum": 2
+      "allowedTypeGroups": [
+        "STRING"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the input table column that contains the paths."
     },
     {
-      "permittedValues": [],
-      "defaultValue": ",",
-      "isOutputColumn": false,
       "name": "Delimiter",
-      "alternateNames": [],
+      "allowsLists": false,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "defaultValue": ",",
+      "rOrderNum": 3,
+      "rName": "delimiter",
       "isRequired": false,
       "rDescription": " Specifies the single-character delimiter that separates symbols in the path string. The default value is comma (','). Note: Do not use any of the following characters as delimiter (they cause the function to fail): Asterisk (*), Plus (+), Left parenthesis ((), Right parenthesis ()), Single quotation mark ('), Escaped single quotation mark ('), Backslash ('')",
-      "description": " Specifies the single-character delimiter that separates symbols in the path string. The default value is comma (','). Note: Do not use any of the following characters as delimiter (they cause the function to fail): Asterisk (*), Plus (+), Left parenthesis ((), Right parenthesis ()), Single quotation mark ('), Escaped single quotation mark ('), Backslash ('')",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "delimiter",
-      "useInR": true,
-      "rOrderNum": 3
+      "alternateNames": [],
+      "permittedValues": [],
+      "description": " Specifies the single-character delimiter that separates symbols in the path string. The default value is comma (','). Note: Do not use any of the following characters as delimiter (they cause the function to fail): Asterisk (*), Plus (+), Left parenthesis ((), Right parenthesis ()), Single quotation mark ('), Escaped single quotation mark ('), Backslash ('')"
     }
   ]
 }

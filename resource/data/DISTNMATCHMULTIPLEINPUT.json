@@ -11,159 +11,159 @@
   "function_operation": "map",
   "input_tables": [
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "input",
+      "rName": "data",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 1,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "The input table consists of an arbitrary number of grouping columns and a single value column that contains the dataset to be matched to the specified distribution",
       "requiredInputKind": [
         "PartitionByAny",
         "PartitionByKey"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "input",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "The input table consists of an arbitrary number of grouping columns and a single value column that contains the dataset to be matched to the specified distribution",
-      "description": "The input table consists of an arbitrary number of grouping columns and a single value column that contains the dataset to be matched to the specified distribution",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "data",
-      "useInR": true,
-      "rOrderNum": 1
+      "description": "The input table consists of an arbitrary number of grouping columns and a single value column that contains the dataset to be matched to the specified distribution"
     },
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "groupstats",
+      "rName": "groupstats.data",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 2,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "Group stats table",
       "requiredInputKind": [
         "PartitionByKey",
         "Dimension"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "groupstats",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "Group stats table",
-      "description": "Group stats table",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "groupstats.data",
-      "useInR": true,
-      "rOrderNum": 2
+      "description": "Group stats table"
     }
   ],
   "argument_clauses": [
     {
+      "name": "ValueColumn",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "value.column",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "input"
       ],
+      "rOrderNum": 3,
       "checkDuplicate": true,
-      "allowedTypes": [],
-      "allowedTypeGroups": [
-        "ALL"
-      ],
-      "requiredLength": 1,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "ValueColumn",
-      "alternateNames": [],
       "isRequired": true,
       "rDescription": "Specifies the name of the input table column that contains the values of the sample data set.",
-      "description": "Specifies the name of the input table column that contains the values of the sample data set.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "value.column",
-      "useInR": true,
-      "rOrderNum": 3
-    },
-    {
-      "targetTable": [
-        "input"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
+      "requiredLength": 1,
+      "alternateNames": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "matchLengthOfArgument": "",
       "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the input table column that contains the values of the sample data set."
+    },
+    {
       "name": "GroupByColumns",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "group.by.columns",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "input"
+      ],
+      "rOrderNum": 6,
+      "checkDuplicate": true,
+      "isRequired": false,
+      "rDescription": "Specifies the names of the input table columns that contain the group identifications over which to run the test. The function can run multiple tests for different partitions of the data in parallel. ",
       "alternateNames": [
         "GROUPINGCOLUMNS"
       ],
-      "isRequired": false,
-      "rDescription": "Specifies the names of the input table columns that contain the group identifications over which to run the test. The function can run multiple tests for different partitions of the data in parallel. ",
-      "description": "Specifies the names of the input table columns that contain the group identifications over which to run the test. The function can run multiple tests for different partitions of the data in parallel. ",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "group.by.columns",
-      "useInR": true,
-      "rOrderNum": 6
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the names of the input table columns that contain the group identifications over which to run the test. The function can run multiple tests for different partitions of the data in parallel. "
     },
     {
-      "permittedValues": [],
-      "isOutputColumn": false,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
       "name": "Tests",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "Specifies one to four tests to perform. A test can be: • 'KS' (Kolmogorov-Smirnov test) • 'CvM' (Cramér-von Mises criterion) • 'AD' (Anderson-Darling test) • 'CHISQ' (Pearson's Chi-squared test) By default, the function runs all of the preceding tests.",
-      "description": "Specifies one to four tests to perform. A test can be: • 'KS' (Kolmogorov-Smirnov test) • 'CvM' (Cramér-von Mises criterion) • 'AD' (Anderson-Darling test) • 'CHISQ' (Pearson's Chi-squared test) By default, the function runs all of the preceding tests.",
-      "datatype": "STRING",
       "allowsLists": true,
-      "rName": "tests",
-      "useInR": true,
-      "rOrderNum": 4
-    },
-    {
-      "permittedValues": [],
       "isOutputColumn": false,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "Distributions",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "Specifies the reference distributions and their parameters. All distributions must be continuous or all must be discrete. The possible distribution and parameters values for continuous distributions. The possible distribution and parameters values for continuous distributions are in Table.  For discrete distributions: • BINOMIAL, GEOMETRIC, NEGATIVEBINOMIAL, and POISSON distributions are on N={0,1,2,...} • UNIFORMDISCRETE distribution is on events, which are represented by integers.",
-      "description": "Specifies the reference distributions and their parameters. All distributions must be continuous or all must be discrete. The possible distribution and parameters values for continuous distributions. The possible distribution and parameters values for continuous distributions are in Table.  For discrete distributions: • BINOMIAL, GEOMETRIC, NEGATIVEBINOMIAL, and POISSON distributions are on N={0,1,2,...} • UNIFORMDISCRETE distribution is on events, which are represented by integers.",
-      "datatype": "STRING",
-      "allowsLists": true,
-      "rName": "distributions",
       "useInR": true,
-      "rOrderNum": 5
+      "datatype": "STRING",
+      "rOrderNum": 4,
+      "rName": "tests",
+      "isRequired": false,
+      "rDescription": "Specifies one to four tests to perform. A test can be: \u2022 'KS' (Kolmogorov-Smirnov test) \u2022 'CvM' (Cram\u00e9r-von Mises criterion) \u2022 'AD' (Anderson-Darling test) \u2022 'CHISQ' (Pearson's Chi-squared test) By default, the function runs all of the preceding tests.",
+      "alternateNames": [],
+      "permittedValues": [],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies one to four tests to perform. A test can be: \u2022 'KS' (Kolmogorov-Smirnov test) \u2022 'CvM' (Cram\u00e9r-von Mises criterion) \u2022 'AD' (Anderson-Darling test) \u2022 'CHISQ' (Pearson's Chi-squared test) By default, the function runs all of the preceding tests."
     },
     {
-      "defaultValue": 50,
+      "name": "Distributions",
+      "allowsLists": true,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "rOrderNum": 5,
+      "rName": "distributions",
+      "isRequired": false,
+      "rDescription": "Specifies the reference distributions and their parameters. All distributions must be continuous or all must be discrete. The possible distribution and parameters values for continuous distributions. The possible distribution and parameters values for continuous distributions are in Table.  For discrete distributions: \u2022 BINOMIAL, GEOMETRIC, NEGATIVEBINOMIAL, and POISSON distributions are on N={0,1,2,...} \u2022 UNIFORMDISCRETE distribution is on events, which are represented by integers.",
+      "alternateNames": [],
+      "permittedValues": [],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the reference distributions and their parameters. All distributions must be continuous or all must be discrete. The possible distribution and parameters values for continuous distributions. The possible distribution and parameters values for continuous distributions are in Table.  For discrete distributions: \u2022 BINOMIAL, GEOMETRIC, NEGATIVEBINOMIAL, and POISSON distributions are on N={0,1,2,...} \u2022 UNIFORMDISCRETE distribution is on events, which are represented by integers."
+    },
+    {
+      "name": "MinGroupSize",
+      "upperBoundType": "INCLUSIVE",
       "lowerBound": 0,
+      "useInR": true,
+      "rName": "min.group.size",
+      "datatype": "INTEGER",
+      "defaultValue": 50,
+      "rOrderNum": 7,
+      "allowsLists": false,
       "upperBound": 2147483647,
       "lowerBoundType": "EXCLUSIVE",
-      "upperBoundType": "INCLUSIVE",
-      "allowNaN": false,
-      "name": "MinGroupSize",
-      "alternateNames": [],
       "isRequired": false,
       "rDescription": "Specifies the minimum group size. The function ignores groups smaller than the minimum size when calculating statistics. The default value is 50.",
-      "description": "Specifies the minimum group size. The function ignores groups smaller than the minimum size when calculating statistics. The default value is 50.",
-      "datatype": "INTEGER",
-      "allowsLists": false,
-      "rName": "min.group.size",
-      "useInR": true,
-      "rOrderNum": 7
+      "alternateNames": [],
+      "allowNaN": false,
+      "description": "Specifies the minimum group size. The function ignores groups smaller than the minimum size when calculating statistics. The default value is 50."
     },
     {
-      "defaultValue": 10,
+      "name": "NumCell",
+      "upperBoundType": "INCLUSIVE",
       "lowerBound": 0,
+      "useInR": true,
+      "rName": "num.cell",
+      "datatype": "INTEGER",
+      "defaultValue": 10,
+      "rOrderNum": 8,
+      "allowsLists": false,
       "upperBound": 2147483647,
       "lowerBoundType": "EXCLUSIVE",
-      "upperBoundType": "INCLUSIVE",
-      "allowNaN": false,
-      "name": "NumCell",
+      "isRequired": false,
+      "rDescription": "Specifies the number of cells that you want to make discrete in a continuous distribution. The cell_size must be greater than 3 if distribution is NORMAL; otherwise, it must be greater than 1. The quotient min_group_size/cell_size cannot be less than 5. The default value is 10.",
       "alternateNames": [
         "CELLSIZE"
       ],
-      "isRequired": false,
-      "rDescription": "Specifies the number of cells that you want to make discrete in a continuous distribution. The cell_size must be greater than 3 if distribution is NORMAL; otherwise, it must be greater than 1. The quotient min_group_size/cell_size cannot be less than 5. The default value is 10.",
-      "description": "Specifies the number of cells that you want to make discrete in a continuous distribution. The cell_size must be greater than 3 if distribution is NORMAL; otherwise, it must be greater than 1. The quotient min_group_size/cell_size cannot be less than 5. The default value is 10.",
-      "datatype": "INTEGER",
-      "allowsLists": false,
-      "rName": "num.cell",
-      "useInR": true,
-      "rOrderNum": 8
+      "allowNaN": false,
+      "description": "Specifies the number of cells that you want to make discrete in a continuous distribution. The cell_size must be greater than 3 if distribution is NORMAL; otherwise, it must be greater than 1. The quotient min_group_size/cell_size cannot be less than 5. The default value is 10."
     }
   ]
 }

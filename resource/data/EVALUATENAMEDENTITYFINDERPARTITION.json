@@ -11,20 +11,20 @@
   "function_operation": "reduce",
   "input_tables": [
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "input",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 0,
+      "allowsLists": false,
+      "partitionByOne": true,
+      "rDescription": "The input table should contain a text column which contains input text.",
       "requiredInputKind": [
         "PartitionByKey"
       ],
-      "isOrdered": false,
-      "partitionByOne": true,
-      "name": "input",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "The input table should contain a text column which contains input text.",
-      "description": "The input table should contain a text column which contains input text.",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "useInR": true,
-      "rOrderNum": 0
+      "description": "The input table should contain a text column which contains input text."
     }
   ]
 }

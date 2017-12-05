@@ -3,265 +3,215 @@
   "json_schema_minor_version": "2",
   "json_content_version": "1",
   "function_name": "HMMSupervisedLearner",
-  "function_version": "1.4",
+  "function_version": "1.5",
   "function_type": "driver",
   "function_r_name": "aa.hmm.supervised.learner",
   "short_description": "Given observation sequences O and state sequences, find the model theta = (A, B, Pi) that maximizes P(O | theta).",
   "long_description": "Given observation sequences O and state sequences, find the model theta = (A, B, Pi) that maximizes P(O | theta). ",
   "input_tables": [
     {
+      "isOrdered": true,
+      "useInR": true,
+      "name": "vertices",
+      "rName": "vertices",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 1,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "vertex table",
       "requiredInputKind": [
         "PartitionByKey"
       ],
-      "isOrdered": true,
-      "partitionByOne": false,
-      "name": "vertices",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "vertex table",
-      "description": "vertex table",
-      "datatype": "TABLE_ALIAS",
+      "description": "vertex table"
+    }
+  ],
+  "output_tables": [
+    {
+      "name": "InitStateTable",
       "allowsLists": false,
-      "rName": "vertices",
       "useInR": true,
-      "rOrderNum": 1
+      "isRequired": false,
+      "datatype": "TABLE_NAME",
+      "defaultValue": "Pi",
+      "rOrderNum": 8,
+      "rName": "output.initialstate.table",
+      "alternateNames": [],
+      "rDescription": "Initial state probability table",
+      "isOutputTable": true,
+      "description": "Initial state probability table"
+    },
+    {
+      "name": "StateTransitionTable",
+      "allowsLists": false,
+      "useInR": true,
+      "isRequired": false,
+      "datatype": "TABLE_NAME",
+      "defaultValue": "A",
+      "rOrderNum": 9,
+      "rName": "output.statetransition.table",
+      "alternateNames": [],
+      "rDescription": "State transition probability table",
+      "isOutputTable": true,
+      "description": "State transition probability table"
+    },
+    {
+      "name": "EmissionTable",
+      "allowsLists": false,
+      "useInR": true,
+      "isRequired": false,
+      "datatype": "TABLE_NAME",
+      "defaultValue": "B",
+      "rOrderNum": 10,
+      "rName": "output.emission.table",
+      "alternateNames": [],
+      "rDescription": "Emission probability table",
+      "isOutputTable": true,
+      "description": "Emission probability table"
     }
   ],
   "argument_clauses": [
     {
-      "permittedValues": [],
-      "isOutputColumn": false,
-      "name": "Domain",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "The address of the Queen. The host parameter is the Aster Database Queen’s IP address or hostname.",
-      "description": "The address of the Queen. The host parameter is the Aster Database Queen’s IP address or hostname.",
-      "datatype": "DRIVER",
+      "name": "StateColumn",
       "allowsLists": false,
-      "useInR": false,
-      "rOrderNum": 0
-    },
-    {
-      "permittedValues": [],
-      "isOutputColumn": false,
-      "name": "Database",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "The name of the database where the input table is located.",
-      "description": "The name of the database where the input table is located.",
-      "datatype": "DRIVER",
-      "allowsLists": false,
-      "useInR": false,
-      "rOrderNum": 0
-    },
-    {
-      "permittedValues": [],
-      "isOutputColumn": false,
-      "name": "UserId",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "The Aster Database user name of the user running this function.",
-      "description": "The Aster Database user name of the user running this function.",
-      "datatype": "DRIVER",
-      "allowsLists": false,
-      "useInR": false,
-      "rOrderNum": 0
-    },
-    {
-      "permittedValues": [],
-      "isOutputColumn": false,
-      "name": "Password",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "The Aster Database password of the user.",
-      "description": "The Aster Database password of the user.",
-      "datatype": "DRIVER",
-      "allowsLists": false,
-      "useInR": false,
-      "rOrderNum": 0
-    },
-    {
-      "permittedValues": [],
-      "isOutputColumn": false,
-      "name": "SSLSettings",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "A string that includes all the SSL settings, except the password for the truststore.",
-      "description": "A string that includes all the SSL settings, except the password for the truststore.",
-      "datatype": "DRIVER",
-      "allowsLists": false,
-      "useInR": false,
-      "rOrderNum": 0
-    },
-    {
-      "permittedValues": [],
-      "isOutputColumn": false,
-      "name": "SSLTrustStorePassword",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "The password for the SSL truststore.",
-      "description": "The password for the SSL truststore.",
-      "datatype": "DRIVER",
-      "allowsLists": false,
-      "useInR": false,
-      "rOrderNum": 0
-    },
-    {
+      "useInR": true,
+      "rName": "state.key",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "vertices"
       ],
+      "rOrderNum": 5,
       "checkDuplicate": true,
-      "allowedTypes": [],
-      "allowedTypeGroups": [
-        "ALL"
-      ],
+      "isRequired": true,
+      "rDescription": "The state attributes. You can specify multiple states. The states are case-sensitive.",
       "requiredLength": 1,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "StateColumn",
       "alternateNames": [
         "StateKey"
       ],
-      "isRequired": true,
-      "rDescription": "The state attributes. You can specify multiple states. The states are case-sensitive.",
-      "description": "The state attributes. You can specify multiple states. The states are case-sensitive.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "state.key",
-      "useInR": true,
-      "rOrderNum": 5
-    },
-    {
-      "targetTable": [
-        "vertices"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "requiredLength": 1,
-      "matchLengthOfArgument": "",
       "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "The state attributes. You can specify multiple states. The states are case-sensitive."
+    },
+    {
       "name": "ObsColumn",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "observed.key",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "vertices"
+      ],
+      "rOrderNum": 4,
+      "checkDuplicate": true,
+      "isRequired": true,
+      "rDescription": "The name of the column that contains the observed symbols. The function scans the input table to find all possible observed symbols. Note: Observed symbols are case-sensitive.",
+      "requiredLength": 1,
       "alternateNames": [
         "ObservedKey"
       ],
-      "isRequired": true,
-      "rDescription": "The name of the column that contains the observed symbols. The function scans the input table to find all possible observed symbols. Note: Observed symbols are case-sensitive.",
-      "description": "The name of the column that contains the observed symbols. The function scans the input table to find all possible observed symbols. Note: Observed symbols are case-sensitive.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "observed.key",
-      "useInR": true,
-      "rOrderNum": 4
-    },
-    {
-      "targetTable": [
-        "vertices"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "requiredLength": 1,
-      "matchLengthOfArgument": "",
       "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "The name of the column that contains the observed symbols. The function scans the input table to find all possible observed symbols. Note: Observed symbols are case-sensitive."
+    },
+    {
       "name": "SeqColumn",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "sequence.key",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "vertices"
+      ],
+      "rOrderNum": 3,
+      "checkDuplicate": true,
+      "isRequired": true,
+      "rDescription": "The name of the column that contains the sequence attribute. The sequence_attribute must be a sequence attribute in the partition.columns clause. A sequence must contain more than two observation symbols.",
+      "requiredLength": 1,
       "alternateNames": [
         "SequenceKey"
       ],
-      "isRequired": true,
-      "rDescription": "The name of the column that contains the sequence attribute. The sequence_attribute must be a sequence attribute in the partition.columns clause. A sequence must contain more than two observation symbols.",
-      "description": "The name of the column that contains the sequence attribute. The sequence_attribute must be a sequence attribute in the PARTITION BY clause. A sequence must contain more than two observation symbols.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "sequence.key",
-      "useInR": true,
-      "rOrderNum": 3
-    },
-    {
-      "targetTable": [
-        "vertices"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "matchLengthOfArgument": "",
       "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "The name of the column that contains the sequence attribute. The sequence_attribute must be a sequence attribute in the PARTITION BY clause. A sequence must contain more than two observation symbols."
+    },
+    {
       "name": "SkipColumn",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "skip.key",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "vertices"
+      ],
+      "rOrderNum": 6,
+      "checkDuplicate": true,
+      "isRequired": false,
+      "rDescription": "The name of the column whose values determine whether the function skips the row. The function skips the row if the value is \u201ctrue\u201d, \u201cyes\u201d, \u201cy\u201d, or \u201c1\u201d. The function does not skip the row if the value is \u201cfalse\u201d, \u201cf\u201d, \u201cno\u201d, \u201cn\u201d, \u201c0\u201d, or NULL.",
       "alternateNames": [
         "SkipKey"
       ],
-      "isRequired": false,
-      "rDescription": "The name of the column whose values determine whether the function skips the row. The function skips the row if the value is “true”, “yes”, “y”, or “1”. The function does not skip the row if the value is “false”, “f”, “no”, “n”, “0”, or NULL.",
-      "description": "The name of the column whose values determine whether the function skips the row. The function skips the row if the value is “true”, “yes”, “y”, or “1”. The function does not skip the row if the value is “false”, “f”, “no”, “n”, “0”, or NULL.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "skip.key",
-      "useInR": true,
-      "rOrderNum": 6
-    },
-    {
-      "targetTable": [
-        "vertices"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "requiredLength": 1,
-      "matchLengthOfArgument": "",
       "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "The name of the column whose values determine whether the function skips the row. The function skips the row if the value is \u201ctrue\u201d, \u201cyes\u201d, \u201cy\u201d, or \u201c1\u201d. The function does not skip the row if the value is \u201cfalse\u201d, \u201cf\u201d, \u201cno\u201d, \u201cn\u201d, \u201c0\u201d, or NULL."
+    },
+    {
       "name": "ModelColumn",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "model.key",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "vertices"
+      ],
+      "rOrderNum": 2,
+      "checkDuplicate": true,
+      "isRequired": false,
+      "rDescription": "The name of the column that contains the model attribute. If you specify this argument, then its value must match a model_key in the partition.columns clause.",
+      "requiredLength": 1,
       "alternateNames": [
         "ModelKey"
       ],
-      "isRequired": false,
-      "rDescription": "The name of the column that contains the model attribute. If you specify this argument, then its value must match a model_key in the partition.columns clause.",
-      "description": "The name of the column that contains the model attribute. If you specify this argument, then its value must match a model_key in the PARTITION BY clause.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "model.key",
-      "useInR": true,
-      "rOrderNum": 2
-    },
-    {
-      "permittedValues": [],
-      "isOutputColumn": false,
-      "matchLengthOfArgument": "",
+      "allowedTypeGroups": [
+        "ALL"
+      ],
       "allowPadding": true,
-      "name": "OutputTables",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "The names of the output tables: • init_state_prob—Initial state probability table (default name is Pi). • state_transition_prob—State transition probability table (default name is A). • emit_prob—Emission probability table (default name is B). ",
-      "description": "The names of the output tables: • init_state_prob—Initial state probability table (default name is Pi). • state_transition_prob—State transition probability table (default name is A). • emit_prob—Emission probability table (default name is B). ",
-      "datatype": "STRING",
-      "allowsLists": true,
-      "rName": "output.tables",
-      "useInR": true,
-      "rOrderNum": 7
+      "matchLengthOfArgument": "",
+      "description": "The name of the column that contains the model attribute. If you specify this argument, then its value must match a model_key in the PARTITION BY clause."
     },
     {
+      "name": "BatchSize",
+      "upperBoundType": "INCLUSIVE",
       "lowerBound": 1,
+      "useInR": true,
+      "rName": "batch.size",
+      "datatype": "INTEGER",
+      "allowNaN": false,
+      "rOrderNum": 7,
+      "allowsLists": false,
       "upperBound": 2147483647,
       "lowerBoundType": "INCLUSIVE",
-      "upperBoundType": "INCLUSIVE",
-      "allowNaN": false,
-      "name": "BatchSize",
-      "alternateNames": [],
       "isRequired": false,
       "rDescription": "The number of models to process. The size must be positive. If the batch size is not specified, the function avoids out-of-memory errors by determining the appropriate size. If the batch size is specified and there is insufficient free memory, the function reduces the batch size. The batch size is determined dynamically, based on the memory conditions. For example, at time T1, the specified batch size 1000 might be adjusted to 980, and at time T2, the batch size might be adjusted to 800.",
-      "description": "The number of models to process. The size must be positive. If the batch size is not specified, the function avoids out-of-memory errors by determining the appropriate size. If the batch size is specified and there is insufficient free memory, the function reduces the batch size. The batch size is determined dynamically, based on the memory conditions. For example, at time T1, the specified batch size 1000 might be adjusted to 980, and at time T2, the batch size might be adjusted to 800.",
-      "datatype": "INTEGER",
-      "allowsLists": false,
-      "rName": "batch.size",
-      "useInR": true,
-      "rOrderNum": 8
+      "alternateNames": [],
+      "description": "The number of models to process. The size must be positive. If the batch size is not specified, the function avoids out-of-memory errors by determining the appropriate size. If the batch size is specified and there is insufficient free memory, the function reduces the batch size. The batch size is determined dynamically, based on the memory conditions. For example, at time T1, the specified batch size 1000 might be adjusted to 980, and at time T2, the batch size might be adjusted to 800."
     }
   ]
 }

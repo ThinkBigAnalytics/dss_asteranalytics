@@ -12,93 +12,93 @@
   "partner_function": "NaiveBayesReduce",
   "input_tables": [
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "input",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 0,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "This table defining the input training data.",
       "requiredInputKind": [
         "PartitionByAny"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "input",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "This table defining the input training data.",
-      "description": "This table defining the input training data.",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "useInR": true,
-      "rOrderNum": 0
+      "description": "This table defining the input training data."
     }
   ],
   "argument_clauses": [
     {
+      "name": "ResponseColumn",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "response.column",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "input"
       ],
+      "rOrderNum": 0,
       "checkDuplicate": true,
-      "allowedTypes": [],
-      "allowedTypeGroups": [
-        "INTEGER",
-        "STRING"
-      ],
+      "isRequired": true,
+      "rDescription": "Specifies the name of the input table column that contains the response variable, passed as text.",
       "requiredLength": 1,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "ResponseColumn",
       "alternateNames": [
         "Response"
       ],
-      "isRequired": true,
-      "rDescription": "Specifies the name of the input table column that contains the response variable, passed as text.",
-      "description": "Specifies the name of the input table column that contains the response variable, passed as text.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "response.column",
-      "useInR": true,
-      "rOrderNum": 0
-    },
-    {
-      "targetTable": [
-        "input"
-      ],
-      "checkDuplicate": false,
-      "allowedTypes": [],
       "allowedTypeGroups": [
         "INTEGER",
         "STRING"
       ],
-      "matchLengthOfArgument": "",
       "allowPadding": true,
-      "name": "CategoricalInputs",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "Specifies input table columns that contain categorical values to be included in the model. The syntax of categorical_input_columns is the same as the syntax of numeric_input_columns.",
-      "description": "Specifies input table columns that contain categorical values to be included in the model. The syntax of categorical_input_columns is the same as the syntax of numeric_input_columns.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "categorical.inputs",
-      "useInR": true,
-      "rOrderNum": 0
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the input table column that contains the response variable, passed as text."
     },
     {
+      "name": "CategoricalInputs",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "categorical.inputs",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "input"
       ],
+      "rOrderNum": 0,
       "checkDuplicate": false,
+      "isRequired": false,
+      "rDescription": "Specifies input table columns that contain categorical values to be included in the model. The syntax of categorical_input_columns is the same as the syntax of numeric_input_columns.",
+      "alternateNames": [],
+      "allowedTypeGroups": [
+        "INTEGER",
+        "STRING"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies input table columns that contain categorical values to be included in the model. The syntax of categorical_input_columns is the same as the syntax of numeric_input_columns."
+    },
+    {
+      "name": "NumericInputs",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "numeric.inputs",
       "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "input"
+      ],
+      "rOrderNum": 0,
+      "checkDuplicate": false,
+      "isRequired": false,
+      "rDescription": "Specifies input table columns that contain numeric values to be included in the model. The syntax of numeric_input_columns is: {'column_name [,...]' | '[start_column:end_column]'}[,...] For example: 'input1','[4:21]','[25:53]','input73, input80', '[25:53]' The first column index is 0.",
+      "alternateNames": [],
       "allowedTypeGroups": [
         "NUMERIC"
       ],
-      "matchLengthOfArgument": "",
       "allowPadding": true,
-      "name": "NumericInputs",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "Specifies input table columns that contain numeric values to be included in the model. The syntax of numeric_input_columns is: {'column_name [,...]' | '[start_column:end_column]'}[,...] For example: 'input1','[4:21]','[25:53]','input73, input80', '[25:53]' The first column index is 0.",
-      "description": "Specifies input table columns that contain numeric values to be included in the model. The syntax of numeric_input_columns is: {'column_name [,...]' | '[start_column:end_column]'}[,...] For example: 'input1','[4:21]','[25:53]','input73, input80', '[25:53]' The first column index is 0.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "numeric.inputs",
-      "useInR": true,
-      "rOrderNum": 0
+      "matchLengthOfArgument": "",
+      "description": "Specifies input table columns that contain numeric values to be included in the model. The syntax of numeric_input_columns is: {'column_name [,...]' | '[start_column:end_column]'}[,...] For example: 'input1','[4:21]','[25:53]','input73, input80', '[25:53]' The first column index is 0."
     }
   ]
 }

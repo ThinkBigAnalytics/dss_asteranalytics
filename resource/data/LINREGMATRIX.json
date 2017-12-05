@@ -10,67 +10,67 @@
   "long_description": "Outputs linear-regression matrix corresponding to the input samples. The <n+2> column of the matrix corresponds to the right-hand side of the model.",
   "input_tables": [
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "input",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 0,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "Input table that contains one row for each data point and one column for each data point component",
       "requiredInputKind": [
         "PartitionByAny"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "input",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "Input table that contains one row for each data point and one column for each data point component",
-      "description": "Input table that contains one row for each data point and one column for each data point component",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "useInR": true,
-      "rOrderNum": 0
+      "description": "Input table that contains one row for each data point and one column for each data point component"
     }
   ],
   "argument_clauses": [
     {
+      "name": "InputColumns",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "input.columns",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "input"
       ],
+      "rOrderNum": -1,
       "checkDuplicate": true,
-      "allowedTypes": [],
-      "allowedTypeGroups": [
-        "NUMERIC"
-      ],
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "InputColumns",
-      "alternateNames": [],
       "isRequired": false,
       "rDescription": "The column containing the input variables.",
-      "description": "The column containing the input variables.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "input.columns",
-      "useInR": true,
-      "rOrderNum": -1
-    },
-    {
-      "targetTable": [
-        "input"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
+      "alternateNames": [],
       "allowedTypeGroups": [
         "NUMERIC"
       ],
-      "requiredLength": 1,
-      "matchLengthOfArgument": "",
       "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "The column containing the input variables."
+    },
+    {
       "name": "TargetColumn",
-      "alternateNames": [],
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "target.column",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "input"
+      ],
+      "rOrderNum": 1,
+      "checkDuplicate": true,
       "isRequired": false,
       "rDescription": "The column containing the target variable.",
-      "description": "The column containing the target variable.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "target.column",
-      "useInR": true,
-      "rOrderNum": 1
+      "requiredLength": 1,
+      "alternateNames": [],
+      "allowedTypeGroups": [
+        "NUMERIC"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "The column containing the target variable."
     }
   ]
 }

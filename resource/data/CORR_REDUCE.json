@@ -11,20 +11,20 @@
   "function_operation": "reduce",
   "input_tables": [
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "input",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 0,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "The input table that is the output of corr_map. ",
       "requiredInputKind": [
         "PartitionByKey"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "input",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "The input table that is the output of corr_map. ",
-      "description": "The input table that is the output of corr_map. ",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "useInR": true,
-      "rOrderNum": 0
+      "description": "The input table that is the output of corr_map. "
     }
   ]
 }

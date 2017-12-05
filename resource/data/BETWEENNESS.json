@@ -10,207 +10,207 @@
   "long_description": "The function works on directed and undirected graphs to compute betweenness.",
   "input_tables": [
     {
-      "requiredInputKind": [
-        "PartitionByKey"
-      ],
       "isOrdered": false,
-      "partitionByOne": false,
+      "useInR": true,
       "name": "vertices",
-      "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "vertex table",
-      "description": "vertex table",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
       "rName": "vertices.data",
-      "useInR": true,
-      "rOrderNum": 1
-    },
-    {
-      "requiredInputKind": [
-        "PartitionByKey"
-      ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "edges",
-      "alternateNames": [],
       "isRequired": true,
-      "rDescription": "edge table",
-      "description": "edge table",
       "datatype": "TABLE_ALIAS",
+      "rOrderNum": 1,
       "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "vertex table",
+      "requiredInputKind": [
+        "PartitionByKey"
+      ],
+      "alternateNames": [],
+      "description": "vertex table"
+    },
+    {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "edges",
       "rName": "edges.data",
-      "useInR": true,
-      "rOrderNum": 2
-    },
-    {
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 2,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "edge table",
       "requiredInputKind": [
         "PartitionByKey"
       ],
+      "alternateNames": [],
+      "description": "edge table"
+    },
+    {
       "isOrdered": false,
-      "partitionByOne": false,
+      "useInR": true,
       "name": "sources",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "source table",
-      "description": "source table",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
       "rName": "sources.data",
-      "useInR": true,
-      "rOrderNum": 4
-    },
-    {
+      "isRequired": false,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 4,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "source table",
       "requiredInputKind": [
         "PartitionByKey"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "targets",
       "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "target table",
-      "description": "target table",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "targets.data",
+      "description": "source table"
+    },
+    {
+      "isOrdered": false,
       "useInR": true,
-      "rOrderNum": 5
+      "name": "targets",
+      "rName": "targets.data",
+      "isRequired": false,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 5,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "target table",
+      "requiredInputKind": [
+        "PartitionByKey"
+      ],
+      "alternateNames": [],
+      "description": "target table"
     }
   ],
   "argument_clauses": [
     {
+      "name": "TargetKey",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "target.key",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "edges"
       ],
+      "rOrderNum": 3,
       "checkDuplicate": true,
-      "allowedTypes": [],
+      "isRequired": true,
+      "rDescription": "Specifies the target key (the names of the edges table columns that identify the target vertex). If you specify targets_table, then the function uses only the vertices in targets_table as targets (which must be a subset of those that this argument specifies).",
+      "alternateNames": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "matchLengthOfArgument": "",
       "allowPadding": true,
-      "name": "TargetKey",
-      "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "Specifies the target key (the names of the edges table columns that identify the target vertex). If you specify targets_table, then the function uses only the vertices in targets_table as targets (which must be a subset of those that this argument specifies).",
-      "description": "Specifies the target key (the names of the edges table columns that identify the target vertex). If you specify targets_table, then the function uses only the vertices in targets_table as targets (which must be a subset of those that this argument specifies).",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "target.key",
-      "useInR": true,
-      "rOrderNum": 3
+      "matchLengthOfArgument": "",
+      "description": "Specifies the target key (the names of the edges table columns that identify the target vertex). If you specify targets_table, then the function uses only the vertices in targets_table as targets (which must be a subset of those that this argument specifies)."
     },
     {
+      "name": "Accumulate",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "accumulate",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "vertices"
       ],
+      "rOrderNum": 11,
       "checkDuplicate": true,
-      "allowedTypes": [],
+      "isRequired": false,
+      "rDescription": "Specifies the names of the vertices table columns to copy to the output table.",
+      "alternateNames": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "matchLengthOfArgument": "",
       "allowPadding": true,
-      "name": "Accumulate",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "Specifies the names of the vertices table columns to copy to the output table.",
-      "description": "Specifies the names of the vertices table columns to copy to the output table.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "accumulate",
-      "useInR": true,
-      "rOrderNum": 11
+      "matchLengthOfArgument": "",
+      "description": "Specifies the names of the vertices table columns to copy to the output table."
     },
     {
+      "name": "EdgeWeight",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "weights",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "edges"
       ],
+      "rOrderNum": 7,
       "checkDuplicate": true,
-      "allowedTypes": [],
+      "isRequired": false,
+      "rDescription": "Specifies the name of the edges table column that contains edge weights. The weights are positive values. By default, the weight of each edge is 1 (that is, the graph is unweighted).",
+      "requiredLength": 1,
+      "alternateNames": [],
       "allowedTypeGroups": [
         "NUMERIC"
       ],
-      "requiredLength": 1,
-      "matchLengthOfArgument": "",
       "allowPadding": true,
-      "name": "EdgeWeight",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "Specifies the name of the edges table column that contains edge weights. The weights are positive values. By default, the weight of each edge is 1 (that is, the graph is unweighted).",
-      "description": "Specifies the name of the edges table column that contains edge weights. The weights are positive values. By default, the weight of each edge is 1 (that is, the graph is unweighted).",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "weights",
-      "useInR": true,
-      "rOrderNum": 7
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the edges table column that contains edge weights. The weights are positive values. By default, the weight of each edge is 1 (that is, the graph is unweighted)."
     },
     {
-      "defaultValue": 1.0,
+      "name": "SampleRate",
+      "upperBoundType": "INCLUSIVE",
       "lowerBound": 0,
+      "useInR": true,
+      "rName": "sample.rate",
+      "datatype": "DOUBLE",
+      "defaultValue": 1.0,
+      "rOrderNum": 10,
+      "allowsLists": false,
       "upperBound": 1,
       "lowerBoundType": "EXCLUSIVE",
-      "upperBoundType": "INCLUSIVE",
-      "allowNaN": false,
-      "name": "SampleRate",
-      "alternateNames": [],
       "isRequired": false,
       "rDescription": "Specifies the sample rate (the percentage of source vertices to sample), a DOUBLE PRECISION value in the range (0.0, 1.0]. The number of source vertices that the function uses to generate betweenness is approximately sample_rate *n, where n is the number of vertices in the graph.",
-      "description": "Specifies the sample rate (the percentage of source vertices to sample), a DOUBLE PRECISION value in the range (0.0, 1.0]. The number of source vertices that the function uses to generate betweenness is approximately sample_rate *n, where n is the number of vertices in the graph.",
-      "datatype": "DOUBLE",
-      "allowsLists": false,
-      "rName": "sample.rate",
-      "useInR": true,
-      "rOrderNum": 10
+      "alternateNames": [],
+      "allowNaN": false,
+      "description": "Specifies the sample rate (the percentage of source vertices to sample), a DOUBLE PRECISION value in the range (0.0, 1.0]. The number of source vertices that the function uses to generate betweenness is approximately sample_rate *n, where n is the number of vertices in the graph."
     },
     {
-      "defaultValue": 10,
+      "name": "MaxDistance",
+      "upperBoundType": "INCLUSIVE",
       "lowerBound": -2147483648,
+      "useInR": true,
+      "rName": "max.distance",
+      "datatype": "INTEGER",
+      "defaultValue": 10,
+      "rOrderNum": 8,
+      "allowsLists": false,
       "upperBound": 2147483647,
       "lowerBoundType": "INCLUSIVE",
-      "upperBoundType": "INCLUSIVE",
-      "allowNaN": false,
-      "name": "MaxDistance",
-      "alternateNames": [],
       "isRequired": false,
       "rDescription": "Specifies the maximum distance (an integer) between the source and target vertices. A negative max_distance specifies an infinite distance. If vertices are separated by more than max_distance, the function does not output them. The default value is 10.",
-      "description": "Specifies the maximum distance (an integer) between the source and target vertices. A negative max_distance specifies an infinite distance. If vertices are separated by more than max_distance, the function does not output them. The default value is 10.",
-      "datatype": "INTEGER",
-      "allowsLists": false,
-      "rName": "max.distance",
-      "useInR": true,
-      "rOrderNum": 8
+      "alternateNames": [],
+      "allowNaN": false,
+      "description": "Specifies the maximum distance (an integer) between the source and target vertices. A negative max_distance specifies an infinite distance. If vertices are separated by more than max_distance, the function does not output them. The default value is 10."
     },
     {
-      "defaultValue": true,
       "name": "Directed",
-      "alternateNames": [],
+      "allowsLists": false,
+      "useInR": true,
+      "datatype": "BOOLEAN",
+      "defaultValue": true,
+      "rOrderNum": 6,
+      "rName": "directed",
       "isRequired": false,
       "rDescription": "Specifies whether the graph is directed. The default value is 'true'.",
-      "description": "Specifies whether the graph is directed. The default value is 'true'.",
-      "datatype": "BOOLEAN",
-      "allowsLists": false,
-      "rName": "directed",
-      "useInR": true,
-      "rOrderNum": 6
+      "alternateNames": [],
+      "description": "Specifies whether the graph is directed. The default value is 'true'."
     },
     {
+      "name": "GroupSize",
+      "upperBoundType": "INCLUSIVE",
       "lowerBound": 1,
+      "useInR": true,
+      "rName": "group.size",
+      "datatype": "LONG",
+      "allowNaN": false,
+      "rOrderNum": 9,
+      "allowsLists": false,
       "upperBound": 9223372036854775807,
       "lowerBoundType": "INCLUSIVE",
-      "upperBoundType": "INCLUSIVE",
-      "allowNaN": false,
-      "name": "GroupSize",
-      "alternateNames": [],
       "isRequired": false,
       "rDescription": "Specifies the number of source vertices that execute a SNSP algorithm in parallel. If group_size exceeds the number of source vertices in each partition, s, then s is the group size. By default, the function calculates the optimal group size based on various cluster and query characteristics. Running a group of vertices on each vWorker, in parallel, uses less memory than running all vertices on each vWorker.",
-      "description": "Specifies the number of source vertices that execute a SNSP algorithm in parallel. If group_size exceeds the number of source vertices in each partition, s, then s is the group size. By default, the function calculates the optimal group size based on various cluster and query characteristics. Running a group of vertices on each vWorker, in parallel, uses less memory than running all vertices on each vWorker.",
-      "datatype": "LONG",
-      "allowsLists": false,
-      "rName": "group.size",
-      "useInR": true,
-      "rOrderNum": 9
+      "alternateNames": [],
+      "description": "Specifies the number of source vertices that execute a SNSP algorithm in parallel. If group_size exceeds the number of source vertices in each partition, s, then s is the group size. By default, the function calculates the optimal group size based on various cluster and query characteristics. Running a group of vertices on each vWorker, in parallel, uses less memory than running all vertices on each vWorker."
     }
   ]
 }

@@ -8,176 +8,102 @@
   "function_r_name": "aa.sentiment.train",
   "short_description": "SQL/MR function to train the model used in sentiment extraction.",
   "long_description": "SQL/MR function to train model used in sentiment extraction. At present, maximum extropy model is supported.",
+  "input_tables": [
+    {
+      "name": "InputTable",
+      "allowsLists": false,
+      "useInR": true,
+      "description": "Specifies the name of the table that contains the training data.",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 1,
+      "rName": "data",
+      "alternateNames": [],
+      "rDescription": "Specifies the name of the table that contains the training data.",
+      "requiredInputKind": [],
+      "isOrdered": false,
+      "partitionByOne": false
+    }
+  ],
   "argument_clauses": [
     {
-      "permittedValues": [],
-      "isOutputColumn": false,
-      "name": "Domain",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "The address of the Queen. The host parameter is the Aster Database Queen’s IP address or hostname.",
-      "description": "The address of the Queen. The host parameter is the Aster Database Queen’s IP address or hostname.",
-      "datatype": "DRIVER",
+      "name": "TextColumn",
       "allowsLists": false,
-      "useInR": false,
-      "rOrderNum": 0
-    },
-    {
-      "permittedValues": [],
-      "isOutputColumn": false,
-      "name": "Database",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "The name of the database where the input table is located.",
-      "description": "The name of the database where the input table is located.",
-      "datatype": "DRIVER",
-      "allowsLists": false,
-      "useInR": false,
-      "rOrderNum": 0
-    },
-    {
-      "permittedValues": [],
-      "isOutputColumn": false,
-      "name": "UserId",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "The Aster Database user name of the user running this function.",
-      "description": "The Aster Database user name of the user running this function.",
-      "datatype": "DRIVER",
-      "allowsLists": false,
-      "useInR": false,
-      "rOrderNum": 0
-    },
-    {
-      "permittedValues": [],
-      "isOutputColumn": false,
-      "name": "Password",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "The Aster Database password of the user.",
-      "description": "The Aster Database password of the user.",
-      "datatype": "DRIVER",
-      "allowsLists": false,
-      "useInR": false,
-      "rOrderNum": 0
-    },
-    {
-      "permittedValues": [],
-      "isOutputColumn": false,
-      "name": "SSLSettings",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "A string that includes all the SSL settings, except the password for the truststore.",
-      "description": "A string that includes all the SSL settings, except the password for the truststore.",
-      "datatype": "DRIVER",
-      "allowsLists": false,
-      "useInR": false,
-      "rOrderNum": 0
-    },
-    {
-      "permittedValues": [],
-      "isOutputColumn": false,
-      "name": "SSLTrustStorePassword",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "The password for the SSL truststore.",
-      "description": "The password for the SSL truststore.",
-      "datatype": "DRIVER",
-      "allowsLists": false,
-      "useInR": false,
-      "rOrderNum": 0
-    },
-    {
-      "isOutputTable": false,
-      "name": "InputTable",
-      "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "Specifies the name of the table that contains the training data.",
-      "description": "Specifies the name of the table that contains the training data.",
-      "datatype": "TABLE_NAME",
-      "allowsLists": false,
-      "rName": "data",
       "useInR": true,
-      "rOrderNum": 1
-    },
-    {
+      "rName": "text.column",
+      "allowedTypes": [],
+      "datatype": "COLUMN_NAMES",
       "targetTable": [
         "InputTable"
       ],
+      "rOrderNum": 2,
       "checkDuplicate": true,
-      "allowedTypes": [],
-      "allowedTypeGroups": [
-        "ALL"
-      ],
-      "requiredLength": 1,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "TextColumn",
-      "alternateNames": [],
       "isRequired": true,
       "rDescription": "Specifies the name of the input table column that contains the training data.",
-      "description": "Specifies the name of the input table column that contains the training data.",
-      "datatype": "COLUMN_NAMES",
-      "allowsLists": false,
-      "rName": "text.column",
-      "useInR": true,
-      "rOrderNum": 2
-    },
-    {
-      "targetTable": [
-        "InputTable"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
+      "requiredLength": 1,
+      "alternateNames": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "requiredLength": 1,
-      "matchLengthOfArgument": "",
       "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the input table column that contains the training data."
+    },
+    {
       "name": "SentimentColumn",
-      "alternateNames": [],
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "sentiment.column",
+      "allowedTypes": [],
+      "datatype": "COLUMN_NAMES",
+      "targetTable": [
+        "InputTable"
+      ],
+      "rOrderNum": 3,
+      "checkDuplicate": true,
       "isRequired": true,
       "rDescription": "Specifies the name of the input table column that contains the sentiment values, which are'POS' (positive), 'NEG' (negative), and 'NEU' (neutral).",
-      "description": "Specifies the name of the input table column that contains the sentiment values, which are'POS' (positive), 'NEG' (negative), and 'NEU' (neutral).",
-      "datatype": "COLUMN_NAMES",
-      "allowsLists": false,
-      "rName": "sentiment.column",
-      "useInR": true,
-      "rOrderNum": 3
+      "requiredLength": 1,
+      "alternateNames": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the input table column that contains the sentiment values, which are'POS' (positive), 'NEG' (negative), and 'NEU' (neutral)."
     },
     {
-      "permittedValues": [],
-      "isOutputColumn": false,
       "name": "ModelFile",
-      "alternateNames": [],
+      "allowsLists": false,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "rOrderNum": 5,
+      "rName": "model.file",
       "isRequired": true,
       "rDescription": "Specifies the name of the file to which the function outputs the model.",
-      "description": "Specifies the name of the file to which the function outputs the model.",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "model.file",
-      "useInR": true,
-      "rOrderNum": 5
+      "alternateNames": [],
+      "permittedValues": [],
+      "description": "Specifies the name of the file to which the function outputs the model."
     },
     {
+      "name": "Language",
+      "allowsLists": false,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "defaultValue": "en",
+      "rOrderNum": 4,
+      "rName": "language",
+      "isRequired": false,
+      "rDescription": "Specifies the language of the training data: 'en' (English), 'zh_CN' (Simple Chinese), 'zh_TW' (Traditional Chinese).",
+      "alternateNames": [],
       "permittedValues": [
         "en",
         "zh_CN",
         "zh_TW"
       ],
-      "defaultValue": "en",
-      "isOutputColumn": false,
-      "name": "Language",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "Specifies the language of the training data: 'en' (English), 'zh_CN' (Simple Chinese), 'zh_TW' (Traditional Chinese).",
-      "description": "Specifies the language of the training data: 'en' (English), 'zh_CN' (Simple Chinese), 'zh_TW' (Traditional Chinese).",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "language",
-      "useInR": true,
-      "rOrderNum": 4
+      "description": "Specifies the language of the training data: 'en' (English), 'zh_CN' (Simple Chinese), 'zh_TW' (Traditional Chinese)."
     }
   ]
 }

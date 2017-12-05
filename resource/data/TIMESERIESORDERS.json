@@ -1,0 +1,98 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "2",
+  "json_content_version": "2",
+  "function_name": "TIMESERIESORDERS",
+  "function_version": "1.0",
+  "function_type": "non-driver",
+  "function_r_name": "aa.timeseriesorders",
+  "short_description": "The function automatically determines the non-seasonal orders for univariate time series.",
+  "long_description": "The function automatically determines the non-seasonal orders for univariate time series and whether there is a need to incorporate the drift and mean into the time series model, such as ARIMA or VARMAX.",
+  "input_tables": [
+    {
+      "isOrdered": true,
+      "useInR": true,
+      "name": "data",
+      "rName": "data",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 1,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "Specifies the name of the input time series.",
+      "requiredInputKind": [
+        "PartitionByKey"
+      ],
+      "alternateNames": [],
+      "description": "Specifies the name of the input time series."
+    }
+  ],
+  "argument_clauses": [
+    {
+      "name": "ResponseColumn",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "response.columns",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "data"
+      ],
+      "rOrderNum": 2,
+      "checkDuplicate": true,
+      "isRequired": true,
+      "rDescription": "Specifies the columns containing the response data. ",
+      "alternateNames": [],
+      "allowedTypeGroups": [
+        "NUMERIC"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the columns containing the response data. "
+    },
+    {
+      "name": "PartitionColumns",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "partition.columns",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "data"
+      ],
+      "rOrderNum": 3,
+      "checkDuplicate": true,
+      "isRequired": false,
+      "rDescription": "Specifies the partition columns that will be passed to the output. It must be specified when the function is not partition by 1. Otherwise, the result will be incorrect. ",
+      "alternateNames": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the partition columns that will be passed to the output. It must be specified when the function is not partition by 1. Otherwise, the result will be incorrect. "
+    },
+    {
+      "name": "TimeStampColumns",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "timstamp.columns",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "data"
+      ],
+      "rOrderNum": 4,
+      "checkDuplicate": true,
+      "isRequired": false,
+      "rDescription": "Specifies the names of the input table columns that specify the sequence (time points). ",
+      "alternateNames": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the names of the input table columns that specify the sequence (time points). "
+    }
+  ]
+}

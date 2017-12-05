@@ -11,40 +11,40 @@
   "function_operation": "reduce",
   "input_tables": [
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "input",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 0,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "The table is the output DistnmatchMultipleinput",
       "requiredInputKind": [
         "PartitionByKey"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "input",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "The table is the output DistnmatchMultipleinput",
-      "description": "The table is the output DistnmatchMultipleinput",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "useInR": true,
-      "rOrderNum": 0
+      "description": "The table is the output DistnmatchMultipleinput"
     }
   ],
   "argument_clauses": [
     {
-      "defaultValue": 1,
+      "name": "Top",
+      "upperBoundType": "INCLUSIVE",
       "lowerBound": 0,
+      "useInR": true,
+      "rName": "top",
+      "datatype": "INTEGER",
+      "defaultValue": 1,
+      "rOrderNum": 0,
+      "allowsLists": false,
       "upperBound": 2147483647,
       "lowerBoundType": "EXCLUSIVE",
-      "upperBoundType": "INCLUSIVE",
-      "allowNaN": false,
-      "name": "Top",
-      "alternateNames": [],
       "isRequired": false,
       "rDescription": "Specifies the number of the top matching distributions you want the function to output. Default value is 1",
-      "description": "Specifies the number of the top matching distributions you want the function to output. Default value is 1",
-      "datatype": "INTEGER",
-      "allowsLists": false,
-      "rName": "top",
-      "useInR": true,
-      "rOrderNum": 0
+      "alternateNames": [],
+      "allowNaN": false,
+      "description": "Specifies the number of the top matching distributions you want the function to output. Default value is 1"
     }
   ]
 }

@@ -11,110 +11,110 @@
   "partner_function": "stock_vol",
   "input_tables": [
     {
+      "isOrdered": true,
+      "useInR": true,
+      "name": "input",
+      "rName": "data",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 1,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "The table containing the input data.",
       "requiredInputKind": [
         "PartitionByKey"
       ],
-      "isOrdered": true,
-      "partitionByOne": false,
-      "name": "input",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "The table containing the input data.",
-      "description": "The table containing the input data.",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "data",
-      "useInR": true,
-      "rOrderNum": 1
+      "description": "The table containing the input data."
     }
   ],
   "argument_clauses": [
     {
+      "name": "Price",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "price",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "input"
       ],
+      "rOrderNum": 2,
       "checkDuplicate": true,
-      "allowedTypes": [],
-      "allowedTypeGroups": [
-        "NUMERIC"
-      ],
-      "requiredLength": 1,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "Price",
-      "alternateNames": [],
       "isRequired": false,
       "rDescription": "Specifies the name of the input table column that contains the price at which the item traded. The default value is 'price'.",
-      "description": "Specifies the name of the input table column that contains the price at which the item traded. The default value is 'price'.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "price",
-      "useInR": true,
-      "rOrderNum": 2
-    },
-    {
-      "targetTable": [
-        "input"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
+      "requiredLength": 1,
+      "alternateNames": [],
       "allowedTypeGroups": [
         "NUMERIC"
       ],
-      "requiredLength": 1,
-      "matchLengthOfArgument": "",
       "allowPadding": true,
-      "name": "Volume",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "Specifies the name of the input table column that contains the number of units traded in the transaction. The default value is 'volume'.",
-      "description": "Specifies the name of the input table column that contains the number of units traded in the transaction. The default value is 'volume'.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "volume",
-      "useInR": true,
-      "rOrderNum": 3
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the input table column that contains the price at which the item traded. The default value is 'price'."
     },
     {
+      "name": "Volume",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "volume",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "input"
       ],
+      "rOrderNum": 3,
       "checkDuplicate": true,
+      "isRequired": false,
+      "rDescription": "Specifies the name of the input table column that contains the number of units traded in the transaction. The default value is 'volume'.",
+      "requiredLength": 1,
+      "alternateNames": [],
+      "allowedTypeGroups": [
+        "NUMERIC"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the input table column that contains the number of units traded in the transaction. The default value is 'volume'."
+    },
+    {
+      "name": "Dt",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "date.time",
       "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "input"
+      ],
+      "rOrderNum": 4,
+      "checkDuplicate": true,
+      "isRequired": false,
+      "rDescription": "Specifies the name of the input table column that contains the date and time of the trade. The default value is 'dt'.",
+      "requiredLength": 1,
+      "alternateNames": [],
       "allowedTypeGroups": [
         "TIME"
       ],
-      "requiredLength": 1,
-      "matchLengthOfArgument": "",
       "allowPadding": true,
-      "name": "Dt",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "Specifies the name of the input table column that contains the date and time of the trade. The default value is 'dt'.",
-      "description": "Specifies the name of the input table column that contains the date and time of the trade. The default value is 'dt'.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "date.time",
-      "useInR": true,
-      "rOrderNum": 4
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the input table column that contains the date and time of the trade. The default value is 'dt'."
     },
     {
-      "defaultValue": 0,
+      "name": "TimeInterval",
+      "upperBoundType": "INCLUSIVE",
       "lowerBound": 0,
+      "useInR": true,
+      "rName": "time.interval",
+      "datatype": "INTEGER",
+      "defaultValue": 0,
+      "rOrderNum": 5,
+      "allowsLists": false,
       "upperBound": 2147483647,
       "lowerBoundType": "INCLUSIVE",
-      "upperBoundType": "INCLUSIVE",
-      "allowNaN": false,
-      "name": "TimeInterval",
-      "alternateNames": [],
       "isRequired": false,
       "rDescription": "Specifies the number of seconds in each time interval. The default value is 0, which makes each row an interval, causing the function to calculate no averages.",
-      "description": "Specifies the number of seconds in each time interval. The default value is 0, which makes each row an interval, causing the function to calculate no averages.",
-      "datatype": "INTEGER",
-      "allowsLists": false,
-      "rName": "time.interval",
-      "useInR": true,
-      "rOrderNum": 5
+      "alternateNames": [],
+      "allowNaN": false,
+      "description": "Specifies the number of seconds in each time interval. The default value is 0, which makes each row an interval, causing the function to calculate no averages."
     }
   ]
 }

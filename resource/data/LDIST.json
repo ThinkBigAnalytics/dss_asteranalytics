@@ -10,158 +10,158 @@
   "long_description": "Computes the Levenshtein distance between words in target column and each source column. User can specify a maximum distance.  See implementation at http://www.merriampark.com/ld.htm",
   "input_tables": [
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "input",
+      "rName": "data",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 1,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "Table containing the input data.",
       "requiredInputKind": [
         "PartitionByAny"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "input",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "Table containing the input data.",
-      "description": "Table containing the input data.",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "data",
-      "useInR": true,
-      "rOrderNum": 1
+      "description": "Table containing the input data."
     }
   ],
   "argument_clauses": [
     {
+      "name": "TargetColumn",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "target.column",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "input"
       ],
+      "rOrderNum": 2,
       "checkDuplicate": true,
-      "allowedTypes": [],
-      "allowedTypeGroups": [
-        "ALL"
-      ],
+      "isRequired": true,
+      "rDescription": "Specifies the name of the input column that contains the target text.",
       "requiredLength": 1,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "TargetColumn",
       "alternateNames": [
         "TARGET"
       ],
-      "isRequired": true,
-      "rDescription": "Specifies the name of the input column that contains the target text.",
-      "description": "Specifies the name of the input column that contains the target text.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "target.column",
-      "useInR": true,
-      "rOrderNum": 2
-    },
-    {
-      "targetTable": [
-        "input"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "matchLengthOfArgument": "",
       "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the input column that contains the target text."
+    },
+    {
       "name": "Source",
-      "alternateNames": [],
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "source",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "input"
+      ],
+      "rOrderNum": 3,
+      "checkDuplicate": true,
       "isRequired": true,
       "rDescription": "Specifies the names of the input columns that contain the source text.",
-      "description": "Specifies the names of the input columns that contain the source text.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "source",
-      "useInR": true,
-      "rOrderNum": 3
-    },
-    {
-      "targetTable": [
-        "input"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
+      "alternateNames": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "matchLengthOfArgument": "",
       "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the names of the input columns that contain the source text."
+    },
+    {
       "name": "Accumulate",
-      "alternateNames": [],
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "accumulate",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "input"
+      ],
+      "rOrderNum": 8,
+      "checkDuplicate": true,
       "isRequired": false,
       "rDescription": "Specifies the names of the input columns to copy to the output table.",
-      "description": "Specifies the names of the input columns to copy to the output table.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "accumulate",
-      "useInR": true,
-      "rOrderNum": 8
+      "alternateNames": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the names of the input columns to copy to the output table."
     },
     {
+      "name": "Threshold",
+      "upperBoundType": "INCLUSIVE",
       "lowerBound": 1,
+      "useInR": true,
+      "rName": "threshold",
+      "datatype": "INTEGER",
+      "allowNaN": false,
+      "rOrderNum": 4,
+      "allowsLists": false,
       "upperBound": 2147483647,
       "lowerBoundType": "INCLUSIVE",
-      "upperBoundType": "INCLUSIVE",
-      "allowNaN": false,
-      "name": "Threshold",
-      "alternateNames": [],
       "isRequired": false,
       "rDescription": "Specifies the value that determines whether to return the Levenshtein distance for a source-target pair. The threshold must a positive integer. The function returns the Levenshtein distance for a pair if it is less than or equal to threshold; otherwise, the function returns -1. By default, the function returns the Levenshtein distance of every pair.",
-      "description": "Specifies the value that determines whether to return the Levenshtein distance for a source-target pair. The threshold must a positive integer. The function returns the Levenshtein distance for a pair if it is less than or equal to threshold; otherwise, the function returns -1. By default, the function returns the Levenshtein distance of every pair.",
-      "datatype": "INTEGER",
-      "allowsLists": false,
-      "rName": "threshold",
-      "useInR": true,
-      "rOrderNum": 4
+      "alternateNames": [],
+      "description": "Specifies the value that determines whether to return the Levenshtein distance for a source-target pair. The threshold must a positive integer. The function returns the Levenshtein distance for a pair if it is less than or equal to threshold; otherwise, the function returns -1. By default, the function returns the Levenshtein distance of every pair."
     },
     {
-      "permittedValues": [],
-      "defaultValue": "distance",
-      "isOutputColumn": true,
       "name": "OutputColumnName",
-      "alternateNames": [],
+      "allowsLists": false,
+      "isOutputColumn": true,
+      "useInR": true,
+      "datatype": "STRING",
+      "defaultValue": "distance",
+      "rOrderNum": 5,
+      "rName": "output.column",
       "isRequired": false,
       "rDescription": "Specifies the name of the output column that contains the Levenshtein distance for a source-target pair. The default value is 'distance'.",
-      "description": "Specifies the name of the output column that contains the Levenshtein distance for a source-target pair. The default value is 'distance'.",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "output.column",
-      "useInR": true,
-      "rOrderNum": 5
+      "alternateNames": [],
+      "permittedValues": [],
+      "description": "Specifies the name of the output column that contains the Levenshtein distance for a source-target pair. The default value is 'distance'."
     },
     {
-      "permittedValues": [],
-      "defaultValue": "target",
-      "isOutputColumn": true,
       "name": "OutputTargetColumn",
+      "allowsLists": false,
+      "isOutputColumn": true,
+      "useInR": true,
+      "datatype": "STRING",
+      "defaultValue": "target",
+      "rOrderNum": 6,
+      "rName": "output.target",
+      "isRequired": false,
+      "rDescription": "Specifies the name of the output column that contains the compared target text. The default value is 'target'.",
       "alternateNames": [
         "TargetColumnName"
       ],
-      "isRequired": false,
-      "rDescription": "Specifies the name of the output column that contains the compared target text. The default value is 'target'.",
-      "description": "Specifies the name of the output column that contains the compared target text. The default value is 'target'.",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "output.target",
-      "useInR": true,
-      "rOrderNum": 6
+      "permittedValues": [],
+      "description": "Specifies the name of the output column that contains the compared target text. The default value is 'target'."
     },
     {
-      "permittedValues": [],
-      "defaultValue": "source",
-      "isOutputColumn": true,
       "name": "PrintSourceColumn",
+      "allowsLists": false,
+      "isOutputColumn": true,
+      "useInR": true,
+      "datatype": "STRING",
+      "defaultValue": "source",
+      "rOrderNum": 7,
+      "rName": "print.source",
+      "isRequired": false,
+      "rDescription": "Specifies the name of the output column that contains the compared source text. The default value is 'source'.",
       "alternateNames": [
         "SourceColumnName"
       ],
-      "isRequired": false,
-      "rDescription": "Specifies the name of the output column that contains the compared source text. The default value is 'source'.",
-      "description": "Specifies the name of the output column that contains the compared source text. The default value is 'source'.",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "print.source",
-      "useInR": true,
-      "rOrderNum": 7
+      "permittedValues": [],
+      "description": "Specifies the name of the output column that contains the compared source text. The default value is 'source'."
     }
   ]
 }

@@ -3,7 +3,7 @@
   "json_schema_minor_version": "2",
   "json_content_version": "1",
   "function_name": "Single_Tree_Predict",
-  "function_version": "1.6",
+  "function_version": "1.7",
   "function_type": "driver",
   "function_r_name": "aa.single.tree.predict",
   "ref_function_r_name": "aa.single.tree.drive",
@@ -11,233 +11,123 @@
   "long_description": "This function applies a single decision tree model for predicting each of the input test data items.",
   "input_tables": [
     {
-      "requiredInputKind": [
-        "PartitionByKey"
-      ],
-      "isOrdered": true,
-      "partitionByOne": false,
-      "name": "AttributeTable",
-      "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "Specifies the name of the table containing the attribute names and the values",
-      "description": "Specifies the name of the table containing the attribute names and the values",
-      "datatype": "TABLE_ALIAS",
+      "name": "ModelTableName",
       "allowsLists": false,
-      "rName": "newdata",
       "useInR": true,
-      "rOrderNum": 2
-    },
-    {
-      "requiredInputKind": [
-        "Dimension"
-      ],
+      "description": "Specifies the name of the previously built model table on which to base the output probabilities.",
+      "isRequired": false,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": -1,
+      "rName": "output.response.model",
+      "alternateNames": [],
+      "rDescription": "Indicates whether to include model object, default value is FALSE.",
+      "requiredInputKind": [],
       "isOrdered": false,
-      "partitionByOne": false,
-      "name": "ModelTable",
-      "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "Specifies the name of the table containing the output model from single_tree_drive",
-      "description": "Specifies the name of the table containing the output model from single_tree_drive",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "object",
-      "useInR": true,
-      "rOrderNum": 1
+      "partitionByOne": false
     }
   ],
   "argument_clauses": [
     {
-      "permittedValues": [],
-      "isOutputColumn": false,
-      "name": "Domain",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "The address of the Queen. The host parameter is the Aster Database Queen’s IP address or hostname.",
-      "description": "The address of the Queen. The host parameter is the Aster Database Queen’s IP address or hostname.",
-      "datatype": "DRIVER",
-      "allowsLists": false,
-      "useInR": false,
-      "rOrderNum": 0
-    },
-    {
-      "permittedValues": [],
-      "isOutputColumn": false,
-      "name": "Database",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "The name of the database where the input table is located.",
-      "description": "The name of the database where the input table is located.",
-      "datatype": "DRIVER",
-      "allowsLists": false,
-      "useInR": false,
-      "rOrderNum": 0
-    },
-    {
-      "permittedValues": [],
-      "isOutputColumn": false,
-      "name": "UserId",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "The Aster Database user name of the user running this function.",
-      "description": "The Aster Database user name of the user running this function.",
-      "datatype": "DRIVER",
-      "allowsLists": false,
-      "useInR": false,
-      "rOrderNum": 0
-    },
-    {
-      "permittedValues": [],
-      "isOutputColumn": false,
-      "name": "Password",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "The Aster Database password of the user.",
-      "description": "The Aster Database password of the user.",
-      "datatype": "DRIVER",
-      "allowsLists": false,
-      "useInR": false,
-      "rOrderNum": 0
-    },
-    {
-      "permittedValues": [],
-      "isOutputColumn": false,
-      "name": "SSLSettings",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "A string that includes all the SSL settings, except the password for the truststore.",
-      "description": "A string that includes all the SSL settings, except the password for the truststore.",
-      "datatype": "DRIVER",
-      "allowsLists": false,
-      "useInR": false,
-      "rOrderNum": 0
-    },
-    {
-      "permittedValues": [],
-      "isOutputColumn": false,
-      "name": "SSLTrustStorePassword",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "The password for the SSL truststore.",
-      "description": "The password for the SSL truststore.",
-      "datatype": "DRIVER",
-      "allowsLists": false,
-      "useInR": false,
-      "rOrderNum": 0
-    },
-    {
-      "isOutputTable": false,
-      "name": "ModelTableName",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "Indicates whether to include model object, default value is FALSE.",
-      "description": "Specifies the name of the previously built model table on which to base the output probabilities.",
-      "datatype": "TABLE_NAME",
-      "allowsLists": false,
-      "rName": "output.response.model",
+      "name": "AttrTableGroupbyColumns",
+      "allowsLists": true,
       "useInR": true,
-      "rOrderNum": -1
-    },
-    {
+      "rName": "attr.table.groupby.columns",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "AttributeTable"
       ],
+      "rOrderNum": 3,
       "checkDuplicate": true,
-      "allowedTypes": [],
-      "allowedTypeGroups": [
-        "ALL"
-      ],
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "AttrTableGroupbyColumns",
-      "alternateNames": [],
       "isRequired": true,
       "rDescription": "Specifies the names of the columns on which attribute_table is partitioned. Each partition contains one attribute of the input data.",
-      "description": "Specifies the names of the columns on which attribute_table is partitioned. Each partition contains one attribute of the input data.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "attr.table.groupby.columns",
-      "useInR": true,
-      "rOrderNum": 3
-    },
-    {
-      "targetTable": [
-        "AttributeTable"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
+      "alternateNames": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "matchLengthOfArgument": "",
       "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the names of the columns on which attribute_table is partitioned. Each partition contains one attribute of the input data."
+    },
+    {
       "name": "AttrTablePidColumns",
-      "alternateNames": [],
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "attr.table.pid.columns",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "AttributeTable"
+      ],
+      "rOrderNum": 4,
+      "checkDuplicate": true,
       "isRequired": true,
       "rDescription": "Specifies the names of the columns that define the data point identifiers. ",
-      "description": "Specifies the names of the columns that define the data point identifiers. ",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "attr.table.pid.columns",
-      "useInR": true,
-      "rOrderNum": 4
-    },
-    {
-      "targetTable": [
-        "AttributeTable"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
+      "alternateNames": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "requiredLength": 1,
-      "matchLengthOfArgument": "",
       "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the names of the columns that define the data point identifiers. "
+    },
+    {
       "name": "AttrTableValColumn",
-      "alternateNames": [],
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "attr.table.val.column",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "AttributeTable"
+      ],
+      "rOrderNum": 5,
+      "checkDuplicate": true,
       "isRequired": true,
       "rDescription": " Specifies the name of the column that contains the input values.",
-      "description": " Specifies the name of the column that contains the input values.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "attr.table.val.column",
-      "useInR": true,
-      "rOrderNum": 5
-    },
-    {
-      "targetTable": [
-        "AttributeTable"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
+      "requiredLength": 1,
+      "alternateNames": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "matchLengthOfArgument": "",
       "allowPadding": true,
-      "name": "Accumulate",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "Specifies the names of input_table columns to copy to the output table.",
-      "description": "Specifies the names of input_table columns to copy to the output table.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "accumulate",
-      "useInR": true,
-      "rOrderNum": 7
+      "matchLengthOfArgument": "",
+      "description": " Specifies the name of the column that contains the input values."
     },
     {
-      "defaultValue": false,
-      "name": "OutputResponseProbDist",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "Specifies whether to output probabilities. If this value is true, you must specify the model on which to base the output probabilities, either in this argument or in the “output.response.model” argument. The model table is the name of a previously built model object.",
-      "description": "Specifies whether to output probabilities. If this value is true, you must specify the model on which to base the output probabilities, either in this argument or in the ModelTableName argument. The model_table is the name of a previously built model table.",
-      "datatype": "BOOLEAN",
-      "allowsLists": false,
-      "rName": "output.response.probdist",
+      "name": "Accumulate",
+      "allowsLists": true,
       "useInR": true,
-      "rOrderNum": 6
+      "rName": "accumulate",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "AttributeTable"
+      ],
+      "rOrderNum": 7,
+      "checkDuplicate": true,
+      "isRequired": false,
+      "rDescription": "Specifies the names of input_table columns to copy to the output table.",
+      "alternateNames": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the names of input_table columns to copy to the output table."
+    },
+    {
+      "name": "OutputResponseProbDist",
+      "allowsLists": false,
+      "useInR": true,
+      "datatype": "BOOLEAN",
+      "defaultValue": false,
+      "rOrderNum": 6,
+      "rName": "output.response.probdist",
+      "isRequired": false,
+      "rDescription": "Specifies whether to output probabilities. If this value is true, you must specify the model on which to base the output probabilities, either in this argument or in the \u201coutput.response.model\u201d argument. The model table is the name of a previously built model object.",
+      "alternateNames": [],
+      "description": "Specifies whether to output probabilities. If this value is true, you must specify the model on which to base the output probabilities, either in this argument or in the ModelTableName argument. The model_table is the name of a previously built model table."
     }
   ]
 }

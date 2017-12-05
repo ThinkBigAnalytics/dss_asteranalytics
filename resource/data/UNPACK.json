@@ -10,168 +10,168 @@
   "long_description": "Takes a single column with packed data and transforms it into a table with multiple columns, as specified by the user's parameters.",
   "input_tables": [
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "input",
+      "rName": "data",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 1,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "The table containing the input attributes.",
       "requiredInputKind": [
         "PartitionByAny"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "input",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "The table containing the input attributes.",
-      "description": "The table containing the input attributes.",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "data",
-      "useInR": true,
-      "rOrderNum": 1
+      "description": "The table containing the input attributes."
     }
   ],
   "argument_clauses": [
     {
+      "name": "InputColumn",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "input.column",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "input"
       ],
+      "rOrderNum": 2,
       "checkDuplicate": true,
-      "allowedTypes": [],
-      "allowedTypeGroups": [
-        "STRING"
-      ],
+      "isRequired": true,
+      "rDescription": " Specifies the name of the input column that contains the packed data.",
       "requiredLength": 1,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "InputColumn",
       "alternateNames": [
         "DataColumn"
       ],
-      "isRequired": true,
-      "rDescription": " Specifies the name of the input column that contains the packed data.",
-      "description": " Specifies the name of the input column that contains the packed data.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "input.column",
-      "useInR": true,
-      "rOrderNum": 2
+      "allowedTypeGroups": [
+        "STRING"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": " Specifies the name of the input column that contains the packed data."
     },
     {
-      "permittedValues": [],
-      "isOutputColumn": true,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
       "name": "OutputColumns",
+      "allowsLists": true,
+      "isOutputColumn": true,
+      "useInR": true,
+      "datatype": "STRING",
+      "rOrderNum": 3,
+      "rName": "output.columns",
+      "isRequired": true,
+      "rDescription": "Specifies the names to give to the output columns, in the order in which the corresponding virtual columns appear in input_column.",
       "alternateNames": [
         "ColumnNames"
       ],
-      "isRequired": true,
-      "rDescription": "Specifies the names to give to the output columns, in the order in which the corresponding virtual columns appear in input_column.",
-      "description": "Specifies the names to give to the output columns, in the order in which the corresponding virtual columns appear in input_column.",
-      "datatype": "STRING",
-      "allowsLists": true,
-      "rName": "output.columns",
-      "useInR": true,
-      "rOrderNum": 3
+      "permittedValues": [],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the names to give to the output columns, in the order in which the corresponding virtual columns appear in input_column."
     },
     {
-      "permittedValues": [],
-      "isOutputColumn": false,
-      "matchLengthOfArgument": "OutputColumns",
-      "allowPadding": true,
       "name": "OutputDataTypes",
+      "allowsLists": true,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "rOrderNum": 4,
+      "rName": "output.datatypes",
+      "isRequired": true,
+      "rDescription": "Specifies the datatypes of the unpacked output columns. If output.datatypes specifies only one value and output.columns specifies multiple columns, then the specified value applies to every output_column. If output.datatypes specifies multiple values, then it must specify a value for each output_column. The nth datatype corresponds to the nth output_column.",
       "alternateNames": [
         "ColumnTypes"
       ],
-      "isRequired": true,
-      "rDescription": "Specifies the datatypes of the unpacked output columns. If output.datatypes specifies only one value and output.columns specifies multiple columns, then the specified value applies to every output_column. If output.datatypes specifies multiple values, then it must specify a value for each output_column. The nth datatype corresponds to the nth output_column.",
-      "description": "Specifies the datatypes of the unpacked output columns. If OutputDataTypes specifies only one value and OutputColumns specifies multiple columns, then the specified value applies to every output_column. If OutputDataTypes specifies multiple values, then it must specify a value for each output_column. The nth datatype corresponds to the nth output_column.",
-      "datatype": "STRING",
-      "allowsLists": true,
-      "rName": "output.datatypes",
-      "useInR": true,
-      "rOrderNum": 4
+      "permittedValues": [],
+      "allowPadding": true,
+      "matchLengthOfArgument": "OutputColumns",
+      "description": "Specifies the datatypes of the unpacked output columns. If OutputDataTypes specifies only one value and OutputColumns specifies multiple columns, then the specified value applies to every output_column. If OutputDataTypes specifies multiple values, then it must specify a value for each output_column. The nth datatype corresponds to the nth output_column."
     },
     {
-      "permittedValues": [],
-      "defaultValue": ",",
-      "isOutputColumn": false,
       "name": "Delimiter",
+      "allowsLists": false,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "defaultValue": ",",
+      "rOrderNum": 5,
+      "rName": "delimiter",
+      "isRequired": false,
+      "rDescription": " Specifies the delimiter (a string) that separates the virtual columns in the packed data. If delimiter contains a character that is a symbol in a regular expression\u2014such as an asterisk (*) or pipe character (|)\u2014precede it with two escape characters. For example, if the delimiter is the pipe character, specify '\\|'. The default delimiter is comma (,). If the virtual columns are separated by a delimiter, then specify the delimiter with this argument; otherwise, specify the column.length argument. Do not specify both this argument and the column.length argument.",
       "alternateNames": [
         "ColumnDelimiter"
       ],
-      "isRequired": false,
-      "rDescription": " Specifies the delimiter (a string) that separates the virtual columns in the packed data. If delimiter contains a character that is a symbol in a regular expression—such as an asterisk (*) or pipe character (|)—precede it with two escape characters. For example, if the delimiter is the pipe character, specify '\\|'. The default delimiter is comma (,). If the virtual columns are separated by a delimiter, then specify the delimiter with this argument; otherwise, specify the column.length argument. Do not specify both this argument and the column.length argument.",
-      "description": "Specifies the delimiter (a string) that separates the virtual columns in the packed data. If delimiter contains a character that is a symbol in a regular expression—such as an asterisk (*) or pipe character (|)—precede it with two escape characters. For example, if the delimiter is the pipe character, specify '\\|'. The default delimiter is comma (,). If the virtual columns are separated by a delimiter, then specify the delimiter with this argument; otherwise, specify the ColumnLength argument. Do not specify both this argument and the ColumnLength argument.",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "delimiter",
-      "useInR": true,
-      "rOrderNum": 5
+      "permittedValues": [],
+      "description": "Specifies the delimiter (a string) that separates the virtual columns in the packed data. If delimiter contains a character that is a symbol in a regular expression\u2014such as an asterisk (*) or pipe character (|)\u2014precede it with two escape characters. For example, if the delimiter is the pipe character, specify '\\|'. The default delimiter is comma (,). If the virtual columns are separated by a delimiter, then specify the delimiter with this argument; otherwise, specify the ColumnLength argument. Do not specify both this argument and the ColumnLength argument."
     },
     {
-      "permittedValues": [],
-      "isOutputColumn": false,
-      "matchLengthOfArgument": "OutputColumns",
-      "allowPadding": true,
       "name": "ColumnLength",
-      "alternateNames": [],
+      "allowsLists": true,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "rOrderNum": 6,
+      "rName": "column.length",
       "isRequired": false,
       "rDescription": "Specifies the lengths of the virtual columns; therefore, to use this argument, you must know the length of each virtual column. If column.length specifies only one value and output.columns specifies multiple columns, then the specified value applies to every output_column. If column.length specifies multiple values, then it must specify a value for each output_column. The nth datatype corresponds to the nth output_column. However, the last column_name can be an asterisk (*), which represents a single virtual column that contains the remaining data. For example, if the first three virtual columns have the lengths 2, 1, and 3, and all remaining data belongs to the fourth virtual column, you can specify column.length ('2', '1', '3', *). If you specify this argument, you must omit the delimiter argument.",
-      "description": "Specifies the lengths of the virtual columns; therefore, to use this argument, you must know the length of each virtual column. If ColumnLength specifies only one value and OutputColumns specifies multiple columns, then the specified value applies to every output_column. If ColumnLength specifies multiple values, then it must specify a value for each output_column. The nth datatype corresponds to the nth output_column. However, the last column_name can be an asterisk (*), which represents a single virtual column that contains the remaining data. For example, if the first three virtual columns have the lengths 2, 1, and 3, and all remaining data belongs to the fourth virtual column, you can specify ColumnLength ('2', '1', '3', *). If you specify this argument, you must omit the Delimiter argument.",
-      "datatype": "STRING",
-      "allowsLists": true,
-      "rName": "column.length",
-      "useInR": true,
-      "rOrderNum": 6
+      "alternateNames": [],
+      "permittedValues": [],
+      "allowPadding": true,
+      "matchLengthOfArgument": "OutputColumns",
+      "description": "Specifies the lengths of the virtual columns; therefore, to use this argument, you must know the length of each virtual column. If ColumnLength specifies only one value and OutputColumns specifies multiple columns, then the specified value applies to every output_column. If ColumnLength specifies multiple values, then it must specify a value for each output_column. The nth datatype corresponds to the nth output_column. However, the last column_name can be an asterisk (*), which represents a single virtual column that contains the remaining data. For example, if the first three virtual columns have the lengths 2, 1, and 3, and all remaining data belongs to the fourth virtual column, you can specify ColumnLength ('2', '1', '3', *). If you specify this argument, you must omit the Delimiter argument."
     },
     {
-      "permittedValues": [],
-      "defaultValue": "(.*)",
-      "isOutputColumn": false,
       "name": "Regex",
+      "allowsLists": false,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "defaultValue": "(.*)",
+      "rOrderNum": 7,
+      "rName": "regex",
+      "isRequired": false,
+      "rDescription": "Specifies a regular expression that describes a row of packed data, enabling the function to find the data values. A row of packed data contains one data value for each virtual column, but the row might also contain other information (such as the virtual column name). In the regular_expression, each data value is enclosed in parentheses. For example, suppose that the packed data has two virtual columns, age and sex, and that one row of packed data is: age:34,sex:male The regular_expression that describes the row is '.*:(.*)'. The '.*:' matches the virtual column names, age and sex, and the '(.*)' matches the values, 34 and male. The default regular_expression is '(.*)' which matches the whole string (between delimiters, if any). When applied to the preceding sample row, the default regular_expression causes the function to return 'age:34' and 'sex:male' as data values. To represent multiple data groups in regular_expression, use multiple pairs of parentheses. By default, the last data group in regular_expression represents the data value (other data groups are assumed to be virtual column names or unwanted data). If a different data group represents the data value, specify its group number with the regex.set argument.",
       "alternateNames": [
         "DataPattern"
       ],
-      "isRequired": false,
-      "rDescription": "Specifies a regular expression that describes a row of packed data, enabling the function to find the data values. A row of packed data contains one data value for each virtual column, but the row might also contain other information (such as the virtual column name). In the regular_expression, each data value is enclosed in parentheses. For example, suppose that the packed data has two virtual columns, age and sex, and that one row of packed data is: age:34,sex:male The regular_expression that describes the row is '.*:(.*)'. The '.*:' matches the virtual column names, age and sex, and the '(.*)' matches the values, 34 and male. The default regular_expression is '(.*)' which matches the whole string (between delimiters, if any). When applied to the preceding sample row, the default regular_expression causes the function to return 'age:34' and 'sex:male' as data values. To represent multiple data groups in regular_expression, use multiple pairs of parentheses. By default, the last data group in regular_expression represents the data value (other data groups are assumed to be virtual column names or unwanted data). If a different data group represents the data value, specify its group number with the regex.set argument.",
-      "description": "Specifies a regular expression that describes a row of packed data, enabling the function to find the data values. A row of packed data contains one data value for each virtual column, but the row might also contain other information (such as the virtual column name). In the regular_expression, each data value is enclosed in parentheses. For example, suppose that the packed data has two virtual columns, age and sex, and that one row of packed data is: age:34,sex:male The regular_expression that describes the row is '.*:(.*)'. The '.*:' matches the virtual column names, age and sex, and the '(.*)' matches the values, 34 and male. The default regular_expression is '(.*)' which matches the whole string (between delimiters, if any). When applied to the preceding sample row, the default regular_expression causes the function to return 'age:34' and 'sex:male' as data values. To represent multiple data groups in regular_expression, use multiple pairs of parentheses. Bydefault, the last data group in regular_expression represents the data value (other data groups are assumed to be virtual column names or unwanted data). If a different data group represents the data value, specify its group number with the RegexSet argument.",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "regex",
-      "useInR": true,
-      "rOrderNum": 7
+      "permittedValues": [],
+      "description": "Specifies a regular expression that describes a row of packed data, enabling the function to find the data values. A row of packed data contains one data value for each virtual column, but the row might also contain other information (such as the virtual column name). In the regular_expression, each data value is enclosed in parentheses. For example, suppose that the packed data has two virtual columns, age and sex, and that one row of packed data is: age:34,sex:male The regular_expression that describes the row is '.*:(.*)'. The '.*:' matches the virtual column names, age and sex, and the '(.*)' matches the values, 34 and male. The default regular_expression is '(.*)' which matches the whole string (between delimiters, if any). When applied to the preceding sample row, the default regular_expression causes the function to return 'age:34' and 'sex:male' as data values. To represent multiple data groups in regular_expression, use multiple pairs of parentheses. Bydefault, the last data group in regular_expression represents the data value (other data groups are assumed to be virtual column names or unwanted data). If a different data group represents the data value, specify its group number with the RegexSet argument."
     },
     {
+      "name": "RegexSet",
+      "upperBoundType": "INCLUSIVE",
       "lowerBound": -2147483648,
+      "useInR": true,
+      "rName": "regex.set",
+      "datatype": "INTEGER",
+      "allowNaN": false,
+      "rOrderNum": 8,
+      "allowsLists": false,
       "upperBound": 2147483647,
       "lowerBoundType": "INCLUSIVE",
-      "upperBoundType": "INCLUSIVE",
-      "allowNaN": false,
-      "name": "RegexSet",
+      "isRequired": false,
+      "rDescription": "Specifies the ordinal number of the data group in regular_expression that represents the data value in a virtual column. By default, the last data group in regular_expression represents the data value. For example, suppose that regular_expression is: '([a-zA-Z]*):(.*)' If group_number is '1', then '([a-zA-Z]*)' represents the data value. If group_number is '2', then '(.*)' represents the data value.",
       "alternateNames": [
         "DataGroup"
       ],
-      "isRequired": false,
-      "rDescription": "Specifies the ordinal number of the data group in regular_expression that represents the data value in a virtual column. By default, the last data group in regular_expression represents the data value. For example, suppose that regular_expression is: '([a-zA-Z]*):(.*)' If group_number is '1', then '([a-zA-Z]*)' represents the data value. If group_number is '2', then '(.*)' represents the data value.",
-      "description": "Specifies the ordinal number of the data group in regular_expression that represents the data value in a virtual column. By default, the last data group in regular_expression represents the data value. For example, suppose that regular_expression is: '([a-zA-Z]*):(.*)' If group_number is '1', then '([a-zA-Z]*)' represents the data value. If group_number is '2', then '(.*)' represents the data value.",
-      "datatype": "INTEGER",
-      "allowsLists": false,
-      "rName": "regex.set",
-      "useInR": true,
-      "rOrderNum": 8
+      "description": "Specifies the ordinal number of the data group in regular_expression that represents the data value in a virtual column. By default, the last data group in regular_expression represents the data value. For example, suppose that regular_expression is: '([a-zA-Z]*):(.*)' If group_number is '1', then '([a-zA-Z]*)' represents the data value. If group_number is '2', then '(.*)' represents the data value."
     },
     {
-      "defaultValue": false,
       "name": "Exception",
+      "allowsLists": false,
+      "useInR": true,
+      "datatype": "BOOLEAN",
+      "defaultValue": false,
+      "rOrderNum": 9,
+      "rName": "exception",
+      "isRequired": false,
+      "rDescription": "Specifies whether the function ignores rows that contain invalid data; that is, continues without outputting them. The default value is 'false', which causes the function to fail if it encounters a row with invalid data.",
       "alternateNames": [
         "IgnoreBadRows"
       ],
-      "isRequired": false,
-      "rDescription": "Specifies whether the function ignores rows that contain invalid data; that is, continues without outputting them. The default value is 'false', which causes the function to fail if it encounters a row with invalid data.",
-      "description": "Specifies whether the function ignores rows that contain invalid data; that is, continues without outputting them. The default value is 'false', which causes the function to fail if it encounters a row with invalid data.",
-      "datatype": "BOOLEAN",
-      "allowsLists": false,
-      "rName": "exception",
-      "useInR": true,
-      "rOrderNum": 9
+      "description": "Specifies whether the function ignores rows that contain invalid data; that is, continues without outputting them. The default value is 'false', which causes the function to fail if it encounters a row with invalid data."
     }
   ]
 }

@@ -10,178 +10,178 @@
   "long_description": "URIPACK can reassemble URI split into their constituent parks using URIUNPACK. Values included in the columns in the argument QUERIES are converted to a query string of the form '?query1=value1&query2=value2'. If the optional arguments SCHEME_COLUMN, HOST_COLUMN, PATH_COLUMN, and FRAGMENT_COLUMN are included, the output URI will be of the form 'scheme://host/path?querystring#fragment'.",
   "input_tables": [
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "input",
+      "rName": "data",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 1,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "The table containing the URIs to be packed.",
       "requiredInputKind": [
         "PartitionByAny"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "input",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "The table containing the URIs to be packed.",
-      "description": "The table containing the URIs to be packed.",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "data",
-      "useInR": true,
-      "rOrderNum": 1
+      "description": "The table containing the URIs to be packed."
     }
   ],
   "argument_clauses": [
     {
+      "name": "Queries",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "queries",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "input"
       ],
+      "rOrderNum": 2,
       "checkDuplicate": true,
-      "allowedTypes": [],
-      "allowedTypeGroups": [
-        "STRING"
-      ],
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "Queries",
-      "alternateNames": [],
       "isRequired": false,
       "rDescription": "Specifies the names of the query parameters whose values are to be included in the URIs",
-      "description": "Specifies the names of the query parameters whose values are to be included in the URIs",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "queries",
-      "useInR": true,
-      "rOrderNum": 2
-    },
-    {
-      "targetTable": [
-        "input"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
+      "alternateNames": [],
       "allowedTypeGroups": [
         "STRING"
       ],
-      "requiredLength": 1,
-      "matchLengthOfArgument": "",
       "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the names of the query parameters whose values are to be included in the URIs"
+    },
+    {
       "name": "SchemeColumn",
-      "alternateNames": [],
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "scheme.column",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "input"
+      ],
+      "rOrderNum": 3,
+      "checkDuplicate": true,
       "isRequired": false,
       "rDescription": "Specifies the name of the input table column that contains the URI scheme.",
-      "description": "Specifies the name of the input table column that contains the URI scheme.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "scheme.column",
-      "useInR": true,
-      "rOrderNum": 3
-    },
-    {
-      "targetTable": [
-        "input"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
+      "requiredLength": 1,
+      "alternateNames": [],
       "allowedTypeGroups": [
         "STRING"
       ],
-      "requiredLength": 1,
-      "matchLengthOfArgument": "",
       "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the input table column that contains the URI scheme."
+    },
+    {
       "name": "HostColumn",
-      "alternateNames": [],
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "host.column",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "input"
+      ],
+      "rOrderNum": 4,
+      "checkDuplicate": true,
       "isRequired": false,
       "rDescription": " Specifies the name of the input table column that contains the URI host.",
-      "description": " Specifies the name of the input table column that contains the URI host.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "host.column",
-      "useInR": true,
-      "rOrderNum": 4
-    },
-    {
-      "targetTable": [
-        "input"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
+      "requiredLength": 1,
+      "alternateNames": [],
       "allowedTypeGroups": [
         "STRING"
       ],
-      "requiredLength": 1,
-      "matchLengthOfArgument": "",
       "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": " Specifies the name of the input table column that contains the URI host."
+    },
+    {
       "name": "PathColumn",
-      "alternateNames": [],
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "path.column",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "input"
+      ],
+      "rOrderNum": 5,
+      "checkDuplicate": true,
       "isRequired": false,
       "rDescription": "Specifies the name of the input table column that contains the URI path.",
-      "description": "Specifies the name of the input table column that contains the URI path.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "path.column",
-      "useInR": true,
-      "rOrderNum": 5
-    },
-    {
-      "targetTable": [
-        "input"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
+      "requiredLength": 1,
+      "alternateNames": [],
       "allowedTypeGroups": [
         "STRING"
       ],
-      "requiredLength": 1,
-      "matchLengthOfArgument": "",
       "allowPadding": true,
-      "name": "FragmentColumn",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "Specifies the name of the input table column that contains the URI fragment.",
-      "description": "Specifies the name of the input table column that contains the URI fragment.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "fragment.column",
-      "useInR": true,
-      "rOrderNum": 6
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the input table column that contains the URI path."
     },
     {
+      "name": "FragmentColumn",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "fragment.column",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "input"
       ],
+      "rOrderNum": 6,
       "checkDuplicate": true,
+      "isRequired": false,
+      "rDescription": "Specifies the name of the input table column that contains the URI fragment.",
+      "requiredLength": 1,
+      "alternateNames": [],
+      "allowedTypeGroups": [
+        "STRING"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the input table column that contains the URI fragment."
+    },
+    {
+      "name": "Accumulate",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "accumulate",
       "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "input"
+      ],
+      "rOrderNum": 8,
+      "checkDuplicate": true,
+      "isRequired": false,
+      "rDescription": "Specifies names of the input table columns to copy to the output table.",
+      "alternateNames": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "matchLengthOfArgument": "",
       "allowPadding": true,
-      "name": "Accumulate",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "Specifies names of the input table columns to copy to the output table.",
-      "description": "Specifies names of the input table columns to copy to the output table.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "accumulate",
-      "useInR": true,
-      "rOrderNum": 8
+      "matchLengthOfArgument": "",
+      "description": "Specifies names of the input table columns to copy to the output table."
     },
     {
-      "permittedValues": [],
+      "name": "IgnoreValues",
+      "allowsLists": true,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
       "defaultValue": [
         "null"
       ],
-      "isOutputColumn": false,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "IgnoreValues",
-      "alternateNames": [],
+      "rOrderNum": 7,
+      "rName": "ignore.values",
       "isRequired": false,
       "rDescription": " Specifies a list of (case-insensitive) strings for the function to treat as null values. If you omit this argument, the function treats only the string 'null' as a null value. If you specify this argument, you must specify the string 'null' to have the function treat it as a null value.",
-      "description": " Specifies a list of (case-insensitive) strings for the function to treat as null values. If you omit this argument, the function treats only the string 'null' as a null value. If you specify this argument, you must specify the string 'null' to have the function treat it as a null value.",
-      "datatype": "STRING",
-      "allowsLists": true,
-      "rName": "ignore.values",
-      "useInR": true,
-      "rOrderNum": 7
+      "alternateNames": [],
+      "permittedValues": [],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": " Specifies a list of (case-insensitive) strings for the function to treat as null values. If you omit this argument, the function treats only the string 'null' as a null value. If you specify this argument, you must specify the string 'null' to have the function treat it as a null value."
     }
   ]
 }

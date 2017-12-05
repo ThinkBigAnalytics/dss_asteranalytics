@@ -11,41 +11,41 @@
   "long_description": "This function analyze the model from random forest and outputs a list of which variables are used at which levels in each of the decision trees in the model along with the variable importance.",
   "input_tables": [
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "input",
+      "rName": "object",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 1,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "Specifies the table containing the model data from forest.drive.",
       "requiredInputKind": [
         "PartitionByAny"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "input",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "Specifies the table containing the model data from forest.drive.",
-      "description": "Specifies the table containing the model data from forest_drive.",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "object",
-      "useInR": true,
-      "rOrderNum": 1
+      "description": "Specifies the table containing the model data from forest_drive."
     }
   ],
   "argument_clauses": [
     {
-      "defaultValue": 5,
+      "name": "NumLevels",
+      "upperBoundType": "INCLUSIVE",
       "lowerBound": -2147483648,
+      "useInR": true,
+      "rName": "num.levels",
+      "datatype": "INTEGER",
+      "defaultValue": 5,
+      "rOrderNum": 2,
+      "allowsLists": false,
       "upperBound": 2147483647,
       "lowerBoundType": "INCLUSIVE",
-      "upperBoundType": "INCLUSIVE",
-      "allowNaN": false,
-      "name": "NumLevels",
-      "alternateNames": [],
       "isRequired": false,
       "rDescription": "Specifies number of levels to analyze and the default value is 5.",
-      "description": "Specifies number of levels to analyze and the default value is 5.",
-      "datatype": "INTEGER",
-      "allowsLists": false,
-      "rName": "num.levels",
-      "useInR": true,
-      "rOrderNum": 2
+      "alternateNames": [],
+      "allowNaN": false,
+      "description": "Specifies number of levels to analyze and the default value is 5."
     }
   ]
 }

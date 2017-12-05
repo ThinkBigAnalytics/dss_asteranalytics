@@ -12,77 +12,77 @@
   "partner_function": "Corr_Reduce",
   "input_tables": [
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "input",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 0,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "The input table that contains the Xi and Yi pairs. ",
       "requiredInputKind": [
         "PartitionByAny"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "input",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "The input table that contains the Xi and Yi pairs. ",
-      "description": "The input table that contains the Xi and Yi pairs. ",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "useInR": true,
-      "rOrderNum": 0
+      "description": "The input table that contains the Xi and Yi pairs. "
     }
   ],
   "argument_clauses": [
     {
+      "name": "GroupByColumns",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "group.by.columns",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "input"
       ],
+      "rOrderNum": 0,
       "checkDuplicate": true,
-      "allowedTypes": [],
+      "isRequired": false,
+      "rDescription": "Specifies the names of the input columns that define the group for correlation calculation. By default, all input columns belong to a single group, for which the function calculates correlation. ",
+      "alternateNames": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "matchLengthOfArgument": "",
       "allowPadding": true,
-      "name": "GroupByColumns",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "Specifies the names of the input columns that define the group for correlation calculation. By default, all input columns belong to a single group, for which the function calculates correlation. ",
-      "description": "Specifies the names of the input columns that define the group for correlation calculation. By default, all input columns belong to a single group, for which the function calculates correlation. ",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "group.by.columns",
-      "useInR": true,
-      "rOrderNum": 0
+      "matchLengthOfArgument": "",
+      "description": "Specifies the names of the input columns that define the group for correlation calculation. By default, all input columns belong to a single group, for which the function calculates correlation. "
     },
     {
-      "permittedValues": [],
-      "isOutputColumn": true,
       "name": "KeyName",
-      "alternateNames": [],
+      "allowsLists": false,
+      "isOutputColumn": true,
+      "useInR": true,
+      "datatype": "STRING",
+      "rOrderNum": 0,
+      "rName": "key.name",
       "isRequired": true,
       "rDescription": "Specifies the name for the Corr_Map output table column that contains the correlations, and by which the Corr_Map output table is partitioned. ",
-      "description": "Specifies the name for the Corr_Map output table column that contains the correlations, and by which the Corr_Map output table is partitioned. ",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "key.name",
-      "useInR": true,
-      "rOrderNum": 0
+      "alternateNames": [],
+      "permittedValues": [],
+      "description": "Specifies the name for the Corr_Map output table column that contains the correlations, and by which the Corr_Map output table is partitioned. "
     },
     {
-      "permittedValues": [],
-      "isOutputColumn": false,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
       "name": "TargetColumns",
+      "allowsLists": true,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "rOrderNum": 0,
+      "rName": "target.columns",
+      "isRequired": false,
+      "rDescription": "Specifies pairs of columns for which to calculate correlations. For each column pair, 'col_name1:col_name2', the function calculates the correlation between col_name1 and col_name2. For each column range, '[col_index1:col_index2]', the function calculates the correlation between every pair of columns in the range. For example, if you specify '[1:3]', the function calculates the correlation between the pairs (1,2), (1,3), (2,3),(1,1),(3,3). The mininum value of col_index1 is 0, and col_index1 must be less than col_index2. ",
       "alternateNames": [
         "ColumnPairs",
         "Columns"
       ],
-      "isRequired": false,
-      "rDescription": "Specifies pairs of columns for which to calculate correlations. For each column pair, 'col_name1:col_name2', the function calculates the correlation between col_name1 and col_name2. For each column range, '[col_index1:col_index2]', the function calculates the correlation between every pair of columns in the range. For example, if you specify '[1:3]', the function calculates the correlation between the pairs (1,2), (1,3), (2,3),(1,1),(3,3). The mininum value of col_index1 is 0, and col_index1 must be less than col_index2. ",
-      "description": "Specifies pairs of columns for which to calculate correlations. For each column pair, 'col_name1:col_name2', the function calculates the correlation between col_name1 and col_name2. For each column range, '[col_index1:col_index2]', the function calculates the correlation between every pair of columns in the range. For example, if you specify '[1:3]', the function calculates the correlation between the pairs (1,2), (1,3), (2,3),(1,1),(3,3). The mininum value of col_index1 is 0, and col_index1 must be less than col_index2. ",
-      "datatype": "STRING",
-      "allowsLists": true,
-      "rName": "target.columns",
-      "useInR": true,
-      "rOrderNum": 0
+      "permittedValues": [],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies pairs of columns for which to calculate correlations. For each column pair, 'col_name1:col_name2', the function calculates the correlation between col_name1 and col_name2. For each column range, '[col_index1:col_index2]', the function calculates the correlation between every pair of columns in the range. For example, if you specify '[1:3]', the function calculates the correlation between the pairs (1,2), (1,3), (2,3),(1,1),(3,3). The mininum value of col_index1 is 0, and col_index1 must be less than col_index2. "
     }
   ]
 }

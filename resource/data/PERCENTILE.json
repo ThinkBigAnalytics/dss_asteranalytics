@@ -10,85 +10,85 @@
   "long_description": "This function generates the exact percentiles for a group of numbers. This function works well when the number of groups is big (in the order of > 100s of thousands) and each group is small enough to fit in memory (in the order of 10s of thousands). The exact number depends on the cluster configuration.",
   "input_tables": [
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "input",
+      "rName": "data",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 1,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "The table defining the data on which percentages will be calculated.",
       "requiredInputKind": [
         "PartitionByKey"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "input",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "The table defining the data on which percentages will be calculated.",
-      "description": "The table defining the data on which percentages will be calculated.",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "data",
-      "useInR": true,
-      "rOrderNum": 1
+      "description": "The table defining the data on which percentages will be calculated."
     }
   ],
   "argument_clauses": [
     {
+      "name": "TargetColumns",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "target.columns",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "input"
       ],
+      "rOrderNum": 3,
       "checkDuplicate": true,
-      "allowedTypes": [],
+      "isRequired": true,
+      "rDescription": " Specifies the names of the columns that contain the groups of numbers whose percentiles are to be generated.",
+      "alternateNames": [],
       "allowedTypeGroups": [
         "NUMERIC"
       ],
-      "matchLengthOfArgument": "",
       "allowPadding": true,
-      "name": "TargetColumns",
-      "alternateNames": [],
-      "isRequired": true,
-      "rDescription": " Specifies the names of the columns that contain the groups of numbers whose percentiles are to be generated.",
-      "description": " Specifies the names of the columns that contain the groups of numbers whose percentiles are to be generated.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "target.columns",
-      "useInR": true,
-      "rOrderNum": 3
+      "matchLengthOfArgument": "",
+      "description": " Specifies the names of the columns that contain the groups of numbers whose percentiles are to be generated."
     },
     {
+      "name": "GroupColumns",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "group.columns",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "input"
       ],
+      "rOrderNum": 4,
       "checkDuplicate": true,
-      "allowedTypes": [],
+      "isRequired": false,
+      "rDescription": " Specifies the names of the columns to copy to the output table. Typically, the list of group columns is the same as the list of partition columns.",
+      "alternateNames": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "matchLengthOfArgument": "",
       "allowPadding": true,
-      "name": "GroupColumns",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": " Specifies the names of the columns to copy to the output table. Typically, the list of group columns is the same as the list of partition columns.",
-      "description": " Specifies the names of the columns to copy to the output table. Typically, the list of group columns is the same as the list of partition columns.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "group.columns",
-      "useInR": true,
-      "rOrderNum": 4
+      "matchLengthOfArgument": "",
+      "description": " Specifies the names of the columns to copy to the output table. Typically, the list of group columns is the same as the list of partition columns."
     },
     {
+      "name": "Percentile",
+      "upperBoundType": "INCLUSIVE",
       "lowerBound": 0,
+      "useInR": true,
+      "rName": "percentile",
+      "datatype": "DOUBLE",
+      "rOrderNum": 2,
+      "allowsLists": true,
       "upperBound": 100,
       "lowerBoundType": "INCLUSIVE",
-      "upperBoundType": "INCLUSIVE",
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "Percentile",
-      "alternateNames": [],
       "isRequired": true,
       "rDescription": "Specifies the percentiles for the function to generate.",
-      "description": "Specifies the percentiles for the function to generate.",
-      "datatype": "DOUBLE",
-      "allowsLists": true,
-      "rName": "percentile",
-      "useInR": true,
-      "rOrderNum": 2
+      "alternateNames": [],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the percentiles for the function to generate."
     }
   ]
 }

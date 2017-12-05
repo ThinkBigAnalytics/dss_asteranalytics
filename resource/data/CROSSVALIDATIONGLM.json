@@ -1,0 +1,313 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "2",
+  "json_content_version": "1",
+  "function_name": "CrossValidation",
+  "function_version": "1.2",
+  "function_type": "driver",
+  "function_r_name": "aa.crossvalidation",
+  "short_description": "This function runs cross validation of glm for analytics functions.",
+  "long_description": "This function runs cross validation of glm for analytics functions to evaluate models.",
+  "input_tables": [
+    {
+      "name": "InputTable",
+      "allowsLists": false,
+      "useInR": true,
+      "description": "Specifies the table containing the input data.",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 1,
+      "rName": "data",
+      "alternateNames": [],
+      "rDescription": "Specifies the table containing the input data.",
+      "requiredInputKind": [],
+      "isOrdered": false,
+      "partitionByOne": false
+    }
+  ],
+  "output_tables": [
+    {
+      "name": "CVTable",
+      "allowsLists": false,
+      "useInR": true,
+      "isRequired": false,
+      "datatype": "TABLE_NAME",
+      "defaultValue": "cvtable",
+      "rOrderNum": 100,
+      "rName": "cv.table",
+      "alternateNames": [],
+      "rDescription": "The name of the output table that contains the cross-validation errors for all models. Default is \u2018cvtable\u2019.",
+      "isOutputTable": true,
+      "description": "The name of the output table that contains the cross-validation errors for all models. Default is \u2018cvtable\u2019."
+    }
+  ],
+  "argument_clauses": [
+    {
+      "name": "Function",
+      "allowsLists": false,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "rOrderNum": 2,
+      "rName": "function.name",
+      "isRequired": true,
+      "rDescription": "The name of the function to be cross-validated. Only ta.glm (\u2018glm\u2019) is supported.",
+      "alternateNames": [],
+      "permittedValues": [
+        "GLM"
+      ],
+      "description": "The name of the function to be cross-validated. Only GLM (\u2018glm\u2019) is supported."
+    },
+    {
+      "name": "CVParams",
+      "allowsLists": true,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "rOrderNum": 3,
+      "rName": "cv.params ",
+      "isRequired": true,
+      "rDescription": "The list of the arguments that will be used in cross validation",
+      "alternateNames": [],
+      "permittedValues": [],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "The list of the arguments that will be used in cross validation"
+    },
+    {
+      "name": "FoldNum",
+      "upperBoundType": "INCLUSIVE",
+      "lowerBound": 0,
+      "useInR": true,
+      "rName": "K",
+      "datatype": "INTEGER",
+      "defaultValue": 10,
+      "rOrderNum": 4,
+      "allowsLists": false,
+      "upperBound": 2147483647,
+      "lowerBoundType": "EXCLUSIVE",
+      "isRequired": false,
+      "rDescription": "The value of k in k-fold cross validation. Default is 10.",
+      "alternateNames": [],
+      "allowNaN": false,
+      "description": "The value of k in k-fold cross validation. Default is 10."
+    },
+    {
+      "name": "Metric",
+      "allowsLists": false,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "defaultValue": "AUROC",
+      "rOrderNum": 5,
+      "rName": "metric",
+      "isRequired": false,
+      "rDescription": "Error function used to calculate the cross-validation error. Possible values are \u2018AUROC\u2019 (area under the ROC curve) and \u2018MSE\u2019 (mean squared error). Default is 'AUROC'.",
+      "alternateNames": [],
+      "permittedValues": [
+        "AUROC",
+        "MSE"
+      ],
+      "description": "Error function used to calculate the cross-validation error. Possible values are \u2018AUROC\u2019 (area under the ROC curve) and \u2018MSE\u2019 (mean squared error). Default is 'AUROC'."
+    },
+    {
+      "name": "InputColumns",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "input.columns",
+      "allowedTypes": [],
+      "datatype": "COLUMN_NAMES",
+      "targetTable": [
+        "InputTable"
+      ],
+      "rOrderNum": 6,
+      "checkDuplicate": true,
+      "isRequired": false,
+      "rDescription": "Specifies the names of the columns of the input table that contain the response and predictors like Y,X1,X2,...,Xp.",
+      "alternateNames": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the names of the columns of the input table that contain the response and predictors like Y,X1,X2,...,Xp."
+    },
+    {
+      "name": "CategoricalColumns",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "categorical.columns",
+      "allowedTypes": [],
+      "datatype": "COLUMN_NAMES",
+      "targetTable": [
+        "InputTable"
+      ],
+      "rOrderNum": 7,
+      "checkDuplicate": true,
+      "isRequired": false,
+      "rDescription": "Specifies columnname-value pairs, 'columnname:max_cardinality' or 'columnname:(category [, ...])' or 'columnname'",
+      "alternateNames": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies columnname-value pairs, 'columnname:max_cardinality' or 'columnname:(category [, ...])' or 'columnname'"
+    },
+    {
+      "name": "OutputTable",
+      "allowsLists": true,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "rOrderNum": 9,
+      "rName": "output.table",
+      "isRequired": true,
+      "rDescription": "Specifies the output table.",
+      "alternateNames": [],
+      "permittedValues": [],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the output table."
+    },
+    {
+      "name": "Step",
+      "allowsLists": false,
+      "useInR": true,
+      "datatype": "BOOLEAN",
+      "defaultValue": false,
+      "rOrderNum": 8,
+      "rName": "step",
+      "isRequired": false,
+      "rDescription": "Specifies whether the function runs stepwise glm.",
+      "alternateNames": [],
+      "description": "Specifies whether the function runs stepwise glm."
+    },
+    {
+      "name": "Family",
+      "allowsLists": true,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "defaultValue": [
+        "BINOMIAL"
+      ],
+      "rOrderNum": 10,
+      "rName": "family",
+      "isRequired": false,
+      "rDescription": "Specifies the distribution exponential family.",
+      "alternateNames": [],
+      "permittedValues": [
+        "LOGISTIC",
+        "BINOMIAL",
+        "POISSON",
+        "GAUSSIAN",
+        "GAMMA",
+        "INVERSE_GAUSSIAN",
+        "NEGATIVE_BINOMIAL"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the distribution exponential family."
+    },
+    {
+      "name": "LinkFunction",
+      "allowsLists": true,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "defaultValue": [
+        "CANONICAL"
+      ],
+      "rOrderNum": 11,
+      "rName": "link.function",
+      "isRequired": false,
+      "rDescription": "Specifies the canonical link functions.",
+      "alternateNames": [
+        "Link"
+      ],
+      "permittedValues": [
+        "CANONICAL",
+        "IDENTITY",
+        "INVERSE",
+        "LOG",
+        "COMPLEMENTARY_LOG_LOG",
+        "SQUARE_ROOT",
+        "INVERSE_MU_SQUARED",
+        "LOGIT",
+        "PROBIT",
+        "CAUCHIT"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the canonical link functions."
+    },
+    {
+      "name": "Weight",
+      "allowsLists": true,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "defaultValue": [
+        "1.0"
+      ],
+      "rOrderNum": 12,
+      "rName": "weight",
+      "isRequired": false,
+      "rDescription": "Specifies the name of an input table column that contains the weights to assign to responses.",
+      "alternateNames": [],
+      "permittedValues": [],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of an input table column that contains the weights to assign to responses."
+    },
+    {
+      "name": "Threshold",
+      "allowsLists": true,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "rOrderNum": 13,
+      "rName": "threshold",
+      "isRequired": false,
+      "rDescription": "Specify the convergence threshold.",
+      "alternateNames": [],
+      "permittedValues": [],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specify the convergence threshold."
+    },
+    {
+      "name": "MaxIterNum",
+      "allowsLists": true,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "rOrderNum": 14,
+      "rName": "max.iter.num",
+      "isRequired": false,
+      "rDescription": "Specifies the maximum number of steps the function executes before quitting if the convergence threshold has not been met.",
+      "alternateNames": [],
+      "permittedValues": [],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the maximum number of steps the function executes before quitting if the convergence threshold has not been met."
+    },
+    {
+      "name": "Intercept",
+      "allowsLists": true,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "rOrderNum": 15,
+      "rName": "intercept",
+      "isRequired": false,
+      "rDescription": "Specifies whether an intercept is included in the model.",
+      "alternateNames": [],
+      "permittedValues": [],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies whether an intercept is included in the model."
+    }
+  ]
+}

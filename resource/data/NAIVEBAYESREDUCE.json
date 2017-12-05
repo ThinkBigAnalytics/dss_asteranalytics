@@ -12,20 +12,20 @@
   "partner_function": "NaiveBayesMap",
   "input_tables": [
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "input",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 0,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "This input table is the output of naiveBayesMap function.",
       "requiredInputKind": [
         "PartitionByKey"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "input",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "This input table is the output of naiveBayesMap function.",
-      "description": "This input table is the output of naiveBayesMap function.",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "useInR": true,
-      "rOrderNum": 0
+      "description": "This input table is the output of naiveBayesMap function."
     }
   ]
 }

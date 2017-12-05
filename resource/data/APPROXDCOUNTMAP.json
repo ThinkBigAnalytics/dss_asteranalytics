@@ -12,61 +12,61 @@
   "partner_function": "ApproxDCountReduce",
   "input_tables": [
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "InputTable",
+      "rName": "input.table",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 0,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "Specifies the table containing the input data.",
       "requiredInputKind": [
         "PartitionByAny"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "InputTable",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "Specifies the table containing the input data.",
-      "description": "Specifies the table containing the input data.",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "input.table",
-      "useInR": true,
-      "rOrderNum": 0
+      "description": "Specifies the table containing the input data."
     }
   ],
   "argument_clauses": [
     {
-      "permittedValues": [],
-      "isOutputColumn": false,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
       "name": "InputColumns",
+      "allowsLists": true,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "rOrderNum": 0,
+      "rName": "input.columns",
+      "isRequired": true,
+      "rDescription": "Specifies the columns for which to estimate the number of distinct values.",
       "alternateNames": [
         "Columns"
       ],
-      "isRequired": true,
-      "rDescription": "Specifies the columns for which to estimate the number of distinct values.",
-      "description": "Specifies the columns for which to estimate the number of distinct values.",
-      "datatype": "STRING",
-      "allowsLists": true,
-      "rName": "input.columns",
-      "useInR": true,
-      "rOrderNum": 0
+      "permittedValues": [],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the columns for which to estimate the number of distinct values."
     },
     {
-      "defaultValue": 10,
+      "name": "ErrorRate",
+      "upperBoundType": "INCLUSIVE",
       "lowerBound": 0.05,
+      "useInR": true,
+      "rName": "error.rate",
+      "datatype": "DOUBLE",
+      "defaultValue": 10,
+      "rOrderNum": 0,
+      "allowsLists": false,
       "upperBound": 10,
       "lowerBoundType": "INCLUSIVE",
-      "upperBoundType": "INCLUSIVE",
-      "allowNaN": false,
-      "name": "ErrorRate",
+      "isRequired": false,
+      "rDescription": "Specifies the acceptable error rate, expressed as a decimal (for example, if error_tolerance is 10, then the acceptable error rate is 10%). The error_tolerance must be in the range (5.0E-4, 10]. The default value is 10.",
       "alternateNames": [
         "Error"
       ],
-      "isRequired": false,
-      "rDescription": "Specifies the acceptable error rate, expressed as a decimal (for example, if error_tolerance is 10, then the acceptable error rate is 10%). The error_tolerance must be in the range (5.0E-4, 10]. The default value is 10.",
-      "description": "Specifies the acceptable error rate, expressed as a decimal (for example, if error_tolerance is 10, then the acceptable error rate is 10%). The error_tolerance must be in the range (5.0E-4, 10]. The default value is 10.",
-      "datatype": "DOUBLE",
-      "allowsLists": false,
-      "rName": "error.rate",
-      "useInR": true,
-      "rOrderNum": 0
+      "allowNaN": false,
+      "description": "Specifies the acceptable error rate, expressed as a decimal (for example, if error_tolerance is 10, then the acceptable error rate is 10%). The error_tolerance must be in the range (5.0E-4, 10]. The default value is 10."
     }
   ]
 }

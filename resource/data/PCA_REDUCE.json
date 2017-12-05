@@ -3,7 +3,7 @@
   "json_schema_minor_version": "2",
   "json_content_version": "1",
   "function_name": "PCA_Reduce",
-  "function_version": "1.3",
+  "function_version": "1.4",
   "function_type": "non-driver",
   "function_r_name": "aa.pca",
   "short_description": "Computes the principal components of an input matrix.",
@@ -13,39 +13,39 @@
   "expected_partition_column": "1",
   "input_tables": [
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "input",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 0,
+      "allowsLists": false,
+      "partitionByOne": true,
+      "rDescription": "The tables contains the attributes that the PCA algorithm will analyze.",
       "requiredInputKind": [
         "PartitionByKey"
       ],
-      "isOrdered": false,
-      "partitionByOne": true,
-      "name": "input",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "The tables contains the attributes that the PCA algorithm will analyze.",
-      "description": "The tables contains the attributes that the PCA algorithm will analyze.",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "useInR": true,
-      "rOrderNum": 0
+      "description": "The tables contains the attributes that the PCA algorithm will analyze."
     }
   ],
   "argument_clauses": [
     {
+      "name": "Components",
+      "upperBoundType": "INCLUSIVE",
       "lowerBound": 1,
+      "useInR": true,
+      "rName": "components",
+      "datatype": "INTEGER",
+      "allowNaN": false,
+      "rOrderNum": 0,
+      "allowsLists": false,
       "upperBound": 2147483647,
       "lowerBoundType": "INCLUSIVE",
-      "upperBoundType": "INCLUSIVE",
-      "allowNaN": false,
-      "name": "Components",
-      "alternateNames": [],
       "isRequired": false,
       "rDescription": "Specifies the number of principal components to return (an integer). If num_components is k, then the function returns the top k components. By default, the function returns every principle component.",
-      "description": "Specifies the number of principal components to return (an integer). If num_components is k, then the function returns the top k components. By default, the function returns every principle component.",
-      "datatype": "INTEGER",
-      "allowsLists": false,
-      "rName": "components",
-      "useInR": true,
-      "rOrderNum": 0
+      "alternateNames": [],
+      "description": "Specifies the number of principal components to return (an integer). If num_components is k, then the function returns the top k components. By default, the function returns every principle component."
     }
   ]
 }

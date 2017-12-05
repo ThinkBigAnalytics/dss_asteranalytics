@@ -12,136 +12,136 @@
   "partner_function": "aa.glm",
   "input_tables": [
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "model1",
+      "rName": "model1.data",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 1,
+      "allowsLists": false,
+      "partitionByOne": true,
+      "rDescription": "The table containing the first model to compare.",
       "requiredInputKind": [
         "PartitionByKey"
       ],
-      "isOrdered": false,
-      "partitionByOne": true,
-      "name": "model1",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "The table containing the first model to compare.",
-      "description": "The table containing the first model to compare.",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "model1.data",
-      "useInR": true,
-      "rOrderNum": 1
+      "description": "The table containing the first model to compare."
     },
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "model2",
+      "rName": "model2.data",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 2,
+      "allowsLists": false,
+      "partitionByOne": true,
+      "rDescription": "The table containing the second model to compare.",
       "requiredInputKind": [
         "PartitionByKey"
       ],
-      "isOrdered": false,
-      "partitionByOne": true,
-      "name": "model2",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "The table containing the second model to compare.",
-      "description": "The table containing the second model to compare.",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "model2.data",
-      "useInR": true,
-      "rOrderNum": 2
+      "description": "The table containing the second model to compare."
     }
   ],
   "argument_clauses": [
     {
+      "name": "Statistic",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "statistic",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "model1"
       ],
+      "rOrderNum": 3,
       "checkDuplicate": true,
-      "allowedTypes": [],
-      "allowedTypeGroups": [
-        "ALL"
-      ],
-      "requiredLength": 1,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "Statistic",
-      "alternateNames": [],
       "isRequired": true,
       "rDescription": "Specifies the name of the input column that contains the name of the statistic. This column\tcorresponds to the ta.glm output column 'predictor'.",
-      "description": "Specifies the name of the input column that contains the name of the statistic. This column\tcorresponds to the GLM output column 'predictor'.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "statistic",
-      "useInR": true,
-      "rOrderNum": 3
-    },
-    {
-      "targetTable": [
-        "model1"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
+      "requiredLength": 1,
+      "alternateNames": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "requiredLength": 1,
-      "matchLengthOfArgument": "",
       "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the input column that contains the name of the statistic. This column\tcorresponds to the GLM output column 'predictor'."
+    },
+    {
       "name": "LogLik",
-      "alternateNames": [],
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "log.lik",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "model1"
+      ],
+      "rOrderNum": 4,
+      "checkDuplicate": true,
       "isRequired": true,
       "rDescription": "Specifies the name of the input column that contains the log-likelihood of the ta.glm model. This column corresponds to the ta.glm output column 'estimate'.",
-      "description": "Specifies the name of the input column that contains the log-likelihood of the GLM model. This column corresponds to the GLM output column 'estimate'.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "log.lik",
-      "useInR": true,
-      "rOrderNum": 4
-    },
-    {
-      "targetTable": [
-        "model1"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
+      "requiredLength": 1,
+      "alternateNames": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "requiredLength": 1,
-      "matchLengthOfArgument": "",
       "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the input column that contains the log-likelihood of the GLM model. This column corresponds to the GLM output column 'estimate'."
+    },
+    {
       "name": "ObsNum",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "obs.num",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "model1"
+      ],
+      "rOrderNum": 5,
+      "checkDuplicate": true,
+      "isRequired": true,
+      "rDescription": "Specifies the name of the input column that contains the number of observations. This column corresponds to the ta.glm output column 'std_err'.",
+      "requiredLength": 1,
       "alternateNames": [
         "NumObservation"
       ],
-      "isRequired": true,
-      "rDescription": "Specifies the name of the input column that contains the number of observations. This column corresponds to the ta.glm output column 'std_err'.",
-      "description": "Specifies the name of the input column that contains the number of observations. This column corresponds to the GLM output column 'std_err'.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "obs.num",
-      "useInR": true,
-      "rOrderNum": 5
-    },
-    {
-      "targetTable": [
-        "model1"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "requiredLength": 1,
-      "matchLengthOfArgument": "",
       "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the input column that contains the number of observations. This column corresponds to the GLM output column 'std_err'."
+    },
+    {
       "name": "ParamNum",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "param.num",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "model1"
+      ],
+      "rOrderNum": 6,
+      "checkDuplicate": true,
+      "isRequired": true,
+      "rDescription": "Specifies the name of the input column that contains the number of parameters (excluding the intercept). This column corresponds to the ta.glm output column 'z_score'.",
+      "requiredLength": 1,
       "alternateNames": [
         "NumParameter"
       ],
-      "isRequired": true,
-      "rDescription": "Specifies the name of the input column that contains the number of parameters (excluding the intercept). This column corresponds to the ta.glm output column 'z_score'.",
-      "description": "Specifies the name of the input column that contains the number of parameters (excluding the intercept). This column corresponds to the GLM output column 'z_score'.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "param.num",
-      "useInR": true,
-      "rOrderNum": 6
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the input column that contains the number of parameters (excluding the intercept). This column corresponds to the GLM output column 'z_score'."
     }
   ]
 }

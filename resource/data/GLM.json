@@ -3,191 +3,131 @@
   "json_schema_minor_version": "2",
   "json_content_version": "1",
   "function_name": "GLM",
-  "function_version": "1.8",
+  "function_version": "1.10",
   "function_type": "driver",
   "function_r_name": "aa.glm",
   "short_description": "This function creates a generalized linear model.",
   "long_description": "This function does linear regression model. GLM is an extension of the linear regression model that enables the linear equation to be related to the dependent variables by a link function.",
+  "input_tables": [
+    {
+      "name": "InputTable",
+      "allowsLists": false,
+      "useInR": true,
+      "description": "Specifies the name of the table that contains the columns",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 3,
+      "rName": "data",
+      "alternateNames": [],
+      "rDescription": "Specifies the name of the table that contains the columns",
+      "requiredInputKind": [],
+      "isOrdered": false,
+      "partitionByOne": false
+    }
+  ],
+  "output_tables": [
+    {
+      "name": "OutputTable",
+      "allowsLists": false,
+      "useInR": true,
+      "description": "Specifies the name for the output table of coefficients. This table must not exist. For GLM, the output is written to the screen, and the output table is the table where the coefficients are stored.",
+      "isRequired": true,
+      "datatype": "TABLE_NAME",
+      "rOrderNum": 100,
+      "rName": "coefficients",
+      "alternateNames": [],
+      "rDescription": "Specifies the name for the output table of coefficients. This table must not exist. For GLM, the output is written to the screen, and the output table is the table where the coefficients are stored.",
+      "isOutputTable": true
+    }
+  ],
   "argument_clauses": [
     {
-      "permittedValues": [],
-      "isOutputColumn": false,
-      "name": "Domain",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "The address of the Queen. The host parameter is the Aster Database Queen’s IP address or hostname.",
-      "description": "The address of the Queen. The host parameter is the Aster Database Queen’s IP address or hostname.",
-      "datatype": "DRIVER",
-      "allowsLists": false,
-      "useInR": false,
-      "rOrderNum": 0
-    },
-    {
-      "permittedValues": [],
-      "isOutputColumn": false,
-      "name": "Database",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "The name of the database where the input table is located.",
-      "description": "The name of the database where the input table is located.",
-      "datatype": "DRIVER",
-      "allowsLists": false,
-      "useInR": false,
-      "rOrderNum": 0
-    },
-    {
-      "permittedValues": [],
-      "isOutputColumn": false,
-      "name": "UserId",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "The Aster Database user name of the user running this function.",
-      "description": "The Aster Database user name of the user running this function.",
-      "datatype": "DRIVER",
-      "allowsLists": false,
-      "useInR": false,
-      "rOrderNum": 0
-    },
-    {
-      "permittedValues": [],
-      "isOutputColumn": false,
-      "name": "Password",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "The Aster Database password of the user.",
-      "description": "The Aster Database password of the user.",
-      "datatype": "DRIVER",
-      "allowsLists": false,
-      "useInR": false,
-      "rOrderNum": 0
-    },
-    {
-      "permittedValues": [],
-      "isOutputColumn": false,
-      "name": "SSLSettings",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "A string that includes all the SSL settings, except the password for the truststore.",
-      "description": "A string that includes all the SSL settings, except the password for the truststore.",
-      "datatype": "DRIVER",
-      "allowsLists": false,
-      "useInR": false,
-      "rOrderNum": 0
-    },
-    {
-      "permittedValues": [],
-      "isOutputColumn": false,
-      "name": "SSLTrustStorePassword",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "The password for the SSL truststore.",
-      "description": "The password for the SSL truststore.",
-      "datatype": "DRIVER",
-      "allowsLists": false,
-      "useInR": false,
-      "rOrderNum": 0
-    },
-    {
-      "isOutputTable": false,
-      "name": "InputTable",
-      "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "Specifies the name of the table that contains the columns",
-      "description": "Specifies the name of the table that contains the columns",
-      "datatype": "TABLE_NAME",
-      "allowsLists": false,
-      "rName": "data",
+      "name": "InputColumns",
+      "allowsLists": true,
+      "rOrderNum": -1,
       "useInR": true,
-      "rOrderNum": 3
-    },
-    {
-      "isOutputTable": true,
-      "name": "OutputTable",
-      "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "Specifies the name for the output table of coefficients. This table must not exist. For GLM, the output is written to the screen, and the output table is the table where the coefficients are stored.",
-      "description": "Specifies the name for the output table of coefficients. This table must not exist. For GLM, the output is written to the screen, and the output table is the table where the coefficients are stored.",
-      "datatype": "TABLE_NAME",
-      "allowsLists": false,
-      "rName": "coefficients",
-      "useInR": true,
-      "rOrderNum": 100
-    },
-    {
+      "rName": "input.columns",
+      "allowedTypes": [],
+      "datatype": "COLUMN_NAMES",
       "targetTable": [
         "InputTable"
       ],
+      "rFormulaUsage": true,
       "checkDuplicate": true,
-      "allowedTypes": [],
-      "allowedTypeGroups": [
-        "ALL"
-      ],
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "InputColumns",
+      "isRequired": false,
+      "rDescription": "Specifies the name of the column that contains the dependent variables (Y) followed by the  names of the columns that contain the predictor variables (Xi), in this format:  'Y,X1,X2,...,Xp'.  By default, the first column of the input table is Y and the remaining input table columns  are Xi, except for the column specified by the Weight argument.",
       "alternateNames": [
         "ColumnNames"
       ],
-      "isRequired": false,
-      "rDescription": "Specifies the name of the column that contains the dependent variables (Y) followed by the  names of the columns that contain the predictor variables (Xi), in this format:  'Y,X1,X2,...,Xp'.  By default, the first column of the input table is Y and the remaining input table columns  are Xi, except for the column specified by the Weight argument.",
-      "description": "Specifies the name of the column that contains the dependent variables (Y) followed by the  names of the columns that contain the predictor variables (Xi), in this format:  'Y,X1,X2,...,Xp'.  By default, the first column of the input table is Y and the remaining input table columns  are Xi, except for the column specified by the Weight argument.",
-      "datatype": "COLUMN_NAMES",
-      "allowsLists": true,
-      "rName": "input.columns",
-      "useInR": true,
-      "rFormulaUsage": true,
-      "rOrderNum": -1
-    },
-    {
-      "targetTable": [
-        "InputTable"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "matchLengthOfArgument": "",
       "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the column that contains the dependent variables (Y) followed by the  names of the columns that contain the predictor variables (Xi), in this format:  'Y,X1,X2,...,Xp'.  By default, the first column of the input table is Y and the remaining input table columns  are Xi, except for the column specified by the Weight argument."
+    },
+    {
       "name": "CategoricalColumns",
-      "alternateNames": [],
+      "allowsLists": true,
+      "rOrderNum": -2,
+      "useInR": true,
+      "rName": "categorical.columns",
+      "allowedTypes": [],
+      "datatype": "COLUMN_NAMES",
+      "targetTable": [
+        "InputTable"
+      ],
+      "rFormulaUsage": true,
+      "checkDuplicate": true,
       "isRequired": false,
       "rDescription": "Specifies columnname-value pairs, each of which contains the name of a categorical input column and the category values in that column that the function is to include in the model that it generates. Each columnname-value pair has one these forms: 'columnname:max_cardinality' Limits the categories in the column to the max_cardinality most common ones and groups the others together as 'others'. For example, 'column_a:3' specifies that for column_a, the function uses the 3 most common categories and sets the category of the rows that do not belong to those 3 categories to 'others', 'columnname:(category [, ...])' Limits the categories in the column to those that you specify and groups the others together as 'others'. For example, 'column_a : (red, yellow, blue)' specifies that for column_a, the function uses the categories red, yellow, and blue, and sets the category of the rows that do not belong to those categories to 'others'. 'columnname' All category values appear in the model. If you specify the ColumnNames argument, then the columns that you specify in the categorical.columns argument must also appear in the ColumnNames argument.",
-      "description": "Specifies columnname-value pairs, each of which contains the name of a categorical input column and the category values in that column that the function is to include in the model that it generates. Each columnname-value pair has one these forms: 'columnname:max_cardinality' Limits the categories in the column to the max_cardinality most common ones and groups the others together as 'others'. For example, 'column_a:3' specifies that for column_a, the function uses the 3 most common categories and sets the category of the rows that do not belong to those 3 categories to 'others', 'columnname:(category [, ...])' Limits the categories in the column to those that you specify and groups the others together as 'others'. For example, 'column_a : (red, yellow, blue)' specifies that for column_a, the function uses the categories red, yellow, and blue, and sets the category of the rows that do not belong to those categories to 'others', 'columnname' All category values appear in the model. If you specify the ColumnNames argument, then the columns that you specify in the CategoricalColumns argument must also appear in the ColumnNames argument.",
-      "datatype": "COLUMN_NAMES",
-      "allowsLists": true,
-      "rName": "categorical.columns",
-      "useInR": true,
-      "rFormulaUsage": true,
-      "rOrderNum": -2
-    },
-    {
-      "targetTable": [
-        "InputTable"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
+      "alternateNames": [],
       "allowedTypeGroups": [
         "ALL"
       ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies columnname-value pairs, each of which contains the name of a categorical input column and the category values in that column that the function is to include in the model that it generates. Each columnname-value pair has one these forms: 'columnname:max_cardinality' Limits the categories in the column to the max_cardinality most common ones and groups the others together as 'others'. For example, 'column_a:3' specifies that for column_a, the function uses the 3 most common categories and sets the category of the rows that do not belong to those 3 categories to 'others', 'columnname:(category [, ...])' Limits the categories in the column to those that you specify and groups the others together as 'others'. For example, 'column_a : (red, yellow, blue)' specifies that for column_a, the function uses the categories red, yellow, and blue, and sets the category of the rows that do not belong to those categories to 'others', 'columnname' All category values appear in the model. If you specify the ColumnNames argument, then the columns that you specify in the CategoricalColumns argument must also appear in the ColumnNames argument."
+    },
+    {
+      "name": "Weight",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "weights",
+      "allowedTypes": [],
+      "datatype": "COLUMN_NAMES",
+      "targetTable": [
+        "InputTable"
+      ],
+      "rOrderNum": 4,
       "defaultValues": [
         "1.0"
       ],
-      "requiredLength": 1,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "Weight",
-      "alternateNames": [],
+      "checkDuplicate": true,
       "isRequired": false,
       "rDescription": "Specifies the name of an input table column that contains the weights to assign to responses. The default value is 1.You can use non-NULL weights to indicate that different observations have different dispersions (with the weights being inversely proportional to the dispersions).Equivalently, when the weights are positive integers wi, each response yi is the mean of wi unit-weight observations. A binomial GLM uses prior weights to give the number of trials when the response is the proportion of successes. A Poisson GLM rarely uses weights. If the weight is less than the response value, then the function throws an exception. Therefore, if the response value is greater than 1 (the default weight), then you must specify a weight that is greater than or equal to the response value.",
-      "description": "Specifies the name of an input table column that contains the weights to assign to responses. The default value is 1.You can use non-NULL weights to indicate that different observations have different dispersions (with the weights being inversely proportional to the dispersions).Equivalently, when the weights are positive integers wi, each response yi is the mean of wi unit-weight observations. A binomial GLM uses prior weights to give the number of trials when the response is the proportion of successes. A Poisson GLM rarely uses weights. If the weight is less than the response value, then the function throws an exception. Therefore, if the response value is greater than 1 (the default weight), then you must specify a weight that is greater than or equal to the response value.",
-      "datatype": "COLUMN_NAMES",
-      "allowsLists": false,
-      "rName": "weights",
-      "useInR": true,
-      "rOrderNum": 4
+      "requiredLength": 1,
+      "alternateNames": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of an input table column that contains the weights to assign to responses. The default value is 1.You can use non-NULL weights to indicate that different observations have different dispersions (with the weights being inversely proportional to the dispersions).Equivalently, when the weights are positive integers wi, each response yi is the mean of wi unit-weight observations. A binomial GLM uses prior weights to give the number of trials when the response is the proportion of successes. A Poisson GLM rarely uses weights. If the weight is less than the response value, then the function throws an exception. Therefore, if the response value is greater than 1 (the default weight), then you must specify a weight that is greater than or equal to the response value."
     },
     {
+      "name": "Family",
+      "allowsLists": false,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "defaultValue": "BINOMIAL",
+      "rOrderNum": 1,
+      "rName": "family",
+      "isRequired": false,
+      "rDescription": "Specifies the distribution exponential family. Supported values are: 'BINOMIAL' (default), 'LOGISTIC' (equivalent to 'BINOMIAL'), 'POISSON', 'GAUSSIAN', 'GAMMA', 'INVERSE_GAUSSIAN', 'NEGATIVE_BINOMIAL' ",
+      "rDefaultValue": "gaussian",
+      "alternateNames": [],
       "permittedValues": [
         "LOGISTIC",
         "BINOMIAL",
@@ -197,21 +137,22 @@
         "INVERSE_GAUSSIAN",
         "NEGATIVE_BINOMIAL"
       ],
-      "defaultValue": "BINOMIAL",
-      "rDefaultValue": "gaussian",
-      "isOutputColumn": false,
-      "name": "Family",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "Specifies the distribution exponential family. Supported values are: 'BINOMIAL' (default), 'LOGISTIC' (equivalent to 'BINOMIAL'), 'POISSON', 'GAUSSIAN', 'GAMMA', 'INVERSE_GAUSSIAN', 'NEGATIVE_BINOMIAL' ",
-      "description": "Specifies the distribution exponential family. Supported values are: 'BINOMIAL' (default), 'LOGISTIC' (equivalent to 'BINOMIAL'), 'POISSON', 'GAUSSIAN', 'GAMMA', 'INVERSE_GAUSSIAN', 'NEGATIVE_BINOMIAL' ",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "family",
-      "useInR": true,
-      "rOrderNum": 1
+      "description": "Specifies the distribution exponential family. Supported values are: 'BINOMIAL' (default), 'LOGISTIC' (equivalent to 'BINOMIAL'), 'POISSON', 'GAUSSIAN', 'GAMMA', 'INVERSE_GAUSSIAN', 'NEGATIVE_BINOMIAL' "
     },
     {
+      "name": "LinkFunction",
+      "allowsLists": false,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "defaultValue": "CANONICAL",
+      "rOrderNum": 2,
+      "rName": "linkfunction",
+      "isRequired": false,
+      "rDescription": "The default value is 'CANONICAL'. The canonical link functions (default link functions) and the link functions that are allowed.",
+      "alternateNames": [
+        "Link"
+      ],
       "permittedValues": [
         "CANONICAL",
         "IDENTITY",
@@ -224,80 +165,69 @@
         "PROBIT",
         "CAUCHIT"
       ],
-      "defaultValue": "CANONICAL",
-      "isOutputColumn": false,
-      "name": "Link",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "The default value is 'CANONICAL'. The canonical link functions (default link functions) and the link functions that are allowed.",
-      "description": "The default value is 'CANONICAL'. The canonical link functions (default link functions) and the link functions that are allowed.",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "link",
-      "useInR": true,
-      "rOrderNum": 2
+      "description": "The default value is 'CANONICAL'. The canonical link functions (default link functions) and the link functions that are allowed."
     },
     {
-      "defaultValue": 0.01,
+      "name": "Threshold",
+      "upperBoundType": "INCLUSIVE",
       "lowerBound": -Infinity,
+      "useInR": true,
+      "rName": "threshold",
+      "datatype": "DOUBLE",
+      "defaultValue": 0.01,
+      "rOrderNum": 5,
+      "allowsLists": false,
       "upperBound": Infinity,
       "lowerBoundType": "INCLUSIVE",
-      "upperBoundType": "INCLUSIVE",
-      "allowNaN": false,
-      "name": "Threshold",
-      "alternateNames": [],
       "isRequired": false,
       "rDescription": "Specify the convergence threshold. The default value is 0.01.",
-      "description": "Specify the convergence threshold. The default value is 0.01.",
-      "datatype": "DOUBLE",
-      "allowsLists": false,
-      "rName": "threshold",
-      "useInR": true,
-      "rOrderNum": 5
+      "alternateNames": [],
+      "allowNaN": false,
+      "description": "Specify the convergence threshold. The default value is 0.01."
     },
     {
-      "defaultValue": 25,
+      "name": "MaxIterNum",
+      "upperBoundType": "INCLUSIVE",
       "lowerBound": 0,
+      "useInR": true,
+      "rName": "maxit",
+      "datatype": "INTEGER",
+      "defaultValue": 25,
+      "rOrderNum": 6,
+      "allowsLists": false,
       "upperBound": 2147483647,
       "lowerBoundType": "EXCLUSIVE",
-      "upperBoundType": "INCLUSIVE",
-      "allowNaN": false,
-      "name": "MaxIterNum",
-      "alternateNames": [],
       "isRequired": false,
       "rDescription": "Specifies the maximum number of iterations that the algorithm runs before quitting if the convergence threshold has not been met. The default value is 25.",
-      "description": "Specifies the maximum number of iterations that the algorithm runs before quitting if the convergence threshold has not been met. The default value is 25.",
-      "datatype": "INTEGER",
-      "allowsLists": false,
-      "rName": "maxit",
-      "useInR": true,
-      "rOrderNum": 6
+      "alternateNames": [],
+      "allowNaN": false,
+      "description": "Specifies the maximum number of iterations that the algorithm runs before quitting if the convergence threshold has not been met. The default value is 25."
     },
     {
-      "defaultValue": true,
       "name": "Intercept",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "Specifies whether the function uses an intercept. For example, in ß0+ß1*X1+ß2*X2+ ....+ßpXp, the intercept is ß0. The default value is 'true'.",
-      "description": "Specifies whether the function uses an intercept. For example, in ß0+ß1*X1+ß2*X2+ ....+ßpXp, the intercept is ß0. The default value is 'true'.",
-      "datatype": "BOOLEAN",
       "allowsLists": false,
-      "rName": "intercept",
       "useInR": true,
-      "rOrderNum": 8
+      "datatype": "BOOLEAN",
+      "defaultValue": true,
+      "rOrderNum": 8,
+      "rName": "intercept",
+      "isRequired": false,
+      "rDescription": "Specifies whether the function uses an intercept. For example, in \u00df0+\u00df1*X1+\u00df2*X2+ ....+\u00dfpXp, the intercept is \u00df0. The default value is 'true'.",
+      "alternateNames": [],
+      "description": "Specifies whether the function uses an intercept. For example, in \u00df0+\u00df1*X1+\u00df2*X2+ ....+\u00dfpXp, the intercept is \u00df0. The default value is 'true'."
     },
     {
-      "defaultValue": false,
       "name": "Step",
-      "alternateNames": [],
+      "allowsLists": false,
+      "useInR": true,
+      "datatype": "BOOLEAN",
+      "defaultValue": false,
+      "rOrderNum": 7,
+      "rName": "step",
       "isRequired": false,
       "rDescription": "Specifies whether the function uses a step. The default value is false. If the function uses a step, then it runs with the GLM model that has the lowest Akaike information criterion (AIC) score, drops one predictor from the current predictor group, and repeats this process until no predictor remains.",
-      "description": "Specifies whether the function uses a step. The default value is false. If the function uses a step, then it runs with the GLM model that has the lowest Akaike information criterion (AIC) score, drops one predictor from the current predictor group, and repeats this process until no predictor remains.",
-      "datatype": "BOOLEAN",
-      "allowsLists": false,
-      "rName": "step",
-      "useInR": true,
-      "rOrderNum": 7
+      "alternateNames": [],
+      "description": "Specifies whether the function uses a step. The default value is false. If the function uses a step, then it runs with the GLM model that has the lowest Akaike information criterion (AIC) score, drops one predictor from the current predictor group, and repeats this process until no predictor remains."
     }
   ]
 }

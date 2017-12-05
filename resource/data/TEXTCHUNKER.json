@@ -10,71 +10,71 @@
   "long_description": "Predict the category of the document in each text column",
   "input_tables": [
     {
+      "isOrdered": true,
+      "useInR": true,
+      "name": "input",
+      "rName": "data",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 1,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "The relation contains the text to be scanned",
       "requiredInputKind": [
         "PartitionByKey"
       ],
-      "isOrdered": true,
-      "partitionByOne": false,
-      "name": "input",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "The relation contains the text to be scanned",
-      "description": "The relation contains the text to be scanned",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "data",
-      "useInR": true,
-      "rOrderNum": 1
+      "description": "The relation contains the text to be scanned"
     }
   ],
   "argument_clauses": [
     {
+      "name": "WordColumn",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "word.column",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "input"
       ],
+      "rOrderNum": 2,
       "checkDuplicate": true,
-      "allowedTypes": [],
-      "allowedTypeGroups": [
-        "ALL"
-      ],
-      "requiredLength": 1,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "WordColumn",
-      "alternateNames": [],
       "isRequired": true,
       "rDescription": "Specifies the name of the input table column that contains the words to chunk into phrases. Typically, this is the word column of the output table of the  \"ta.postagger\"function",
-      "description": "Specifies the name of the input table column that contains the words to chunk into phrases. Typically, this is the word column of the output table of the \"POSTagger\" function",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "word.column",
-      "useInR": true,
-      "rOrderNum": 2
-    },
-    {
-      "targetTable": [
-        "input"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
+      "requiredLength": 1,
+      "alternateNames": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "requiredLength": 1,
-      "matchLengthOfArgument": "",
       "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the input table column that contains the words to chunk into phrases. Typically, this is the word column of the output table of the \"POSTagger\" function"
+    },
+    {
       "name": "PosColumn",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "pos.column",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "input"
+      ],
+      "rOrderNum": 3,
+      "checkDuplicate": true,
+      "isRequired": true,
+      "rDescription": "Specifies the name of the input table column the part-of-speech (POS) tag of words. Typically, this is the pos_tag column of the output table of the \"ta.postagger\" function",
+      "requiredLength": 1,
       "alternateNames": [
         "PosTagColumn"
       ],
-      "isRequired": true,
-      "rDescription": "Specifies the name of the input table column the part-of-speech (POS) tag of words. Typically, this is the pos_tag column of the output table of the \"ta.postagger\" function",
-      "description": "Specifies the name of the input table column the part-of-speech (POS) tag of words. Typically, this is the pos_tag column of the output table of the POSTagger function",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "pos.column",
-      "useInR": true,
-      "rOrderNum": 3
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the input table column the part-of-speech (POS) tag of words. Typically, this is the pos_tag column of the output table of the POSTagger function"
     }
   ]
 }

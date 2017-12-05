@@ -3,163 +3,163 @@
   "json_schema_minor_version": "2",
   "json_content_version": "1",
   "function_name": "Pivot",
-  "function_version": "1.7",
+  "function_version": "1.8",
   "function_type": "non-driver",
   "function_r_name": "aa.pivot",
   "short_description": "This function takes a table as input, and converts rows to columns.",
   "long_description": "This function takes a table as input and converts rows to columns based on a column which has certain key values in it",
   "input_tables": [
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "input",
+      "rName": "data",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 1,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "The table containing the data to be pivoted.",
       "requiredInputKind": [
         "PartitionByKey"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "input",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "The table containing the data to be pivoted.",
-      "description": "The table containing the data to be pivoted.",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "data",
-      "useInR": true,
-      "rOrderNum": 1
+      "description": "The table containing the data to be pivoted."
     }
   ],
   "argument_clauses": [
     {
+      "name": "PartitionColumns",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "partition.columns",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "input"
       ],
+      "rOrderNum": 2,
       "checkDuplicate": true,
-      "allowedTypes": [],
-      "allowedTypeGroups": [
-        "ALL"
-      ],
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "PartitionColumns",
+      "isRequired": true,
+      "rDescription": "Specifies the same columns as the partition.columns clause (in any order).",
       "alternateNames": [
         "Partitions"
       ],
-      "isRequired": true,
-      "rDescription": "Specifies the same columns as the partition.columns clause (in any order).",
-      "description": "Specifies the same columns as the PARTITION BY clause (in any order).",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "partition.columns",
-      "useInR": true,
-      "rOrderNum": 2
-    },
-    {
-      "targetTable": [
-        "input"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "matchLengthOfArgument": "",
       "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the same columns as the PARTITION BY clause (in any order)."
+    },
+    {
       "name": "TargetColumns",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "target.columns",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "input"
+      ],
+      "rOrderNum": 3,
+      "checkDuplicate": true,
+      "isRequired": true,
+      "rDescription": " Specifies the names of the input columns that contain the values to pivot.",
       "alternateNames": [
         "Metrics"
       ],
-      "isRequired": true,
-      "rDescription": " Specifies the names of the input columns that contain the values to pivot.",
-      "description": " Specifies the names of the input columns that contain the values to pivot.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "target.columns",
-      "useInR": true,
-      "rOrderNum": 3
-    },
-    {
-      "targetTable": [
-        "input"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "requiredLength": 1,
-      "matchLengthOfArgument": "",
       "allowPadding": true,
-      "name": "PivotColumn",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": " Specifies the name of the column that contains the pivot keys. If the pivot column contains numeric values, then the function casts them to VARCHAR. If you omit the num.rows argument, then you must specify this argument. Note: If you specify the pivot.column argument, then you must order the input data; otherwise, the output table column content is nondeterministic.",
-      "description": "Specifies the name of the column that contains the pivot keys. If the pivot column contains numeric values, then the function casts them to VARCHAR. If you omit the NumberOfRows argument, then you must specify this argument. Note: If you specify the PivotColumn argument, then you must order the input data; otherwise, the output table column content is nondeterministic.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "pivot.column",
-      "useInR": true,
-      "rOrderNum": 4
+      "matchLengthOfArgument": "",
+      "description": " Specifies the names of the input columns that contain the values to pivot."
     },
     {
+      "name": "PivotColumn",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "pivot.column",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "input"
+      ],
+      "rOrderNum": 4,
+      "checkDuplicate": true,
+      "isRequired": false,
+      "rDescription": " Specifies the name of the column that contains the pivot keys. If the pivot column contains numeric values, then the function casts them to VARCHAR. If you omit the num.rows argument, then you must specify this argument. Note: If you specify the pivot.column argument, then you must order the input data; otherwise, the output table column content is nondeterministic.",
+      "requiredLength": 1,
+      "alternateNames": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the column that contains the pivot keys. If the pivot column contains numeric values, then the function casts them to VARCHAR. If you omit the NumberOfRows argument, then you must specify this argument. Note: If you specify the PivotColumn argument, then you must order the input data; otherwise, the output table column content is nondeterministic."
+    },
+    {
+      "name": "NumberOfRows",
+      "upperBoundType": "INCLUSIVE",
       "lowerBound": 1,
+      "useInR": true,
+      "rName": "num.rows",
+      "datatype": "INTEGER",
+      "allowNaN": false,
+      "rOrderNum": 7,
+      "allowsLists": false,
       "upperBound": 2147483647,
       "lowerBoundType": "INCLUSIVE",
-      "upperBoundType": "INCLUSIVE",
-      "allowNaN": false,
-      "name": "NumberOfRows",
+      "isRequired": false,
+      "rDescription": "Specifies the maximum number of rows in any partition. If a partition has fewer than number_of_rows rows, then the function adds NULL values; if a partition has more than number_of_rows rows, then the function omits the extra rows. If you omit this argument, then you must specify the pivot.column argument. Note: With this argument, the ORDER BY clause is optional. If omitted, the order of values can vary. The function adds NULL values at the end.",
       "alternateNames": [
         "Rows"
       ],
-      "isRequired": false,
-      "rDescription": "Specifies the maximum number of rows in any partition. If a partition has fewer than number_of_rows rows, then the function adds NULL values; if a partition has more than number_of_rows rows, then the function omits the extra rows. If you omit this argument, then you must specify the pivot.column argument. Note: With this argument, the ORDER BY clause is optional. If omitted, the order of values can vary. The function adds NULL values at the end.",
-      "description": "Specifies the maximum number of rows in any partition. If a partition has fewer than number_of_rows rows, then the function adds NULL values; if a partition has more than number_of_rows rows, then the function omits the extra rows. If you omit this argument, then you must specify the PivotColumn argument. Note: With this argument, the ORDER BY clause is optional. If omitted, the order of values can vary. The function adds NULL values at the end.",
-      "datatype": "INTEGER",
-      "allowsLists": false,
-      "rName": "num.rows",
-      "useInR": true,
-      "rOrderNum": 7
+      "description": "Specifies the maximum number of rows in any partition. If a partition has fewer than number_of_rows rows, then the function adds NULL values; if a partition has more than number_of_rows rows, then the function omits the extra rows. If you omit this argument, then you must specify the PivotColumn argument. Note: With this argument, the ORDER BY clause is optional. If omitted, the order of values can vary. The function adds NULL values at the end."
     },
     {
-      "permittedValues": [],
-      "isOutputColumn": false,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
       "name": "PivotKeys",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "If you specify the pivot.column argument, then this argument specifies the names of the pivot keys. Do not use this argument without the pivot.column argument. If pivot_column contains a value that is not specified as a pivot_key, then the function ignores the row containing that value",
-      "description": " If you specify the PivotColumn argument, then this argument specifies the names of the pivot keys. Do not use this argument without the PivotColumn argument. If pivot_column contains a value that is not specified as a pivot_key, then the function ignores the row containing that value. By default, every unique value in pivot_column is a pivot key.",
-      "datatype": "STRING",
       "allowsLists": true,
-      "rName": "pivot.keys",
+      "isOutputColumn": false,
       "useInR": true,
-      "rOrderNum": 5
+      "datatype": "STRING",
+      "rOrderNum": 5,
+      "rName": "pivot.keys",
+      "isRequired": false,
+      "rDescription": "If you specify the pivot.column argument, then this argument specifies the names of the pivot keys. Do not use this argument without the pivot.column argument. If pivot.column contains a value that is not specified as a pivot.key, then the function ignores the row containing that value. pivot.keys is required when pivot.columns is used.",
+      "alternateNames": [],
+      "permittedValues": [],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": " If you specify the PivotColumn argument, then this argument specifies the names of the pivot keys. Do not use this argument without the PivotColumn argument. If pivot_column contains a value that is not specified as a pivot_key, then the function ignores the row containing that value. pivot_keys is required when pivot_columns is used."
     },
     {
-      "permittedValues": [],
-      "isOutputColumn": false,
       "name": "SchemaName",
-      "alternateNames": [],
+      "allowsLists": false,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "rOrderNum": 8,
+      "rName": "schema.name",
       "isRequired": false,
       "rDescription": "Schema name of the input table if it is not in the public schema",
-      "description": "Schema name of the input table if it is not in the public schema",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "schema.name",
-      "useInR": true,
-      "rOrderNum": 8
+      "alternateNames": [],
+      "permittedValues": [],
+      "description": "Schema name of the input table if it is not in the public schema"
     },
     {
-      "defaultValue": false,
       "name": "NumericPivotKey",
-      "alternateNames": [],
+      "allowsLists": false,
+      "useInR": true,
+      "datatype": "BOOLEAN",
+      "defaultValue": false,
+      "rOrderNum": 6,
+      "rName": "numeric.pivotkey",
       "isRequired": false,
       "rDescription": "indicates whether the pivot key values are numeric values.",
-      "description": "indicates whether the pivot key values are numeric values.",
-      "datatype": "BOOLEAN",
-      "allowsLists": false,
-      "rName": "numeric.pivotkey",
-      "useInR": true,
-      "rOrderNum": 6
+      "alternateNames": [],
+      "description": "indicates whether the pivot key values are numeric values."
     }
   ]
 }

@@ -10,69 +10,79 @@
   "long_description": "This function scales the input to a specified range based on the values in each partition.",
   "input_tables": [
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "input",
+      "rName": "data",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 1,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "The input dataset for scale function.",
       "requiredInputKind": [
         "PartitionByKey"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "input",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "The input dataset for scale function.",
-      "description": "The input dataset for scale function.",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "data",
-      "useInR": true,
-      "rOrderNum": 1
+      "description": "The input dataset for scale function."
     }
   ],
   "argument_clauses": [
     {
+      "name": "InputColumns",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "input.columns",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "input"
       ],
+      "rOrderNum": 4,
       "checkDuplicate": true,
-      "allowedTypes": [],
+      "isRequired": true,
+      "rDescription": "Specifies the input table columns that contain the attribute values of the samples. The attribute values must be numeric values between -1e308 and 1e308. If a value is outside this range, the function treats it as infinity.",
+      "alternateNames": [],
       "allowedTypeGroups": [
         "NUMERIC"
       ],
-      "matchLengthOfArgument": "",
       "allowPadding": true,
-      "name": "InputColumns",
-      "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "Specifies the input table columns that contain the attribute values of the samples. The attribute values must be numeric values between -1e308 and 1e308. If a value is outside this range, the function treats it as infinity.",
-      "description": "Specifies the input table columns that contain the attribute values of the samples. The attribute values must be numeric values between -1e308 and 1e308. If a value is outside this range, the function treats it as infinity.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "input.columns",
-      "useInR": true,
-      "rOrderNum": 4
+      "matchLengthOfArgument": "",
+      "description": "Specifies the input table columns that contain the attribute values of the samples. The attribute values must be numeric values between -1e308 and 1e308. If a value is outside this range, the function treats it as infinity."
     },
     {
+      "name": "Accumulate",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "accumulate",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "input"
       ],
+      "rOrderNum": 6,
       "checkDuplicate": true,
-      "allowedTypes": [],
+      "isRequired": false,
+      "rDescription": "Specifies the input table columns to copy to the output table. By default, the function copies no input table columns to the output table. Tip: To identify the sequences in the output, specify the partition columns in this argument.",
+      "alternateNames": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "matchLengthOfArgument": "",
       "allowPadding": true,
-      "name": "Accumulate",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "Specifies the input table columns to copy to the output table. By default, the function copies no input table columns to the output table. Tip: To identify the sequences in the output, specify the partition columns in this argument.",
-      "description": "Specifies the input table columns to copy to the output table. By default, the function copies no input table columns to the output table. Tip: To identify the sequences in the output, specify the partition columns in this argument.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "accumulate",
-      "useInR": true,
-      "rOrderNum": 6
+      "matchLengthOfArgument": "",
+      "description": "Specifies the input table columns to copy to the output table. By default, the function copies no input table columns to the output table. Tip: To identify the sequences in the output, specify the partition columns in this argument."
     },
     {
+      "name": "Method",
+      "allowsLists": true,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "rOrderNum": 2,
+      "rName": "method",
+      "isRequired": true,
+      "rDescription": "Specifies one or more statistical methods to use to scale the data set. For method values and descriptions. If you specify multiple methods, the output table includes the column scalemethod (which contains the method name) and a row for each input-row/method combination",
+      "alternateNames": [],
       "permittedValues": [
         "MEAN",
         "SUM",
@@ -82,94 +92,84 @@
         "MIDRANGE",
         "MAXABS"
       ],
-      "isOutputColumn": false,
-      "matchLengthOfArgument": "",
       "allowPadding": true,
-      "name": "Method",
-      "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "Specifies one or more statistical methods to use to scale the data set. For method values and descriptions. If you specify multiple methods, the output table includes the column scalemethod (which contains the method name) and a row for each input-row/method combination",
-      "description": "Specifies one or more statistical methods to use to scale the data set. For method values and descriptions. If you specify multiple methods, the output table includes the column scalemethod (which contains the method name) and a row for each input-row/method combination",
-      "datatype": "STRING",
-      "allowsLists": true,
-      "rName": "method",
-      "useInR": true,
-      "rOrderNum": 2
+      "matchLengthOfArgument": "",
+      "description": "Specifies one or more statistical methods to use to scale the data set. For method values and descriptions. If you specify multiple methods, the output table includes the column scalemethod (which contains the method name) and a row for each input-row/method combination"
     },
     {
+      "name": "MissValue",
+      "allowsLists": false,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "defaultValue": "KEEP",
+      "rOrderNum": 3,
+      "rName": "miss.value",
+      "isRequired": false,
+      "rDescription": "Specifies how the ta.partitionscale function is to process NULL values in input, as follows: KEEP (default): Keep NULL values, OMIT: Ignore any row that has a NULL value, ZERO: Replace each NULL value with zero, LOCATION: Replace each NULL value with its location value.",
+      "alternateNames": [],
       "permittedValues": [
         "KEEP",
         "OMIT",
         "ZERO",
         "LOCATION"
       ],
-      "defaultValue": "KEEP",
-      "isOutputColumn": false,
-      "name": "MissValue",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "Specifies how the ta.partitionscale function is to process NULL values in input, as follows: KEEP (default): Keep NULL values, OMIT: Ignore any row that has a NULL value, ZERO: Replace each NULL value with zero, LOCATION: Replace each NULL value with its location value.",
-      "description": "Specifies how the PartitionScale function is to process NULL values in input, as follows: KEEP (default): Keep NULL values, OMIT: Ignore any row that has a NULL value, ZERO: Replace each NULL value with zero, LOCATION: Replace each NULL value with its location value.",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "miss.value",
-      "useInR": true,
-      "rOrderNum": 3
+      "description": "Specifies how the PartitionScale function is to process NULL values in input, as follows: KEEP (default): Keep NULL values, OMIT: Ignore any row that has a NULL value, ZERO: Replace each NULL value with zero, LOCATION: Replace each NULL value with its location value."
     },
     {
-      "defaultValue": false,
       "name": "Global",
+      "allowsLists": false,
+      "useInR": true,
+      "datatype": "BOOLEAN",
+      "defaultValue": false,
+      "rOrderNum": 5,
+      "rName": "global",
+      "isRequired": false,
+      "rDescription": " Specifies whether all input columns are scaled to the same location and scale. The default value is 'false' (each input column is scaled separately). ",
       "alternateNames": [
         "GlobalScale"
       ],
-      "isRequired": false,
-      "rDescription": " Specifies whether all input columns are scaled to the same location and scale. The default value is 'false' (each input column is scaled separately). ",
-      "description": " Specifies whether all input columns are scaled to the same location and scale. The default value is 'false' (each input column is scaled separately). ",
-      "datatype": "BOOLEAN",
-      "allowsLists": false,
-      "rName": "global",
-      "useInR": true,
-      "rOrderNum": 5
+      "description": " Specifies whether all input columns are scaled to the same location and scale. The default value is 'false' (each input column is scaled separately). "
     },
     {
+      "name": "Multiplier",
+      "allowsLists": true,
+      "useInR": true,
+      "datatype": "DOUBLE",
       "defaultValue": [
         1
       ],
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "Multiplier",
+      "rOrderNum": 7,
+      "rName": "multiplier",
+      "isRequired": false,
+      "rDescription": "Specifies one or more multiplying factors to apply to the input variables (multiplier in the following formula): X' = intercept + multiplier * (X - location)/scale If you specify only one multiplier, it applies to all columns specified by the input.columns argument. If you specify multiple multiplying factor, each multiplier applies to the corresponding input column. For example, the first multiplier applies to the first column specified by the InputColumns argument, the second multiplier applies to the second input column, and so on. The default multiplier is 1. ",
       "alternateNames": [
         "MultFactor"
       ],
-      "isRequired": false,
-      "rDescription": "Specifies one or more multiplying factors to apply to the input variables (multiplier in the following formula): X' = intercept + multiplier * (X - location)/scale If you specify only one multiplier, it applies to all columns specified by the input.columns argument. If you specify multiple multiplying factor, each multiplier applies to the corresponding input column. For example, the first multiplier applies to the first column specified by the InputColumns argument, the second multiplier applies to the second input column, and so on. The default multiplier is 1. ",
-      "description": "Specifies one or more multiplying factors to apply to the input variables (multiplier in the following formula): X' = intercept + multiplier * (X - location)/scale If you specify only one multiplier, it applies to all columns specified by the InputColumns argument. If you specify multiple multiplying factor, each multiplier applies to the corresponding input column. For example, the first multiplier applies to the first column specified by the InputColumns argument, the second multiplier applies to the second input column, and so on. The default multiplier is 1. ",
-      "datatype": "DOUBLE",
-      "allowsLists": true,
-      "rName": "multiplier",
-      "useInR": true,
-      "rOrderNum": 7
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies one or more multiplying factors to apply to the input variables (multiplier in the following formula): X' = intercept + multiplier * (X - location)/scale If you specify only one multiplier, it applies to all columns specified by the InputColumns argument. If you specify multiple multiplying factor, each multiplier applies to the corresponding input column. For example, the first multiplier applies to the first column specified by the InputColumns argument, the second multiplier applies to the second input column, and so on. The default multiplier is 1. "
     },
     {
-      "permittedValues": [],
+      "name": "Intercept",
+      "allowsLists": true,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
       "defaultValue": [
         "0"
       ],
-      "isOutputColumn": false,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "Intercept",
+      "rOrderNum": 8,
+      "rName": "intercept",
+      "isRequired": false,
+      "rDescription": "Specifies one or more addition factors incrementing the scaled results\u2014intercept in the following formula: X' = intercept + multiplier * (X - location)/scale If you specify only one intercept, it applies to all columns specified by the input.columns argument. If you specify multiple addition factors, each intercept applies to the corresponding input column. The syntax of intercept is: [-]{number | min | mean | max } where min, mean, and max are the global minimum, maximum, mean values in the corresponding columns. The function scales the values of min, mean, and max. For example, if intercept is '- min' and multiplier is 1, the scaled result is transformed to a nonnegative sequence according to this formula, where scaledmin is the scaled value: X' = -scaledmin + 1 * (X - location)/scale The default intercept is 0.",
       "alternateNames": [
         "AddFactor"
       ],
-      "isRequired": false,
-      "rDescription": "Specifies one or more addition factors incrementing the scaled results—intercept in the following formula: X' = intercept + multiplier * (X - location)/scale If you specify only one intercept, it applies to all columns specified by the input.columns argument. If you specify multiple addition factors, each intercept applies to the corresponding input column. The syntax of intercept is: [-]{number | min | mean | max } where min, mean, and max are the global minimum, maximum, mean values in the corresponding columns. The function scales the values of min, mean, and max. For example, if intercept is '- min' and multiplier is 1, the scaled result is transformed to a nonnegative sequence according to this formula, where scaledmin is the scaled value: X' = -scaledmin + 1 * (X - location)/scale The default intercept is 0.",
-      "description": "Specifies one or more addition factors incrementing the scaled results—intercept in the following formula: X' = intercept + multiplier * (X - location)/scale If you specify only one intercept, it applies to all columns specified by the InputColumns argument. If you specify multiple addition factors, each intercept applies to the corresponding input column. The syntax of intercept is: [-]{number | min | mean | max } where min, mean, and max are the global minimum, maximum, mean values in the corresponding columns. The function scales the values of min, mean, and max. For example, if intercept is '- min' and multiplier is 1, the scaled result is transformed to a nonnegative sequence according to this formula, where scaledmin is the scaled value: X' = -scaledmin + 1 * (X - location)/scale The default intercept is 0.",
-      "datatype": "STRING",
-      "allowsLists": true,
-      "rName": "intercept",
-      "useInR": true,
-      "rOrderNum": 8
+      "permittedValues": [],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies one or more addition factors incrementing the scaled results\u2014intercept in the following formula: X' = intercept + multiplier * (X - location)/scale If you specify only one intercept, it applies to all columns specified by the InputColumns argument. If you specify multiple addition factors, each intercept applies to the corresponding input column. The syntax of intercept is: [-]{number | min | mean | max } where min, mean, and max are the global minimum, maximum, mean values in the corresponding columns. The function scales the values of min, mean, and max. For example, if intercept is '- min' and multiplier is 1, the scaled result is transformed to a nonnegative sequence according to this formula, where scaledmin is the scaled value: X' = -scaledmin + 1 * (X - location)/scale The default intercept is 0."
     }
   ]
 }

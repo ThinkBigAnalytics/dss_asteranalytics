@@ -10,285 +10,285 @@
   "long_description": "This function calculate the distance from target vector to each reference vector. User can specify desired measurements in MEASURE argument.",
   "input_tables": [
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "target",
+      "rName": "target.data",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 1,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "A table that specifies target vectors",
       "requiredInputKind": [
         "PartitionByKey"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "target",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "A table that specifies target vectors",
-      "description": "A table that specifies target vectors",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "target.data",
-      "useInR": true,
-      "rOrderNum": 1
+      "description": "A table that specifies target vectors"
     },
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "ref",
+      "rName": "ref.data",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 2,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "A table that specifies reference vectors",
       "requiredInputKind": [
         "Dimension"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "ref",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "A table that specifies reference vectors",
-      "description": "A table that specifies reference vectors",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "ref.data",
-      "useInR": true,
-      "rOrderNum": 2
+      "description": "A table that specifies reference vectors"
     }
   ],
   "argument_clauses": [
     {
+      "name": "TargetIdColumns",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "target.id",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "target"
       ],
+      "rOrderNum": 3,
       "checkDuplicate": true,
-      "allowedTypes": [],
-      "allowedTypeGroups": [
-        "ALL"
-      ],
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "TargetIdColumns",
-      "alternateNames": [],
       "isRequired": true,
       "rDescription": "Specifies the names of the columns that comprise the target vector identifier. You must partition the target input table by these columns and specify them with this argument.",
-      "description": "Specifies the names of the columns that comprise the target vector identifier. You must partition the target input table by these columns and specify them with this argument.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "target.id",
-      "useInR": true,
-      "rOrderNum": 3
-    },
-    {
-      "targetTable": [
-        "target"
-      ],
-      "checkDuplicate": false,
-      "allowedTypes": [],
+      "alternateNames": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "requiredLength": 1,
-      "matchLengthOfArgument": "",
       "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the names of the columns that comprise the target vector identifier. You must partition the target input table by these columns and specify them with this argument."
+    },
+    {
       "name": "TargetFeatureColumn",
-      "alternateNames": [],
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "target.feature",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "target"
+      ],
+      "rOrderNum": 4,
+      "checkDuplicate": false,
       "isRequired": true,
       "rDescription": "Specifies the name of the column that contains the target vector feature name (for example, the axis of a 3-D vector). Note: An entry with a NULL value in a feature_column is dropped.",
-      "description": "Specifies the name of the column that contains the target vector feature name (for example, the axis of a 3-D vector). Note: An entry with a NULL value in a feature_column is dropped.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "target.feature",
-      "useInR": true,
-      "rOrderNum": 4
+      "requiredLength": 1,
+      "alternateNames": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the column that contains the target vector feature name (for example, the axis of a 3-D vector). Note: An entry with a NULL value in a feature_column is dropped."
     },
     {
+      "name": "TargetValueColumn",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "target.value",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "target"
       ],
+      "rOrderNum": 5,
       "checkDuplicate": false,
-      "allowedTypes": [],
-      "allowedTypeGroups": [
-        "NUMERIC"
-      ],
-      "requiredLength": 1,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "TargetValueColumn",
-      "alternateNames": [],
       "isRequired": false,
       "rDescription": "Specifies the name of the column that contains the value for the target vector feature. The default value is 1. Note: An entry with a NULL value in a value_column is dropped.",
-      "description": "Specifies the name of the column that contains the value for the target vector feature. The default value is 1. Note: An entry with a NULL value in a value_column is dropped.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "target.value",
-      "useInR": true,
-      "rOrderNum": 5
-    },
-    {
-      "targetTable": [
-        "ref"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
-      "allowedTypeGroups": [
-        "ALL"
-      ],
-      "defaultValues": [],
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "RefIdColumns",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "Specifies the names of the columns that comprise the reference vector identifier. The default value is the target.id argument value. ",
-      "description": "Specifies the names of the columns that comprise the reference vector identifier. The default value is the TargetIDColumns argument value. ",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "ref.id",
-      "useInR": true,
-      "rOrderNum": 6
-    },
-    {
-      "targetTable": [
-        "ref"
-      ],
-      "checkDuplicate": false,
-      "allowedTypes": [],
-      "allowedTypeGroups": [
-        "ALL"
-      ],
       "requiredLength": 1,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "RefFeatureColumn",
       "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "Specifies the name of the column that contains the reference vector feature name. The default value is the target.feature argument value.",
-      "description": "Specifies the name of the column that contains the reference vector feature name. The default value is the target.feature argument value.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "ref.feature",
-      "useInR": true,
-      "rOrderNum": 7
-    },
-    {
-      "targetTable": [
-        "ref"
-      ],
-      "checkDuplicate": false,
-      "allowedTypes": [],
       "allowedTypeGroups": [
         "NUMERIC"
       ],
-      "requiredLength": 1,
-      "matchLengthOfArgument": "",
       "allowPadding": true,
-      "name": "RefValueColumn",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "Specifies the name of the column that contains the value for the reference vector feature. The default value is the TargetValueColumn argument value. Note: An entry with a NULL value in a value_column is dropped.",
-      "description": "Specifies the name of the column that contains the value for the reference vector feature. The default value is the TargetValueColumn argument value. Note: An entry with a NULL value in a value_column is dropped.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "ref.value",
-      "useInR": true,
-      "rOrderNum": 8
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the column that contains the value for the target vector feature. The default value is 1. Note: An entry with a NULL value in a value_column is dropped."
     },
     {
-      "permittedValues": [],
-      "defaultValue": "positiveinfinity",
-      "isOutputColumn": false,
+      "name": "RefIdColumns",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "ref.id",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "ref"
+      ],
+      "rOrderNum": 6,
+      "defaultValues": [],
+      "checkDuplicate": true,
+      "isRequired": false,
+      "rDescription": "Specifies the names of the columns that comprise the reference vector identifier. The default value is the target.id argument value. ",
+      "alternateNames": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the names of the columns that comprise the reference vector identifier. The default value is the TargetIDColumns argument value. "
+    },
+    {
+      "name": "RefFeatureColumn",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "ref.feature",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "ref"
+      ],
+      "rOrderNum": 7,
+      "checkDuplicate": false,
+      "isRequired": false,
+      "rDescription": "Specifies the name of the column that contains the reference vector feature name. The default value is the target.feature argument value.",
+      "requiredLength": 1,
+      "alternateNames": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the column that contains the reference vector feature name. The default value is the target.feature argument value."
+    },
+    {
+      "name": "RefValueColumn",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "ref.value",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "ref"
+      ],
+      "rOrderNum": 8,
+      "checkDuplicate": false,
+      "isRequired": false,
+      "rDescription": "Specifies the name of the column that contains the value for the reference vector feature. The default value is the TargetValueColumn argument value. Note: An entry with a NULL value in a value_column is dropped.",
+      "requiredLength": 1,
+      "alternateNames": [],
+      "allowedTypeGroups": [
+        "NUMERIC"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the column that contains the value for the reference vector feature. The default value is the TargetValueColumn argument value. Note: An entry with a NULL value in a value_column is dropped."
+    },
+    {
       "name": "ReplaceInvalid",
+      "allowsLists": false,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "defaultValue": "positiveinfinity",
+      "rOrderNum": 12,
+      "rName": "replace.invalid",
+      "isRequired": false,
+      "rDescription": "Specifies the value to return when the function encounters an infinite value or empty vectors. For custom, you can supply any DOUBLE PRECISION value. The default value is 'PositiveInfinity'.",
       "alternateNames": [
         "InvalidReturnValue"
       ],
-      "isRequired": false,
-      "rDescription": "Specifies the value to return when the function encounters an infinite value or empty vectors. For custom, you can supply any DOUBLE PRECISION value. The default value is 'PositiveInfinity'.",
-      "description": "Specifies the value to return when the function encounters an infinite value or empty vectors. For custom, you can supply any DOUBLE PRECISION value. The default value is 'PositiveInfinity'.",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "replace.invalid",
-      "useInR": true,
-      "rOrderNum": 12
+      "permittedValues": [],
+      "description": "Specifies the value to return when the function encounters an infinite value or empty vectors. For custom, you can supply any DOUBLE PRECISION value. The default value is 'PositiveInfinity'."
     },
     {
+      "name": "RefTableSize",
+      "allowsLists": false,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "defaultValue": "small",
+      "rOrderNum": 9,
+      "rName": "reftable.size",
+      "isRequired": false,
+      "rDescription": "Specifies the size of the reference table. Specify 'LARGE' only if the reference table does not fit in memory. The default value, 'SMALL', allows faster processing.",
+      "alternateNames": [],
       "permittedValues": [
         "small",
         "large"
       ],
-      "defaultValue": "small",
-      "isOutputColumn": false,
-      "name": "RefTableSize",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "Specifies the size of the reference table. Specify 'LARGE' only if the reference table does not fit in memory. The default value, 'SMALL', allows faster processing.",
-      "description": "Specifies the size of the reference table. Specify 'LARGE' only if the reference table does not fit in memory. The default value, 'SMALL', allows faster processing.",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "reftable.size",
-      "useInR": true,
-      "rOrderNum": 9
+      "description": "Specifies the size of the reference table. Specify 'LARGE' only if the reference table does not fit in memory. The default value, 'SMALL', allows faster processing."
     },
     {
+      "name": "DistanceMeasure",
+      "allowsLists": true,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "defaultValue": [
+        "cosine"
+      ],
+      "rOrderNum": 10,
+      "rName": "distance.measure",
+      "isRequired": false,
+      "rDescription": "Specifies the distance measures that the function uses.The default value is 'cosine'.",
+      "alternateNames": [
+        "Measure"
+      ],
       "permittedValues": [
         "COSINE",
         "EUCLIDEAN",
         "MANHATTAN",
         "BINARY"
       ],
-      "defaultValue": [
-        "cosine"
-      ],
-      "isOutputColumn": false,
-      "matchLengthOfArgument": "",
       "allowPadding": true,
-      "name": "DistanceMeasure",
-      "alternateNames": [
-        "Measure"
-      ],
-      "isRequired": false,
-      "rDescription": "Specifies the distance measures that the function uses.The default value is 'cosine'.",
-      "description": "Specifies the distance measures that the function uses.The default value is 'cosine'.",
-      "datatype": "STRING",
-      "allowsLists": true,
-      "rName": "distance.measure",
-      "useInR": true,
-      "rOrderNum": 10
+      "matchLengthOfArgument": "",
+      "description": "Specifies the distance measures that the function uses.The default value is 'cosine'."
     },
     {
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
       "name": "MaxDistance",
+      "allowsLists": true,
+      "useInR": true,
+      "datatype": "DOUBLE",
+      "rOrderNum": 14,
+      "rName": "max.distance",
+      "isRequired": false,
+      "rDescription": "Specifies the maximum distance between a pair of target and reference vectors. If the distance exceeds the threshold, the pair does not appear in the output table. If the distance.measure argument specifies multiple measures, then the max.distance argument must specify a threshold for each measure. The ith threshold corresponds to the ith measure. Each threshold can be any DOUBLE PRECISION value. If you omit this argument, then the function returns all results.",
       "alternateNames": [
         "Threshold"
       ],
-      "isRequired": false,
-      "rDescription": "Specifies the maximum distance between a pair of target and reference vectors. If the distance exceeds the threshold, the pair does not appear in the output table. If the distance.measure argument specifies multiple measures, then the max.distance argument must specify a threshold for each measure. The ith threshold corresponds to the ith measure. Each threshold can be any DOUBLE PRECISION value. If you omit this argument, then the function returns all results.",
-      "description": "Specifies the maximum distance between a pair of target and reference vectors. If the distance exceeds the threshold, the pair does not appear in the output table. If the DistanceMeasure argument specifies multiple measures, then the MaxDistance argument must specify a threshold for each measure. The ith threshold corresponds to the ith measure. Each threshold can be any DOUBLE PRECISION value. If you omit this argument, then the function returns all results.",
-      "datatype": "DOUBLE",
-      "allowsLists": true,
-      "rName": "max.distance",
-      "useInR": true,
-      "rOrderNum": 14
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the maximum distance between a pair of target and reference vectors. If the distance exceeds the threshold, the pair does not appear in the output table. If the DistanceMeasure argument specifies multiple measures, then the MaxDistance argument must specify a threshold for each measure. The ith threshold corresponds to the ith measure. Each threshold can be any DOUBLE PRECISION value. If you omit this argument, then the function returns all results."
     },
     {
-      "defaultValue": true,
       "name": "IgnoreMismatch",
-      "alternateNames": [],
+      "allowsLists": false,
+      "useInR": true,
+      "datatype": "BOOLEAN",
+      "defaultValue": true,
+      "rOrderNum": 11,
+      "rName": "ignore.mismatch",
       "isRequired": false,
       "rDescription": "Specifies whether to drop mismatched dimensions. The default value is 'true'. If distance.measure is 'cosine', then this argument is 'false'. If you specify 'true', then two vectors with no common features become two empty vectors when only their common features are considered, and the function cannot measure the distance between them.",
-      "description": "Specifies whether to drop mismatched dimensions. The default value is 'true'. If DistanceMeasure is 'cosine', then this argument is 'false'. If you specify 'true', then two vectors with no common features become two empty vectors when only their common features are considered, and the function cannot measure the distance between them.",
-      "datatype": "BOOLEAN",
-      "allowsLists": false,
-      "rName": "ignore.mismatch",
-      "useInR": true,
-      "rOrderNum": 11
+      "alternateNames": [],
+      "description": "Specifies whether to drop mismatched dimensions. The default value is 'true'. If DistanceMeasure is 'cosine', then this argument is 'false'. If you specify 'true', then two vectors with no common features become two empty vectors when only their common features are considered, and the function cannot measure the distance between them."
     },
     {
-      "defaultValue": 2147483647,
+      "name": "TopK",
+      "upperBoundType": "INCLUSIVE",
       "lowerBound": 1,
+      "useInR": true,
+      "rName": "top.k",
+      "datatype": "INTEGER",
+      "defaultValue": 2147483647,
+      "rOrderNum": 13,
+      "allowsLists": false,
       "upperBound": 2147483647,
       "lowerBoundType": "INCLUSIVE",
-      "upperBoundType": "INCLUSIVE",
-      "allowNaN": false,
-      "name": "TopK",
-      "alternateNames": [],
       "isRequired": false,
       "rDescription": "Specifies, for each target vector and for each measure, the maximum number of closest reference vectors to include in the output table. For k, you can supply any INTEGER value. The default value is the maximum INTEGER value (2,147,483,647).",
-      "description": "Specifies, for each target vector and for each measure, the maximum number of closest reference vectors to include in the output table. For k, you can supply any INTEGER value. The default value is the maximum INTEGER value (2,147,483,647).",
-      "datatype": "INTEGER",
-      "allowsLists": false,
-      "rName": "top.k",
-      "useInR": true,
-      "rOrderNum": 13
+      "alternateNames": [],
+      "allowNaN": false,
+      "description": "Specifies, for each target vector and for each measure, the maximum number of closest reference vectors to include in the output table. For k, you can supply any INTEGER value. The default value is the maximum INTEGER value (2,147,483,647)."
     }
   ]
 }

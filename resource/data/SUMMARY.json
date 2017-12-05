@@ -1,0 +1,159 @@
+{
+  "json_schema_major_version": "1",
+  "json_schema_minor_version": "2",
+  "json_content_version": "1",
+  "function_name": "Summary",
+  "function_version": "1.0",
+  "function_type": "driver",
+  "function_r_name": "aa.summary",
+  "short_description": "This outputs descriptive statistics for local partitions.",
+  "long_description": "This outputs descriptive statistics values for each partition.",
+  "input_tables": [
+    {
+      "name": "InputTable",
+      "allowsLists": false,
+      "useInR": true,
+      "description": "Specifies the input table.",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 0,
+      "rName": "inputTable",
+      "alternateNames": [],
+      "rDescription": "Specifies the input table.",
+      "requiredInputKind": [],
+      "isOrdered": false,
+      "partitionByOne": false
+    }
+  ],
+  "output_tables": [
+    {
+      "name": "MomentsTableName",
+      "allowsLists": false,
+      "useInR": true,
+      "description": "Specifies the table name for MOMENTS group of statistical measures.",
+      "isRequired": false,
+      "datatype": "TABLE_NAME",
+      "rOrderNum": 5,
+      "rName": "momentsTable",
+      "alternateNames": [],
+      "rDescription": "Specifies the table name for MOMENTS group of statistical measures.",
+      "isOutputTable": true
+    },
+    {
+      "name": "BasicTableName",
+      "allowsLists": false,
+      "useInR": true,
+      "description": "Specifies the table name for BASIC group of statistical measures.",
+      "isRequired": false,
+      "datatype": "TABLE_NAME",
+      "rOrderNum": 6,
+      "rName": "basicTable",
+      "alternateNames": [],
+      "rDescription": "Specifies the table name for BASIC group of statistical measures.",
+      "isOutputTable": true
+    },
+    {
+      "name": "QuantilesTableName",
+      "allowsLists": false,
+      "useInR": true,
+      "description": "Specifies the table name for QUANTILES group of statistical measures.",
+      "isRequired": false,
+      "datatype": "TABLE_NAME",
+      "rOrderNum": 7,
+      "rName": "quantilesTable",
+      "alternateNames": [],
+      "rDescription": "Specifies the table name for QUANTILES group of statistical measures.",
+      "isOutputTable": true
+    }
+  ],
+  "argument_clauses": [
+    {
+      "name": "TargetColumns",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "targetColumns",
+      "allowedTypes": [],
+      "datatype": "COLUMN_NAMES",
+      "targetTable": [
+        "InputTable"
+      ],
+      "rOrderNum": 1,
+      "checkDuplicate": true,
+      "isRequired": false,
+      "rDescription": "Specifies input table columns that contain numeric values to calculate statistics for.",
+      "alternateNames": [],
+      "allowedTypeGroups": [
+        "NUMERIC"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies input table columns that contain numeric values to calculate statistics for."
+    },
+    {
+      "name": "ExcludeColumns",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "excludeColumns",
+      "allowedTypes": [],
+      "datatype": "COLUMN_NAMES",
+      "targetTable": [
+        "InputTable"
+      ],
+      "rOrderNum": 2,
+      "checkDuplicate": true,
+      "isRequired": false,
+      "rDescription": "Specifies table columns which should be ignored, the rest of numeric columns in the table will be used as target variables.",
+      "alternateNames": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies table columns which should be ignored, the rest of numeric columns in the table will be used as target variables."
+    },
+    {
+      "name": "PartitionColumns",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "partitionColumns",
+      "allowedTypes": [],
+      "datatype": "COLUMN_NAMES",
+      "targetTable": [
+        "InputTable"
+      ],
+      "rOrderNum": 4,
+      "checkDuplicate": true,
+      "isRequired": false,
+      "rDescription": "Specifies columns which define groups for which statistics is calculated.",
+      "alternateNames": [],
+      "allowedTypeGroups": [
+        "STRING",
+        "NUMERIC",
+        "TIME"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies columns which define groups for which statistics is calculated."
+    },
+    {
+      "name": "Statistics",
+      "allowsLists": true,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "rOrderNum": 3,
+      "rName": "statistics",
+      "isRequired": false,
+      "rDescription": "Specifying groups of statistical measures to include in the response.",
+      "alternateNames": [],
+      "permittedValues": [
+        "MOMENTS",
+        "BASIC",
+        "QUANTILES"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifying groups of statistical measures to include in the response."
+    }
+  ]
+}

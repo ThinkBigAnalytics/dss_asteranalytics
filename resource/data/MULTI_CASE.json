@@ -10,39 +10,39 @@
   "long_description": "This function is used to categorize the input rows. Each row can be part of multiple groups.",
   "input_tables": [
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "input",
+      "rName": "data",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 1,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "Specifies the name of the input table",
       "requiredInputKind": [
         "PartitionByAny"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "input",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "Specifies the name of the input table",
-      "description": "Specifies the name of the input table",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "data",
-      "useInR": true,
-      "rOrderNum": 1
+      "description": "Specifies the name of the input table"
     }
   ],
   "argument_clauses": [
     {
-      "permittedValues": [],
-      "isOutputColumn": false,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
       "name": "labels",
-      "alternateNames": [],
+      "allowsLists": true,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "rOrderNum": 2,
+      "rName": "labels",
       "isRequired": true,
       "rDescription": "Specifies a label for each case. Each case corresponds to a condition, which is a SQL predicate that includes input column names. When an input value satisfies condition, that is a match, and the function outputs the input row and the corresponding label.",
-      "description": "Specifies a label for each case. Each case corresponds to a condition, which is a SQL predicate that includes input column names. When an input value satisfies condition, that is a match, and the function outputs the input row and the corresponding label.",
-      "datatype": "STRING",
-      "allowsLists": true,
-      "rName": "labels",
-      "useInR": true,
-      "rOrderNum": 2
+      "alternateNames": [],
+      "permittedValues": [],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies a label for each case. Each case corresponds to a condition, which is a SQL predicate that includes input column names. When an input value satisfies condition, that is a match, and the function outputs the input row and the corresponding label."
     }
   ]
 }

@@ -11,84 +11,84 @@
   "long_description": "This function gives score according to linear regression model.",
   "input_tables": [
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "input",
+      "rName": "newdata",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 2,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "",
       "requiredInputKind": [
         "PartitionByAny"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "input",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "",
-      "description": "",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "newdata",
-      "useInR": true,
-      "rOrderNum": 2
+      "description": ""
     },
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "model",
+      "rName": "object",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 1,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "Specifies the model table from linreg for the prediction",
       "requiredInputKind": [
         "Dimension"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "model",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "Specifies the model table from linreg for the prediction",
-      "description": "Specifies the model table from linreg for the prediction",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "object",
-      "useInR": true,
-      "rOrderNum": 1
+      "description": "Specifies the model table from linreg for the prediction"
     }
   ],
   "argument_clauses": [
     {
+      "name": "InputColumns",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "input.columns",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "input"
       ],
+      "rOrderNum": -1,
       "checkDuplicate": true,
-      "allowedTypes": [],
+      "isRequired": false,
+      "rDescription": "Specifies the names of the input table columns that contain the input variables.",
+      "alternateNames": [],
       "allowedTypeGroups": [
         "NUMERIC"
       ],
-      "matchLengthOfArgument": "",
       "allowPadding": true,
-      "name": "InputColumns",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "Specifies the names of the input table columns that contain the input variables.",
-      "description": "Specifies the names of the input table columns that contain the input variables.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "input.columns",
-      "useInR": true,
-      "rOrderNum": -1
+      "matchLengthOfArgument": "",
+      "description": "Specifies the names of the input table columns that contain the input variables."
     },
     {
+      "name": "Accumulate",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "accumulate",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "input"
       ],
+      "rOrderNum": 3,
       "checkDuplicate": true,
-      "allowedTypes": [],
+      "isRequired": false,
+      "rDescription": "Specifies the names of input table columns to copy to the output table.",
+      "alternateNames": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "matchLengthOfArgument": "",
       "allowPadding": true,
-      "name": "Accumulate",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "Specifies the names of input table columns to copy to the output table.",
-      "description": "Specifies the names of input table columns to copy to the output table.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "accumulate",
-      "useInR": true,
-      "rOrderNum": 3
+      "matchLengthOfArgument": "",
+      "description": "Specifies the names of input table columns to copy to the output table."
     }
   ]
 }

@@ -11,20 +11,20 @@
   "partner_function": "LinRegMatrix",
   "input_tables": [
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "input",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 0,
+      "allowsLists": false,
+      "partitionByOne": true,
+      "rDescription": "Input table that contains one row for each data point and one column for each data point component",
       "requiredInputKind": [
         "PartitionByKey"
       ],
-      "isOrdered": false,
-      "partitionByOne": true,
-      "name": "input",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "Input table that contains one row for each data point and one column for each data point component",
-      "description": "Input table that contains one row for each data point and one column for each data point component",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "useInR": true,
-      "rOrderNum": 0
+      "description": "Input table that contains one row for each data point and one column for each data point component"
     }
   ]
 }

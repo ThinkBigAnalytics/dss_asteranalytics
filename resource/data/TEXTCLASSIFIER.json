@@ -11,82 +11,82 @@
   "long_description": "Predict the category of the document in each text column",
   "input_tables": [
     {
+      "isOrdered": true,
+      "useInR": true,
+      "name": "input",
+      "rName": "newdata",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 2,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "The relation contains the text to be classified",
       "requiredInputKind": [
         "PartitionByAny"
       ],
-      "isOrdered": true,
-      "partitionByOne": false,
-      "name": "input",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "The relation contains the text to be classified",
-      "description": "The relation contains the text to be classified",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "newdata",
-      "useInR": true,
-      "rOrderNum": 2
+      "description": "The relation contains the text to be classified"
     }
   ],
   "argument_clauses": [
     {
+      "name": "TextColumn",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "text.column",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "input"
       ],
+      "rOrderNum": 3,
       "checkDuplicate": true,
-      "allowedTypes": [],
-      "allowedTypeGroups": [
-        "ALL"
-      ],
-      "requiredLength": 1,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "TextColumn",
-      "alternateNames": [],
       "isRequired": true,
       "rDescription": "Specifies the column of the input table that contains the text to be used for predicting classification.",
-      "description": "Specifies the column of the input table that contains the text to be used for predicting classification.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "text.column",
-      "useInR": true,
-      "rOrderNum": 3
-    },
-    {
-      "targetTable": [
-        "input"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
+      "requiredLength": 1,
+      "alternateNames": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "matchLengthOfArgument": "",
       "allowPadding": true,
-      "name": "Accumulate",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "Specifies the names of the input columns to copy to the output table.",
-      "description": "Specifies the names of the input columns to copy to the output table.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "accumulate",
-      "useInR": true,
-      "rOrderNum": 4
+      "matchLengthOfArgument": "",
+      "description": "Specifies the column of the input table that contains the text to be used for predicting classification."
     },
     {
-      "permittedValues": [],
-      "isOutputColumn": false,
-      "name": "Model",
+      "name": "Accumulate",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "accumulate",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "input"
+      ],
+      "rOrderNum": 4,
+      "checkDuplicate": true,
+      "isRequired": false,
+      "rDescription": "Specifies the names of the input columns to copy to the output table.",
       "alternateNames": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the names of the input columns to copy to the output table."
+    },
+    {
+      "name": "Model",
+      "allowsLists": false,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "rOrderNum": 1,
+      "rName": "model.file",
       "isRequired": true,
       "rDescription": "Specifies the model (which you must install in the database before calling the function).",
-      "description": "Specifies the model (which you must install in the database before calling the function).",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "model.file",
-      "useInR": true,
-      "rOrderNum": 1
+      "alternateNames": [],
+      "permittedValues": [],
+      "description": "Specifies the model (which you must install in the database before calling the function)."
     }
   ]
 }

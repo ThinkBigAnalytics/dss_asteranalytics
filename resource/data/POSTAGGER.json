@@ -10,88 +10,88 @@
   "long_description": "Part of Speech tagging is an important preprocessing step in many natural language processing applications and the first step in the syntactic analysis of a language.",
   "input_tables": [
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "input",
+      "rName": "data",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 1,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "The input table that contains the input texts. ",
       "requiredInputKind": [
         "PartitionByAny"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "input",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "The input table that contains the input texts. ",
-      "description": "The input table that contains the input texts. ",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "data",
-      "useInR": true,
-      "rOrderNum": 1
+      "description": "The input table that contains the input texts. "
     }
   ],
   "argument_clauses": [
     {
-      "targetTable": [
-        "input"
-      ],
-      "checkDuplicate": true,
+      "name": "TextColumn",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "text.column",
       "allowedTypes": [
         "bytea"
       ],
-      "allowedTypeGroups": [
-        "STRING"
-      ],
-      "requiredLength": 1,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "TextColumn",
-      "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "Specifies the name of the input column that contains the text to be tagged.",
-      "description": "Specifies the name of the input column that contains the text to be tagged.",
       "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "text.column",
-      "useInR": true,
-      "rOrderNum": 2
-    },
-    {
       "targetTable": [
         "input"
       ],
+      "rOrderNum": 2,
       "checkDuplicate": true,
+      "isRequired": true,
+      "rDescription": "Specifies the name of the input column that contains the text to be tagged.",
+      "requiredLength": 1,
+      "alternateNames": [],
+      "allowedTypeGroups": [
+        "STRING"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the input column that contains the text to be tagged."
+    },
+    {
+      "name": "Accumulate",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "accumulate",
       "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "input"
+      ],
+      "rOrderNum": 4,
+      "checkDuplicate": true,
+      "isRequired": false,
+      "rDescription": "Specifies the names of the input table columns to copy to the output table. Note: If you intend to use the ta.postagger output table as input to the function \"ta.textchunker\", then this argument must specify the input table columns that comprise the partition key.",
+      "alternateNames": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "matchLengthOfArgument": "",
       "allowPadding": true,
-      "name": "Accumulate",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "Specifies the names of the input table columns to copy to the output table. Note: If you intend to use the ta.postagger output table as input to the function \"ta.textchunker\", then this argument must specify the input table columns that comprise the partition key.",
-      "description": "Specifies the names of the input table columns to copy to the output table. Note: If you intend to use the PosTagger output table as input to the function \"TextChunker\", then this argument must specify the input table columns that comprise the partition key.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "accumulate",
-      "useInR": true,
-      "rOrderNum": 4
+      "matchLengthOfArgument": "",
+      "description": "Specifies the names of the input table columns to copy to the output table. Note: If you intend to use the PosTagger output table as input to the function \"TextChunker\", then this argument must specify the input table columns that comprise the partition key."
     },
     {
+      "name": "Language",
+      "allowsLists": false,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "defaultValue": "en",
+      "rOrderNum": 3,
+      "rName": "language",
+      "isRequired": false,
+      "rDescription": "Specifies the language of the input text. The supported values are: en (English, the default value), zh_CN (Simplified Chinese)",
+      "alternateNames": [],
       "permittedValues": [
         "en",
         "zh_CN"
       ],
-      "defaultValue": "en",
-      "isOutputColumn": false,
-      "name": "Language",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "Specifies the language of the input text. The supported values are: en (English, the default value), zh_CN (Simplified Chinese)",
-      "description": "Specifies the language of the input text. The supported values are: en (English, the default value), zh_CN (Simplified Chinese)",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "language",
-      "useInR": true,
-      "rOrderNum": 3
+      "description": "Specifies the language of the input text. The supported values are: en (English, the default value), zh_CN (Simplified Chinese)"
     }
   ]
 }

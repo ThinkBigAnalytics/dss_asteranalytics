@@ -11,138 +11,149 @@
   "long_description": "Extract setiment of each text column.The sentiment analysis level can be document and sentence.",
   "input_tables": [
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "input",
+      "rName": "newdata",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 2,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "The table defining the input text.",
       "requiredInputKind": [
         "PartitionByAny"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "input",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "The table defining the input text.",
-      "description": "The table defining the input text.",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "newdata",
-      "useInR": true,
-      "rOrderNum": 2
+      "description": "The table defining the input text."
     },
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "dict",
+      "rName": "dict.data",
+      "isRequired": false,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 3,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "The table defining the dictionary.",
       "requiredInputKind": [
         "Dimension"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "dict",
       "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "The table defining the dictionary.",
-      "description": "The table defining the dictionary.",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "dict.data",
-      "useInR": true,
-      "rOrderNum": 3
+      "description": "The table defining the dictionary."
     }
   ],
   "argument_clauses": [
     {
+      "name": "TextColumn",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "text.column",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "input"
       ],
+      "rOrderNum": 4,
       "checkDuplicate": true,
-      "allowedTypes": [],
-      "allowedTypeGroups": [
-        "ALL"
-      ],
-      "requiredLength": 1,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "TextColumn",
-      "alternateNames": [],
       "isRequired": true,
       "rDescription": "Specifies the name of the input column that contains text from which to extract sentiments.",
-      "description": "Specifies the name of the input column that contains text from which to extract sentiments.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "text.column",
-      "useInR": true,
-      "rOrderNum": 4
-    },
-    {
-      "targetTable": [
-        "input"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
+      "requiredLength": 1,
+      "alternateNames": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "matchLengthOfArgument": "",
       "allowPadding": true,
-      "name": "Accumulate",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "Specifies the names of the input columns to copy to the output table.",
-      "description": "Specifies the names of the input columns to copy to the output table.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "accumulate",
-      "useInR": true,
-      "rOrderNum": 9
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the input column that contains text from which to extract sentiments."
     },
     {
+      "name": "Accumulate",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "accumulate",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "input"
+      ],
+      "rOrderNum": 9,
+      "checkDuplicate": true,
+      "isRequired": false,
+      "rDescription": "Specifies the names of the input columns to copy to the output table.",
+      "alternateNames": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the names of the input columns to copy to the output table."
+    },
+    {
+      "name": "Language",
+      "allowsLists": false,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "defaultValue": "en",
+      "rOrderNum": 5,
+      "rName": "language",
+      "isRequired": false,
+      "rDescription": "Specifies the language of the input text:  en (English, the default),  zh_CN (Simplified Chinese),  zh_TW (Traditional Chinese)",
+      "alternateNames": [],
       "permittedValues": [
         "en",
         "zh_CN",
         "zh_TW"
       ],
-      "defaultValue": "en",
-      "isOutputColumn": false,
-      "name": "Language",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "Specifies the language of the input text:  en (English, the default),  zh_CN (Simplified Chinese),  zh_TW (Traditional Chinese)",
-      "description": "Specifies the language of the input text:  en (English, the default),  zh_CN (Simplified Chinese),  zh_TW (Traditional Chinese)",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "language",
-      "useInR": true,
-      "rOrderNum": 5
+      "description": "Specifies the language of the input text:  en (English, the default),  zh_CN (Simplified Chinese),  zh_TW (Traditional Chinese)"
     },
     {
-      "permittedValues": [],
-      "isOutputColumn": false,
       "name": "Model",
-      "alternateNames": [],
+      "allowsLists": false,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "rOrderNum": 1,
+      "rName": "object",
       "isRequired": false,
       "rDescription": "Specifies the model type and file. The default model type is dictionary. If you omit this argument or specify dictionary without dict_file, then you must specify a dictionary table with alias 'dict'. If you specify both dict and dict_file, then whenever their words conflict, dict has higher priority. The dict_file must be a text file in which each line contains only a sentiment word, a space, and the opinion score of the sentiment word. If you specify classification:model_file, model_file must be the name of a model file generated and installed on the database by the function aa.sentiment.train. Note: Before running the function, add the location of dict_file or model_file to the user/session default search path.",
-      "description": "Specifies the model type and file. The default model type is dictionary. If you omit this argument or specify dictionary without dict_file, then you must specify a dictionary table with alias 'dict'. If you specify both dict and dict_file, then whenever their words conflict, dict has higher priority. The dict_file must be a text file in which each line contains only a sentiment word, a space, and the opinion score of the sentiment word. If you specify classification:model_file, model_file must be the name of a model file generated and installed on the database by the function “TrainSentimentExtractor” on page 780. Note: Before running the function, add the location of dict_file or model_file to the user/session default search path.",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "object",
-      "useInR": true,
-      "rOrderNum": 1
+      "alternateNames": [],
+      "permittedValues": [],
+      "description": "Specifies the model type and file. The default model type is dictionary. If you omit this argument or specify dictionary without dict_file, then you must specify a dictionary table with alias 'dict'. If you specify both dict and dict_file, then whenever their words conflict, dict has higher priority. The dict_file must be a text file in which each line contains only a sentiment word, a space, and the opinion score of the sentiment word. If you specify classification:model_file, model_file must be the name of a model file generated and installed on the database by the function \u201cTrainSentimentExtractor\u201d on page 780. Note: Before running the function, add the location of dict_file or model_file to the user/session default search path."
     },
     {
+      "name": "Level",
+      "allowsLists": false,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "defaultValue": "DOCUMENT",
+      "rOrderNum": 6,
+      "rName": "level",
+      "isRequired": false,
+      "rDescription": "Specifies the level of analysis\u2014whether to analyze each document (the default) or each sentence.",
+      "alternateNames": [],
       "permittedValues": [
         "DOCUMENT",
         "SENTENCE"
       ],
-      "defaultValue": "DOCUMENT",
-      "isOutputColumn": false,
-      "name": "Level",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "Specifies the level of analysis—whether to analyze each document (the default) or each sentence.",
-      "description": "Specifies the level of analysis—whether to analyze each document (the default) or each sentence.",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "level",
-      "useInR": true,
-      "rOrderNum": 6
+      "description": "Specifies the level of analysis\u2014whether to analyze each document (the default) or each sentence."
     },
     {
+      "name": "HighPriority",
+      "allowsLists": false,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "defaultValue": "NONE",
+      "rOrderNum": 7,
+      "rName": "high.priority",
+      "isRequired": false,
+      "rDescription": "Specifies the highest priority when returning results:  NEGATIVE_RECALL: Give highest priority to negative results, including those with lowerconfidence sentiment classifications (maximizes the number of negative results returned), NEGATIVE_PRECISION: Give highest priority to negative results with high-confidence sentiment classifications. POSITIVE_RECALL: Give highest priority to positive results, including those with lowerconfidence sentiment classifications (maximizes the number of positive results returned). POSITIVE_PRECISION: Give highest priority to positive results with high-confidence sentiment classifications. NONE: Give all results the same priority.",
+      "alternateNames": [],
       "permittedValues": [
         "NEGATIVE_RECALL",
         "NEGATIVE_PRECISION",
@@ -150,37 +161,26 @@
         "POSITIVE_PRECISION",
         "NONE"
       ],
-      "defaultValue": "NONE",
-      "isOutputColumn": false,
-      "name": "HighPriority",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "Specifies the highest priority when returning results:  NEGATIVE_RECALL: Give highest priority to negative results, including those with lowerconfidence sentiment classifications (maximizes the number of negative results returned), NEGATIVE_PRECISION: Give highest priority to negative results with high-confidence sentiment classifications. POSITIVE_RECALL: Give highest priority to positive results, including those with lowerconfidence sentiment classifications (maximizes the number of positive results returned). POSITIVE_PRECISION: Give highest priority to positive results with high-confidence sentiment classifications. NONE: Give all results the same priority.",
-      "description": "Specifies the highest priority when returning results:  NEGATIVE_RECALL: Give highest priority to negative results, including those with lowerconfidence sentiment classifications (maximizes the number of negative results returned), NEGATIVE_PRECISION: Give highest priority to negative results with high-confidence sentiment classifications. POSITIVE_RECALL: Give highest priority to positive results, including those with lowerconfidence sentiment classifications (maximizes the number of positive results returned). POSITIVE_PRECISION: Give highest priority to positive results with high-confidence sentiment classifications. NONE: Give all results the same priority.",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "high.priority",
-      "useInR": true,
-      "rOrderNum": 7
+      "description": "Specifies the highest priority when returning results:  NEGATIVE_RECALL: Give highest priority to negative results, including those with lowerconfidence sentiment classifications (maximizes the number of negative results returned), NEGATIVE_PRECISION: Give highest priority to negative results with high-confidence sentiment classifications. POSITIVE_RECALL: Give highest priority to positive results, including those with lowerconfidence sentiment classifications (maximizes the number of positive results returned). POSITIVE_PRECISION: Give highest priority to positive results with high-confidence sentiment classifications. NONE: Give all results the same priority."
     },
     {
+      "name": "Filter",
+      "allowsLists": false,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "defaultValue": "ALL",
+      "rOrderNum": 8,
+      "rName": "filter",
+      "isRequired": false,
+      "rDescription": "Specifies the kind of results to return: POSITIVE: Return only results with positive sentiments. NEGATIVE: Return only results with negative sentiments. ALL: Return all results (default)",
+      "alternateNames": [],
       "permittedValues": [
         "POSITIVE",
         "NEGATIVE",
         "ALL"
       ],
-      "defaultValue": "ALL",
-      "isOutputColumn": false,
-      "name": "Filter",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "Specifies the kind of results to return: POSITIVE: Return only results with positive sentiments. NEGATIVE: Return only results with negative sentiments. ALL: Return all results (default)",
-      "description": "Specifies the kind of results to return: POSITIVE: Return only results with positive sentiments. NEGATIVE: Return only results with negative sentiments. ALL: Return all results (default)",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "filter",
-      "useInR": true,
-      "rOrderNum": 8
+      "description": "Specifies the kind of results to return: POSITIVE: Return only results with positive sentiments. NEGATIVE: Return only results with negative sentiments. ALL: Return all results (default)"
     }
   ]
 }

@@ -11,21 +11,21 @@
   "long_description": "This function prints the statistic of the input, including min, max, count, sum, squaresum, avg, std and variance.",
   "input_tables": [
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "input",
+      "rName": "object",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 1,
+      "allowsLists": false,
+      "partitionByOne": true,
+      "rDescription": "The output ta.scalemap function",
       "requiredInputKind": [
         "PartitionByKey"
       ],
-      "isOrdered": false,
-      "partitionByOne": true,
-      "name": "input",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "The output ta.scalemap function",
-      "description": "The output of ScaleMap function.",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "object",
-      "useInR": true,
-      "rOrderNum": 1
+      "description": "The output of ScaleMap function."
     }
   ]
 }

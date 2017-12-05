@@ -3,7 +3,7 @@
   "json_schema_minor_version": "2",
   "json_content_version": "1",
   "function_name": "TF_IDF",
-  "function_version": "2.2",
+  "function_version": "2.3",
   "function_type": "non-driver",
   "function_r_name": "aa.tf.idf",
   "ref_function_r_name": "aa.tf",
@@ -11,72 +11,72 @@
   "long_description": "Compute term frequency * inverse document frequency. The function can be used in two ways: 1. Compute 'IDF' and 'TF_IDF' value. Need two or three input tables in the case: 1). 'tf' table with schema (docid datatype, term varchar, tf double, count int) or (docid datatype, term varchar, tf double). 2). 'doccount' table with schema (count bigint). 3). An optional input: 'docperterm' table with schema (term varchar, count bigint).2. Compute 'TF_IDF' value for the prediction function. Also need two input tables: 1). 'tf' table same as 1. 2). 'idf' table with schema (term varchar, idf double). ",
   "input_tables": [
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "tf",
+      "rName": "object",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 1,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "'tf' table that contains the tf values.",
       "requiredInputKind": [
         "PartitionByKey"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "tf",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "'tf' table that contains the tf values.",
-      "description": "'tf' table that contains the tf values.",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "object",
-      "useInR": true,
-      "rOrderNum": 1
+      "description": "'tf' table that contains the tf values."
     },
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "doccount",
+      "rName": "doccount.data",
+      "isRequired": false,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 2,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "'doccount' table that contains the total number of documents. ",
       "requiredInputKind": [
         "Dimension"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "doccount",
       "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "'doccount' table that contains the total number of documents. ",
-      "description": "'doccount' table that contains the total number of documents. ",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "doccount.data",
-      "useInR": true,
-      "rOrderNum": 2
+      "description": "'doccount' table that contains the total number of documents. "
     },
     {
-      "requiredInputKind": [
-        "PartitionByKey"
-      ],
       "isOrdered": false,
-      "partitionByOne": false,
+      "useInR": true,
       "name": "docperterm",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "'docperterm' table that contains the total number of documents that each term appears. ",
-      "description": "'docperterm' table that contains the total number of documents that each term appears. ",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
       "rName": "docperterm.data",
-      "useInR": true,
-      "rOrderNum": 3
-    },
-    {
+      "isRequired": false,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 3,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "'docperterm' table that contains the total number of documents that each term appears. ",
       "requiredInputKind": [
         "PartitionByKey"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "idf",
       "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "'idf' table that contains the idf values that the predict process outputs. ",
-      "description": "'idf' table that contains the idf values that the predict process outputs. ",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "idf.data",
+      "description": "'docperterm' table that contains the total number of documents that each term appears. "
+    },
+    {
+      "isOrdered": false,
       "useInR": true,
-      "rOrderNum": 4
+      "name": "idf",
+      "rName": "idf.data",
+      "isRequired": false,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 4,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "'idf' table that contains the idf values that the predict process outputs. ",
+      "requiredInputKind": [
+        "PartitionByKey"
+      ],
+      "alternateNames": [],
+      "description": "'idf' table that contains the idf values that the predict process outputs. "
     }
   ]
 }

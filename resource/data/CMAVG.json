@@ -10,47 +10,47 @@
   "long_description": "The cumulative moving average computes the average  from the beginning of a series.",
   "input_tables": [
     {
+      "isOrdered": true,
+      "useInR": true,
+      "name": "input",
+      "rName": "data",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 1,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "Specifies the name of the table that contains the columns",
       "requiredInputKind": [
         "PartitionByKey"
       ],
-      "isOrdered": true,
-      "partitionByOne": false,
-      "name": "input",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "Specifies the name of the table that contains the columns",
-      "description": "Specifies the name of the table that contains the columns",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "data",
-      "useInR": true,
-      "rOrderNum": 1
+      "description": "Specifies the name of the table that contains the columns"
     }
   ],
   "argument_clauses": [
     {
+      "name": "TargetColumns",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "target.columns",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "input"
       ],
+      "rOrderNum": 2,
       "checkDuplicate": true,
-      "allowedTypes": [],
-      "allowedTypeGroups": [
-        "NUMERIC"
-      ],
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "TargetColumns",
+      "isRequired": false,
+      "rDescription": "Specifies the input column names for which the moving average is to be computed. If you omit this argument, then the function copies every input column to the output table but does not compute moving average.",
       "alternateNames": [
         "Columns"
       ],
-      "isRequired": false,
-      "rDescription": "Specifies the input column names for which the moving average is to be computed. If you omit this argument, then the function copies every input column to the output table but does not compute moving average.",
-      "description": "Specifies the input column names for which the moving average is to be computed. If you omit this argument, then the function copies every input column to the output table but does not compute moving average.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "target.columns",
-      "useInR": true,
-      "rOrderNum": 2
+      "allowedTypeGroups": [
+        "NUMERIC"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the input column names for which the moving average is to be computed. If you omit this argument, then the function copies every input column to the output table but does not compute moving average."
     }
   ]
 }

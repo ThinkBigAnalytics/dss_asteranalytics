@@ -10,70 +10,70 @@
   "long_description": "Many NLP tasks, such as Part-Of-Speech and chunking, begin by identifying sentences. In English, a sentence is ended with a short list of sentence-final punctuation marks, such as  ., ?, !. The Sentenizer function can divide a paragraph to serveral sentences.",
   "input_tables": [
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "input",
+      "rName": "data",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 1,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "The input table that contains the input texts.",
       "requiredInputKind": [
         "PartitionByAny"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "input",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "The input table that contains the input texts.",
-      "description": "The input table that contains the input texts.",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "data",
-      "useInR": true,
-      "rOrderNum": 1
+      "description": "The input table that contains the input texts."
     }
   ],
   "argument_clauses": [
     {
-      "targetTable": [
-        "input"
-      ],
-      "checkDuplicate": true,
+      "name": "TextColumn",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "text.column",
       "allowedTypes": [
         "bytea"
       ],
-      "allowedTypeGroups": [
-        "STRING"
-      ],
-      "requiredLength": 1,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "TextColumn",
-      "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "Specifies the name of the input column that contains the text from which to extract sentences.",
-      "description": "Specifies the name of the input column that contains the text from which to extract sentences.",
       "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "text.column",
-      "useInR": true,
-      "rOrderNum": 2
-    },
-    {
       "targetTable": [
         "input"
       ],
+      "rOrderNum": 2,
       "checkDuplicate": true,
+      "isRequired": true,
+      "rDescription": "Specifies the name of the input column that contains the text from which to extract sentences.",
+      "requiredLength": 1,
+      "alternateNames": [],
+      "allowedTypeGroups": [
+        "STRING"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the input column that contains the text from which to extract sentences."
+    },
+    {
+      "name": "Accumulate",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "accumulate",
       "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "input"
+      ],
+      "rOrderNum": 3,
+      "checkDuplicate": true,
+      "isRequired": false,
+      "rDescription": "Specifies the names of the input columns to copy to the output table.",
+      "alternateNames": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "matchLengthOfArgument": "",
       "allowPadding": true,
-      "name": "Accumulate",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "Specifies the names of the input columns to copy to the output table.",
-      "description": "Columns from the input table to be passed through from input to output.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "accumulate",
-      "useInR": true,
-      "rOrderNum": 3
+      "matchLengthOfArgument": "",
+      "description": "Columns from the input table to be passed through from input to output."
     }
   ]
 }

@@ -10,137 +10,137 @@
   "long_description": "Implements the name finder SQL/MR function.",
   "input_tables": [
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "input",
+      "rName": "newdata",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 1,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "The input table containing text column to find.",
       "requiredInputKind": [
         "PartitionByAny"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "input",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "The input table containing text column to find.",
-      "description": "The input table containing text column to find.",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "newdata",
-      "useInR": true,
-      "rOrderNum": 1
+      "description": "The input table containing text column to find."
     },
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "ConfigureTable",
+      "rName": "configure.table.data",
+      "isRequired": false,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 2,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "The configure table.",
       "requiredInputKind": [
         "Dimension"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "ConfigureTable",
       "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "The configure table.",
-      "description": "The configure table.",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "configure.table.data",
-      "useInR": true,
-      "rOrderNum": 2
+      "description": "The configure table."
     }
   ],
   "argument_clauses": [
     {
+      "name": "TextColumn",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "text.column",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "input"
       ],
+      "rOrderNum": 3,
       "checkDuplicate": true,
-      "allowedTypes": [],
+      "isRequired": true,
+      "rDescription": "Specifies the name of the input table column that contains the text to analyze.",
+      "alternateNames": [],
       "allowedTypeGroups": [
         "STRING"
       ],
-      "matchLengthOfArgument": "",
       "allowPadding": true,
-      "name": "TextColumn",
-      "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "Specifies the name of the input table column that contains the text to analyze.",
-      "description": "Specifies the name of the input table column that contains the text to analyze.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "text.column",
-      "useInR": true,
-      "rOrderNum": 3
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the input table column that contains the text to analyze."
     },
     {
+      "name": "Accumulate",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "accumulate",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "input"
       ],
+      "rOrderNum": 7,
       "checkDuplicate": true,
-      "allowedTypes": [],
-      "allowedTypeGroups": [
-        "ALL"
-      ],
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "Accumulate",
+      "isRequired": false,
+      "rDescription": "Specifies the names of input columns to copy to the output table. No accumulate_column can be an entity_column. By default, the function copies all input columns to the output table.",
       "alternateNames": [
         "OutputColumns"
       ],
-      "isRequired": false,
-      "rDescription": "Specifies the names of input columns to copy to the output table. No accumulate_column can be an entity_column. By default, the function copies all input columns to the output table.",
-      "description": "Specifies the names of input columns to copy to the output table. No accumulate_column can be an entity_column. By default, the function copies all input columns to the output table.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "accumulate",
-      "useInR": true,
-      "rOrderNum": 7
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the names of input columns to copy to the output table. No accumulate_column can be an entity_column. By default, the function copies all input columns to the output table."
     },
     {
-      "permittedValues": [],
-      "isOutputColumn": false,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
       "name": "Model",
-      "alternateNames": [],
+      "allowsLists": true,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "rOrderNum": 4,
+      "rName": "object",
       "isRequired": false,
       "rDescription": "Specifies the model items to load. Optional if you specify configuration_table; required otherwise (and you cannot specify 'all'). If you specify both configuration_table and this argument, then the function loads the specified model items from configuration_table. If you specify configuration_table but omit this argument, its default value is 'all' (every model item from configuration_table). The entity_type is the name of an entity type (for example, PERSON, LOCATION, or EMAIL), which appears in the output table. The model_type is one of these model types: 'max entropy': maximum entropy language model generated by training, 'rule': rule-based model, a plain text file with one regular expression on each line, 'dictionary': dictionary-based model, a plain text file with one word on each line, 'reg exp': regular expression that describes entity_type. If model_type is 'reg exp', specify regular_expression (a regular expression that describes entity_type); otherwise, specify model_file (the name of the model file). Before calling the function, add the location of every specified model_file to the user/session default search path. If you specify configuration_table, you can use entity_type as a shortcut. For example, if the configure_table has the row 'organization, max entropy, en-ner-organization.bin', you can specify Model('organization') as a shortcut for Model('organization:max entropy:en-nerorganization.bin'). Note: For model_type 'max entropy', if you specify configuration_file and omit this argument, then the JVM of the worker node needs more than 2GB of memory",
-      "description": "Specifies the model items to load. Optional if you specify configuration_table; required otherwise (and you cannot specify 'all'). If you specify both configuration_table and this argument, then the function loads the specified model items from configuration_table. If you specify configuration_table but omit this argument, its default value is 'all' (every model item from configuration_table). The entity_type is the name of an entity type (for example, PERSON, LOCATION, or EMAIL), which appears in the output table. The model_type is one of these model types: 'max entropy': maximum entropy language model generated by training, 'rule': rule-based model, a plain text file with one regular expression on each line, 'dictionary': dictionary-based model, a plain text file with one word on each line, 'reg exp': regular expression that describes entity_type. If model_type is 'reg exp', specify regular_expression (a regular expression that describes entity_type); otherwise, specify model_file (the name of the model file). Before calling the function, add the location of every specified model_file to the user/session default search path. If you specify configuration_table, you can use entity_type as a shortcut. For example, if the configure_table has the row 'organization, max entropy, en-ner-organization.bin', you can specify Model('organization') as a shortcut for Model('organization:max entropy:en-nerorganization.bin'). Note: For model_type 'max entropy', if you specify configuration_file and omit this argument, then the JVM of the worker node needs more than 2GB of memory",
-      "datatype": "STRING",
-      "allowsLists": true,
-      "rName": "object",
-      "useInR": true,
-      "rOrderNum": 4
+      "alternateNames": [],
+      "permittedValues": [],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the model items to load. Optional if you specify configuration_table; required otherwise (and you cannot specify 'all'). If you specify both configuration_table and this argument, then the function loads the specified model items from configuration_table. If you specify configuration_table but omit this argument, its default value is 'all' (every model item from configuration_table). The entity_type is the name of an entity type (for example, PERSON, LOCATION, or EMAIL), which appears in the output table. The model_type is one of these model types: 'max entropy': maximum entropy language model generated by training, 'rule': rule-based model, a plain text file with one regular expression on each line, 'dictionary': dictionary-based model, a plain text file with one word on each line, 'reg exp': regular expression that describes entity_type. If model_type is 'reg exp', specify regular_expression (a regular expression that describes entity_type); otherwise, specify model_file (the name of the model file). Before calling the function, add the location of every specified model_file to the user/session default search path. If you specify configuration_table, you can use entity_type as a shortcut. For example, if the configure_table has the row 'organization, max entropy, en-ner-organization.bin', you can specify Model('organization') as a shortcut for Model('organization:max entropy:en-nerorganization.bin'). Note: For model_type 'max entropy', if you specify configuration_file and omit this argument, then the JVM of the worker node needs more than 2GB of memory"
     },
     {
-      "defaultValue": 0,
+      "name": "ShowEntityContext",
+      "upperBoundType": "INCLUSIVE",
       "lowerBound": 0,
+      "useInR": true,
+      "rName": "show.entity.context",
+      "datatype": "INTEGER",
+      "defaultValue": 0,
+      "rOrderNum": 5,
+      "allowsLists": false,
       "upperBound": 2147483647,
       "lowerBoundType": "INCLUSIVE",
-      "upperBoundType": "INCLUSIVE",
-      "allowNaN": false,
-      "name": "ShowEntityContext",
+      "isRequired": false,
+      "rDescription": "Specifies the number of context words to output. If context_words is n (which must be a positive integer), the function outputs the n words that precede the entity, the entity, and the n words that follow the entity. The default value is 0.",
       "alternateNames": [
         "ShowContext"
       ],
-      "isRequired": false,
-      "rDescription": "Specifies the number of context words to output. If context_words is n (which must be a positive integer), the function outputs the n words that precede the entity, the entity, and the n words that follow the entity. The default value is 0.",
-      "description": "Specifies the number of context words to output. If context_words is n (which must be a positive integer), the function outputs the n words that precede the entity, the entity, and the n words that follow the entity. The default value is 0.",
-      "datatype": "INTEGER",
-      "allowsLists": false,
-      "rName": "show.entity.context",
-      "useInR": true,
-      "rOrderNum": 5
+      "allowNaN": false,
+      "description": "Specifies the number of context words to output. If context_words is n (which must be a positive integer), the function outputs the n words that precede the entity, the entity, and the n words that follow the entity. The default value is 0."
     },
     {
-      "permittedValues": [],
-      "defaultValue": "entity",
-      "isOutputColumn": true,
       "name": "EntityColumn",
-      "alternateNames": [],
+      "allowsLists": false,
+      "isOutputColumn": true,
+      "useInR": true,
+      "datatype": "STRING",
+      "defaultValue": "entity",
+      "rOrderNum": 6,
+      "rName": "entity.column",
       "isRequired": false,
       "rDescription": "Specifies the name of the output table column that contains the entity names. The default value is 'entity'.",
-      "description": "Specifies the name of the output table column that contains the entity names. The default value is 'entity'.",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "entity.column",
-      "useInR": true,
-      "rOrderNum": 6
+      "alternateNames": [],
+      "permittedValues": [],
+      "description": "Specifies the name of the output table column that contains the entity names. The default value is 'entity'."
     }
   ]
 }

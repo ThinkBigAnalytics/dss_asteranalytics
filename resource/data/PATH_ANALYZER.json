@@ -3,193 +3,121 @@
   "json_schema_minor_version": "2",
   "json_content_version": "1",
   "function_name": "Path_Analyzer",
-  "function_version": "1.4",
+  "function_version": "1.5",
   "function_type": "driver",
   "function_r_name": "aa.path.evaluate",
   "short_description": "This function generates the children, parent for a particular node and calcuates its depth and number of visits.",
   "long_description": "This is a wrapper function, invoked by a 'ON (SELECT 1) PARTITION BY 1' clause. This Function generates the children, parent for a particular node and calcuates its depth and number of visits.",
+  "input_tables": [
+    {
+      "name": "InputTable",
+      "allowsLists": false,
+      "useInR": true,
+      "description": "Specifies either the name of the input table or view or an nPath query whose result is the input table. The input table contains the paths to analyze. Each path is a string of alphanumeric symbols that represents an ordered sequence of page views (or actions). Typically each symbol is a code that represents a unique page view. If you specify an nPath query, it must select both the column that contains the paths (sequence_column) and the column that contains the number of times a path was traveled (count_column). It must also specify sequence_column in the GROUP BY clause, so that the input table has one row for each unique path traveled on a web site.",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 1,
+      "rName": "data",
+      "alternateNames": [],
+      "rDescription": "Specifies either the name of the input table or view or a ta.npath query whose result is the input table. The input table contains the paths to analyze. Each path is a string of alphanumeric symbols that represents an ordered sequence of page views (or actions). Typically each symbol is a code that represents a unique page view. If you specify an ta.npath query, it must select both the column that contains the paths (sequence_column) and the column that contains the number of times a path was traveled (count_column). It must also specify sequence_column in the groupby.columns clause, so that the input table has one row for each unique path traveled on a web site.",
+      "requiredInputKind": [],
+      "isOrdered": false,
+      "partitionByOne": false
+    }
+  ],
+  "output_tables": [
+    {
+      "name": "OutputTable",
+      "allowsLists": false,
+      "useInR": true,
+      "description": "Specifies the name of the output table.",
+      "isRequired": true,
+      "datatype": "TABLE_NAME",
+      "rOrderNum": 100,
+      "rName": "output.table",
+      "alternateNames": [],
+      "rDescription": "Specifies the name of the output table.",
+      "isOutputTable": true
+    }
+  ],
   "argument_clauses": [
     {
-      "permittedValues": [],
-      "isOutputColumn": false,
-      "name": "Domain",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "The address of the Queen. The host parameter is the Aster Database Queen’s IP address or hostname.",
-      "description": "The address of the Queen. The host parameter is the Aster Database Queen’s IP address or hostname.",
-      "datatype": "DRIVER",
+      "name": "SeqColumn",
       "allowsLists": false,
-      "useInR": false,
-      "rOrderNum": 0
-    },
-    {
-      "permittedValues": [],
-      "isOutputColumn": false,
-      "name": "Database",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "The name of the database where the input table is located.",
-      "description": "The name of the database where the input table is located.",
-      "datatype": "DRIVER",
-      "allowsLists": false,
-      "useInR": false,
-      "rOrderNum": 0
-    },
-    {
-      "permittedValues": [],
-      "isOutputColumn": false,
-      "name": "UserId",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "The Aster Database user name of the user running this function.",
-      "description": "The Aster Database user name of the user running this function.",
-      "datatype": "DRIVER",
-      "allowsLists": false,
-      "useInR": false,
-      "rOrderNum": 0
-    },
-    {
-      "permittedValues": [],
-      "isOutputColumn": false,
-      "name": "Password",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "The Aster Database password of the user.",
-      "description": "The Aster Database password of the user.",
-      "datatype": "DRIVER",
-      "allowsLists": false,
-      "useInR": false,
-      "rOrderNum": 0
-    },
-    {
-      "permittedValues": [],
-      "isOutputColumn": false,
-      "name": "SSLSettings",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "A string that includes all the SSL settings, except the password for the truststore.",
-      "description": "A string that includes all the SSL settings, except the password for the truststore.",
-      "datatype": "DRIVER",
-      "allowsLists": false,
-      "useInR": false,
-      "rOrderNum": 0
-    },
-    {
-      "permittedValues": [],
-      "isOutputColumn": false,
-      "name": "SSLTrustStorePassword",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "The password for the SSL truststore.",
-      "description": "The password for the SSL truststore.",
-      "datatype": "DRIVER",
-      "allowsLists": false,
-      "useInR": false,
-      "rOrderNum": 0
-    },
-    {
-      "isOutputTable": false,
-      "name": "InputTable",
-      "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "Specifies either the name of the input table or view or a ta.npath query whose result is the input table. The input table contains the paths to analyze. Each path is a string of alphanumeric symbols that represents an ordered sequence of page views (or actions). Typically each symbol is a code that represents a unique page view. If you specify an ta.npath query, it must select both the column that contains the paths (sequence_column) and the column that contains the number of times a path was traveled (count_column). It must also specify sequence_column in the groupby.columns clause, so that the input table has one row for each unique path traveled on a web site.",
-      "description": "Specifies either the name of the input table or view or an nPath query whose result is the input table. The input table contains the paths to analyze. Each path is a string of alphanumeric symbols that represents an ordered sequence of page views (or actions). Typically each symbol is a code that represents a unique page view. If you specify an nPath query, it must select both the column that contains the paths (sequence_column) and the column that contains the number of times a path was traveled (count_column). It must also specify sequence_column in the GROUP BY clause, so that the input table has one row for each unique path traveled on a web site.",
-      "datatype": "TABLE_NAME",
-      "allowsLists": false,
-      "rName": "data",
       "useInR": true,
-      "rOrderNum": 1
-    },
-    {
-      "isOutputTable": true,
-      "name": "OutputTable",
-      "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "Specifies the name of the output table.",
-      "description": "Specifies the name of the output table.",
-      "datatype": "TABLE_NAME",
-      "allowsLists": false,
-      "rName": "output.table",
-      "useInR": true,
-      "rOrderNum": 100
-    },
-    {
+      "rName": "seq.column",
+      "allowedTypes": [],
+      "datatype": "COLUMN_NAMES",
       "targetTable": [
         "InputTable"
       ],
+      "rOrderNum": 2,
       "checkDuplicate": true,
-      "allowedTypes": [
-        "character varying"
-      ],
-      "allowedTypeGroups": [],
+      "isRequired": true,
+      "rDescription": "Specifies the name of the input table column that contains the paths.",
       "requiredLength": 1,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "SeqColumn",
       "alternateNames": [
         "Seq"
       ],
-      "isRequired": true,
-      "rDescription": "Specifies the name of the input table column that contains the paths.",
-      "description": "Specifies the name of the input table column that contains the paths.",
-      "datatype": "COLUMN_NAMES",
-      "allowsLists": false,
-      "rName": "seq.column",
-      "useInR": true,
-      "rOrderNum": 2
+      "allowedTypeGroups": [
+        "STRING"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the input table column that contains the paths."
     },
     {
+      "name": "CountColumn",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "count.column",
+      "allowedTypes": [],
+      "datatype": "COLUMN_NAMES",
       "targetTable": [
         "InputTable"
       ],
+      "rOrderNum": 3,
       "checkDuplicate": true,
-      "allowedTypes": [],
-      "allowedTypeGroups": [
-        "INTEGER"
-      ],
+      "isRequired": true,
+      "rDescription": "Specifies the name of the input table column that contains the number of times a path was traveled.",
       "requiredLength": 1,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "CountColumn",
       "alternateNames": [
         "Cnt"
       ],
-      "isRequired": true,
-      "rDescription": "Specifies the name of the input table column that contains the number of times a path was traveled.",
-      "description": "Specifies the name of the input table column that contains the number of times a path was traveled.",
-      "datatype": "COLUMN_NAMES",
-      "allowsLists": false,
-      "rName": "count.column",
-      "useInR": true,
-      "rOrderNum": 3
+      "allowedTypeGroups": [
+        "INTEGER"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the input table column that contains the number of times a path was traveled."
     },
     {
-      "defaultValue": false,
       "name": "Hash",
-      "alternateNames": [],
+      "allowsLists": false,
+      "useInR": true,
+      "datatype": "BOOLEAN",
+      "defaultValue": false,
+      "rOrderNum": 4,
+      "rName": "hash",
       "isRequired": false,
       "rDescription": "Specifies whether to include the hash code of the output column node. The default value is 'false'.",
-      "description": "Specifies whether to include the hash code of the output column node. The default value is 'false'.",
-      "datatype": "BOOLEAN",
-      "allowsLists": false,
-      "rName": "hash",
-      "useInR": true,
-      "rOrderNum": 4
+      "alternateNames": [],
+      "description": "Specifies whether to include the hash code of the output column node. The default value is 'false'."
     },
     {
-      "permittedValues": [],
-      "defaultValue": ",",
-      "isOutputColumn": false,
       "name": "Delimiter",
-      "alternateNames": [],
+      "allowsLists": false,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "defaultValue": ",",
+      "rOrderNum": 5,
+      "rName": "delimiter",
       "isRequired": false,
       "rDescription": "Specifies the single-character delimiter that separates symbols in the path string. The default value is comma (',').Note: Do not use any of the following characters as delimiter (they cause the function to fail): Asterisk (*), Plus (+), Left parenthesis ((), Right parenthesis ()), Single quotation mark ('), Escaped single quotation mark ('), Backslash ('')",
-      "description": "Specifies the single-character delimiter that separates symbols in the path string. The default value is comma (',').Note: Do not use any of the following characters as delimiter (they cause the function to fail): Asterisk (*), Plus (+), Left parenthesis ((), Right parenthesis ()), Single quotation mark ('), Escaped single quotation mark ('), Backslash ('')",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "delimiter",
-      "useInR": true,
-      "rOrderNum": 5
+      "alternateNames": [],
+      "permittedValues": [],
+      "description": "Specifies the single-character delimiter that separates symbols in the path string. The default value is comma (',').Note: Do not use any of the following characters as delimiter (they cause the function to fail): Asterisk (*), Plus (+), Left parenthesis ((), Right parenthesis ()), Single quotation mark ('), Escaped single quotation mark ('), Backslash ('')"
     }
   ]
 }

@@ -3,7 +3,7 @@
   "json_schema_minor_version": "2",
   "json_content_version": "1",
   "function_name": "Path_Start",
-  "function_version": "1.4",
+  "function_version": "1.5",
   "function_type": "non-driver",
   "function_r_name": "aa.path.start",
   "ref_function_r_name": "ta.path.summarizer",
@@ -12,129 +12,129 @@
   "partner_function": "aa.path.summary,aa.path.generator",
   "input_tables": [
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "input",
+      "rName": "object",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 1,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "The name of the table containing the input data.",
       "requiredInputKind": [
         "PartitionByKey"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "input",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "The name of the table containing the input data.",
-      "description": "The name of the table containing the input data.",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "object",
-      "useInR": true,
-      "rOrderNum": 1
+      "description": "The name of the table containing the input data."
     }
   ],
   "argument_clauses": [
     {
+      "name": "NodeColumn",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "node.column",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "input"
       ],
+      "rOrderNum": 6,
       "checkDuplicate": true,
-      "allowedTypes": [
-        "character varying"
-      ],
-      "allowedTypeGroups": [],
+      "isRequired": true,
+      "rDescription": " Specifies the name of the input table column that contains the nodes.",
       "requiredLength": 1,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "NodeColumn",
       "alternateNames": [
         "Node"
       ],
-      "isRequired": true,
-      "rDescription": " Specifies the name of the input table column that contains the nodes.",
-      "description": " Specifies the name of the input table column that contains the nodes.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "node.column",
-      "useInR": true,
-      "rOrderNum": 6
+      "allowedTypeGroups": [
+        "STRING"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": " Specifies the name of the input table column that contains the nodes."
     },
     {
+      "name": "ParentColumn",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "parent.column",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "input"
       ],
+      "rOrderNum": 4,
       "checkDuplicate": true,
-      "allowedTypes": [
-        "character varying"
-      ],
-      "allowedTypeGroups": [],
+      "isRequired": true,
+      "rDescription": "Specifies the name of the input table column that contains the parent nodes. The partition.columns clause in the function call must include this column.",
       "requiredLength": 1,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "ParentColumn",
       "alternateNames": [
         "Parent"
       ],
-      "isRequired": true,
-      "rDescription": "Specifies the name of the input table column that contains the parent nodes. The partition.columns clause in the function call must include this column.",
-      "description": "Specifies the name of the input table column that contains the parent nodes. The PARTITION BY clause in the function call must include this column.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "parent.column",
-      "useInR": true,
-      "rOrderNum": 4
+      "allowedTypeGroups": [
+        "STRING"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the input table column that contains the parent nodes. The PARTITION BY clause in the function call must include this column."
     },
     {
+      "name": "CountColumn",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "count.column",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "input"
       ],
+      "rOrderNum": 2,
       "checkDuplicate": true,
-      "allowedTypes": [],
-      "allowedTypeGroups": [
-        "INTEGER"
-      ],
+      "isRequired": true,
+      "rDescription": "Specifies the name of the input table column that contains the number of times a path was traveled.",
       "requiredLength": 1,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "CountColumn",
       "alternateNames": [
         "Cnt"
       ],
-      "isRequired": true,
-      "rDescription": "Specifies the name of the input table column that contains the number of times a path was traveled.",
-      "description": "Specifies the name of the input table column that contains the number of times a path was traveled.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "count.column",
-      "useInR": true,
-      "rOrderNum": 2
+      "allowedTypeGroups": [
+        "INTEGER"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the input table column that contains the number of times a path was traveled."
     },
     {
-      "permittedValues": [],
-      "isOutputColumn": true,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
       "name": "PartitionNames",
-      "alternateNames": [],
+      "allowsLists": true,
+      "isOutputColumn": true,
+      "useInR": true,
+      "datatype": "STRING",
+      "rOrderNum": 5,
+      "rName": "partition.names",
       "isRequired": true,
       "rDescription": "Lists the names of the columns that the partition.columns clause specifies. The function uses these names for output table columns. This argument and the partition.columns clause must specify the same names in the same order. One partition_column must be parent_column.",
-      "description": "Lists the names of the columns that the PARTITION BY clause specifies. The function uses these names for output table columns. This argument and the PARTITION BY clause must specify the same names in the same order. One partition_column must be parent_column.",
-      "datatype": "STRING",
-      "allowsLists": true,
-      "rName": "partition.names",
-      "useInR": true,
-      "rOrderNum": 5
+      "alternateNames": [],
+      "permittedValues": [],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Lists the names of the columns that the PARTITION BY clause specifies. The function uses these names for output table columns. This argument and the PARTITION BY clause must specify the same names in the same order. One partition_column must be parent_column."
     },
     {
-      "permittedValues": [],
-      "defaultValue": ",",
-      "isOutputColumn": false,
       "name": "Delimiter",
-      "alternateNames": [],
+      "allowsLists": false,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "defaultValue": ",",
+      "rOrderNum": 3,
+      "rName": "delimiter",
       "isRequired": false,
       "rDescription": "Specifies the single-character delimiter that separates symbols in the path string. The default value is comma (','). Note: Do not use any of the following characters as delimiter (they cause the function to fail): Asterisk (*), Plus (+), Left parenthesis ((), Right parenthesis ()), Single quotation mark ('), Escaped single quotation mark ('), Backslash ('')",
-      "description": "Specifies the single-character delimiter that separates symbols in the path string. The default value is comma (','). Note: Do not use any of the following characters as delimiter (they cause the function to fail): Asterisk (*), Plus (+), Left parenthesis ((), Right parenthesis ()), Single quotation mark ('), Escaped single quotation mark ('), Backslash ('')",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "delimiter",
-      "useInR": true,
-      "rOrderNum": 3
+      "alternateNames": [],
+      "permittedValues": [],
+      "description": "Specifies the single-character delimiter that separates symbols in the path string. The default value is comma (','). Note: Do not use any of the following characters as delimiter (they cause the function to fail): Asterisk (*), Plus (+), Left parenthesis ((), Right parenthesis ()), Single quotation mark ('), Escaped single quotation mark ('), Backslash ('')"
     }
   ]
 }

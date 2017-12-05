@@ -11,98 +11,98 @@
   "long_description": "Since model table is stored in binary fromat, this function is adopted to show the contained information of the table. If summary is true, the parameters  and training set of the model table is given. Otherwise, each topic and related words are outputted. ",
   "input_tables": [
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "input",
+      "rName": "object",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 1,
+      "allowsLists": false,
+      "partitionByOne": true,
+      "rDescription": "The model table.",
       "requiredInputKind": [
         "PartitionByKey"
       ],
-      "isOrdered": false,
-      "partitionByOne": true,
-      "name": "input",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "The model table.",
-      "description": "The model table.",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "object",
-      "useInR": true,
-      "rOrderNum": 1
+      "description": "The model table."
     }
   ],
   "argument_clauses": [
     {
-      "defaultValue": false,
       "name": "Summary",
+      "allowsLists": false,
+      "useInR": true,
+      "datatype": "BOOLEAN",
+      "defaultValue": false,
+      "rOrderNum": 2,
+      "rName": "summary",
+      "isRequired": false,
+      "rDescription": "Specifies whether to display only a summary of the information in the model table. The default value is 'false'.",
       "alternateNames": [
         "ShowSummary"
       ],
-      "isRequired": false,
-      "rDescription": "Specifies whether to display only a summary of the information in the model table. The default value is 'false'.",
-      "description": "Specifies whether to display only a summary of the information in the model table. The default value is 'false'.",
-      "datatype": "BOOLEAN",
-      "allowsLists": false,
-      "rName": "summary",
-      "useInR": true,
-      "rOrderNum": 2
+      "description": "Specifies whether to display only a summary of the information in the model table. The default value is 'false'."
     },
     {
-      "permittedValues": [],
-      "defaultValue": "all",
-      "isOutputColumn": false,
       "name": "OutputTopicWordNum",
+      "allowsLists": false,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "defaultValue": "all",
+      "rOrderNum": 3,
+      "rName": "out.topicwordnum",
+      "isRequired": false,
+      "rDescription": " Specifies the number of top topic words and their topic identifiers to include in the output table for each training document.The value topic_words must be either a positive integer or the string 'all'. The default value, 'all', specifies all topic words and their topic identifiers.",
       "alternateNames": [
         "OutputTopicWordNumber"
       ],
-      "isRequired": false,
-      "rDescription": " Specifies the number of top topic words and their topic identifiers to include in the output table for each training document.The value topic_words must be either a positive integer or the string 'all'. The default value, 'all', specifies all topic words and their topic identifiers.",
-      "description": " Specifies the number of top topic words and their topic identifiers to include in the output table for each training document.The value topic_words must be either a positive integer or the string 'all'. The default value, 'all', specifies all topic words and their topic identifiers.",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "out.topicwordnum",
-      "useInR": true,
-      "rOrderNum": 3
+      "permittedValues": [],
+      "description": " Specifies the number of top topic words and their topic identifiers to include in the output table for each training document.The value topic_words must be either a positive integer or the string 'all'. The default value, 'all', specifies all topic words and their topic identifiers."
     },
     {
-      "defaultValue": false,
       "name": "WordWeight",
+      "allowsLists": false,
+      "useInR": true,
+      "datatype": "BOOLEAN",
+      "defaultValue": false,
+      "rOrderNum": 4,
+      "rName": "word.weight",
+      "isRequired": false,
+      "rDescription": "Specifies whether to display the weight (probability of occurrence) of each unique word in each topic. The weights for the unique words in each topic are normalized to 1. The default value is 'false'.",
       "alternateNames": [
         "ShowWordWeight"
       ],
-      "isRequired": false,
-      "rDescription": "Specifies whether to display the weight (probability of occurrence) of each unique word in each topic. The weights for the unique words in each topic are normalized to 1. The default value is 'false'.",
-      "description": "Specifies whether to display the weight (probability of occurrence) of each unique word in each topic. The weights for the unique words in each topic are normalized to 1. The default value is 'false'.",
-      "datatype": "BOOLEAN",
-      "allowsLists": false,
-      "rName": "word.weight",
-      "useInR": true,
-      "rOrderNum": 4
+      "description": "Specifies whether to display the weight (probability of occurrence) of each unique word in each topic. The weights for the unique words in each topic are normalized to 1. The default value is 'false'."
     },
     {
-      "defaultValue": false,
       "name": "WordCount",
+      "allowsLists": false,
+      "useInR": true,
+      "datatype": "BOOLEAN",
+      "defaultValue": false,
+      "rOrderNum": 5,
+      "rName": "word.count",
+      "isRequired": false,
+      "rDescription": "Specifies whether to display the count (number of occurrences) of each unique word in each topic. Topic distribution is factored into word counts. The default value is 'false'.",
       "alternateNames": [
         "ShowWordCount"
       ],
-      "isRequired": false,
-      "rDescription": "Specifies whether to display the count (number of occurrences) of each unique word in each topic. Topic distribution is factored into word counts. The default value is 'false'.",
-      "description": "Specifies whether to display the count (number of occurrences) of each unique word in each topic. Topic distribution is factored into word counts. The default value is 'false'.",
-      "datatype": "BOOLEAN",
-      "allowsLists": false,
-      "rName": "word.count",
-      "useInR": true,
-      "rOrderNum": 5
+      "description": "Specifies whether to display the count (number of occurrences) of each unique word in each topic. Topic distribution is factored into word counts. The default value is 'false'."
     },
     {
-      "defaultValue": true,
       "name": "OutputByWord",
-      "alternateNames": [],
+      "allowsLists": false,
+      "useInR": true,
+      "datatype": "BOOLEAN",
+      "defaultValue": true,
+      "rOrderNum": 6,
+      "rName": "out.byword",
       "isRequired": false,
       "rDescription": "Specifies whether to display each topic-word pair in its own row. The default value is 'true'.If you specify 'false', each row contains a unique topic and all words that occur in that topic, separated by commas.",
-      "description": "Specifies whether to display each topic-word pair in its own row. The default value is 'true'.If you specify 'false', each row contains a unique topic and all words that occur in that topic, separated by commas.",
-      "datatype": "BOOLEAN",
-      "allowsLists": false,
-      "rName": "out.byword",
-      "useInR": true,
-      "rOrderNum": 6
+      "alternateNames": [],
+      "description": "Specifies whether to display each topic-word pair in its own row. The default value is 'true'.If you specify 'false', each row contains a unique topic and all words that occur in that topic, separated by commas."
     }
   ]
 }

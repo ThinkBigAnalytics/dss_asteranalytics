@@ -10,120 +10,120 @@
   "long_description": "This function is a part of association analysis used for mining interesting baskets and also for trends over time and compare attributes",
   "input_tables": [
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "input",
+      "rName": "data",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 1,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "Input table that contains basket information.",
       "requiredInputKind": [
         "PartitionByKey"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "input",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "Input table that contains basket information.",
-      "description": "Input table that contains basket information.",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "data",
-      "useInR": true,
-      "rOrderNum": 1
+      "description": "Input table that contains basket information."
     }
   ],
   "argument_clauses": [
     {
+      "name": "BasketItem",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": " basket.item",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "input"
       ],
+      "rOrderNum": 2,
       "checkDuplicate": true,
-      "allowedTypes": [],
-      "allowedTypeGroups": [
-        "ALL"
-      ],
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "BasketItem",
-      "alternateNames": [],
       "isRequired": true,
       "rDescription": "Specifies the names of the input columns that contain the items to be collected into baskets. If you specify multiple columns, the function treats every unique combination of column values as one item. For example, you could specify only the column that contains the stock keeping unit (SKU) that identifies an item that was sold. Alternatively, you could specify the SKU column and the columns that contain the month manufactured, color and size.",
-      "description": "Specifies the names of the input columns that contain the items to be collected into baskets. If you specify multiple columns, the function treats every unique combination of column values as one item. For example, you could specify only the column that contains the stock keeping unit (SKU) that identifies an item that was sold. Alternatively, you could specify the SKU column and the columns that contain the month manufactured, color and size.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": " basket.item",
-      "useInR": true,
-      "rOrderNum": 2
-    },
-    {
-      "targetTable": [
-        "input"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
+      "alternateNames": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "matchLengthOfArgument": "",
       "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the names of the input columns that contain the items to be collected into baskets. If you specify multiple columns, the function treats every unique combination of column values as one item. For example, you could specify only the column that contains the stock keeping unit (SKU) that identifies an item that was sold. Alternatively, you could specify the SKU column and the columns that contain the month manufactured, color and size."
+    },
+    {
       "name": "Accumulate",
-      "alternateNames": [],
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "accumulate",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "input"
+      ],
+      "rOrderNum": 6,
+      "checkDuplicate": true,
       "isRequired": false,
       "rDescription": "Specifies the names of the input columns to copy to the output table. Each accumulate_column must be a partition_column; otherwise, the function is nondeterministic. However, not every partition_column must be an accumulate_column.",
-      "description": "Specifies the names of the input columns to copy to the output table. Each accumulate_column must be a partition_column; otherwise, the function is nondeterministic. However, not every partition_column must be an accumulate_column.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "accumulate",
-      "useInR": true,
-      "rOrderNum": 6
+      "alternateNames": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the names of the input columns to copy to the output table. Each accumulate_column must be a partition_column; otherwise, the function is nondeterministic. However, not every partition_column must be an accumulate_column."
     },
     {
-      "defaultValue": 2,
+      "name": "BasketSize",
+      "upperBoundType": "INCLUSIVE",
       "lowerBound": 2,
+      "useInR": true,
+      "rName": "basket.size",
+      "datatype": "INTEGER",
+      "defaultValue": 2,
+      "rOrderNum": 3,
+      "allowsLists": false,
       "upperBound": 2147483647,
       "lowerBoundType": "INCLUSIVE",
-      "upperBoundType": "INCLUSIVE",
-      "allowNaN": false,
-      "name": "BasketSize",
-      "alternateNames": [],
       "isRequired": false,
       "rDescription": " Specifies the number of items to be included in a basket (an INTEGER value). The default value is 2.",
-      "description": " Specifies the number of items to be included in a basket (an INTEGER value). The default value is 2.",
-      "datatype": "INTEGER",
-      "allowsLists": false,
-      "rName": "basket.size",
-      "useInR": true,
-      "rOrderNum": 3
+      "alternateNames": [],
+      "allowNaN": false,
+      "description": " Specifies the number of items to be included in a basket (an INTEGER value). The default value is 2."
     },
     {
-      "defaultValue": 100,
+      "name": "MaxItems",
+      "upperBoundType": "INCLUSIVE",
       "lowerBound": 0,
+      "useInR": true,
+      "rName": "max.items",
+      "datatype": "INTEGER",
+      "defaultValue": 100,
+      "rOrderNum": 4,
+      "allowsLists": false,
       "upperBound": 2147483647,
       "lowerBoundType": "INCLUSIVE",
-      "upperBoundType": "INCLUSIVE",
-      "allowNaN": false,
-      "name": "MaxItems",
+      "isRequired": false,
+      "rDescription": "Specifies the maximum number of items in a partition (an INTEGER value). If the number of items in a partition exceeds item_set_max, then the function ignores that partition. The default value is 100.",
       "alternateNames": [
         "ItemSetMax"
       ],
-      "isRequired": false,
-      "rDescription": "Specifies the maximum number of items in a partition (an INTEGER value). If the number of items in a partition exceeds item_set_max, then the function ignores that partition. The default value is 100.",
-      "description": "Specifies the maximum number of items in a partition (an INTEGER value). If the number of items in a partition exceeds item_set_max, then the function ignores that partition. The default value is 100.",
-      "datatype": "INTEGER",
-      "allowsLists": false,
-      "rName": "max.items",
-      "useInR": true,
-      "rOrderNum": 4
+      "allowNaN": false,
+      "description": "Specifies the maximum number of items in a partition (an INTEGER value). If the number of items in a partition exceeds item_set_max, then the function ignores that partition. The default value is 100."
     },
     {
-      "defaultValue": true,
       "name": "Combination",
+      "allowsLists": false,
+      "useInR": true,
+      "datatype": "BOOLEAN",
+      "defaultValue": true,
+      "rOrderNum": 5,
+      "rName": "combination",
+      "isRequired": false,
+      "rDescription": "Specifies whether the function returns a basket for each unique combination of items. The default value is 'true'. If you specify 'false', then the function returns a basket for each unique permutation of items. In a combination, item order is irrelevant. For example, the baskets \"tomatoes and basil\" and \"basil and tomatoes\" are equivalent. In a permutation, item order is relevant. For example, the baskets \"tomatoes and basil\" and \"basil and tomatoes\" are not equivalent. The function returns combinations and permutations in lexicographical order",
       "alternateNames": [
         "Combinations"
       ],
-      "isRequired": false,
-      "rDescription": "Specifies whether the function returns a basket for each unique combination of items. The default value is 'true'. If you specify 'false', then the function returns a basket for each unique permutation of items. In a combination, item order is irrelevant. For example, the baskets \"tomatoes and basil\" and \"basil and tomatoes\" are equivalent. In a permutation, item order is relevant. For example, the baskets \"tomatoes and basil\" and \"basil and tomatoes\" are not equivalent. The function returns combinations and permutations in lexicographical order",
-      "description": "Specifies whether the function returns a basket for each unique combination of items. The default value is 'true'. If you specify 'false', then the function returns a basket for each unique permutation of items. In a combination, item order is irrelevant. For example, the baskets \"tomatoes and basil\" and \"basil and tomatoes\" are equivalent. In a permutation, item order is relevant. For example, the baskets \"tomatoes and basil\" and \"basil and tomatoes\" are not equivalent. The function returns combinations and permutations in lexicographical order",
-      "datatype": "BOOLEAN",
-      "allowsLists": false,
-      "rName": "combination",
-      "useInR": true,
-      "rOrderNum": 5
+      "description": "Specifies whether the function returns a basket for each unique combination of items. The default value is 'true'. If you specify 'false', then the function returns a basket for each unique permutation of items. In a combination, item order is irrelevant. For example, the baskets \"tomatoes and basil\" and \"basil and tomatoes\" are equivalent. In a permutation, item order is relevant. For example, the baskets \"tomatoes and basil\" and \"basil and tomatoes\" are not equivalent. The function returns combinations and permutations in lexicographical order"
     }
   ]
 }

@@ -12,65 +12,65 @@
   "partner_function": "Scale, ScalePrinter",
   "input_tables": [
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "input",
+      "rName": "data",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 1,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "The input dataset for scale function.",
       "requiredInputKind": [
         "PartitionByAny"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "input",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "The input dataset for scale function.",
-      "description": "The input dataset for scale function.",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "data",
-      "useInR": true,
-      "rOrderNum": 1
+      "description": "The input dataset for scale function."
     }
   ],
   "argument_clauses": [
     {
+      "name": "InputColumns",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "input.columns",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "input"
       ],
+      "rOrderNum": 2,
       "checkDuplicate": true,
-      "allowedTypes": [],
+      "isRequired": true,
+      "rDescription": "Specifies the input table columns that contain the attribute values of the samples. The attribute values must be numeric values between -1e308 and 1e308. If a value is outside this range, the function treats it as infinity.",
+      "alternateNames": [],
       "allowedTypeGroups": [
         "NUMERIC"
       ],
-      "matchLengthOfArgument": "",
       "allowPadding": true,
-      "name": "InputColumns",
-      "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "Specifies the input table columns that contain the attribute values of the samples. The attribute values must be numeric values between -1e308 and 1e308. If a value is outside this range, the function treats it as infinity.",
-      "description": "Specifies the input table columns that contain the attribute values of the samples. The attribute values must be numeric values between -1e308 and 1e308. If a value is outside this range, the function treats it as infinity.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "input.columns",
-      "useInR": true,
-      "rOrderNum": 2
+      "matchLengthOfArgument": "",
+      "description": "Specifies the input table columns that contain the attribute values of the samples. The attribute values must be numeric values between -1e308 and 1e308. If a value is outside this range, the function treats it as infinity."
     },
     {
+      "name": "MissValue",
+      "allowsLists": false,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "defaultValue": "KEEP",
+      "rOrderNum": 3,
+      "rName": "miss.value",
+      "isRequired": false,
+      "rDescription": "Specifies how the ta.scale, ta.scalemap, and ta.partitionscale functions are to process NULL values in input, as follows:KEEP (default): Keep NULL values, OMIT: Ignore any row that has a NULL value, ZERO: Replace each NULL value with zero, LOCATION: Replace each NULL value with its location value.",
+      "alternateNames": [],
       "permittedValues": [
         "KEEP",
         "OMIT",
         "ZERO",
         "LOCATION"
       ],
-      "defaultValue": "KEEP",
-      "isOutputColumn": false,
-      "name": "MissValue",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "Specifies how the ta.scale, ta.scalemap, and ta.partitionscale functions are to process NULL values in input, as follows:KEEP (default): Keep NULL values, OMIT: Ignore any row that has a NULL value, ZERO: Replace each NULL value with zero, LOCATION: Replace each NULL value with its location value.",
-      "description": "Specifies how the Scale, ScaleMap, and PartitionScale functions are to process NULL values in input, as follows:KEEP (default): Keep NULL values, OMIT: Ignore any row that has a NULL value, ZERO: Replace each NULL value with zero, LOCATION: Replace each NULL value with its location value.",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "miss.value",
-      "useInR": true,
-      "rOrderNum": 3
+      "description": "Specifies how the Scale, ScaleMap, and PartitionScale functions are to process NULL values in input, as follows:KEEP (default): Keep NULL values, OMIT: Ignore any row that has a NULL value, ZERO: Replace each NULL value with zero, LOCATION: Replace each NULL value with its location value."
     }
   ]
 }

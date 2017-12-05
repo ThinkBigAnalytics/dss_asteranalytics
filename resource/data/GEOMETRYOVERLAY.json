@@ -10,134 +10,144 @@
   "long_description": "This function is used to find the result of overlaying two geometries. Overlay operations include intersection, difference, union, and symmetric difference. It can be used to perform operations to prepare sets of geometries for use with LocationPointInGeometry.  geospatial from AFS, parse the format and output them into database relations.",
   "input_tables": [
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "source",
+      "rName": "source.data",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 1,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "The input table contains the source geometry information",
       "requiredInputKind": [
         "PartitionByAny",
         "PartitionByKey"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "source",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "The input table contains the source geometry information",
-      "description": "The input table contains the source geometry information",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "source.data",
-      "useInR": true,
-      "rOrderNum": 1
+      "description": "The input table contains the source geometry information"
     },
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "reference",
+      "rName": "reference.data",
+      "isRequired": false,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 2,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "The input table contains the reference geometry information",
       "requiredInputKind": [
         "Dimension",
         "PartitionByKey"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "reference",
       "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "The input table contains the reference geometry information",
-      "description": "The input table contains the reference geometry information",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "reference.data",
-      "useInR": true,
-      "rOrderNum": 2
+      "description": "The input table contains the reference geometry information"
     }
   ],
   "argument_clauses": [
     {
+      "name": "SourceLocationColumn",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "source.location.column",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "source"
       ],
+      "rOrderNum": 3,
       "checkDuplicate": true,
-      "allowedTypes": [],
-      "allowedTypeGroups": [
-        "STRING"
-      ],
-      "requiredLength": 1,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "SourceLocationColumn",
-      "alternateNames": [],
       "isRequired": true,
       "rDescription": "Specifies the name of the source table column that contains the polygon description in WKT format.",
-      "description": "Specifies the name of the source table column that contains the polygon description in WKT format.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "source.location.column",
-      "useInR": true,
-      "rOrderNum": 3
-    },
-    {
-      "targetTable": [
-        "reference"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
+      "requiredLength": 1,
+      "alternateNames": [],
       "allowedTypeGroups": [
         "STRING"
       ],
-      "requiredLength": 1,
-      "matchLengthOfArgument": "",
       "allowPadding": true,
-      "name": "ReferenceLocationColumn",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "Specifies the name of the reference table column that contains the location of the polygon description in WKT format.",
-      "description": "Specifies the name of the reference table column that contains the location of the polygon description in WKT format.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "reference.location.column",
-      "useInR": true,
-      "rOrderNum": 4
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the source table column that contains the polygon description in WKT format."
     },
     {
+      "name": "ReferenceLocationColumn",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "reference.location.column",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "reference"
       ],
+      "rOrderNum": 4,
       "checkDuplicate": true,
+      "isRequired": false,
+      "rDescription": "Specifies the name of the reference table column that contains the location of the polygon description in WKT format.",
+      "requiredLength": 1,
+      "alternateNames": [],
+      "allowedTypeGroups": [
+        "STRING"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the reference table column that contains the location of the polygon description in WKT format."
+    },
+    {
+      "name": "ReferenceNameColumns",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "reference.name.columns",
       "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "reference"
+      ],
+      "rOrderNum": 5,
+      "checkDuplicate": true,
+      "isRequired": false,
+      "rDescription": "Specifies the name of the reference table column that contains the names of the polygons.",
+      "alternateNames": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "matchLengthOfArgument": "",
       "allowPadding": true,
-      "name": "ReferenceNameColumns",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "Specifies the name of the reference table column that contains the names of the polygons.",
-      "description": "Specifies the name of the reference table column that contains the names of the polygons.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "reference.name.columns",
-      "useInR": true,
-      "rOrderNum": 5
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the reference table column that contains the names of the polygons."
     },
     {
+      "name": "Accumulate",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "accumulate",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "source"
       ],
+      "rOrderNum": 9,
       "checkDuplicate": true,
-      "allowedTypes": [],
+      "isRequired": false,
+      "rDescription": "Specifies the names of the source table columns to copy to the output table.",
+      "alternateNames": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "matchLengthOfArgument": "",
       "allowPadding": true,
-      "name": "Accumulate",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "Specifies the names of the source table columns to copy to the output table.",
-      "description": "Specifies the names of the source table columns to copy to the output table.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "accumulate",
-      "useInR": true,
-      "rOrderNum": 9
+      "matchLengthOfArgument": "",
+      "description": "Specifies the names of the source table columns to copy to the output table."
     },
     {
+      "name": "BoundaryOperator",
+      "allowsLists": false,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "rOrderNum": 6,
+      "rName": "boundary.operator",
+      "isRequired": true,
+      "rDescription": "Specifies the boundary (geometry overlay) operator ",
+      "alternateNames": [],
       "permittedValues": [
         "union",
         "intersection",
@@ -146,47 +156,37 @@
         "buffer",
         "convexhull"
       ],
-      "isOutputColumn": false,
-      "name": "BoundaryOperator",
-      "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "Specifies the boundary (geometry overlay) operator ",
-      "description": "Specifies the boundary (geometry overlay) operator ",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "boundary.operator",
-      "useInR": true,
-      "rOrderNum": 6
+      "description": "Specifies the boundary (geometry overlay) operator "
     },
     {
-      "defaultValue": false,
       "name": "OutputAll",
-      "alternateNames": [],
+      "allowsLists": false,
+      "useInR": true,
+      "datatype": "BOOLEAN",
+      "defaultValue": false,
+      "rOrderNum": 8,
+      "rName": "output.all",
       "isRequired": false,
       "rDescription": "Specifies whether to include the result of non-intersection geometries in the output. The default value is 'false'.",
-      "description": "Specifies whether to include the result of non-intersection geometries in the output. The default value is 'false'.",
-      "datatype": "BOOLEAN",
-      "allowsLists": false,
-      "rName": "output.all",
-      "useInR": true,
-      "rOrderNum": 8
+      "alternateNames": [],
+      "description": "Specifies whether to include the result of non-intersection geometries in the output. The default value is 'false'."
     },
     {
+      "name": "Distance",
+      "upperBoundType": "INCLUSIVE",
       "lowerBound": -Infinity,
+      "useInR": true,
+      "rName": "distance",
+      "datatype": "DOUBLE",
+      "allowNaN": false,
+      "rOrderNum": 7,
+      "allowsLists": false,
       "upperBound": Infinity,
       "lowerBoundType": "INCLUSIVE",
-      "upperBoundType": "INCLUSIVE",
-      "allowNaN": false,
-      "name": "Distance",
-      "alternateNames": [],
       "isRequired": false,
       "rDescription": "Specifies the distance by which to extend or decrease the polygon.",
-      "description": "Specifies the distance by which to extend or decrease the polygon.",
-      "datatype": "DOUBLE",
-      "allowsLists": false,
-      "rName": "distance",
-      "useInR": true,
-      "rOrderNum": 7
+      "alternateNames": [],
+      "description": "Specifies the distance by which to extend or decrease the polygon."
     }
   ]
 }

@@ -10,96 +10,96 @@
   "long_description": "Creates sessions for a clickstream data and also detects bots.",
   "input_tables": [
     {
+      "isOrdered": true,
+      "useInR": true,
+      "name": "input",
+      "rName": "data",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 1,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "Specifies the name of the input table",
       "requiredInputKind": [
         "PartitionByKey"
       ],
-      "isOrdered": true,
-      "partitionByOne": false,
-      "name": "input",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "Specifies the name of the input table",
-      "description": "Specifies the name of the input table",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "data",
-      "useInR": true,
-      "rOrderNum": 1
+      "description": "Specifies the name of the input table"
     }
   ],
   "argument_clauses": [
     {
+      "name": "TimeColumn",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "time.column",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "input"
       ],
+      "rOrderNum": 2,
       "checkDuplicate": true,
-      "allowedTypes": [],
+      "isRequired": true,
+      "rDescription": " Specifies the name of the input column that contains the click times. Note: The timestamp_column must also be an order_column.",
+      "requiredLength": 1,
+      "alternateNames": [],
       "allowedTypeGroups": [
         "TIME",
         "INTEGER"
       ],
-      "requiredLength": 1,
-      "matchLengthOfArgument": "",
       "allowPadding": true,
-      "name": "TimeColumn",
-      "alternateNames": [],
-      "isRequired": true,
-      "rDescription": " Specifies the name of the input column that contains the click times. Note: The timestamp_column must also be an order_column.",
-      "description": " Specifies the name of the input column that contains the click times. Note: The timestamp_column must also be an order_column.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "time.column",
-      "useInR": true,
-      "rOrderNum": 2
+      "matchLengthOfArgument": "",
+      "description": " Specifies the name of the input column that contains the click times. Note: The timestamp_column must also be an order_column."
     },
     {
+      "name": "TimeOut",
+      "upperBoundType": "INCLUSIVE",
       "lowerBound": 0,
+      "useInR": true,
+      "rName": "time.out",
+      "datatype": "DOUBLE",
+      "allowNaN": false,
+      "rOrderNum": 3,
+      "allowsLists": false,
       "upperBound": Infinity,
       "lowerBoundType": "EXCLUSIVE",
-      "upperBoundType": "INCLUSIVE",
-      "allowNaN": false,
-      "name": "TimeOut",
-      "alternateNames": [],
       "isRequired": true,
       "rDescription": "Specifies the number of seconds at which the session times out. If session_timeout seconds elapse after a click, then the next click starts a new session. The data type of session_timeout is DOUBLE PRECISION.",
-      "description": "Specifies the number of seconds at which the session times out. If session_timeout seconds elapse after a click, then the next click starts a new session. The data type of session_timeout is DOUBLE PRECISION.",
-      "datatype": "DOUBLE",
-      "allowsLists": false,
-      "rName": "time.out",
-      "useInR": true,
-      "rOrderNum": 3
+      "alternateNames": [],
+      "description": "Specifies the number of seconds at which the session times out. If session_timeout seconds elapse after a click, then the next click starts a new session. The data type of session_timeout is DOUBLE PRECISION."
     },
     {
+      "name": "ClickLag",
+      "upperBoundType": "INCLUSIVE",
       "lowerBound": 0,
+      "useInR": true,
+      "rName": "click.lag",
+      "datatype": "DOUBLE",
+      "allowNaN": true,
+      "rOrderNum": 4,
+      "allowsLists": false,
       "upperBound": Infinity,
       "lowerBoundType": "EXCLUSIVE",
-      "upperBoundType": "INCLUSIVE",
-      "allowNaN": true,
-      "name": "ClickLag",
+      "isRequired": false,
+      "rDescription": "Specifies the minimum number of seconds between clicks for the session user to be considered human. If clicks are more frequent, indicating that the user is a \u201cbot,\u201d the function ignores the session. The min_human_click_lag must be less than session_timout. The data type of min_human_click_lag is DOUBLE PRECISION.",
       "alternateNames": [
         "RapidFire"
       ],
-      "isRequired": false,
-      "rDescription": "Specifies the minimum number of seconds between clicks for the session user to be considered human. If clicks are more frequent, indicating that the user is a “bot,” the function ignores the session. The min_human_click_lag must be less than session_timout. The data type of min_human_click_lag is DOUBLE PRECISION.",
-      "description": "Specifies the minimum number of seconds between clicks for the session user to be considered human. If clicks are more frequent, indicating that the user is a “bot,” the function ignores the session. The min_human_click_lag must be less than session_timout. The data type of min_human_click_lag is DOUBLE PRECISION.",
-      "datatype": "DOUBLE",
-      "allowsLists": false,
-      "rName": "click.lag",
-      "useInR": true,
-      "rOrderNum": 4
+      "description": "Specifies the minimum number of seconds between clicks for the session user to be considered human. If clicks are more frequent, indicating that the user is a \u201cbot,\u201d the function ignores the session. The min_human_click_lag must be less than session_timout. The data type of min_human_click_lag is DOUBLE PRECISION."
     },
     {
-      "defaultValue": false,
       "name": "EmitNull",
-      "alternateNames": [],
+      "allowsLists": false,
+      "useInR": true,
+      "datatype": "BOOLEAN",
+      "defaultValue": false,
+      "rOrderNum": 5,
+      "rName": "emit.null",
       "isRequired": false,
       "rDescription": "Specifies whether to output rows that have NULL values in their session id and rapid fire columns, even if their timestamp_column has a NULL value. The default value is 'false'.",
-      "description": "Specifies whether to output rows that have NULL values in their session id and rapid fire columns, even if their timestamp_column has a NULL value. The default value is 'false'.",
-      "datatype": "BOOLEAN",
-      "allowsLists": false,
-      "rName": "emit.null",
-      "useInR": true,
-      "rOrderNum": 5
+      "alternateNames": [],
+      "description": "Specifies whether to output rows that have NULL values in their session id and rapid fire columns, even if their timestamp_column has a NULL value. The default value is 'false'."
     }
   ]
 }

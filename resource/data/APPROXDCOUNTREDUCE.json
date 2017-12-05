@@ -10,20 +10,20 @@
   "long_description": "Outputs approximate distinct counts of specified columns; must be used in conjuction with approx_dcount_partial; note: the outputted result may be exact (i.e. not approximate) in the regime with low cardinality",
   "input_tables": [
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "input",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 0,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "Specifies the input table.",
       "requiredInputKind": [
         "PartitionByKey"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "input",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "Specifies the input table.",
-      "description": "Specifies the input table.",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "useInR": true,
-      "rOrderNum": 0
+      "description": "Specifies the input table."
     }
   ]
 }

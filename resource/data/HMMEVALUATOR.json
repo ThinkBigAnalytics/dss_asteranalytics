@@ -10,518 +10,518 @@
   "long_description": "Given a Hidden Markov Model theta = (A, B, Pi) and an observation sequence, find the probability that the model produces the observation sequence.",
   "input_tables": [
     {
-      "requiredInputKind": [
-        "PartitionByKey"
-      ],
       "isOrdered": true,
-      "partitionByOne": false,
+      "useInR": true,
       "name": "observation",
-      "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "observation table",
-      "description": "observation table",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
       "rName": "observation",
-      "useInR": true,
-      "rOrderNum": 4
-    },
-    {
-      "requiredInputKind": [
-        "PartitionByKey"
-      ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "InitStateProb",
-      "alternateNames": [],
       "isRequired": true,
-      "rDescription": "init state table",
-      "description": "init state table",
       "datatype": "TABLE_ALIAS",
+      "rOrderNum": 4,
       "allowsLists": false,
-      "rName": "init.state.prob",
-      "useInR": true,
-      "rOrderNum": 1
-    },
-    {
+      "partitionByOne": false,
+      "rDescription": "observation table",
       "requiredInputKind": [
         "PartitionByKey"
       ],
+      "alternateNames": [],
+      "description": "observation table"
+    },
+    {
       "isOrdered": false,
+      "useInR": true,
+      "name": "InitStateProb",
+      "rName": "init.state.prob",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 1,
+      "allowsLists": false,
       "partitionByOne": false,
+      "rDescription": "init state table",
+      "requiredInputKind": [
+        "PartitionByKey"
+      ],
+      "alternateNames": [],
+      "description": "init state table"
+    },
+    {
+      "isOrdered": false,
+      "useInR": true,
       "name": "TransProb",
+      "rName": "state.transition.prob",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 2,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "state transition table",
+      "requiredInputKind": [
+        "PartitionByKey"
+      ],
       "alternateNames": [
         "StateTransitionProb"
       ],
-      "isRequired": true,
-      "rDescription": "state transition table",
-      "description": "state transition table",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "state.transition.prob",
-      "useInR": true,
-      "rOrderNum": 2
+      "description": "state transition table"
     },
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "EmissionProb",
+      "rName": "emission.prob",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 3,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "emission probability table",
       "requiredInputKind": [
         "PartitionByKey"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "EmissionProb",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "emission probability table",
-      "description": "emission probability table",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "emission.prob",
-      "useInR": true,
-      "rOrderNum": 3
+      "description": "emission probability table"
     }
   ],
   "argument_clauses": [
     {
+      "name": "InitStateModelColumn",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "state.model.key",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "InitStateProb"
       ],
+      "rOrderNum": 5,
       "checkDuplicate": true,
-      "allowedTypes": [],
-      "allowedTypeGroups": [
-        "ALL"
-      ],
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "InitStateModelColumn",
+      "isRequired": true,
+      "rDescription": "The name of the model attribute column in the init.state.prob table.",
       "alternateNames": [
         "InitStateModelKey"
       ],
-      "isRequired": true,
-      "rDescription": "The name of the model attribute column in the init.state.prob table.",
-      "description": "The name of the model attribute column in the InitStateProb table.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "state.model.key",
-      "useInR": true,
-      "rOrderNum": 5
-    },
-    {
-      "targetTable": [
-        "InitStateProb"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "matchLengthOfArgument": "",
       "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "The name of the model attribute column in the InitStateProb table."
+    },
+    {
       "name": "InitStateColumn",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "state.key",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "InitStateProb"
+      ],
+      "rOrderNum": 6,
+      "checkDuplicate": true,
+      "isRequired": true,
+      "rDescription": "The name of the state attribute column in the init.state.prob table.",
       "alternateNames": [
         "InitStateKey"
       ],
-      "isRequired": true,
-      "rDescription": "The name of the state attribute column in the init.state.prob table.",
-      "description": "The name of the state attribute column in the InitStateProb table.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "state.key",
-      "useInR": true,
-      "rOrderNum": 6
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "The name of the state attribute column in the InitStateProb table."
     },
     {
+      "name": "InitStateProbColumn",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "state.prob.key",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "InitStateProb"
       ],
+      "rOrderNum": 7,
       "checkDuplicate": true,
-      "allowedTypes": [],
-      "allowedTypeGroups": [
-        "ALL"
-      ],
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "InitStateProbColumn",
+      "isRequired": true,
+      "rDescription": "The name of the initial probability column in the init.state.prob table.",
       "alternateNames": [
         "InitStateProbKey"
       ],
-      "isRequired": true,
-      "rDescription": "The name of the initial probability column in the init.state.prob table.",
-      "description": "The name of the initial probability column in the InitStateProb table.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "state.prob.key",
-      "useInR": true,
-      "rOrderNum": 7
-    },
-    {
-      "targetTable": [
-        "TransProb"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "matchLengthOfArgument": "",
       "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "The name of the initial probability column in the InitStateProb table."
+    },
+    {
       "name": "TransAttributeColumn",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "trans.model.key",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "TransProb"
+      ],
+      "rOrderNum": 8,
+      "checkDuplicate": true,
+      "isRequired": true,
+      "rDescription": "The name of the model attribute column in the state.transition.prob table.",
       "alternateNames": [
         "StateTransModelKey"
       ],
-      "isRequired": true,
-      "rDescription": "The name of the model attribute column in the state.transition.prob table.",
-      "description": "The name of the model attribute column in the TransProb table.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "trans.model.key",
-      "useInR": true,
-      "rOrderNum": 8
-    },
-    {
-      "targetTable": [
-        "TransProb"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "matchLengthOfArgument": "",
       "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "The name of the model attribute column in the TransProb table."
+    },
+    {
       "name": "TransFromStateColumn",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "trans.from.key",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "TransProb"
+      ],
+      "rOrderNum": 9,
+      "checkDuplicate": true,
+      "isRequired": true,
+      "rDescription": "The name of the source of the state transition column in the state.transition.prob table.",
       "alternateNames": [
         "StateTransFromStateKey"
       ],
-      "isRequired": true,
-      "rDescription": "The name of the source of the state transition column in the state.transition.prob table.",
-      "description": "The name of the source of the state transition column in the TransProb table.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "trans.from.key",
-      "useInR": true,
-      "rOrderNum": 9
-    },
-    {
-      "targetTable": [
-        "TransProb"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "matchLengthOfArgument": "",
       "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "The name of the source of the state transition column in the TransProb table."
+    },
+    {
       "name": "TransToStateColumn",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "trans.to.key",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "TransProb"
+      ],
+      "rOrderNum": 10,
+      "checkDuplicate": true,
+      "isRequired": true,
+      "rDescription": "The name of the target of the state transition column in the state.transition.prob table.",
       "alternateNames": [
         "StateTransToStateKey"
       ],
-      "isRequired": true,
-      "rDescription": "The name of the target of the state transition column in the state.transition.prob table.",
-      "description": "The name of the target of the state transition column in the TransProb table.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "trans.to.key",
-      "useInR": true,
-      "rOrderNum": 10
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "The name of the target of the state transition column in the TransProb table."
     },
     {
+      "name": "TransProbColumn",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "trans.prob.key",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "TransProb"
       ],
+      "rOrderNum": 11,
       "checkDuplicate": true,
-      "allowedTypes": [],
-      "allowedTypeGroups": [
-        "ALL"
-      ],
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "TransProbColumn",
+      "isRequired": true,
+      "rDescription": "The name of the state transition probability column in the state.transition.prob table.",
       "alternateNames": [
         "StateTransProbKey"
       ],
-      "isRequired": true,
-      "rDescription": "The name of the state transition probability column in the state.transition.prob table.",
-      "description": "The name of the state transition probability column in the TransProb table.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "trans.prob.key",
-      "useInR": true,
-      "rOrderNum": 11
-    },
-    {
-      "targetTable": [
-        "EmissionProb"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "matchLengthOfArgument": "",
       "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "The name of the state transition probability column in the TransProb table."
+    },
+    {
       "name": "EmitModelColumn",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "emit.model.key",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "EmissionProb"
+      ],
+      "rOrderNum": 12,
+      "checkDuplicate": true,
+      "isRequired": true,
+      "rDescription": "The name of the model attribute column in the emission.prob table.",
       "alternateNames": [
         "EmitModelKey"
       ],
-      "isRequired": true,
-      "rDescription": "The name of the model attribute column in the emission.prob table.",
-      "description": "The name of the model attribute column in the EmissionProb table.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "emit.model.key",
-      "useInR": true,
-      "rOrderNum": 12
-    },
-    {
-      "targetTable": [
-        "EmissionProb"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "matchLengthOfArgument": "",
       "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "The name of the model attribute column in the EmissionProb table."
+    },
+    {
       "name": "EmitStateColumn",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "emit.state.key",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "EmissionProb"
+      ],
+      "rOrderNum": 13,
+      "checkDuplicate": true,
+      "isRequired": true,
+      "rDescription": "The name of the state attribute in the emission.prob table.",
       "alternateNames": [
         "EmitStateKey"
       ],
-      "isRequired": true,
-      "rDescription": "The name of the state attribute in the emission.prob table.",
-      "description": "The name of the state attribute in the EmissionProb table.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "emit.state.key",
-      "useInR": true,
-      "rOrderNum": 13
-    },
-    {
-      "targetTable": [
-        "EmissionProb"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "matchLengthOfArgument": "",
       "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "The name of the state attribute in the EmissionProb table."
+    },
+    {
       "name": "EmitObsColumn",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "emit.observed.key",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "EmissionProb"
+      ],
+      "rOrderNum": 14,
+      "checkDuplicate": true,
+      "isRequired": true,
+      "rDescription": "The name of the observation attribute column in the emission.prob table.",
       "alternateNames": [
         "EmitObservedKey"
       ],
-      "isRequired": true,
-      "rDescription": "The name of the observation attribute column in the emission.prob table.",
-      "description": "The name of the observation attribute column in the EmissionProb table.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "emit.observed.key",
-      "useInR": true,
-      "rOrderNum": 14
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "The name of the observation attribute column in the EmissionProb table."
     },
     {
+      "name": "EmitProbColumn",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "emit.prob.key",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "EmissionProb"
       ],
+      "rOrderNum": 15,
       "checkDuplicate": true,
-      "allowedTypes": [],
-      "allowedTypeGroups": [
-        "ALL"
-      ],
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "EmitProbColumn",
+      "isRequired": true,
+      "rDescription": "The name of the emission probability in the emission.prob table.",
       "alternateNames": [
         "EmitProbKey"
       ],
-      "isRequired": true,
-      "rDescription": "The name of the emission probability in the emission.prob table.",
-      "description": "The name of the emission probability in the EmissionProb table.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "emit.prob.key",
-      "useInR": true,
-      "rOrderNum": 15
-    },
-    {
-      "targetTable": [
-        "observation"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "requiredLength": 1,
-      "matchLengthOfArgument": "",
       "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "The name of the emission probability in the EmissionProb table."
+    },
+    {
       "name": "ModelColumn",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "model.key",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "observation"
+      ],
+      "rOrderNum": 16,
+      "checkDuplicate": true,
+      "isRequired": true,
+      "rDescription": "The name of the column that contains the model attribute. If you specify this argument, then model_attribute must match a model_key in the observation.partition clause.",
+      "requiredLength": 1,
       "alternateNames": [
         "ModelKey"
       ],
-      "isRequired": true,
-      "rDescription": "The name of the column that contains the model attribute. If you specify this argument, then model_attribute must match a model_key in the observation.partition clause.",
-      "description": "The name of the column that contains the model attribute. If you specify this argument, then model_attribute must match a model_key in the PARTITION BY clause.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "model.key",
-      "useInR": true,
-      "rOrderNum": 16
-    },
-    {
-      "targetTable": [
-        "observation"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "requiredLength": 1,
-      "matchLengthOfArgument": "",
       "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "The name of the column that contains the model attribute. If you specify this argument, then model_attribute must match a model_key in the PARTITION BY clause."
+    },
+    {
       "name": "SeqColumn",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "sequence.key",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "observation"
+      ],
+      "rOrderNum": 17,
+      "checkDuplicate": true,
+      "isRequired": true,
+      "rDescription": "The name of the column that contains the sequence attribute. The sequence_attribute must be a sequence attribute in the observation.partition clause.",
+      "requiredLength": 1,
       "alternateNames": [
         "SequenceKey"
       ],
-      "isRequired": true,
-      "rDescription": "The name of the column that contains the sequence attribute. The sequence_attribute must be a sequence attribute in the observation.partition clause.",
-      "description": "The name of the column that contains the sequence attribute. The sequence_attribute must be a sequence attribute in the PARTITION BY clause.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "sequence.key",
-      "useInR": true,
-      "rOrderNum": 17
-    },
-    {
-      "targetTable": [
-        "observation"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "requiredLength": 1,
-      "matchLengthOfArgument": "",
       "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "The name of the column that contains the sequence attribute. The sequence_attribute must be a sequence attribute in the PARTITION BY clause."
+    },
+    {
       "name": "ObsColumn",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "observed.key",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "observation"
+      ],
+      "rOrderNum": 18,
+      "checkDuplicate": true,
+      "isRequired": true,
+      "rDescription": "The name of the column that contains the observed symbols. Note: Observed symbols are case-sensitive.",
+      "requiredLength": 1,
       "alternateNames": [
         "ObservedKey"
       ],
-      "isRequired": true,
-      "rDescription": "The name of the column that contains the observed symbols. Note: Observed symbols are case-sensitive.",
-      "description": "The name of the column that contains the observed symbols. Note: Observed symbols are case-sensitive.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "observed.key",
-      "useInR": true,
-      "rOrderNum": 18
-    },
-    {
-      "targetTable": [
-        "observation"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "matchLengthOfArgument": "",
       "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "The name of the column that contains the observed symbols. Note: Observed symbols are case-sensitive."
+    },
+    {
       "name": "Accumulate",
-      "alternateNames": [],
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "accumulate",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "observation"
+      ],
+      "rOrderNum": 23,
+      "checkDuplicate": true,
       "isRequired": false,
       "rDescription": "Specifies the names of the columns in input_table that the function copies to the output table.",
-      "description": "Specifies the names of the columns in input_table that the function copies to the output table.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "accumulate",
-      "useInR": true,
-      "rOrderNum": 23
-    },
-    {
-      "targetTable": [
-        "observation"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
+      "alternateNames": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "requiredLength": 1,
-      "matchLengthOfArgument": "",
       "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the names of the columns in input_table that the function copies to the output table."
+    },
+    {
       "name": "SeqProbColumn",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "seq.prob.key",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "observation"
+      ],
+      "rOrderNum": 21,
+      "checkDuplicate": true,
+      "isRequired": false,
+      "rDescription": "The function uses the previous value under the column to calculate the change rate.",
+      "requiredLength": 1,
       "alternateNames": [
         "SequenceProbKey"
       ],
-      "isRequired": false,
-      "rDescription": "The function uses the previous value under the column to calculate the change rate.",
-      "description": "The function uses the previous value under the column to calculate the change rate.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "seq.prob.key",
-      "useInR": true,
-      "rOrderNum": 21
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "The function uses the previous value under the column to calculate the change rate."
     },
     {
+      "name": "SkipColumn",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "skip.key",
+      "allowedTypes": [
+        "boolean"
+      ],
+      "datatype": "COLUMNS",
       "targetTable": [
         "observation"
       ],
+      "rOrderNum": 22,
       "checkDuplicate": true,
-      "allowedTypes": [
-        "boolean"
+      "isRequired": false,
+      "rDescription": "The name of the column whose values determine whether the function skips the row.The function skips the row if the value is \u201ctrue\u201d, \u201cyes\u201d, \u201cy\u201d, or \u201c1\u201d. The function does not skip the row if the value is \u201cfalse\u201d, \u201cf\u201d, \u201cno\u201d, \u201cn\u201d, \u201c0\u201d, or NULL.",
+      "requiredLength": 1,
+      "alternateNames": [
+        "SkipKey"
       ],
       "allowedTypeGroups": [
         "INTEGER",
         "STRING"
       ],
-      "requiredLength": 1,
-      "matchLengthOfArgument": "",
       "allowPadding": true,
-      "name": "SkipColumn",
-      "alternateNames": [
-        "SkipKey"
-      ],
-      "isRequired": false,
-      "rDescription": "The name of the column whose values determine whether the function skips the row.The function skips the row if the value is “true”, “yes”, “y”, or “1”. The function does not skip the row if the value is “false”, “f”, “no”, “n”, “0”, or NULL.",
-      "description": "The name of the column whose values determine whether the function skips the row.The function skips the row if the value is “true”, “yes”, “y”, or “1”. The function does not skip the row if the value is “false”, “f”, “no”, “n”, “0”, or NULL.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "skip.key",
-      "useInR": true,
-      "rOrderNum": 22
+      "matchLengthOfArgument": "",
+      "description": "The name of the column whose values determine whether the function skips the row.The function skips the row if the value is \u201ctrue\u201d, \u201cyes\u201d, \u201cy\u201d, or \u201c1\u201d. The function does not skip the row if the value is \u201cfalse\u201d, \u201cf\u201d, \u201cno\u201d, \u201cn\u201d, \u201c0\u201d, or NULL."
     },
     {
-      "defaultValue": true,
       "name": "ShowChangeRate",
-      "alternateNames": [],
+      "allowsLists": false,
+      "useInR": true,
+      "datatype": "BOOLEAN",
+      "defaultValue": true,
+      "rOrderNum": 20,
+      "rName": "show.rate.change",
       "isRequired": false,
       "rDescription": "If 'true' (the default), the function shows the percentage change that corresponds to the applied model with the difference from previous predicted probability.",
-      "description": "If 'true' (the default), the function shows the percentage change that corresponds to the applied model with the difference from previous predicted probability.",
-      "datatype": "BOOLEAN",
-      "allowsLists": false,
-      "rName": "show.rate.change",
-      "useInR": true,
-      "rOrderNum": 20
+      "alternateNames": [],
+      "description": "If 'true' (the default), the function shows the percentage change that corresponds to the applied model with the difference from previous predicted probability."
     },
     {
-      "defaultValue": true,
       "name": "Incremental",
+      "allowsLists": false,
+      "useInR": true,
+      "datatype": "BOOLEAN",
+      "defaultValue": true,
+      "rOrderNum": 19,
+      "rName": "incremental",
+      "isRequired": false,
+      "rDescription": " Specifies whether only new sequence probabilities are computed. If 'true' (the default), only new sequence probabilities are computed. If 'false', all probabilities are computed. Note: If the seq.prob.key argument is not specified, the function cannot determine whether the observed sequence is new; therefore, all model sequences in the input tables are treated as new.",
       "alternateNames": [
         "IncrementalEvaluate"
       ],
-      "isRequired": false,
-      "rDescription": " Specifies whether only new sequence probabilities are computed. If 'true' (the default), only new sequence probabilities are computed. If 'false', all probabilities are computed. Note: If the seq.prob.key argument is not specified, the function cannot determine whether the observed sequence is new; therefore, all model sequences in the input tables are treated as new.",
-      "description": " Specifies whether only new sequence probabilities are computed. If 'true' (the default), only new sequence probabilities are computed. If 'false', all probabilities are computed. Note: If the SeqProbColumn argument is not specified, the function cannot determine whether the observed sequence is new; therefore, all model sequences in the input tables are treated as new.",
-      "datatype": "BOOLEAN",
-      "allowsLists": false,
-      "rName": "incremental",
-      "useInR": true,
-      "rOrderNum": 19
+      "description": " Specifies whether only new sequence probabilities are computed. If 'true' (the default), only new sequence probabilities are computed. If 'false', all probabilities are computed. Note: If the SeqProbColumn argument is not specified, the function cannot determine whether the observed sequence is new; therefore, all model sequences in the input tables are treated as new."
     }
   ]
 }

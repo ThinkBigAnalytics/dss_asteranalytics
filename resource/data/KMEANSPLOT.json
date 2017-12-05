@@ -11,67 +11,67 @@
   "long_description": "KMeansPlot is a SQL-GR for assigning data points to Kmeans clusters.",
   "input_tables": [
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "input1",
+      "rName": "data",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 2,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "Table containing the points on which to cluster the data. If an input row in the input table contains a null value, aa.kmeans.plot sets the corresponding cluster ID in the output to -1.",
       "requiredInputKind": [
         "PartitionByAny"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "input1",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "Table containing the points on which to cluster the data. If an input row in the input table contains a null value, aa.kmeans.plot sets the corresponding cluster ID in the output to -1.",
-      "description": "Table containing the points on which to cluster the data. If an input row in the input table contains a null value, KMeansPlot sets the corresponding cluster ID in the output to -1.",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "data",
-      "useInR": true,
-      "rOrderNum": 2
+      "description": "Table containing the points on which to cluster the data. If an input row in the input table contains a null value, KMeansPlot sets the corresponding cluster ID in the output to -1."
     },
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "input2",
+      "rName": "object",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 1,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "The table which contains the centroids trained, from the kmeans function.",
       "requiredInputKind": [
         "Dimension"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "input2",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "The table which contains the centroids trained, from the kmeans function.",
-      "description": "The table which contains the centroids trained, from the kmeans function.",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "object",
-      "useInR": true,
-      "rOrderNum": 1
+      "description": "The table which contains the centroids trained, from the kmeans function."
     }
   ],
   "argument_clauses": [
     {
-      "permittedValues": [],
-      "isOutputColumn": false,
       "name": "CentroidsTable",
-      "alternateNames": [],
+      "allowsLists": false,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "rOrderNum": 2,
+      "rName": "centroids.table",
       "isRequired": false,
       "rDescription": "Specifies the name of the table of cluster centroids output by the aa.kmeans function.",
-      "description": "Specifies the name of the table of cluster centroids output by the KMeans function.",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "centroids.table",
-      "useInR": true,
-      "rOrderNum": 2
+      "alternateNames": [],
+      "permittedValues": [],
+      "description": "Specifies the name of the table of cluster centroids output by the KMeans function."
     },
     {
-      "defaultValue": false,
       "name": "PrintDistance",
-      "alternateNames": [],
+      "allowsLists": false,
+      "useInR": true,
+      "datatype": "BOOLEAN",
+      "defaultValue": false,
+      "rOrderNum": 3,
+      "rName": "print.distance",
       "isRequired": false,
       "rDescription": "Specifies whether to print the distance between each data point and the nearest cluster. The default value is 'false'.",
-      "description": "Specifies whether to print the distance between each data point and the nearest cluster. The default value is 'false'.",
-      "datatype": "BOOLEAN",
-      "allowsLists": false,
-      "rName": "print.distance",
-      "useInR": true,
-      "rOrderNum": 3
+      "alternateNames": [],
+      "description": "Specifies whether to print the distance between each data point and the nearest cluster. The default value is 'false'."
     }
   ]
 }

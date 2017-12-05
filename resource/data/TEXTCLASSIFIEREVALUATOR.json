@@ -11,71 +11,71 @@
   "long_description": "Evaluate the text classification SQL/MR function",
   "input_tables": [
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "input",
+      "rName": "object",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 1,
+      "allowsLists": false,
+      "partitionByOne": true,
+      "rDescription": "The relation that contains the output of a classifier",
       "requiredInputKind": [
         "PartitionByKey"
       ],
-      "isOrdered": false,
-      "partitionByOne": true,
-      "name": "input",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "The relation that contains the output of a classifier",
-      "description": "The relation that contains the output of a classifier",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "object",
-      "useInR": true,
-      "rOrderNum": 1
+      "description": "The relation that contains the output of a classifier"
     }
   ],
   "argument_clauses": [
     {
+      "name": "ObsColumn",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "obs.column",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "input"
       ],
+      "rOrderNum": 2,
       "checkDuplicate": true,
-      "allowedTypes": [],
-      "allowedTypeGroups": [
-        "ALL"
-      ],
+      "isRequired": true,
+      "rDescription": "Specifies the name of the input column that contains the expected (correct) category.",
       "requiredLength": 1,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "ObsColumn",
       "alternateNames": [
         "ExpectColumn"
       ],
-      "isRequired": true,
-      "rDescription": "Specifies the name of the input column that contains the expected (correct) category.",
-      "description": "Specifies the name of the input column that contains the expected (correct) category.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "obs.column",
-      "useInR": true,
-      "rOrderNum": 2
-    },
-    {
-      "targetTable": [
-        "input"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "requiredLength": 1,
-      "matchLengthOfArgument": "",
       "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the input column that contains the expected (correct) category."
+    },
+    {
       "name": "PredictColumn",
-      "alternateNames": [],
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "predict.column",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "input"
+      ],
+      "rOrderNum": 3,
+      "checkDuplicate": true,
       "isRequired": true,
       "rDescription": "Specifies the name of the input column that contains the predicted category.",
-      "description": "Specifies the name of the input column that contains the predicted category.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "predict.column",
-      "useInR": true,
-      "rOrderNum": 3
+      "requiredLength": 1,
+      "alternateNames": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the input column that contains the predicted category."
     }
   ]
 }

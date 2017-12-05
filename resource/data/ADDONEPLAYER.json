@@ -10,119 +10,130 @@
   "long_description": "This function augment the combination by adding one extra player which is not in the combination yet. It also adds a column for binomial coefficient, which is used in computing partial Shapley values.",
   "input_tables": [
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "input",
+      "rName": "data",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 1,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "A table output by the GenerateCombination or SortCombination function.",
       "requiredInputKind": [
         "PartitionByAny"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "input",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "A table output by the GenerateCombination or SortCombination function.",
-      "description": "A table output by the GenerateCombination or SortCombination function.",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "data",
-      "useInR": true,
-      "rOrderNum": 1
+      "description": "A table output by the GenerateCombination or SortCombination function."
     }
   ],
   "argument_clauses": [
     {
+      "name": "CombinationColumn",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "combination.column",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "input"
       ],
+      "rOrderNum": 2,
       "checkDuplicate": true,
-      "allowedTypes": [],
-      "allowedTypeGroups": [
-        "ALL"
-      ],
+      "isRequired": true,
+      "rDescription": "Specifies the name of the input table column that contains the combinations.",
       "requiredLength": 1,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "CombinationColumn",
       "alternateNames": [
         "CombColName"
       ],
-      "isRequired": true,
-      "rDescription": "Specifies the name of the input table column that contains the combinations.",
-      "description": "Specifies the name of the input table column that contains the combinations.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "combination.column",
-      "useInR": true,
-      "rOrderNum": 2
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the input table column that contains the combinations."
     },
     {
+      "name": "SizeColumn",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "size.column",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "input"
       ],
+      "rOrderNum": 3,
       "checkDuplicate": true,
-      "allowedTypes": [],
-      "allowedTypeGroups": [
-        "INTEGER"
-      ],
+      "isRequired": true,
+      "rDescription": "Specifies the name of the input table column that contains the size of each combination.",
       "requiredLength": 1,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "SizeColumn",
       "alternateNames": [
         "SizeColName"
       ],
-      "isRequired": true,
-      "rDescription": "Specifies the name of the input table column that contains the size of each combination.",
-      "description": "Specifies the name of the input table column that contains the size of each combination.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "size.column",
-      "useInR": true,
-      "rOrderNum": 3
+      "allowedTypeGroups": [
+        "INTEGER"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the input table column that contains the size of each combination."
     },
     {
+      "name": "ValueColumn",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "value.column",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "input"
       ],
+      "rOrderNum": 4,
       "checkDuplicate": true,
-      "allowedTypes": [],
-      "allowedTypeGroups": [
-        "NUMERIC"
-      ],
+      "isRequired": true,
+      "rDescription": "Specifies the name of the input table column that contains the characteristic value of each combination.",
       "requiredLength": 1,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "ValueColumn",
       "alternateNames": [
         "ValueColName"
       ],
-      "isRequired": true,
-      "rDescription": "Specifies the name of the input table column that contains the characteristic value of each combination.",
-      "description": "Specifies the name of the input table column that contains the characteristic value of each combination.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "value.column",
-      "useInR": true,
-      "rOrderNum": 4
+      "allowedTypeGroups": [
+        "NUMERIC"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the input table column that contains the characteristic value of each combination."
     },
     {
+      "name": "NumPlayers",
+      "upperBoundType": "INCLUSIVE",
       "lowerBound": 2,
+      "useInR": true,
+      "rName": "num.players",
+      "datatype": "INTEGER",
+      "allowNaN": false,
+      "rOrderNum": 5,
+      "allowsLists": false,
       "upperBound": 2147483647,
       "lowerBoundType": "INCLUSIVE",
-      "upperBoundType": "INCLUSIVE",
-      "allowNaN": false,
-      "name": "NumPlayers",
+      "isRequired": true,
+      "rDescription": "Specifies the number of players in the game, a positive integer.",
       "alternateNames": [
         "NumberOfPlayers"
       ],
-      "isRequired": true,
-      "rDescription": "Specifies the number of players in the game, a positive integer.",
-      "description": "Specifies the number of players in the game, a positive integer.",
-      "datatype": "INTEGER",
-      "allowsLists": false,
-      "rName": "num.players",
-      "useInR": true,
-      "rOrderNum": 5
+      "description": "Specifies the number of players in the game, a positive integer."
     },
     {
+      "name": "Delimiter",
+      "allowsLists": false,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "defaultValue": " ",
+      "rOrderNum": 6,
+      "rName": "delimiter",
+      "isRequired": false,
+      "rDescription": "Specifies the character that separates player numbers in combinations\u2014either ' ' (space, the default), '#', '$', '%', or '&'.",
+      "alternateNames": [],
       "permittedValues": [
         " ",
         ",",
@@ -132,18 +143,7 @@
         "%",
         "&"
       ],
-      "defaultValue": " ",
-      "isOutputColumn": false,
-      "name": "Delimiter",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "Specifies the character that separates player numbers in combinations—either ' ' (space, the default), '#', '$', '%', or '&'.",
-      "description": "Specifies the character that separates player numbers in combinations—either ' ' (space, the default), '#', '$', '%', or '&'.",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "delimiter",
-      "useInR": true,
-      "rOrderNum": 6
+      "description": "Specifies the character that separates player numbers in combinations\u2014either ' ' (space, the default), '#', '$', '%', or '&'."
     }
   ]
 }

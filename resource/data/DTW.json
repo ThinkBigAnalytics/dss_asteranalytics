@@ -3,210 +3,210 @@
   "json_schema_minor_version": "2",
   "json_content_version": "1",
   "function_name": "DTW",
-  "function_version": "1.1",
+  "function_version": "1.2",
   "function_type": "non-driver",
   "function_r_name": "aa.dtw",
   "short_description": "This function is used to perform a comparison between 2 time series.",
   "long_description": "This function is used to perform a Fast Dynamic Time Warping time series analysis.",
   "input_tables": [
     {
+      "isOrdered": true,
+      "useInR": true,
+      "name": "inputTable",
+      "rName": "data",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 1,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "the table contains the time series information",
       "requiredInputKind": [
         "PartitionByKey"
       ],
-      "isOrdered": true,
-      "partitionByOne": false,
-      "name": "inputTable",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "the table contains the time series information",
-      "description": "the table contains the time series information",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "data",
-      "useInR": true,
-      "rOrderNum": 1
+      "description": "the table contains the time series information"
     },
     {
+      "isOrdered": true,
+      "useInR": true,
+      "name": "templateTable",
+      "rName": "template.data",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 2,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "the table contains the template information",
       "requiredInputKind": [
         "Dimension"
       ],
-      "isOrdered": true,
-      "partitionByOne": false,
-      "name": "templateTable",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "the table contains the template information",
-      "description": "the table contains the template information",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "template.data",
-      "useInR": true,
-      "rOrderNum": 2
+      "description": "the table contains the template information"
     },
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "mappingTable",
+      "rName": "mapping.data",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 3,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "the table contains the mapping between the rows in the inputTable and the rows in the templateTable",
       "requiredInputKind": [
         "PartitionByKey"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "mappingTable",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "the table contains the mapping between the rows in the inputTable and the rows in the templateTable",
-      "description": "the table contains the mapping between the rows in the inputTable and the rows in the templateTable",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "mapping.data",
-      "useInR": true,
-      "rOrderNum": 3
+      "description": "the table contains the mapping between the rows in the inputTable and the rows in the templateTable"
     }
   ],
   "argument_clauses": [
     {
+      "name": "InputColumns",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "input.columns",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "inputTable"
       ],
+      "rOrderNum": 4,
       "checkDuplicate": true,
-      "allowedTypes": [],
-      "allowedTypeGroups": [
-        "ALL"
-      ],
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "InputColumns",
+      "isRequired": true,
+      "rDescription": "Specifies the names of the data columns that contain the values and timestamps of the time series. Note that the input.columns argument has the alternate name input.columns. Note: If these columns contain NaN or infinity values, then use a WHERE clause to remove them.",
       "alternateNames": [
         "InputTableValueColumnNames"
       ],
-      "isRequired": true,
-      "rDescription": "Specifies the names of the data columns that contain the values and timestamps of the time series. Note that the input.columns argument has the alternate name input.columns. Note: If these columns contain NaN or infinity values, then use a WHERE clause to remove them.",
-      "description": "Specifies the names of the input_table columns that contain the values and timestamps of the time series. Note that the InputColumns argument has the alternate name Input_Table_Value_Column_Names. Note: If these columns contain NaN or infinity values, then use a WHERE clause to remove them.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "input.columns",
-      "useInR": true,
-      "rOrderNum": 4
-    },
-    {
-      "targetTable": [
-        "templateTable"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "matchLengthOfArgument": "",
       "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the names of the input_table columns that contain the values and timestamps of the time series. Note that the InputColumns argument has the alternate name Input_Table_Value_Column_Names. Note: If these columns contain NaN or infinity values, then use a WHERE clause to remove them."
+    },
+    {
       "name": "TemplateColumns",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "template.columns",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "templateTable"
+      ],
+      "rOrderNum": 5,
+      "checkDuplicate": true,
+      "isRequired": true,
+      "rDescription": "Specifies the names of the template_table columns that contain the values and timestamps of the time series. Note that the template.columns argument has the alternate name template.columns. Note: If these columns contain NaN or infinity values, then use a WHERE clause to remove them.",
       "alternateNames": [
         "TemplateTableValueColumnNames"
       ],
-      "isRequired": true,
-      "rDescription": "Specifies the names of the template_table columns that contain the values and timestamps of the time series. Note that the template.columns argument has the alternate name template.columns. Note: If these columns contain NaN or infinity values, then use a WHERE clause to remove them.",
-      "description": "Specifies the names of the template_table columns that contain the values and timestamps of the time series. Note that the TemplateColumns argument has the alternate name Template_Table_Value_Column_Names. Note: If these columns contain NaN or infinity values, then use a WHERE clause to remove them.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "template.columns",
-      "useInR": true,
-      "rOrderNum": 5
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the names of the template_table columns that contain the values and timestamps of the time series. Note that the TemplateColumns argument has the alternate name Template_Table_Value_Column_Names. Note: If these columns contain NaN or infinity values, then use a WHERE clause to remove them."
     },
     {
+      "name": "TimeseriesId",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "timeseries.id",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "inputTable"
       ],
+      "rOrderNum": 6,
       "checkDuplicate": true,
-      "allowedTypes": [],
+      "isRequired": true,
+      "rDescription": "Specifies the names of the columns by which the input_table is partitioned. These columns comprise the unique ID for a time series in input_table.",
+      "requiredLength": 1,
+      "alternateNames": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "requiredLength": 1,
-      "matchLengthOfArgument": "",
       "allowPadding": true,
-      "name": "TimeseriesId",
-      "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "Specifies the names of the columns by which the input_table is partitioned. These columns comprise the unique ID for a time series in input_table.",
-      "description": "Specifies the names of the columns by which the input_table is partitioned. These columns comprise the unique ID for a time series in input_table.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "timeseries.id",
-      "useInR": true,
-      "rOrderNum": 6
+      "matchLengthOfArgument": "",
+      "description": "Specifies the names of the columns by which the input_table is partitioned. These columns comprise the unique ID for a time series in input_table."
     },
     {
+      "name": "TemplateId",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "template.id",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "templateTable"
       ],
+      "rOrderNum": 7,
       "checkDuplicate": true,
-      "allowedTypes": [],
+      "isRequired": true,
+      "rDescription": "Specifies the names of the columns by which the template_table is ordered. These columns comprise the unique ID for a time series in template_table.",
+      "requiredLength": 1,
+      "alternateNames": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "requiredLength": 1,
-      "matchLengthOfArgument": "",
       "allowPadding": true,
-      "name": "TemplateId",
-      "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "Specifies the names of the columns by which the template_table is ordered. These columns comprise the unique ID for a time series in template_table.",
-      "description": "Specifies the names of the columns by which the template_table is ordered. These columns comprise the unique ID for a time series in template_table.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "template.id",
-      "useInR": true,
-      "rOrderNum": 7
+      "matchLengthOfArgument": "",
+      "description": "Specifies the names of the columns by which the template_table is ordered. These columns comprise the unique ID for a time series in template_table."
     },
     {
-      "defaultValue": 10,
-      "lowerBound": -2147483648,
-      "upperBound": 2147483647,
-      "lowerBoundType": "INCLUSIVE",
-      "upperBoundType": "INCLUSIVE",
-      "allowNaN": false,
       "name": "Radius",
-      "alternateNames": [],
+      "upperBoundType": "INCLUSIVE",
+      "lowerBound": 0,
+      "useInR": true,
+      "rName": "radius",
+      "datatype": "INTEGER",
+      "defaultValue": 10,
+      "rOrderNum": 8,
+      "allowsLists": false,
+      "upperBound": 2147483645,
+      "lowerBoundType": "INCLUSIVE",
       "isRequired": false,
       "rDescription": " Specifies the integer value that determines the projected warp path from a previous resolution. The default value is 10.",
-      "description": " Specifies the integer value that determines the projected warp path from a previous resolution. The default value is 10.",
-      "datatype": "INTEGER",
-      "allowsLists": false,
-      "rName": "radius",
-      "useInR": true,
-      "rOrderNum": 8
+      "alternateNames": [],
+      "allowNaN": false,
+      "description": " Specifies the integer value that determines the projected warp path from a previous resolution. The default value is 10."
     },
     {
+      "name": "DistMethod",
+      "allowsLists": false,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "defaultValue": "EuclideanDistance",
+      "rOrderNum": 9,
+      "rName": "dist.method",
+      "isRequired": false,
+      "rDescription": "Specifies the metric for computing the warping distance. The supported values of distance_metric, which are case-sensitive, are: 'EuclideanDistance' (default),'ManhattanDistance', 'BinaryDistance'.contract Note that the DistMethod argument has the alternate name Metric.",
+      "alternateNames": [
+        "Metric"
+      ],
       "permittedValues": [
         "EuclideanDistance",
         "BinaryDistance",
         "ManhattanDistance"
       ],
-      "defaultValue": "EuclideanDistance",
-      "isOutputColumn": false,
-      "name": "DistMethod",
-      "alternateNames": [
-        "Metric"
-      ],
-      "isRequired": false,
-      "rDescription": "Specifies the metric for computing the warping distance. The supported values of distance_metric, which are case-sensitive, are: 'EuclideanDistance' (default),'ManhattanDistance', 'BinaryDistance'.contract Note that the DistMethod argument has the alternate name Metric.",
-      "description": "Specifies the metric for computing the warping distance. The supported values of distance_metric, which are case-sensitive, are: 'EuclideanDistance' (default),'ManhattanDistance', 'BinaryDistance'.contract Note that the DistMethod argument has the alternate name Metric.",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "dist.method",
-      "useInR": true,
-      "rOrderNum": 9
+      "description": "Specifies the metric for computing the warping distance. The supported values of distance_metric, which are case-sensitive, are: 'EuclideanDistance' (default),'ManhattanDistance', 'BinaryDistance'.contract Note that the DistMethod argument has the alternate name Metric."
     },
     {
-      "defaultValue": false,
       "name": "WarpPath",
-      "alternateNames": [],
+      "allowsLists": false,
+      "useInR": true,
+      "datatype": "BOOLEAN",
+      "defaultValue": false,
+      "rOrderNum": 10,
+      "rName": "warp.path",
       "isRequired": false,
       "rDescription": "Determines whether to output the warping path. The default value is 'false'.",
-      "description": "Determines whether to output the warping path. The default value is 'false'.",
-      "datatype": "BOOLEAN",
-      "allowsLists": false,
-      "rName": "warp.path",
-      "useInR": true,
-      "rOrderNum": 10
+      "alternateNames": [],
+      "description": "Determines whether to output the warping path. The default value is 'false'."
     }
   ]
 }

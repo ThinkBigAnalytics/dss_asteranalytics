@@ -10,85 +10,85 @@
   "long_description": "MurmurHash is a non-cryptographic hash function suitable for general hash-based lookup. The function output the hashed value of each cell in the input columns. ",
   "input_tables": [
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "input",
+      "rName": "data",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 1,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "The input table that contains the data.",
       "requiredInputKind": [
         "PartitionByAny"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "input",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "The input table that contains the data.",
-      "description": "The input table that contains the data.",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "data",
-      "useInR": true,
-      "rOrderNum": 1
+      "description": "The input table that contains the data."
     }
   ],
   "argument_clauses": [
     {
+      "name": "InputColumns",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "input.columns",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "input"
       ],
+      "rOrderNum": 2,
       "checkDuplicate": true,
-      "allowedTypes": [],
-      "allowedTypeGroups": [
-        "ALL"
-      ],
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "InputColumns",
-      "alternateNames": [],
       "isRequired": true,
       "rDescription": "Specifies the names of the input table columns for which to calculate hash values. Note: NULL values in the input columns are output as NULL.",
-      "description": "Specifies the names of the input table columns for which to calculate hash values. Note: NULL values in the input columns are output as NULL.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "input.columns",
-      "useInR": true,
-      "rOrderNum": 2
-    },
-    {
-      "targetTable": [
-        "input"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
+      "alternateNames": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "matchLengthOfArgument": "",
       "allowPadding": true,
-      "name": "Accumulate",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "Specifies the names of the input table columns to copy to the output table.",
-      "description": "Specifies the names of the input table columns to copy to the output table.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "accumulate",
-      "useInR": true,
-      "rOrderNum": 4
+      "matchLengthOfArgument": "",
+      "description": "Specifies the names of the input table columns for which to calculate hash values. Note: NULL values in the input columns are output as NULL."
     },
     {
-      "defaultValue": 32,
+      "name": "Accumulate",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "accumulate",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "input"
+      ],
+      "rOrderNum": 4,
+      "checkDuplicate": true,
+      "isRequired": false,
+      "rDescription": "Specifies the names of the input table columns to copy to the output table.",
+      "alternateNames": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the names of the input table columns to copy to the output table."
+    },
+    {
+      "name": "HashBit",
+      "upperBoundType": "INCLUSIVE",
       "lowerBound": -2147483648,
+      "useInR": true,
+      "rName": "hash.bit",
+      "datatype": "INTEGER",
+      "defaultValue": 32,
+      "rOrderNum": 3,
+      "allowsLists": false,
       "upperBound": 2147483647,
       "lowerBoundType": "INCLUSIVE",
-      "upperBoundType": "INCLUSIVE",
-      "allowNaN": false,
-      "name": "HashBit",
-      "alternateNames": [],
       "isRequired": false,
       "rDescription": "Specifies whether the function generates 32-bit hash values (the default) or 64-bit hash values.",
-      "description": "Specifies whether the function generates 32-bit hash values (the default) or 64-bit hash values.",
-      "datatype": "INTEGER",
-      "allowsLists": false,
-      "rName": "hash.bit",
-      "useInR": true,
-      "rOrderNum": 3
+      "alternateNames": [],
+      "allowNaN": false,
+      "description": "Specifies whether the function generates 32-bit hash values (the default) or 64-bit hash values."
     }
   ]
 }

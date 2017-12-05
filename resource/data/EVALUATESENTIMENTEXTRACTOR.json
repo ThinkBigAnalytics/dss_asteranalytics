@@ -11,73 +11,73 @@
   "long_description": "Evaluate the sentiment extraction SQL/MR function, by comapring the RESULT_COLUMN and RESULT_COLUMN.The value of EXPECT_COLUMN and RESULT_COLUMN should be 'pos' represent positive,'neg' represent negative and 'neu' represent neutral",
   "input_tables": [
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "input",
+      "rName": "object",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 1,
+      "allowsLists": false,
+      "partitionByOne": true,
+      "rDescription": "The input table should contain a text column which contains input text.",
       "requiredInputKind": [
         "PartitionByKey"
       ],
-      "isOrdered": false,
-      "partitionByOne": true,
-      "name": "input",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "The input table should contain a text column which contains input text.",
-      "description": "The input table should contain a text column which contains input text.",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "object",
-      "useInR": true,
-      "rOrderNum": 1
+      "description": "The input table should contain a text column which contains input text."
     }
   ],
   "argument_clauses": [
     {
+      "name": "ObsColumn",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "obs.column",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "input"
       ],
+      "rOrderNum": 2,
       "checkDuplicate": true,
-      "allowedTypes": [],
-      "allowedTypeGroups": [
-        "ALL"
-      ],
+      "isRequired": true,
+      "rDescription": "Specifies the name of the input column with the observed sentiment (POS, NEG or NEU).",
       "requiredLength": 1,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "ObsColumn",
       "alternateNames": [
         "ExpectColumn"
       ],
-      "isRequired": true,
-      "rDescription": "Specifies the name of the input column with the observed sentiment (POS, NEG or NEU).",
-      "description": "Specifies the name of the input column with the observed sentiment (POS, NEG or NEU).",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "obs.column",
-      "useInR": true,
-      "rOrderNum": 2
-    },
-    {
-      "targetTable": [
-        "input"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "requiredLength": 1,
-      "matchLengthOfArgument": "",
       "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the input column with the observed sentiment (POS, NEG or NEU)."
+    },
+    {
       "name": "SentimentColumn",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "sentiment.column",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "input"
+      ],
+      "rOrderNum": 3,
+      "checkDuplicate": true,
+      "isRequired": true,
+      "rDescription": "Specifies the name of the input column with the predicted sentiment (POS, NEG or NEU).",
+      "requiredLength": 1,
       "alternateNames": [
         "ResultColumn"
       ],
-      "isRequired": true,
-      "rDescription": "Specifies the name of the input column with the predicted sentiment (POS, NEG or NEU).",
-      "description": "Specifies the name of the input column with the predicted sentiment (POS, NEG or NEU).",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "sentiment.column",
-      "useInR": true,
-      "rOrderNum": 3
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the input column with the predicted sentiment (POS, NEG or NEU)."
     }
   ]
 }

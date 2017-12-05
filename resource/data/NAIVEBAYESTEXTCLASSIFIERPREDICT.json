@@ -11,193 +11,193 @@
   "long_description": "Predict document categories by a trained naive Bayes text classifier model.",
   "input_tables": [
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "predicts",
+      "rName": "newdata",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 2,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "The table defining the token table for prediction.",
       "requiredInputKind": [
         "PartitionByKey"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "predicts",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "The table defining the token table for prediction.",
-      "description": "The table defining the token table for prediction.",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "newdata",
-      "useInR": true,
-      "rOrderNum": 2
+      "description": "The table defining the token table for prediction."
     },
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "model",
+      "rName": "object",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 1,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "The table defining table classification model.",
       "requiredInputKind": [
         "Dimension"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "model",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "The table defining table classification model.",
-      "description": "The table defining table classification model.",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "object",
-      "useInR": true,
-      "rOrderNum": 1
+      "description": "The table defining table classification model."
     }
   ],
   "argument_clauses": [
     {
+      "name": "InputTokenColumn",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "input.token.column",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "predicts"
       ],
+      "rOrderNum": 3,
       "checkDuplicate": true,
-      "allowedTypes": [],
-      "allowedTypeGroups": [
-        "STRING"
-      ],
+      "isRequired": true,
+      "rDescription": "Specifies the name of the input_table column that contains the tokens.",
       "requiredLength": 1,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "InputTokenColumn",
       "alternateNames": [
         "TokenColumn"
       ],
-      "isRequired": true,
-      "rDescription": "Specifies the name of the input_table column that contains the tokens.",
-      "description": "Specifies the name of the input_table column that contains the tokens.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "input.token.column",
-      "useInR": true,
-      "rOrderNum": 3
+      "allowedTypeGroups": [
+        "STRING"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the input_table column that contains the tokens."
     },
     {
+      "name": "DocIdColumns",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "doc.id.columns",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "predicts"
       ],
+      "rOrderNum": 4,
       "checkDuplicate": true,
-      "allowedTypes": [],
+      "isRequired": true,
+      "rDescription": "Specifies the names of the input_table columns that contain the document identifier.",
+      "alternateNames": [],
       "allowedTypeGroups": [
         "STRING",
         "INTEGER"
       ],
-      "matchLengthOfArgument": "",
       "allowPadding": true,
-      "name": "DocIdColumns",
-      "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "Specifies the names of the input_table columns that contain the document identifier.",
-      "description": "Specifies the names of the input_table columns that contain the document identifier.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "doc.id.columns",
-      "useInR": true,
-      "rOrderNum": 4
+      "matchLengthOfArgument": "",
+      "description": "Specifies the names of the input_table columns that contain the document identifier."
     },
     {
+      "name": "ModelTokenColumn",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "model.token.column",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "model"
       ],
+      "rOrderNum": 7,
       "checkDuplicate": true,
-      "allowedTypes": [],
-      "allowedTypeGroups": [
-        "STRING"
-      ],
-      "requiredLength": 1,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "ModelTokenColumn",
-      "alternateNames": [],
       "isRequired": false,
       "rDescription": "Specifies the name of the model_table column that contains the tokens. The default value is the first column of model_table.",
-      "description": "Specifies the name of the model_table column that contains the tokens. The default value is the first column of model_table.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "model.token.column",
-      "useInR": true,
-      "rOrderNum": 7
-    },
-    {
-      "targetTable": [
-        "model"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
+      "requiredLength": 1,
+      "alternateNames": [],
       "allowedTypeGroups": [
         "STRING"
       ],
-      "requiredLength": 1,
-      "matchLengthOfArgument": "",
       "allowPadding": true,
-      "name": "ModelCategoryColumn",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "Specifies the name of the model_table column that contains the prediction categories. The default value is the second column of model_table.",
-      "description": "Specifies the name of the model_table column that contains the prediction categories. The default value is the second column of model_table.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "model.category.column",
-      "useInR": true,
-      "rOrderNum": 8
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the model_table column that contains the tokens. The default value is the first column of model_table."
     },
     {
+      "name": "ModelCategoryColumn",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "model.category.column",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "model"
       ],
+      "rOrderNum": 8,
       "checkDuplicate": true,
+      "isRequired": false,
+      "rDescription": "Specifies the name of the model_table column that contains the prediction categories. The default value is the second column of model_table.",
+      "requiredLength": 1,
+      "alternateNames": [],
+      "allowedTypeGroups": [
+        "STRING"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the model_table column that contains the prediction categories. The default value is the second column of model_table."
+    },
+    {
+      "name": "ModelProbColumn",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "model.prob.column",
       "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "model"
+      ],
+      "rOrderNum": 9,
+      "checkDuplicate": true,
+      "isRequired": false,
+      "rDescription": "Specifies the name of the model_table column that contains the token counts. The default value is the third column of model_table.",
+      "requiredLength": 1,
+      "alternateNames": [],
       "allowedTypeGroups": [
         "STRING",
         "NUMERIC"
       ],
-      "requiredLength": 1,
-      "matchLengthOfArgument": "",
       "allowPadding": true,
-      "name": "ModelProbColumn",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "Specifies the name of the model_table column that contains the token counts. The default value is the third column of model_table.",
-      "description": "Specifies the name of the model_table column that contains the token counts. The default value is the third column of model_table.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "model.prob.column",
-      "useInR": true,
-      "rOrderNum": 9
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the model_table column that contains the token counts. The default value is the third column of model_table."
     },
     {
+      "name": "ModelType",
+      "allowsLists": false,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "defaultValue": "MULTINOMIAL",
+      "rOrderNum": 5,
+      "rName": "model.type",
+      "isRequired": false,
+      "rDescription": "Specifies the model type of the text classifier. The default value is 'Multinomial'.",
+      "alternateNames": [],
       "permittedValues": [
         "MULTINOMIAL",
         "BERNOULLI"
       ],
-      "defaultValue": "MULTINOMIAL",
-      "isOutputColumn": false,
-      "name": "ModelType",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "Specifies the model type of the text classifier. The default value is 'Multinomial'.",
-      "description": "Specifies the model type of the text classifier. The default value is 'Multinomial'.",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "model.type",
-      "useInR": true,
-      "rOrderNum": 5
+      "description": "Specifies the model type of the text classifier. The default value is 'Multinomial'."
     },
     {
+      "name": "TopK",
+      "upperBoundType": "INCLUSIVE",
       "lowerBound": 0,
+      "useInR": true,
+      "rName": "top.k",
+      "datatype": "INTEGER",
+      "allowNaN": false,
+      "rOrderNum": 6,
+      "allowsLists": false,
       "upperBound": 2147483647,
       "lowerBoundType": "EXCLUSIVE",
-      "upperBoundType": "INCLUSIVE",
-      "allowNaN": false,
-      "name": "TopK",
-      "alternateNames": [],
       "isRequired": false,
       "rDescription": "Specifies the number of most likely prediction categories to output with their loglikelihood values (for example, the top 10 most likely prediction categories). The default is all prediction categories.",
-      "description": "Specifies the number of most likely prediction categories to output with their loglikelihood values (for example, the top 10 most likely prediction categories). The default is all prediction categories.",
-      "datatype": "INTEGER",
-      "allowsLists": false,
-      "rName": "top.k",
-      "useInR": true,
-      "rOrderNum": 6
+      "alternateNames": [],
+      "description": "Specifies the number of most likely prediction categories to output with their loglikelihood values (for example, the top 10 most likely prediction categories). The default is all prediction categories."
     }
   ]
 }

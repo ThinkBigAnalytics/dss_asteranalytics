@@ -10,158 +10,158 @@
   "long_description": "Named Entity Recognition SQL/MR function.",
   "input_tables": [
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "input",
+      "rName": "data",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 1,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "The relation from which extract named entities",
       "requiredInputKind": [
         "PartitionByKey",
         "PartitionByAny"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "input",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "The relation from which extract named entities",
-      "description": "The relation from which extract named entities",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "data",
-      "useInR": true,
-      "rOrderNum": 1
+      "description": "The relation from which extract named entities"
     },
     {
-      "requiredInputKind": [
-        "Dimension"
-      ],
       "isOrdered": false,
-      "partitionByOne": false,
+      "useInR": true,
       "name": "rules",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "The relation that contains the regex rules",
-      "description": "The relation that contains the regex rules",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
       "rName": "rules",
-      "useInR": true,
-      "rOrderNum": 2
-    },
-    {
+      "isRequired": false,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 2,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "The relation that contains the regex rules",
       "requiredInputKind": [
         "Dimension"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "dict",
       "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "The relation that contains the dictionary for named entities",
-      "description": "The relation that contains the dictionary for named entities",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "dict",
+      "description": "The relation that contains the regex rules"
+    },
+    {
+      "isOrdered": false,
       "useInR": true,
-      "rOrderNum": 3
+      "name": "dict",
+      "rName": "dict",
+      "isRequired": false,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 3,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "The relation that contains the dictionary for named entities",
+      "requiredInputKind": [
+        "Dimension"
+      ],
+      "alternateNames": [],
+      "description": "The relation that contains the dictionary for named entities"
     }
   ],
   "argument_clauses": [
     {
+      "name": "TextColumn",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "text.column",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "input"
       ],
+      "rOrderNum": 4,
       "checkDuplicate": true,
-      "allowedTypes": [],
-      "allowedTypeGroups": [
-        "ALL"
-      ],
-      "requiredLength": 1,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "TextColumn",
-      "alternateNames": [],
       "isRequired": true,
       "rDescription": "Specifies the name of the input table column that contains the text to analyze.",
-      "description": "Specifies the name of the input table column that contains the text to analyze.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "text.column",
-      "useInR": true,
-      "rOrderNum": 4
-    },
-    {
-      "targetTable": [
-        "input"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
+      "requiredLength": 1,
+      "alternateNames": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "matchLengthOfArgument": "",
       "allowPadding": true,
-      "name": "Accumulate",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "Specifies the names of the input table columns to copy to the output table.",
-      "description": "Specifies the names of the input table columns to copy to the output table.",
-      "datatype": "COLUMNS",
-      "allowsLists": true,
-      "rName": "accumulate",
-      "useInR": true,
-      "rOrderNum": 8
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the input table column that contains the text to analyze."
     },
     {
+      "name": "Accumulate",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "accumulate",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "input"
+      ],
+      "rOrderNum": 8,
+      "checkDuplicate": true,
+      "isRequired": false,
+      "rDescription": "Specifies the names of the input table columns to copy to the output table.",
+      "alternateNames": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the names of the input table columns to copy to the output table."
+    },
+    {
+      "name": "Language",
+      "allowsLists": false,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "defaultValue": "en",
+      "rOrderNum": 6,
+      "rName": "language",
+      "isRequired": false,
+      "rDescription": "Specifies the language of the input text: en (English, the default), zh_CN (Simplified Chinese), zh_TW (Traditional Chinese)",
+      "alternateNames": [],
       "permittedValues": [
         "en",
         "zh_CN",
         "zh_TW"
       ],
-      "defaultValue": "en",
-      "isOutputColumn": false,
-      "name": "Language",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "Specifies the language of the input text: en (English, the default), zh_CN (Simplified Chinese), zh_TW (Traditional Chinese)",
-      "description": "Specifies the language of the input text: en (English, the default), zh_CN (Simplified Chinese), zh_TW (Traditional Chinese)",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "language",
-      "useInR": true,
-      "rOrderNum": 6
+      "description": "Specifies the language of the input text: en (English, the default), zh_CN (Simplified Chinese), zh_TW (Traditional Chinese)"
     },
     {
-      "permittedValues": [],
-      "isOutputColumn": false,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
       "name": "Models",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "Specifies the CRF models (binary files) to use, generated by “ta.nertrainer”. If you specified the ExtractorJAR argument in the ta.nertrainer call that generated model_file, then you must specify the same jar_file in this argument. You must install model_file and jar_file in Aster Database under the user search path before calling the ta.ner function. Note: The names model_file and jar_file are case-sensitive.",
-      "description": "Specifies the CRF models (binary files) to use, generated by “NERTrainer”. If you specified the ExtractorJAR argument in the NERTrainer call that generated model_file, then you must specify the same jar_file in this argument. You must install model_file and jar_file in Aster Database under the user search path before calling the NER function. Note: The names model_file and jar_file are case-sensitive.",
-      "datatype": "STRING",
       "allowsLists": true,
-      "rName": "models",
+      "isOutputColumn": false,
       "useInR": true,
-      "rOrderNum": 5
+      "datatype": "STRING",
+      "rOrderNum": 5,
+      "rName": "models",
+      "isRequired": false,
+      "rDescription": "Specifies the CRF models (binary files) to use, generated by \u201cta.nertrainer\u201d. If you specified the ExtractorJAR argument in the ta.nertrainer call that generated model_file, then you must specify the same jar_file in this argument. You must install model_file and jar_file in Aster Database under the user search path before calling the ta.ner function. Note: The names model_file and jar_file are case-sensitive.",
+      "alternateNames": [],
+      "permittedValues": [],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the CRF models (binary files) to use, generated by \u201cNERTrainer\u201d. If you specified the ExtractorJAR argument in the NERTrainer call that generated model_file, then you must specify the same jar_file in this argument. You must install model_file and jar_file in Aster Database under the user search path before calling the NER function. Note: The names model_file and jar_file are case-sensitive."
     },
     {
-      "defaultValue": 0,
+      "name": "ShowEntityContext",
+      "upperBoundType": "EXCLUSIVE",
       "lowerBound": 0,
+      "useInR": true,
+      "rName": "show.entity.context",
+      "datatype": "INTEGER",
+      "defaultValue": 0,
+      "rOrderNum": 7,
+      "allowsLists": false,
       "upperBound": 10,
       "lowerBoundType": "INCLUSIVE",
-      "upperBoundType": "EXCLUSIVE",
-      "allowNaN": false,
-      "name": "ShowEntityContext",
+      "isRequired": false,
+      "rDescription": "Specifies the number of context words to output. If context_words is n (which must be a positive integer), the function outputs the n words that precede the entity, the entity, and the n words that follow the entity. The default value is 0.",
       "alternateNames": [
         "ShowContext"
       ],
-      "isRequired": false,
-      "rDescription": "Specifies the number of context words to output. If context_words is n (which must be a positive integer), the function outputs the n words that precede the entity, the entity, and the n words that follow the entity. The default value is 0.",
-      "description": "Specifies the number of context words to output. If context_words is n (which must be a positive integer), the function outputs the n words that precede the entity, the entity, and the n words that follow the entity. The default value is 0.",
-      "datatype": "INTEGER",
-      "allowsLists": false,
-      "rName": "show.entity.context",
-      "useInR": true,
-      "rOrderNum": 7
+      "allowNaN": false,
+      "description": "Specifies the number of context words to output. If context_words is n (which must be a positive integer), the function outputs the n words that precede the entity, the entity, and the n words that follow the entity. The default value is 0."
     }
   ]
 }

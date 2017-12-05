@@ -8,226 +8,141 @@
   "function_r_name": "aa.cfilter",
   "short_description": "This function generates combinations of frequent baskets",
   "long_description": "This function is used for identifying the associations in two item-set. For every combination, this function generates the score, support, confidence and z-score associated with the combination",
+  "input_tables": [
+    {
+      "name": "InputTable",
+      "allowsLists": false,
+      "useInR": true,
+      "description": "Specifies the name of the table that contains the data to filter.",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 1,
+      "rName": "data",
+      "alternateNames": [],
+      "rDescription": "Specifies the name of the table that contains the data to filter.",
+      "requiredInputKind": [],
+      "isOrdered": false,
+      "partitionByOne": false
+    }
+  ],
+  "output_tables": [
+    {
+      "name": "OutputTable",
+      "allowsLists": false,
+      "useInR": true,
+      "description": "Specifies the name of the output table that the function creates. The table must not exist.",
+      "isRequired": true,
+      "datatype": "TABLE_NAME",
+      "rOrderNum": 100,
+      "rName": "output.table",
+      "alternateNames": [],
+      "rDescription": "Specifies the name of the output table that the function creates. The table must not exist.",
+      "isOutputTable": true
+    }
+  ],
   "argument_clauses": [
     {
-      "permittedValues": [],
-      "isOutputColumn": false,
-      "name": "Domain",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "The address of the Queen. The host parameter is the Aster Database Queen’s IP address or hostname.",
-      "description": "The address of the Queen. The host parameter is the Aster Database Queen’s IP address or hostname.",
-      "datatype": "DRIVER",
-      "allowsLists": false,
-      "useInR": false,
-      "rOrderNum": 0
-    },
-    {
-      "permittedValues": [],
-      "isOutputColumn": false,
-      "name": "Database",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "The name of the database where the input table is located.",
-      "description": "The name of the database where the input table is located.",
-      "datatype": "DRIVER",
-      "allowsLists": false,
-      "useInR": false,
-      "rOrderNum": 0
-    },
-    {
-      "permittedValues": [],
-      "isOutputColumn": false,
-      "name": "UserId",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "The Aster Database user name of the user running this function.",
-      "description": "The Aster Database user name of the user running this function.",
-      "datatype": "DRIVER",
-      "allowsLists": false,
-      "useInR": false,
-      "rOrderNum": 0
-    },
-    {
-      "permittedValues": [],
-      "isOutputColumn": false,
-      "name": "Password",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "The Aster Database password of the user.",
-      "description": "The Aster Database password of the user.",
-      "datatype": "DRIVER",
-      "allowsLists": false,
-      "useInR": false,
-      "rOrderNum": 0
-    },
-    {
-      "permittedValues": [],
-      "isOutputColumn": false,
-      "name": "SSLSettings",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "A string that includes all the SSL settings, except the password for the truststore.",
-      "description": "A string that includes all the SSL settings, except the password for the truststore.",
-      "datatype": "DRIVER",
-      "allowsLists": false,
-      "useInR": false,
-      "rOrderNum": 0
-    },
-    {
-      "permittedValues": [],
-      "isOutputColumn": false,
-      "name": "SSLTrustStorePassword",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "The password for the SSL truststore.",
-      "description": "The password for the SSL truststore.",
-      "datatype": "DRIVER",
-      "allowsLists": false,
-      "useInR": false,
-      "rOrderNum": 0
-    },
-    {
-      "isOutputTable": false,
-      "name": "InputTable",
-      "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "Specifies the name of the table that contains the data to filter.",
-      "description": "Specifies the name of the table that contains the data to filter.",
-      "datatype": "TABLE_NAME",
-      "allowsLists": false,
-      "rName": "data",
+      "name": "InputColumns",
+      "allowsLists": true,
       "useInR": true,
-      "rOrderNum": 1
-    },
-    {
-      "isOutputTable": true,
-      "name": "OutputTable",
-      "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "Specifies the name of the output table that the function creates. The table must not exist.",
-      "description": "Specifies the name of the output table that the function creates. The table must not exist.",
-      "datatype": "TABLE_NAME",
-      "allowsLists": false,
-      "rName": "output.table",
-      "useInR": true,
-      "rOrderNum": 100
-    },
-    {
+      "rName": "input.columns",
+      "allowedTypes": [],
+      "datatype": "COLUMN_NAMES",
       "targetTable": [
         "InputTable"
       ],
+      "rOrderNum": 2,
       "checkDuplicate": true,
-      "allowedTypes": [],
-      "allowedTypeGroups": [
-        "ALL"
-      ],
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "InputColumns",
-      "alternateNames": [],
       "isRequired": true,
       "rDescription": "Specifies the names of the input table columns that contain the data to filter.",
-      "description": "Specifies the names of the input table columns that contain the data to filter.",
-      "datatype": "COLUMN_NAMES",
-      "allowsLists": true,
-      "rName": "input.columns",
-      "useInR": true,
-      "rOrderNum": 2
-    },
-    {
-      "targetTable": [
-        "InputTable"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
+      "alternateNames": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "matchLengthOfArgument": "",
       "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the names of the input table columns that contain the data to filter."
+    },
+    {
       "name": "JoinColumns",
-      "alternateNames": [],
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "join.columns",
+      "allowedTypes": [],
+      "datatype": "COLUMN_NAMES",
+      "targetTable": [
+        "InputTable"
+      ],
+      "rOrderNum": 3,
+      "checkDuplicate": true,
       "isRequired": true,
       "rDescription": "Specifies the names of the input table columns to join.",
-      "description": "Specifies the names of the input table columns to join.",
-      "datatype": "COLUMN_NAMES",
-      "allowsLists": true,
-      "rName": "join.columns",
-      "useInR": true,
-      "rOrderNum": 3
-    },
-    {
-      "targetTable": [
-        "InputTable"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
+      "alternateNames": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "matchLengthOfArgument": "",
       "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the names of the input table columns to join."
+    },
+    {
       "name": "AddColumns",
+      "allowsLists": true,
+      "useInR": true,
+      "rName": "add.columns",
+      "allowedTypes": [],
+      "datatype": "COLUMN_NAMES",
+      "targetTable": [
+        "InputTable"
+      ],
+      "rOrderNum": 4,
+      "checkDuplicate": true,
+      "isRequired": false,
+      "rDescription": "Specifies the names of the input columns to copy to the output table. The function partitions the input data and the output table on these columns. By default, the function treats the input data as belonging to one partition. Note: Specifying a column as both an add_column and a join_column causes incorrect counts in partitions.",
       "alternateNames": [
         "OtherColumns"
       ],
-      "isRequired": false,
-      "rDescription": "Specifies the names of the input columns to copy to the output table. The function partitions the input data and the output table on these columns. By default, the function treats the input data as belonging to one partition. Note: Specifying a column as both an add_column and a join_column causes incorrect counts in partitions.",
-      "description": "Specifies the names of the input columns to copy to the output table. The function partitions the input data and the output table on these columns. By default, the function treats the input data as belonging to one partition. Note: Specifying a column as both an add_column and a join_column causes incorrect counts in partitions.",
-      "datatype": "COLUMN_NAMES",
-      "allowsLists": true,
-      "rName": "add.columns",
-      "useInR": true,
-      "rOrderNum": 4
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the names of the input columns to copy to the output table. The function partitions the input data and the output table on these columns. By default, the function treats the input data as belonging to one partition. Note: Specifying a column as both an add_column and a join_column causes incorrect counts in partitions."
     },
     {
-      "permittedValues": [],
-      "defaultValue": "col1_item1",
-      "isOutputColumn": false,
       "name": "PartitionKey",
-      "alternateNames": [],
+      "allowsLists": false,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "defaultValue": "col1_item1",
+      "rOrderNum": 5,
+      "rName": " partition.key",
       "isRequired": false,
       "rDescription": "Specifies the names of the output column to use as the partition key. The default value is 'col1_item1'.",
-      "description": "Specifies the names of the output column to use as the partition key. The default value is 'col1_item1'.",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": " partition.key",
-      "useInR": true,
-      "rOrderNum": 5
+      "alternateNames": [],
+      "permittedValues": [],
+      "description": "Specifies the names of the output column to use as the partition key. The default value is 'col1_item1'."
     },
     {
-      "defaultValue": 100,
+      "name": "MaxItemSet",
+      "upperBoundType": "INCLUSIVE",
       "lowerBound": 0,
+      "useInR": true,
+      "rName": "max.itemset",
+      "datatype": "INTEGER",
+      "defaultValue": 100,
+      "rOrderNum": 6,
+      "allowsLists": false,
       "upperBound": 2147483647,
       "lowerBoundType": "INCLUSIVE",
-      "upperBoundType": "INCLUSIVE",
-      "allowNaN": false,
-      "name": "MaxItemSet",
+      "isRequired": false,
+      "rDescription": "Specifies the maximum size of the item set. The default value is 100.",
       "alternateNames": [
         "MaxSet"
       ],
-      "isRequired": false,
-      "rDescription": "Specifies the maximum size of the item set. The default value is 100.",
-      "description": "Specifies the maximum size of the item set. The default value is 100.",
-      "datatype": "INTEGER",
-      "allowsLists": false,
-      "rName": "max.itemset",
-      "useInR": true,
-      "rOrderNum": 6
-    },
-    {
-      "defaultValue": false,
-      "name": "DropTable",
-      "alternateNames": [],
-      "isRequired": false,
-      "rDescription": "Specifies whether to drop the output table if it exists. The default value is 'false'.",
-      "description": "Specifies whether to drop the output table if it exists. The default value is 'false'.",
-      "datatype": "BOOLEAN",
-      "allowsLists": false,
-      "rName": "drop.table",
-      "useInR": true,
-      "rOrderNum": 7
+      "allowNaN": false,
+      "description": "Specifies the maximum size of the item set. The default value is 100."
     }
   ]
 }

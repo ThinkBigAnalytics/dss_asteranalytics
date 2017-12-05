@@ -3,7 +3,7 @@
   "json_schema_minor_version": "2",
   "json_content_version": "1",
   "function_name": "Path_Summarizer",
-  "function_version": "1.4",
+  "function_version": "1.5",
   "function_type": "non-driver",
   "function_r_name": "aa.path.summary",
   "ref_function_r_name": "aa.path.generator",
@@ -12,142 +12,142 @@
   "partner_function": "aa.path_generator",
   "input_tables": [
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "input",
+      "rName": "object",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 1,
+      "allowsLists": false,
+      "partitionByOne": false,
+      "rDescription": "The name of the table containing the input data.",
       "requiredInputKind": [
         "PartitionByKey"
       ],
-      "isOrdered": false,
-      "partitionByOne": false,
-      "name": "input",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "The name of the table containing the input data.",
-      "description": "The name of the table containing the input data.",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "object",
-      "useInR": true,
-      "rOrderNum": 1
+      "description": "The name of the table containing the input data."
     }
   ],
   "argument_clauses": [
     {
+      "name": "SeqColumn",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "seq.column",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "input"
       ],
+      "rOrderNum": 4,
       "checkDuplicate": true,
-      "allowedTypes": [
-        "character varying"
-      ],
-      "allowedTypeGroups": [],
+      "isRequired": true,
+      "rDescription": "Specifies the name of the input table column that contains the paths.",
       "requiredLength": 1,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "SeqColumn",
       "alternateNames": [
         "Seq"
       ],
-      "isRequired": true,
-      "rDescription": "Specifies the name of the input table column that contains the paths.",
-      "description": "Specifies the name of the input table column that contains the paths.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "seq.column",
-      "useInR": true,
-      "rOrderNum": 4
+      "allowedTypeGroups": [
+        "STRING"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the input table column that contains the paths."
     },
     {
+      "name": "PrefixColumn",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "prefix.column",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "input"
       ],
+      "rOrderNum": 7,
       "checkDuplicate": true,
-      "allowedTypes": [
-        "character varying"
-      ],
-      "allowedTypeGroups": [],
+      "isRequired": true,
+      "rDescription": "Specifies the name of the input column that contains the node prefixes.",
       "requiredLength": 1,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "PrefixColumn",
       "alternateNames": [
         "Prefix"
       ],
-      "isRequired": true,
-      "rDescription": "Specifies the name of the input column that contains the node prefixes.",
-      "description": "Specifies the name of the input column that contains the node prefixes.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "prefix.column",
-      "useInR": true,
-      "rOrderNum": 7
+      "allowedTypeGroups": [
+        "STRING"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the input column that contains the node prefixes."
     },
     {
+      "name": "CountColumn",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "count.column",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "input"
       ],
+      "rOrderNum": 2,
       "checkDuplicate": true,
-      "allowedTypes": [],
-      "allowedTypeGroups": [
-        "INTEGER"
-      ],
+      "isRequired": false,
+      "rDescription": "Specifies the name of the input table column that contains the number of times a path was traveled.",
       "requiredLength": 1,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "CountColumn",
       "alternateNames": [
         "Cnt"
       ],
-      "isRequired": false,
-      "rDescription": "Specifies the name of the input table column that contains the number of times a path was traveled.",
-      "description": "Specifies the name of the input table column that contains the number of times a path was traveled.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "count.column",
-      "useInR": true,
-      "rOrderNum": 2
+      "allowedTypeGroups": [
+        "INTEGER"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the input table column that contains the number of times a path was traveled."
     },
     {
-      "permittedValues": [],
-      "isOutputColumn": true,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
       "name": "PartitionNames",
-      "alternateNames": [],
+      "allowsLists": true,
+      "isOutputColumn": true,
+      "useInR": true,
+      "datatype": "STRING",
+      "rOrderNum": 5,
+      "rName": "partition.names",
       "isRequired": true,
       "rDescription": "Lists the names of the columns that the partition.columns clause specifies. The function uses these names for output table columns. This argument and the partition.columns clause must specify the same names in the same order.",
-      "description": "Lists the names of the columns that the PARTITION BY clause specifies. The function uses these names for output table columns. This argument and the PARTITION BY clause must specify the same names in the same order.",
-      "datatype": "STRING",
-      "allowsLists": true,
-      "rName": "partition.names",
-      "useInR": true,
-      "rOrderNum": 5
+      "alternateNames": [],
+      "permittedValues": [],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Lists the names of the columns that the PARTITION BY clause specifies. The function uses these names for output table columns. This argument and the PARTITION BY clause must specify the same names in the same order."
     },
     {
-      "defaultValue": false,
       "name": "Hash",
-      "alternateNames": [],
+      "allowsLists": false,
+      "useInR": true,
+      "datatype": "BOOLEAN",
+      "defaultValue": false,
+      "rOrderNum": 6,
+      "rName": "hash",
       "isRequired": false,
       "rDescription": "Specifies whether to include the hash code of the node in the output table. The default value is 'false'.",
-      "description": "Specifies whether to include the hash code of the node in the output table. The default value is 'false'.",
-      "datatype": "BOOLEAN",
-      "allowsLists": false,
-      "rName": "hash",
-      "useInR": true,
-      "rOrderNum": 6
+      "alternateNames": [],
+      "description": "Specifies whether to include the hash code of the node in the output table. The default value is 'false'."
     },
     {
-      "permittedValues": [],
-      "defaultValue": ",",
-      "isOutputColumn": false,
       "name": "Delimiter",
-      "alternateNames": [],
+      "allowsLists": false,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "defaultValue": ",",
+      "rOrderNum": 3,
+      "rName": "delimiter",
       "isRequired": false,
       "rDescription": "Specifies the single-character delimiter that separates symbols in the path string. The default value is comma (','). Note: Do not use any of the following characters as delimiter (they cause the function to fail):  Asterisk (*), Plus (+), Left parenthesis ((), Right parenthesis ()), Single quotation mark ('), Escaped single quotation mark ('), Backslash ('')",
-      "description": "Specifies the single-character delimiter that separates symbols in the path string. The default value is comma (','). Note: Do not use any of the following characters as delimiter (they cause the function to fail):  Asterisk (*), Plus (+), Left parenthesis ((), Right parenthesis ()), Single quotation mark ('), Escaped single quotation mark ('), Backslash ('')",
-      "datatype": "STRING",
-      "allowsLists": false,
-      "rName": "delimiter",
-      "useInR": true,
-      "rOrderNum": 3
+      "alternateNames": [],
+      "permittedValues": [],
+      "description": "Specifies the single-character delimiter that separates symbols in the path string. The default value is comma (','). Note: Do not use any of the following characters as delimiter (they cause the function to fail):  Asterisk (*), Plus (+), Left parenthesis ((), Right parenthesis ()), Single quotation mark ('), Escaped single quotation mark ('), Backslash ('')"
     }
   ]
 }

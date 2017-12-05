@@ -10,105 +10,105 @@
   "long_description": "Compute the F measure, precision and recall, by comapring the ExpectColumn and PredictColumn.",
   "input_tables": [
     {
+      "isOrdered": false,
+      "useInR": true,
+      "name": "input",
+      "rName": "data",
+      "isRequired": true,
+      "datatype": "TABLE_ALIAS",
+      "rOrderNum": 1,
+      "allowsLists": false,
+      "partitionByOne": true,
+      "rDescription": "The relation that contains the output of a classifier",
       "requiredInputKind": [
         "PartitionByKey"
       ],
-      "isOrdered": false,
-      "partitionByOne": true,
-      "name": "input",
       "alternateNames": [],
-      "isRequired": true,
-      "rDescription": "The relation that contains the output of a classifier",
-      "description": "The relation that contains the output of a classifier",
-      "datatype": "TABLE_ALIAS",
-      "allowsLists": false,
-      "rName": "data",
-      "useInR": true,
-      "rOrderNum": 1
+      "description": "The relation that contains the output of a classifier"
     }
   ],
   "argument_clauses": [
     {
+      "name": "ObsColumn",
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "obs.column",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
       "targetTable": [
         "input"
       ],
+      "rOrderNum": 2,
       "checkDuplicate": true,
-      "allowedTypes": [],
-      "allowedTypeGroups": [
-        "ALL"
-      ],
+      "isRequired": true,
+      "rDescription": "Specifies the name of the input table column that contains the observed class.",
       "requiredLength": 1,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
-      "name": "ObsColumn",
       "alternateNames": [
         "ExpectColumn"
       ],
-      "isRequired": true,
-      "rDescription": "Specifies the name of the input table column that contains the observed class.",
-      "description": "Specifies the name of the input table column that contains the observed class.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "obs.column",
-      "useInR": true,
-      "rOrderNum": 2
-    },
-    {
-      "targetTable": [
-        "input"
-      ],
-      "checkDuplicate": true,
-      "allowedTypes": [],
       "allowedTypeGroups": [
         "ALL"
       ],
-      "requiredLength": 1,
-      "matchLengthOfArgument": "",
       "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the input table column that contains the observed class."
+    },
+    {
       "name": "PredictColumn",
-      "alternateNames": [],
+      "allowsLists": false,
+      "useInR": true,
+      "rName": "predict.column",
+      "allowedTypes": [],
+      "datatype": "COLUMNS",
+      "targetTable": [
+        "input"
+      ],
+      "rOrderNum": 3,
+      "checkDuplicate": true,
       "isRequired": true,
       "rDescription": "Specifies the name of the input table column that contains the predicted class.",
-      "description": "Specifies the name of the input table column that contains the predicted class.",
-      "datatype": "COLUMNS",
-      "allowsLists": false,
-      "rName": "predict.column",
-      "useInR": true,
-      "rOrderNum": 3
+      "requiredLength": 1,
+      "alternateNames": [],
+      "allowedTypeGroups": [
+        "ALL"
+      ],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the name of the input table column that contains the predicted class."
     },
     {
-      "defaultValue": 1.0,
+      "name": "Beta",
+      "upperBoundType": "INCLUSIVE",
       "lowerBound": 0.0,
+      "useInR": true,
+      "rName": "beta",
+      "datatype": "DOUBLE",
+      "defaultValue": 1.0,
+      "rOrderNum": 5,
+      "allowsLists": false,
       "upperBound": Infinity,
       "lowerBoundType": "EXCLUSIVE",
-      "upperBoundType": "INCLUSIVE",
-      "allowNaN": false,
-      "name": "Beta",
-      "alternateNames": [],
       "isRequired": false,
-      "rDescription": "Specifies the value of β in the general formula in “Background”. The beta_value must be a positive DOUBLE PRECISION value. The default value is 1.0.",
-      "description": "Specifies the value of β in the general formula in “Background”. The beta_value must be a positive DOUBLE PRECISION value. The default value is 1.0.",
-      "datatype": "DOUBLE",
-      "allowsLists": false,
-      "rName": "beta",
-      "useInR": true,
-      "rOrderNum": 5
+      "rDescription": "Specifies the value of \u03b2 in the general formula in \u201cBackground\u201d. The beta_value must be a positive DOUBLE PRECISION value. The default value is 1.0.",
+      "alternateNames": [],
+      "allowNaN": false,
+      "description": "Specifies the value of \u03b2 in the general formula in \u201cBackground\u201d. The beta_value must be a positive DOUBLE PRECISION value. The default value is 1.0."
     },
     {
-      "permittedValues": [],
-      "isOutputColumn": false,
-      "matchLengthOfArgument": "",
-      "allowPadding": true,
       "name": "classes",
-      "alternateNames": [],
+      "allowsLists": true,
+      "isOutputColumn": false,
+      "useInR": true,
+      "datatype": "STRING",
+      "rOrderNum": 4,
+      "rName": "classes",
       "isRequired": false,
       "rDescription": "Specifies the class or classes to output in the result. The default is all classes.",
-      "description": "Specifies the class or classes to output in the result. The default is all classes.",
-      "datatype": "STRING",
-      "allowsLists": true,
-      "rName": "classes",
-      "useInR": true,
-      "rOrderNum": 4
+      "alternateNames": [],
+      "permittedValues": [],
+      "allowPadding": true,
+      "matchLengthOfArgument": "",
+      "description": "Specifies the class or classes to output in the result. The default is all classes."
     }
   ]
 }
