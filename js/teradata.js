@@ -10,9 +10,9 @@
     throw new Error('jQuery library not present!')
   }
 
-  const app = angular.module('teradata-7.module', ['selectize']);
+  const app = angular.module('teradata-tap.module', ['selectize']);
 
-  app.controller('TeradataController7', function ($scope, $timeout) {
+  app.controller('TeradataControllerTAP', function ($scope, $timeout) {
 
     /**
      * A wrapper function that delays execution so that
@@ -737,7 +737,7 @@
 
         const $a = $('.mainPane > div:first > div:first > div.recipe-settings-section2 > a');
         $a
-          .text('Aster Analytics Foundation 7.00\nLearn more about Teradata Aster')
+          .text('Aster Analytics Foundation on Teradata Analytics Platform\nLearn more about Teradata Aster')
           .css('color', 'orange')
           .attr('target', '_blank');
         $a.html($a.html().replace(/\n/g,'<br/>'));
