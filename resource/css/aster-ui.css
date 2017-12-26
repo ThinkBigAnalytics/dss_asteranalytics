@@ -6,12 +6,13 @@
 }
 
 .modal {
-    display: none;
-    height: 100%;
-    left: 0;
+	display: none;
+    height: calc(60%);
+    width: calc(90%);
     position: fixed;
-    top: 0;
-    width: 100%;
+    top: 0%;
+    left: 50%;
+    transform: translate(-50%, 25%);
 }
 
 .modal.open {
