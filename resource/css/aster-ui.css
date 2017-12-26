@@ -5,27 +5,30 @@
     min-height: 50vh !important;
 }
 
-.modal.fade {
-    position: fixed !important;
-    z-index: -1050 !important;
-    left: 50% !important;
-    top: 50% !important;
-    margin-left: -390px !important;
-    margin-top: -200px !important;
-    width: 800px !important;
-    max-width: 900px !important;
-    height: 400px !important;
+.modal {
+    display: none;
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
 }
 
-.modal.fade.in {
-z-index: 1050 !important;
-top: 50% !important;
+.modal.open {
+   display: block;
 }
 
 .modal-body {
-    overflow-y: hidden;
-    min-height: 0px;
-    height: 19em;
+	overflow-y: auto !important;
+	height: 100% !important;
+}
+
+.modal-content {
+    position: absolute !important;
+    width: 100% !important;
+    bottom: 10px !important;
+    top: 20px !important;
+    overflow-y: auto !important;
 }
 
 .link1 {
