@@ -90,13 +90,16 @@
 
   <div class="control-group" ng-if="config.function">
 
-    <div id="tabs">
-      <ul>
+    <!-- <div id="tabs"> -->
+      <!-- <ul>
         <li><a href="#tabs-required">Required Arguments</a></li>
         <li><a href="#tabs-optional" ng-if="hasOptionalArguments()">Optional Arguments</a></li>
-      </ul>
-
-      <div id="tabs-required">
+      </ul> -->
+      <div class="tabplugin">
+        <button class="tablinks" id="defaultOpen" ng-click="openTabs($event, 'tabs-required')">Required Arguments</button>
+        <button class="tablinks" ng-if="hasOptionalArguments()" ng-click="openTabs($event, 'tabs-optional')">Optional Arguments</button>        
+      </div>
+      <div id="tabs-required" class="plugintabcontent">
 
         <table class="table table-condensed table-hover" ng-model-options="{ debounce: 200 }">
 
@@ -232,7 +235,7 @@
 
       </div>
 
-      <div id="tabs-optional" ng-if="hasOptionalArguments()">
+      <div id="tabs-optional" class="plugintabcontent" ng-if="hasOptionalArguments()">
 
         <table class="table table-condensed table-hover" ng-model-options="{ debounce: 200 }">
 
@@ -325,7 +328,7 @@
 
       </div>
 
-    </div>
+    <!-- </div> -->
 
 
   </div>
