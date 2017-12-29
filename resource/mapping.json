@@ -515,11 +515,6 @@
     "file_name": "NAIVEBAYESREDUCE.json"
   },
   {
-    "category": "Naive Bayes",
-    "function_name": "NaiveBayesTrain",
-    "file_name": "NAIVEBAYESTRAIN.json"
-  },
-  {
     "category": "Text Analysis",
     "function_name": "NaiveBayesTextClassifierInternal",
     "file_name": "NAIVEBAYESTEXTCLASSIFIERINTERNAL.json"
