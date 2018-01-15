@@ -95,7 +95,6 @@
                 <td>
                   <select required multiple size="8" ng-model="config.function.unaliased_inputs.values" ng-options="t.fullName.split('.')[1] as t.fullName.split('.')[1] for t in inputs"
                     data-toggle="tooltip" data-container="body" data-placement="right" data-html="true" title="<b>(Ctrl+Click to multi-select)</b>">
-                      <option value="" selected>--No Selection--</option>
                   </select>
                 </td>
               </tr>
@@ -190,7 +189,6 @@
                   <select required multiple size="8" ng-if="(item.datatype == 'COLUMN_NAMES' || item.datatype == 'COLUMNS') && item.allowsLists && !getPermittedValuesWithName(item)"
                     ng-model="item.value" data-toggle="tooltip" data-html="true" title="{{ getArgumentDescriptionWithName(item.name) }}<br><br><b>(Ctrl+Click to multi-select)</b>"
                     data-placement="right" data-container="body" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in getSchema(item, config.function.required_input, config.function.unaliased_inputs, config.function.arguments)">
-                    <option value="" selected>--No Selection--</option>
                   </select>
 
                   <select required ng-if="item.datatype == 'TABLE_NAME' && !isArgumentOutputTable(item) && !getPermittedValuesWithName(item)" ng-model="item.value"
@@ -207,7 +205,6 @@
                  <select required multiple size="8" ng-if="getPermittedValuesWithName(item) && item.allowsLists"
                   ng-model="item.value" data-toggle="tooltip" data-html="true" title="{{ getArgumentDescriptionWithName(item.name) }}<br><br><b>(Ctrl+Click to multi-select)</b>"
                   data-placement="right" data-container="body" ng-options="t as t for t in getPermittedValuesWithName(item) || []">
-                    <option value="" selected>--No Selection--</option>
                   </select>
 
                 </td>
@@ -278,7 +275,6 @@
                   <select multiple size="8" ng-if="(item.datatype == 'COLUMN_NAMES' || item.datatype == 'COLUMNS') && item.allowsLists && !getPermittedValuesWithName(item)"
                     ng-model="item.value" data-toggle="tooltip" data-html="true" title="{{ getArgumentDescriptionWithName(item.name) }}<br><br><b>(Ctrl+Click to multi-select)</b>"
                     data-placement="right" data-container=body ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in getSchema(item, config.function.required_input, config.function.unaliased_inputs, config.function.arguments)">
-                    <option value="" selected>--No Selection--</option>
                   </select>
 
                   <select ng-if="item.datatype == 'TABLE_NAME' && !isArgumentOutputTable(item) && !getPermittedValuesWithName(item)" ng-model="item.value"
@@ -295,7 +291,6 @@
                 <select multiple size="8" ng-if="getPermittedValuesWithName(item) && item.allowsLists"
                   ng-model="item.value" data-toggle="tooltip" data-html="true" title="{{ getArgumentDescriptionWithName(item.name) }}<br><br><b>(Ctrl+Click to multi-select)</b>"
                   data-placement="right" data-container="body" ng-options="t as t for t in getPermittedValuesWithName(item)">
-                    <option value="" selected>--No Selection--</option>
                   </select>
                 </td>
               </tr>
