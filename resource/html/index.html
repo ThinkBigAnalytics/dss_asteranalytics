@@ -167,7 +167,7 @@
 
 
               <tr ng-repeat="item in config.function.arguments" ng-model="config.function.arguments" ng-if="item.isRequired">
-                <td style="text-transform: capitalize">{{ cleanName(item.name) }}</td>
+                <td style="text-transform: capitalize">{{ getArgumentFormattedName(item.name) }}</td>
                 <td>
                   <input required type="text" ng-model="item.value" ng-if="(['STRING','DOUBLE','INTEGER','DRIVER','SQLEXPR', 'LONG'].indexOf(item.datatype) >= 0 || (item.datatype == 'TABLE_NAME' && isArgumentOutputTable(item))) && !item.allowsLists && !getPermittedValuesWithName(item)"
                     data-toggle="tooltip" data-container="body" data-html="true" title="{{ getArgumentDescriptionWithName(item.name) }}"
@@ -252,7 +252,7 @@
                 </td>
               </tr>
               <tr ng-repeat="item in config.function.arguments" ng-model="config.function.arguments" ng-if="!item.isRequired">
-                <td style="text-transform: capitalize">{{ cleanName(item.name) }}</td>
+                <td style="text-transform: capitalize">{{ getArgumentFormattedName(item.name) }}</td>
                 <td>
                   <input type="text" ng-model="item.value" ng-if="(['STRING','DOUBLE','INTEGER','DRIVER','SQLEXPR', 'LONG'].indexOf(item.datatype) >= 0 || (item.datatype == 'TABLE_NAME' && isArgumentOutputTable(item))) && !item.allowsLists && !getPermittedValuesWithName(item)"
                     data-toggle="tooltip" data-container="body" data-html="true" title="{{ getArgumentDescriptionWithName(item.name) }}"

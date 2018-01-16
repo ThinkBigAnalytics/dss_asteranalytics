@@ -295,6 +295,13 @@
           return argument ? argument.description : null;
       },
 
+      getArgumentFormattedName: function (name) {
+          let argument = $scope.getArgumentWithName(name);
+          return argument ? argument.name.replace(/([A-Z]+)/g, " $1")
+                  .replace(/([A-Z][a-z])/g, " $1").split('_').join(' ')
+                  : name;
+      },
+
       /**
        * Gets the schema of the unaliased inputs from the static JSON metadata.
        */
