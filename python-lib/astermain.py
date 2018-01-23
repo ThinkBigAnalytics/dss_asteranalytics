@@ -53,7 +53,7 @@ def asterDo():
                            """ This plugin only supports Aster tables.""")
         
     # actual query
-    query = getFunctionsQuery(dss_function, inputTables, outputTable)
+    query = getFunctionsQuery(dss_function, inputTables, outputTable, get_recipe_config() or {})
     print('\n'.join(query))
     executor = SQLExecutor2(dataset=input_dataset)   
     if dss_function.get('dropIfExists', False):

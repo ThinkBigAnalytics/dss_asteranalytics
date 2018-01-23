@@ -7,15 +7,15 @@ from outputtableinfo import *
 
 
 def getSelectClause(dss_function, inputTables):
-    return cascadequery.getSelectQuery(dss_function, inputTables)\
+    return cascadequery.getSelectQuery(dss_function, inputTables, config)\
         if 'cascaded_functions' in \
-        dss_function else singlequery.getSelectQuery(dss_function, inputTables)
+        dss_function else singlequery.getSelectQuery(dss_function, inputTables, config)
 
 def getCreateQuery(dss_function, inputTables, outputTable):
     return CREATE_QUERY.format(outputTable.tableType,
                        outputTable.tablename,
                        outputTable.hashKey and DISTRIBUTE_BY_HASH.format(outputTable.hashKey),
-                       getSelectClause(dss_function, inputTables))
+                       getSelectClause(dss_function, inputTables, config))
 
 def getDropOutputTableArgumentsStatementFromMultipleArguments(arg):
     outputs = arg.get('value', '').split(',')
@@ -30,12 +30,12 @@ def getDropOutputTableArgumentsStatements(args):
                                       and x.get('allowsLists', False) and x.get('value', '')]\
                                        + ['COMMIT;']
 
-def getBeginDropCreateQueries(dss_function, inputTables, outputTable):
+def getBeginDropCreateQueries(dss_function, inputTables, outputTable, config):
      return [BEGIN_TRANSACTION_QUERY,
                     DROP_QUERY.format(outputTablename=outputTable.tablename),
-                    getCreateQuery(dss_function, inputTables, outputTable),
+                    getCreateQuery(dss_function, inputTables, outputTable, config),
                     COMMIT_QUERY]
 
-def getFunctionsQuery(dss_function, inputTables, outputTable):
-    return getBeginDropCreateQueries(dss_function, inputTables, outputTable)
+def getFunctionsQuery(dss_function, inputTables, outputTable, config):
+    return getBeginDropCreateQueries(dss_function, inputTables, outputTable, config)
 

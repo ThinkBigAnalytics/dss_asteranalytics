@@ -5,7 +5,11 @@ except ImportError:
 # -*- coding: utf-8 -*-
 import asterqueryutility as queryutility
 
-def getSelectQuery(dss_function, inputTables):
+def getFunctionName(config, func):
+    aafschema = config.get('aafschema', '')
+    return (aafschema and (aafschema + '.')) + func
+
+def getSelectQuery(dss_function, inputTables, config):
     
     # query, not yet supporting partition by and order by clauses from recipe settings,
     # but not needed for naiveBayes
@@ -36,7 +40,7 @@ def getSelectQuery(dss_function, inputTables):
                 carguments += queryutility.getJoinedArgumentsString(fun['arguments_nonuserdefined'],
                                                                     queryutility.getArgumentClausesFromJson(jsonFunction))      
             cfunction = fun.get('name',"")
-            cquery = """SELECT * FROM {cfunction} (ON {inputInfo} {cpartitionBy} {corderBy} {carguments})""".format(cfunction=cfunction,
+            cquery = """SELECT * FROM {cfunction} (ON {inputInfo} {cpartitionBy} {corderBy} {carguments})""".format(cfunction=getFunctionName(config, cfunction),
                                                                       inputInfo=inputInfo,
                                                                       cpartitionBy=cpartitionBy,
                                                                       corderBy=corderBy,

@@ -61,9 +61,14 @@ def getOnClause(dss_function, jsonfile, inputTables):
     return (getMultipleUnaliasedInputsClause(dss_function, inputTables) +
             getMultipleAliasedInputsClause(dss_function, jsonfile, inputTables)).strip() or\
             ON_SELECT_ONE_PARTITION_BY_ONE
+
+def getFunctionName(config, dss_function):
+    aafschema = config.get('aafschema', '')
+    functionname = dss_function.get('name', '')
+    return (aafschema and (aafschema + '.')) + functionname
             
-def getSelectQuery(dss_function, inputTables):
+def getSelectQuery(dss_function, inputTables, config):
     jsonfile= queryutility.getJson(dss_function.get('name',''))
-    return SELECT_QUERY.format(dss_function.get('name', ''),
+    return SELECT_QUERY.format(getFunctionName(config, dss_function),
                        getOnClause(dss_function, jsonfile, inputTables),
                        getArgumentClauses(dss_function, jsonfile, inputTables))
