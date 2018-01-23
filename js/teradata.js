@@ -254,6 +254,19 @@
         // })
       },
       
+      addPartitionByColumn_TEST: function(partitionArray) {
+        console.log('Added to partition array')
+        console.log(partitionArray)
+        partitionArray.push('');
+    },
+    removePartitionByColumn_TEST: function(partitionArray,index) {
+      if (index > -1) {
+        console.log('Removed from partition array')
+        console.log(partitionArray)
+        partitionArray.splice(index, 1);
+      }
+    },
+
       addPartitionByColumn: function() {
         console.log('Added one column')
         $scope.config.function.partitionAttributes.push('');

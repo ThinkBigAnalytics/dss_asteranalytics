@@ -114,18 +114,54 @@
                   </div>
 
                   <div class="inner-cell" ng-show="'PartitionByKey' == item.kind">
-                    <p class="inner-label">Partition by </p>
-                    <select multiple id="selectize" class="selectize" selectize size="4" ng-model="item.partitionAttributes" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]">
+                    <p class="inner-label">Partition by 
+                        <button ng-click="addPartitionByColumn_TEST(item.partitionAttributes)" title="Add Partition Column">Add</button>
+                    </p>
+                    <!-- <select multiple id="selectize" class="selectize" selectize size="4" ng-model="item.partitionAttributes" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]">
                         <option value="" selected>--No Selection--</option>                        
-                    </select>
+                    </select> -->
                     <!-- <p> Selected {{item.partitionAttributes}} </p> -->
+                    <div ng-repeat="col in item.partitionAttributes track by $index ">
+                        <!-- <input ng-model="col.value" type="text" data-container="body" data-html="true" data-toggle="tooltip" title="Test"
+                          data-placement="right" /> -->
+                    <span>PARTITION BY column {{$index+1}}</span>
+                    <div>
+                        <select required ng-model="item.partitionAttributes[$index]"
+                        ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]"
+                        data-html="true" title="<b>(Ctrl+Click to multi-select)</b>" data-toggle="tooltip" data-container="body"
+                        data-placement="right">
+                        <option value="" selected>--No Selection--</option>
+                      </select>
+                          <button style="border:none;background: none;" ng-if="item.partitionAttributes.length > 1" ng-click="removePartitionByColumn_TEST(item.partitionAttributes,$index)"
+                            title="Remove Script Argument">
+                            Remove
+                          </button>
+                    </div>
                   </div>
 
                   <div class="inner-cell" ng-show="item.isOrdered">
-                    <p class="inner-label">Order by </p>
-                    <select multiple id="selectize" class="selectize" selectize size="4" ng-model="item.orderByColumn" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]">
+                    <p class="inner-label">Order by
+                    <!-- <select multiple id="selectize" class="selectize" selectize size="4" ng-model="item.orderByColumn" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]">
                         <option value="" selected>--No Selection--</option>
-                    </select>
+                    </select> -->
+                    <button ng-click="addPartitionByColumn_TEST(item.orderByColumn)" title="Add Order BY Column">Add</button>
+                  </p>                    
+                      <div ng-repeat="col in item.orderByColumn track by $index ">
+                          <span>PARTITION BY column {{$index+1}}</span>                        
+                          <div>
+                              <select required ng-model="item.orderByColumn[$index]"
+                              ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]"
+                              data-html="true" title="<b>(Ctrl+Click to multi-select)</b>" data-toggle="tooltip" data-container="body"
+                              data-placement="right">
+                              <option value="" selected>--No Selection--</option>
+                            </select>
+                                <button style="border:none;background: none;" ng-if="item.orderByColumn.length > 1" ng-click="removePartitionByColumn_TEST(item.orderByColumn,$index)"
+                                  title="Remove Script Argument">
+                                  Remove
+                                </button>
+                          </div>
+                   
+                      </div>
                   </div>
 
                 </td>
@@ -136,14 +172,8 @@
                     <button ng-click="addOrderByColumn()" title="Add Partition Column">Add</button>
                 </td>
                 <td>
-                  <!-- <select required multiple id="selectize"  class="selectize" selectize ng-model="config.function.orderByColumn" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in getSchemaOfUnaliasedInputs(config.function.unaliased_inputs)">
-                    <option value="" selected>--No Selection--</option>
-                  </select> -->
-
                   <div ng-repeat="col in config.function.orderByColumn track by $index ">
-                      <span>ORDER BY column {{$index+1}}</span>
-                    <!-- <input ng-model="col.value" type="text" data-container="body" data-html="true" data-toggle="tooltip" title="Test"
-                      data-placement="right" /> -->
+                      <span>ORDER BY column {{$index+1}}</span>                    
                       <div>
                           <select required ng-model="config.function.orderByColumn[$index]"
                           ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in getSchemaOfUnaliasedInputs(config.function.unaliased_inputs)"
@@ -159,7 +189,6 @@
                
                   </div>
                 </td>
-                <!--<td>{{ validation_message('orderByColumn') }}</td>-->
               </tr>
 
               <tr ng-if="shouldShowPartitionOrderFields(config.function.unaliased_inputs) && config.function.partitionInputKind.indexOf('PartitionByAny') !== -1 && config.function.partitionInputKind.length > 1">
@@ -171,18 +200,8 @@
 
               <tr ng-if="shouldShowPartitionOrderFields(config.function.unaliased_inputs) && config.function.partitionInputKind.indexOf('PartitionByKey') !== -1">
                 <td>PARTITION BY Column <button ng-disabled="config.function.partitionByAny" ng-click="addPartitionByColumn()" title="Add Partition Column">Add</button></td>
-                <td>
-                  <!-- <select required class="selectize" id="selectize"  selectize ng-disabled="config.function.partitionByAny" multiple size="8" ng-model="config.function.partitionAttributes"
-                    ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in getSchemaOfUnaliasedInputs(config.function.unaliased_inputs)"
-                    data-html="true" title="<b>(Ctrl+Click to multi-select)</b>" data-toggle="tooltip" data-container="body"
-                    data-placement="right">
-                    <option value="" selected>--No Selection--</option> -->
-                  <!-- </select> -->
-                  
-                    <!-- <selectize placeholder='Pick some things...' options='myOptions' name='myName' config="myConfig" ng-model="myModel" ng-disabled='disable' required='true'></selectize> -->
-                    <div ng-repeat="col in config.function.partitionAttributes track by $index ">
-                      <!-- <input ng-model="col.value" type="text" data-container="body" data-html="true" data-toggle="tooltip" title="Test"
-                        data-placement="right" /> -->
+                <td>                                      
+                  <div ng-repeat="col in config.function.partitionAttributes track by $index ">                     
                   <span>PARTITION BY column {{$index+1}}</span>
                   <div>
                       <select required ng-disabled="config.function.partitionByAny" ng-model="config.function.partitionAttributes[$index]"
@@ -195,11 +214,8 @@
                           title="Remove Script Argument">
                           Remove
                         </button>
-                  </div>
-                  
-                    </div>
-
-                  <!-- <p> Selected {{config.function.partitionAttributes}} </p> -->
+                  </div>                  
+                    </div>                  
                 </td>
               </tr>
 
@@ -273,19 +289,50 @@
                   </select>
 
                   <div class="inner-cell" ng-show="'PartitionByKey' == item.kind">
-                    <p class="inner-label">Partition by</p>
-                    <select multiple id="selectize" class="selectize" selectize ng-if="validityChanger()" size="4" ng-model="item.partitionAttributes" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]">
-                        <option value="" selected>--No Selection--</option>                    
-                    </select>
-                        <!-- <p> Selected {{item.partitionAttributes}} </p> -->
-                    
+                    <p class="inner-label">Partition by
+                        <button ng-click="addPartitionByColumn_TEST(item.partitionAttributes)" title="Add Partition Column">Add</button>
+                    </p>                    
+                        <div ng-repeat="col in item.partitionAttributes track by $index ">
+                            <span>PARTITION BY column {{$index+1}}</span>                        
+                            <div>
+                                <select required ng-model="item.partitionAttributes[$index]"
+                                ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]"
+                                data-html="true" title="<b>(Ctrl+Click to multi-select)</b>" data-toggle="tooltip" data-container="body"
+                                data-placement="right">
+                                <option value="" selected>--No Selection--</option>
+                              </select>
+                                  <button style="border:none;background: none;" ng-if="item.partitionAttributes.length > 1" ng-click="removePartitionByColumn_TEST(item.partitionAttributes,$index)"
+                                    title="Remove Script Argument">
+                                    Remove
+                                  </button>
+                            </div>
+                     
+                        </div>
                   </div>
 
                   <div class="inner-cell" ng-show="item.isOrdered">
-                    <p class="inner-label">Order by</p>
-                    <select multiple id="selectize"  class="selectize" selectize size="4" ng-model="item.orderByColumn" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]">
+                    <p class="inner-label">Order by
+                    <!-- <select multiple id="selectize"  class="selectize" selectize size="4" ng-model="item.orderByColumn" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]">
                         <option value="" selected>--No Selection--</option>
-                    </select>
+                    </select> -->
+                    <button ng-click="addPartitionByColumn_TEST(item.orderByColumn)" title="Add Order BY Column">Add</button>
+                  </p>                    
+                      <div ng-repeat="col in item.orderByColumn track by $index ">
+                          <span>PARTITION BY column {{$index+1}}</span>                        
+                          <div>
+                              <select ng-model="item.orderByColumn[$index]"
+                              ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]"
+                              data-html="true" title="<b>(Ctrl+Click to multi-select)</b>" data-toggle="tooltip" data-container="body"
+                              data-placement="right">
+                              <option value="" selected>--No Selection--</option>
+                            </select>
+                                <button style="border:none;background: none;" ng-if="item.orderByColumn.length > 1" ng-click="removePartitionByColumn_TEST(item.orderByColumn,$index)"
+                                  title="Remove Script Argument">
+                                  Remove
+                                </button>
+                          </div>
+                   
+                      </div>
                   </div>
                 </td>
               </tr>
