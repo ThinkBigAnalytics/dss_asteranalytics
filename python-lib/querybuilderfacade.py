@@ -6,12 +6,12 @@ from inputtableinfo import *
 from outputtableinfo import *
 
 
-def getSelectClause(dss_function, inputTables):
+def getSelectClause(dss_function, inputTables, config={}):
     return cascadequery.getSelectQuery(dss_function, inputTables, config)\
         if 'cascaded_functions' in \
         dss_function else singlequery.getSelectQuery(dss_function, inputTables, config)
 
-def getCreateQuery(dss_function, inputTables, outputTable):
+def getCreateQuery(dss_function, inputTables, outputTable, config={}):
     return CREATE_QUERY.format(outputTable.tableType,
                        outputTable.tablename,
                        outputTable.hashKey and DISTRIBUTE_BY_HASH.format(outputTable.hashKey),
