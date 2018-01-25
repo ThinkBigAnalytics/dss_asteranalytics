@@ -167,7 +167,8 @@
           .success(data => {
             functionMetadata = data;
             functionVersion = functionMetadata.function_version;
-
+            $scope.config.function.partitionAttributes = $scope.config.function.partitionAttributes || [];
+            $scope.config.function.orderByColumn = $scope.config.function.orderByColumn || [];
             $scope.preprocessDescriptions();
             $scope.preprocessMetadata(shouldSetDefaults);
             $scope.activateTabs();
@@ -250,10 +251,16 @@
         
         }
         
+      
         
         
 
     },
+    initializeColumnArray: function(columnArray){
+      columnArray = columnArray || [''];
+      return columnArray;
+    },
+    
     removePartitionByColumn_TEST: function(partitionArray,index) {
       if (index > -1) {
         console.log('Removed from partition array')
@@ -928,8 +935,7 @@
         $scope.communicateWithBackend();
         if ($scope.config.function) {
           $scope.getFunctionMetadata($scope.config.function.name, !$scope.config.function);
-          $scope.config.function.partitionAttributes = $scope.config.function.partitionAttributes || [];
-          $scope.config.function.orderByColumn = $scope.config.function.orderByColumn || [];
+          
         }
         
         $scope.preprocessMetadata(false);

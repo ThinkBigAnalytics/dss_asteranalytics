@@ -120,7 +120,7 @@
 
                 <div class="inner-cell" ng-show="'PartitionByKey' == item.kind">
                   <p class="inner-label">Partition by 
-                      <button ng-init="item.partitionAttributes = ['']" ng-click="addPartitionByColumn_TEST(item.partitionAttributes)" title="Add Partition Column">Add</button>
+                      <button ng-init="item.partitionAttributes = initializeColumnArray(item.partitionAttributes)" ng-click="addPartitionByColumn_TEST(item.partitionAttributes)" title="Add Partition Column">Add</button>
                   </p>
                   <div ng-repeat="col in item.partitionAttributes track by $index ">
                       <span>PARTITION BY column {{$index+1}}</span>
@@ -141,7 +141,7 @@
 
                 <div class="inner-cell" ng-show="item.isOrdered">
                   <p class="inner-label">Order by 
-                      <button ng-init="item.orderByColumn = ['']" ng-click="addPartitionByColumn_TEST(item.orderByColumn)" title="Add Order BY Column">Add</button>
+                      <button ng-init="item.orderByColumn = initializeColumnArray(item.orderByColumn)" ng-click="addPartitionByColumn_TEST(item.orderByColumn)" title="Add Order BY Column">Add</button>
                   </p>
                   <!-- <select multiple id="selectize" class="selectize" selectize size="4" ng-model="item.orderByColumn" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]">
                         <option value="" selected>--No Selection--</option>
