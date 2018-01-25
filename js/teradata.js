@@ -231,7 +231,56 @@
           return true;
         }
       },
+      addPartitionByColumn_TEST: function(partitionArray) {
+        console.log('Partition array type');
+        console.log(typeof partitionArray);
+        console.log(partitionArray);
+        if(typeof partitionArray == undefined || typeof partitionArray == 'string'){
+          console.log('Originally undefined/string');          
+          partitionArray = [];
+          console.log(partitionArray)
+          partitionArray.push('');
+          console.log(partitionArray)
+          
+        } else {          
+          partitionArray.push('');
+          console.log('Added to partition array');
+          console.log(partitionArray);
+          
+        
+        }
+        
+        
+        
 
+    },
+    removePartitionByColumn_TEST: function(partitionArray,index) {
+      if (index > -1) {
+        console.log('Removed from partition array')
+        console.log(partitionArray)
+        partitionArray.splice(index, 1);
+      }
+    },
+
+    addPartitionByColumn: function() {
+      console.log('Added one column')
+      $scope.config.function.partitionAttributes.push('');
+  },
+  removePartitionByColumn: function(index) {
+    if (index > -1) {
+        $scope.config.function.partitionAttributes.splice(index, 1);
+    }
+  },
+
+  addOrderByColumn: function() {
+    console.log('Added one column')
+    $scope.config.function.orderByColumn.push('');
+  },
+  removeOrderByColumn: function(index) {
+    if (index > -1) {
+      $scope.config.function.orderByColumn.splice(index, 1);
+    }
+  },
       validityChanger: function () {
         $('div.ng-invalid').removeClass('ng-invalid')
         $('#selectize-selectized').removeClass('ng-invalid');
@@ -390,6 +439,10 @@
         document.getElementById(tabName).style.display = "block";
         evt.currentTarget.className += " active";
     },
+
+    // clickDefaultTab: function(){
+    //   document.getElementById("defaultOpen").click();
+    // },
 
       /**
        * Gets the function schema by joining and processing the metadata from the python backend 
@@ -791,9 +844,11 @@
           $scope.activateTabs();
           $scope.activateMultiTagsInput();
           $scope.activateValidation();
-          document.getElementById("defaultOpen").click();
+                    
+          
+          
           $scope.reloader = true;
-
+          
         });
 
       },
@@ -873,9 +928,14 @@
         $scope.communicateWithBackend();
         if ($scope.config.function) {
           $scope.getFunctionMetadata($scope.config.function.name, !$scope.config.function);
+          $scope.config.function.partitionAttributes = $scope.config.function.partitionAttributes || [];
+          $scope.config.function.orderByColumn = $scope.config.function.orderByColumn || [];
         }
+        
         $scope.preprocessMetadata(false);
         $scope.activateUi();
+        // $scope.config.function.partitionAttributes = $scope.config.function.partitionAttributes || [];
+        // $scope.config.function.orderByColumn = $scope.config.function.orderByColumn || [];
 
       },
       
@@ -890,6 +950,7 @@
 
         $scope.getFunctionMetadata(selectedFunction, true);
         $scope.preprocessMetadata(true);
+        // document.getElementById("defaultOpen").click();
       }
 
     })
