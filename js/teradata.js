@@ -190,6 +190,9 @@
             // //console.log(data);
             // //console.log($scope.config);
 
+            $scope.config.function.partitionAttributes = $scope.config.function.partitionAttributes || [''];
+            $scope.config.function.orderByColumn = $scope.config.function.orderByColumn || [''];
+
             $scope.preprocessDescriptions();
             $scope.preprocessMetadata();
             $scope.activateTabs();
@@ -259,6 +262,12 @@
         console.log(partitionArray)
         partitionArray.push('');
     },
+
+    initializeColumnArray: function(columnArray){
+      columnArray = columnArray || [''];
+      return columnArray;
+    },
+
     removePartitionByColumn_TEST: function(partitionArray,index) {
       if (index > -1) {
         console.log('Removed from partition array')
@@ -275,6 +284,12 @@
       if (index > -1) {
           $scope.config.function.partitionAttributes.splice(index, 1);
       }
+    },
+
+    initTab:function(){
+      $delay(() => {console.log('InitTab Happens');
+      document.getElementById("defaultOpen").click();
+      });
     },
 
     addOrderByColumn: function() {
@@ -879,7 +894,7 @@
             ...$scope.config.function.arguments.filter(x => x.datatype === 'TABLE_NAME'),
             ...$scope.config.function.arguments.filter(x => x.datatype !== 'TABLE_NAME'),
           ]
-
+          $scope.initTab();
         });
 
       },
@@ -893,9 +908,6 @@
         if ($scope.config.function) {
           $scope.getFunctionMetadata($scope.config.function.name);
         }
-        $scope.config.function.partitionAttributes = $scope.config.function.partitionAttributes || [];
-        $scope.config.function.orderByColumn = $scope.config.function.orderByColumn || [];
-
         $scope.preprocessMetadata();
         $scope.activateUi();
 
