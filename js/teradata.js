@@ -660,7 +660,7 @@
       validate: function () {
 
         const invalids = []
-        $('.ng-invalid:not(form,.ng-hide,div,#selectize-selectized)').each((i, x) => invalids.push($(x).parent().prev().text()))
+        $('.ng-invalid:not(form,.ng-hide,div,ng-disabled,#selectize-selectized)').each((i, x) => invalids.push($(x).parent().prev().text()))
 
         if (invalids.length) {
           $scope.validationDialog(`Please amend the following fields: <ul>${invalids.map(x => `<li>${x}</li>`).join('')}</ul>`)

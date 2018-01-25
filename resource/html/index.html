@@ -122,10 +122,10 @@
                   <p class="inner-label">Partition by 
                       <button ng-init="item.partitionAttributes = initializeColumnArray(item.partitionAttributes)" ng-click="addPartitionByColumn_TEST(item.partitionAttributes)" title="Add Partition Column">Add</button>
                   </p>
-                  <div ng-repeat="col in item.partitionAttributes track by $index ">
-                      <span>PARTITION BY column {{$index+1}}</span>
+                  <div ng-if="'PartitionByKey' == item.kind" ng-repeat="col in item.partitionAttributes track by $index ">
+                      <span ng-show="'PartitionByKey' == item.kind">PARTITION BY column {{$index+1}}</span>
                       <div>
-                          <select required ng-model="item.partitionAttributes[$index]"
+                          <select  required ng-model="item.partitionAttributes[$index]"
                           ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]"
                           data-html="true" title="<b>(Ctrl+Click to multi-select)</b>" data-toggle="tooltip" data-container="body"
                           data-placement="right">
@@ -147,9 +147,9 @@
                         <option value="" selected>--No Selection--</option>
                     </select> -->
                     <!--p> Selected {{item.partitionAttributes}} </p-->
-                    <div ng-repeat="col in item.orderByColumn track by $index ">
-                        <span>ORDER BY column {{$index+1}}</span>                        
-                        <div>
+                    <div ng-if="item.isOrdered" ng-repeat="col in item.orderByColumn track by $index ">
+                        <span ng-show="item.isOrdered">ORDER BY column {{$index+1}}</span>                        
+                        <div >
                             <select required ng-model="item.orderByColumn[$index]"
                             ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]"
                             data-html="true" title="<b>(Ctrl+Click to multi-select)</b>" data-toggle="tooltip" data-container="body"
@@ -319,7 +319,7 @@
                    <div ng-repeat="col in item.partitionAttributes track by $index ">
                       <span>PARTITION BY column {{$index+1}}</span>                        
                       <div>
-                          <select required ng-model="item.partitionAttributes[$index]"
+                          <select ng-model="item.partitionAttributes[$index]"
                           ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]"
                           data-html="true" title="<b>(Ctrl+Click to multi-select)</b>" data-toggle="tooltip" data-container="body"
                           data-placement="right">
