@@ -446,11 +446,12 @@
         document.getElementById(tabName).style.display = "block";
         evt.currentTarget.className += " active";
     },
-
-    // clickDefaultTab: function(){
-    //   document.getElementById("defaultOpen").click();
-    // },
-
+    
+    initTab:function(){
+      $delay(() => {console.log('InitTab Happens');
+      document.getElementById("defaultOpen").click();
+      });
+    },
       /**
        * Gets the function schema by joining and processing the metadata from the python backend 
        * and the static JSON file associated with the function.
@@ -923,7 +924,7 @@
             ...$scope.config.function.arguments.filter(x => x.datatype === 'TABLE_NAME'),
             ...$scope.config.function.arguments.filter(x => x.datatype !== 'TABLE_NAME'),
           ]
-
+          $scope.initTab();
         });
 
       },
