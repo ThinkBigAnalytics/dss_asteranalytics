@@ -290,7 +290,7 @@
 
                   <div class="inner-cell" ng-show="'PartitionByKey' == item.kind">
                     <p class="inner-label">Partition by
-                        <button ng-click="addPartitionByColumn_TEST(item.partitionAttributes)" title="Add Partition Column">Add</button>
+                        <button ng-init="item.partitionAttributes = initializeColumnArrayOptional(item.partitionAttributes)" ng-click="addPartitionByColumn_TEST(item.partitionAttributes)" title="Add Partition Column">Add</button>
                     </p>                    
                         <div ng-repeat="col in item.partitionAttributes track by $index ">
                             <span>PARTITION BY column {{$index+1}}</span>                        
@@ -317,7 +317,7 @@
                     </select> -->
                     <button ng-click="addPartitionByColumn_TEST(item.orderByColumn)" title="Add Order BY Column">Add</button>
                   </p>                    
-                      <div ng-repeat="col in item.orderByColumn track by $index ">
+                      <div ng-init="item.orderByColumn = initializeColumnArrayOptional(item.orderByColumn)" ng-repeat="col in item.orderByColumn track by $index ">
                           <span>PARTITION BY column {{$index+1}}</span>                        
                           <div>
                               <select ng-model="item.orderByColumn[$index]"

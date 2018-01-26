@@ -268,6 +268,11 @@
       return columnArray;
     },
 
+    initializeColumnArrayOptional: function(columnArray){
+      columnArray = columnArray || [];
+      return columnArray;
+    },
+
     removePartitionByColumn_TEST: function(partitionArray,index) {
       if (index > -1) {
         console.log('Removed from partition array')
