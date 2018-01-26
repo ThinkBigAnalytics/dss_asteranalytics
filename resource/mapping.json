@@ -80,6 +80,11 @@
     "file_name": "CANOPY.json"
   },
   {
+    "category": "Cluster Analysis",
+    "function_name": "Minhash",
+    "file_name": "MINHASH.json"
+  },
+  {
     "category": "Data Transformation",
     "function_name": "Categorize",
     "file_name": "CATEGORIZE.json"
