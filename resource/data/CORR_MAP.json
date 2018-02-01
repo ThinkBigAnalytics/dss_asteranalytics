@@ -13,7 +13,9 @@
   "input_tables": [
     {
       "requiredInputKind": [
-        "PartitionByAny"
+        "PartitionByAny",
+        "PartitionByKey"
+
       ],
       "isOrdered": false,
       "partitionByOne": false,

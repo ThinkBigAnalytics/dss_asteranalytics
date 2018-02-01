@@ -14,8 +14,7 @@
         "PartitionByKey"
       ],
       "isOrdered": false,
-      "partitionByOne": false,
-      "name": "input",
+      "partitionByOne": false,      
       "alternateNames": [],
       "isRequired": true,
       "rDescription": "The table containing the data to be pivoted.",
