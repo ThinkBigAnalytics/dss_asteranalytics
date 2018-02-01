@@ -57,6 +57,17 @@
       </div>
     </div>
 
+    <div class="control-group">
+     <label class="control-label">AAF Schema</label>
+     <div class="controls" style="max-width: 40%; text-align: justify">
+        <label class="control-label">{{aafschema || 'Default'}}</label>
+     </div>
+   </div>
+   <label>
+     <em><small>*The AAF schema can be changed in the DSS Connections page, JDBC properties,
+     using the keyword aafschema_620. If left blank, it will be set to the default search path.
+     </small></em>
+   </label>
 
     <hr ng-if="config.function">
 
