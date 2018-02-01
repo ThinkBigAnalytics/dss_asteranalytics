@@ -6,6 +6,20 @@ import logging
 
 FUNCTION_CATEGORY="Data Transformation"
 
+def getCurrentConnectionName(inputDataset):
+    #input Dataset is the output of dataiku.Dataset("dataset name"
+    return inputDataset.get_location_info().get('info', {}).get('connectionName',
+                                                                '')
+
+def getConnectionParams(name):
+    client = dataiku.api_client()
+    mydssconnection = client.get_connection(name)
+    return mydssconnection.get_definition().get('params', {})
+
+def getConnectionParamsFromDataset(inputDataset):
+    name = getCurrentConnectionName(inputDataset)
+    return getConnectionParams(name)
+
 # paylaod is sent from the javascript's callPythonDo()
 # config and plugin_config are the recipe/dataset and plugin configured values
 # inputs is the list of input roles (in case of a recipe)
@@ -109,7 +123,16 @@ def do(payload, config, plugin_config, inputs):
     print('was able to forloop input schemas')
         
 
-    return {'choices' : choices, 'schema': schema, 'inputs': inputs, 'inputschemas': inputschemas}
+    # AAF schema from connection details
+    connection = getConnectionParamsFromDataset(inputdataset)
+    aafschema = ([property.get('value', '') for property in connection.get('properties', {})
+          if 'aafschema_700' == property.get('name', '')] or ['']).pop()
+
+    return {'choices' : choices,
+            'schema': schema,
+            'inputs': inputs,
+            'inputschemas': inputschemas,
+            'aafschema': aafschema}
 
 def isMultipleTagsInput(item):
     # if argument datatype is not column or table, and if it allows lists and it has no permitted value,
@@ -126,4 +149,6 @@ def defaultValuesFromArg(item):
         return DELIMITER.join(str(x) for x in defaultvalues)
         print('B - returning defaultvalues from ' + item.get('name', ''))
     print('C - returning defaultvalues from ' + item.get('name', ''))
+    #if isinstance(defaultvalues, basestring):
+    #   defaultvalues = json.dumps(defaultvalues)
     return defaultvalues
