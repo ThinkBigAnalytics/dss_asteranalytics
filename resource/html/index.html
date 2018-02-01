@@ -58,11 +58,17 @@
   <div class="control-group">
     <label class="control-label">AAF Schema</label>
     <div class="controls" style="max-width: 40%; text-align: justify">
-      <input type="text" ng-model="config.aafschema" data-toggle="tooltip"
+      <!--input type="text" ng-model="config.aafschema" data-toggle="tooltip"
       placeholder="Default" data-container="body" data-html="false"
-        title="AAF_schema" data-placement="right" />
+        title="AAF_schema" data-placement="right" /-->
+        <label class="control-label">{{aafschema}}</label>
     </div>
   </div>
+  <label>
+    <em><small>*The AAF schema can be changed in the DSS Connections page, JDBC properties,
+    using the keyword aafschema_700. If left blank, it will be set to the default search path.
+    </small></em>
+  </label>
 
 
   <hr ng-if="config.function">
