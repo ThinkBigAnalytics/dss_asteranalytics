@@ -580,6 +580,11 @@
     "file_name": "RANDOMWALKSAMPLE.json"
   },
   {
+    "category": "Statistical Analysis",
+    "function_name": "RandomSample",
+    "file_name": "RANDOMSAMPLE.json"
+  },
+  {
     "category": "Time Series Analysis",
     "function_name": "RtChangePointDetection",
     "file_name": "RTCHANGEPOINTDETECTION.json"
