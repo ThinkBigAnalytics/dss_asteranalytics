@@ -17,4 +17,4 @@ They include:
 8. [STATISTICAL ANALYSIS](./samples/STATISTICALANALYSIS_620.zip)
 9. [TEXT ANALYTICS](./samples/TEXTANALYTICS_620.zip)
 
-Input datasets used in the above projects are stored in the Aster sandbox at 10.25.11.115/beehive.
+These workflows are based on the Aster Analytics Foundation User Guide examples.
