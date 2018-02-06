@@ -9,6 +9,9 @@
   "long_description": "This function computes approximate percentiles for one or more columns of data.",
   "input_tables": [
     {
+      "requiredInputKind": [
+        "PartitionByKey"
+      ],
       "isOrdered": false,
       "partitionByOne": false,
       "name": "InputTable",
