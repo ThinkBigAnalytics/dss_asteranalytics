@@ -34,5 +34,9 @@
         **Naming rules for new datasets**:
 	    Schema:	schema_name
 	
-5.    Click on Test button to verify that connection details provided in step 3 are valid.
-6.	Finally, click on Save button.
+5.    If the installation schema of the Aster Analytics functions (AAF) to be used is not the default search path, the property aafschema_620 (for AAF 6.20) and/or aafschema_700 (for AAF 7.00) should be added to the JDBC properties.
+
+    ![](/assets/3.png)
+    
+6.    Click on Test button to verify that connection details provided in step 3 are valid.
+7.	Finally, click on Save button.
