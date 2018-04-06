@@ -14,10 +14,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SO
 
 <link rel="stylesheet" href="/plugins/AsterAnalytics7_0/resource/css/aster-ui.css">
 <link rel="stylesheet" href="/plugins/AsterAnalytics7_0/resource/css/jquery-ui.css">
-<link rel="stylesheet" href="/plugins/AsterAnalytics7_0/resource/css/selectize.default.css">
 <link rel="stylesheet" href="/plugins/AsterAnalytics7_0/resource/css/jquery.tagsinput.min.css" />
-<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
-<script src="/plugins/AsterAnalytics7_0/resource/js/selectize.js"></script>
 <script src="/plugins/AsterAnalytics7_0/resource/js/jquery.tagsinput.min.js"></script>
 
 
@@ -163,10 +160,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SO
                   <p class="inner-label">Order by 
                       <button ng-init="item.orderByColumn = initializeColumnArray(item.orderByColumn)" ng-click="addPartitionByColumn_TEST(item.orderByColumn)" title="Add Order BY Column">Add</button>
                   </p>
-                  <!-- <select multiple id="selectize" class="selectize" selectize size="4" ng-model="item.orderByColumn" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]">
-                        <option value="" selected>--No Selection--</option>
-                    </select> -->
-                    <!--p> Selected {{item.partitionAttributes}} </p-->
                     <div ng-if="item.isOrdered" ng-repeat="col in item.orderByColumn track by $index ">
                         <span ng-show="item.isOrdered">ORDER BY column {{$index+1}}</span>                        
                         <div >
@@ -208,9 +201,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SO
                       </div>
                
                   </div>
-                <!-- <select required multiple id="selectize"  class="selectize" selectize ng-model="config.function.orderByColumn" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in getSchemaOfUnaliasedInputs(config.function.unaliased_inputs)">
-                    <option value="" selected>--No Selection--</option>
-                  </select> -->
               </td>
               <!--<td>{{ validation_message('orderByColumn') }}</td>-->
             </tr>
@@ -227,13 +217,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SO
                   <button ng-disabled="config.function.partitionByAny" ng-click="addPartitionByColumn()" title="Add Partition Column">Add</button>
               </td>
               <td>
-                <!-- <select required class="selectize" id="selectize"  selectize ng-disabled="config.function.partitionByAny" multiple size="8" ng-model="config.function.partitionAttributes"
-                  ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in getSchemaOfUnaliasedInputs(config.function.unaliased_inputs)"
-                  data-html="true" title="<b>(Ctrl+Click to multi-select)</b>" data-toggle="tooltip" data-container="body"
-                  data-placement="right">
-                    <option value="" selected>--No Selection--</option>
-                  </select> -->
-
                   <div ng-repeat="col in config.function.partitionAttributes track by $index ">                     
                       <span>PARTITION BY column {{$index+1}}</span>
                       <div>
@@ -332,10 +315,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SO
                   <p class="inner-label">Partition by
                       <button ng-init="item.partitionAttributes = initializeColumnArrayOptional(item.partitionAttributes)"ng-click="addPartitionByColumn_TEST(item.partitionAttributes)" title="Add Partition Column">Add</button>
                   </p>
-                  <!-- <select multiple id="selectize" class="selectize" selectize ng-if="validityChanger()" size="4" ng-model="item.partitionAttributes" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]">
-                  	<option value="" selected>--No Selection--</option>
-                   </select> -->
-                   <!--p> Selected {{item.partitionAttributes}} </p-->
                    <div ng-repeat="col in item.partitionAttributes track by $index ">
                       <span>PARTITION BY column {{$index+1}}</span>                        
                       <div>
@@ -358,9 +337,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SO
                   <p class="inner-label">Order by
                       <button ng-init="item.orderByColumn = initializeColumnArrayOptional(item.orderByColumn)" ng-click="addPartitionByColumn_TEST(item.orderByColumn)" title="Add Order BY Column">Add</button>
                   </p>
-                  <!-- <select multiple id="selectize"  class="selectize" selectize size="4" ng-model="item.orderByColumn" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]">
-                        <option value="" selected>--No Selection--</option>
-                    </select> -->
                     <div ng-repeat="col in item.orderByColumn track by $index ">
                         <span>ORDER BY column {{$index+1}}</span>                        
                         <div>
