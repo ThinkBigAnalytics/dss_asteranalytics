@@ -16,11 +16,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SO
 
 <link rel="stylesheet" href="/plugins/AsterAnalytics/resource/css/aster-ui.css">
 <link rel="stylesheet" href="/plugins/AsterAnalytics/resource/css/jquery-ui.css">
-<link rel="stylesheet" href="/plugins/AsterAnalytics/resource/css/selectize.default.css">
 <link rel="stylesheet" href="/plugins/AsterAnalytics/resource/css/jquery.tagsinput.min.css" />
-
-<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
-<script src="/plugins/AsterAnalytics/resource/js/selectize.js"></script>
 <script src="/plugins/AsterAnalytics/resource/js/jquery.tagsinput.min.js"></script>
 
 <div id="main-container">
@@ -144,10 +140,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SO
                     <p class="inner-label">Partition by 
                         <button ng-init="item.partitionAttributes = initializeColumnArray(item.partitionAttributes)" ng-click="addPartitionByColumn_TEST(item.partitionAttributes)" title="Add Partition Column">Add</button>
                     </p>
-                    <!-- <select multiple id="selectize" class="selectize" selectize size="4" ng-model="item.partitionAttributes" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]">
-                        <option value="" selected>--No Selection--</option>                        
-                    </select> -->
-                    <!-- <p> Selected {{item.partitionAttributes}} </p> -->
                     <div ng-if="'PartitionByKey' == item.kind" ng-repeat="col in item.partitionAttributes track by $index ">
                         <!-- <input ng-model="col.value" type="text" data-container="body" data-html="true" data-toggle="tooltip" title="Test"
                           data-placement="right" /> -->
@@ -168,9 +160,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SO
 
                   <div class="inner-cell" ng-show="item.isOrdered">
                     <p class="inner-label">Order by
-                    <!-- <select multiple id="selectize" class="selectize" selectize size="4" ng-model="item.orderByColumn" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]">
-                        <option value="" selected>--No Selection--</option>
-                    </select> -->
                     <button ng-init="item.orderByColumn = initializeColumnArray(item.orderByColumn)" ng-click="addPartitionByColumn_TEST(item.orderByColumn)" title="Add Order BY Column">Add</button>
                   </p>                    
                       <div ng-if="item.isOrdered" ng-repeat="col in item.orderByColumn track by $index ">
@@ -339,9 +328,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SO
 
                   <div class="inner-cell" ng-show="item.isOrdered">
                     <p class="inner-label">Order by
-                    <!-- <select multiple id="selectize"  class="selectize" selectize size="4" ng-model="item.orderByColumn" ng-options="column.name as column.name + ' (' + (column.type || 'Column') + ')' for column in inputschemas[item.value]">
-                        <option value="" selected>--No Selection--</option>
-                    </select> -->
                     <button ng-click="addPartitionByColumn_TEST(item.orderByColumn)" title="Add Order BY Column">Add</button>
                   </p>                    
                       <div ng-init="item.orderByColumn = initializeColumnArrayOptional(item.orderByColumn)" ng-repeat="col in item.orderByColumn track by $index ">

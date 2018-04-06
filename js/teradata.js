@@ -28,7 +28,7 @@
     throw new Error('jQuery library not present!')
   }
 
-  const app = angular.module('teradata.module', ['selectize']);
+  const app = angular.module('teradata.module', []);
 
   app.controller('TeradataController', function ($scope, $timeout) {
 
@@ -325,17 +325,8 @@
       }
     },
       validityChanger: function () {
-        // console.log('Validity changer happened');
-        // console.log($('#selectize-selectized').parent().parent());
-        // console.log($('#selectize-selectized'))
-        // $('#selectize-selectized').parent().parent().removeClass("ng-invalid");
-        // if (!$('div.ng-invalid').hasClass('invalid')) {
         $('div.ng-invalid').removeClass('ng-invalid')
-        // }
-        $('#selectize-selectized').removeClass('ng-invalid');
         $('div.invalid').addClass('ng-invalid')
-        // console.log($('#selectize-selectized').parent().parent());
-        // console.log($('#selectize-selectized'))
 
         return true;
       },
@@ -439,14 +430,7 @@
         })
         let potentialMatches = argumentsList
           .filter(arg => tableNameAliases.includes(arg.name.toUpperCase()));
-        // .filter(arg => tableNameAlias.toUpperCase() === arg.name.toUpperCase());
-        // .filter(arg => [KEYS.INPUT_TABLE, KEYS.INPUT_TABLE_ALTERNATIVE].includes(arg.name.toUpperCase()));
-        // console.log('Find tablename');
-        // console.log(potentialMatches);
-        // console.log(argumentsList);
         if (potentialMatches.length) {
-          // console.log(potentialMatches);
-          //console.log('We finally got here');
           return potentialMatches[0].value;
         }
         return ''
@@ -458,28 +442,15 @@
        * and the static JSON file associated with the function.
        */
       getSchema: function (functionArgument, aliasedInputsList, unaliasedInputsList, argumentsList) {
-        //console.log('Get Schema runs');
         aliasedInputsList = aliasedInputsList || []
         argumentsList = argumentsList || []
-        console.log('getSchema');
-        // console.log(functionMetadata)
-        console.log(functionArgument);
-        console.log(aliasedInputsList);
-        console.log(unaliasedInputsList);
-        console.log(argumentsList);
         const hasTargetTable = KEYS.TARGET_TABLE in functionArgument
         let targetTableName = ''
         var isAliasedInputsPopulated;
         var isInAliasedInputsList = false;
         var y = false;
         if (hasTargetTable) {
-          //console.log('hasTargetTable');
           const targetTableAlias = functionArgument.targetTable.toUpperCase();
-          // if (KEYS.ALTERNATE_NAMES in func)
-          // var tableAliasList = 
-          console.log('Table name');
-          console.log(targetTableAlias);
-          // const isAliased = KEYS.INPUT_TABLE !== targetTableAlias;
           if (aliasedInputsList !== []) {
             isAliasedInputsPopulated = true;
             aliasedInputsList.map((input) => {
@@ -492,37 +463,24 @@
           } else {
             isInAliasedInputsList = false;
           }
-          // const isAliased = aliasedInputsList.includes(targetTableAlias);
           const isAliased = isInAliasedInputsList;
-          //console.log(KEYS.INPUT_TABLE);
-          //console.log(targetTableAlias);
 
           if (isAliased) {
             console.log('isAliased');
             let matchingInputs = aliasedInputsList.filter(input => targetTableAlias === input.name.toUpperCase());
             if (matchingInputs.length > 0) {
-              //console.log('Matching inputs > 0');
               targetTableName = matchingInputs[0].value;
             } else {
-              //console.log('Matching inputs < 0');
               targetTableName = $scope.findTableNameInArgumentsList(argumentsList, targetTableAlias);
             }
 
 
           } else {
-            //console.log('isNotAliased');
-            //console.log(unaliasedInputsList);
             if (unaliasedInputsList.count && unaliasedInputsList.values && unaliasedInputsList.values.length) {
-              console.log('Went to unaliased');
-
               targetTableName = unaliasedInputsList.values[0];
-              //console.log(targetTableName);
             }
-
             else {
               targetTableName = $scope.findTableNameInArgumentsList(argumentsList, targetTableAlias);
-              console.log('Went to arguments');
-              console.log(targetTableName);
             }
 
 
@@ -531,24 +489,15 @@
         } else if (unaliasedInputsList && unaliasedInputsList.values && unaliasedInputsList.values.length > 0) {
 
           targetTableName = unaliasedInputsList.values[0]
-          //console.log('This else if');
-          //console.log(targetTableName);
-
         }
 
         if (!targetTableName || !$scope.inputschemas) {
-          //console.log('This happened');
-          //console.log(targetTableName);
-          //console.log($scope);
           return [];
         }
 
 
         if (targetTableName && targetTableName in $scope.inputschemas) {
-          //console.log('Schemas');
-          //console.log($scope.inputschemas[targetTableName]);
           return $scope.inputschemas[targetTableName];
-
         }
 
         return $scope.schemas;
@@ -629,7 +578,7 @@
       validate: function () {
 
         const invalids = []
-        $('.ng-invalid:not(form,.ng-hide,div,#selectize-selectized)').each((i, x) => invalids.push($(x).parent().prev().text()))
+        $('.ng-invalid:not(form,.ng-hide,div)').each((i, x) => invalids.push($(x).parent().prev().text()))
 
         if (invalids.length) {
           $scope.validationDialog(`Please amend the following fields: <ul>${invalids.map(x => `<li>${x}</li>`).join('')}</ul>`)
@@ -652,24 +601,10 @@
       runThenListen: function () {
 
         if (!$scope.validate()) return;
-
-        //console.log(functionVersion);
-        //console.log($scope.config.function.function_version);
         $scope.config.function.function_version = functionVersion;
-        // $scope.config.function.orderByColumn = $scope.config.function.orderByColumns;
-        // $scope.config.function.partitionAttributes = $scope.config.function.partitionByColumns;
-        
-        // console.log($scope.config.function.orderByColumns);
-        // console.log($scope.config.function.partitionByColumns)
-        // console.log(scope.config.function.partitionByColumns)
-        // failer.push("a");
         runFunction();
 
         $scope.listenForResults(function () {
-          //console.log('Got results');
-          // //console.log(message);
-          //console.log(functionVersion);
-          //console.log($scope.config.function.function_version);
           const $results = $('.alert:not(.ng-hide):not(.messenger-message)')
 
           if ($results.length === 0) return false;
@@ -951,340 +886,5 @@
     $scope.initialize();
 
   });
-
-  // app.directive('selectize', function () {
-  //   var linker = function (scope, element, attr, $timeout) {
-  //     // $scope.$watch('$scope.config', function () {
-  //     //   console.log('Chosen directive watch happened');
-  //     //   element.trigger('liszt:updated');
-  //     //   element.trigger('chosen:updated')
-  //     // })
-  //     scope.$watch('reloader', function (newValue, oldValue, scope) {
-  //       console.log('Chosen directive watch happened( inputSchemas)');
-  //       console.log(scope.reloader);
-  //       element.selectize()[0].selectize.destroy();
-  //       // $timeout(function () {
-  //       // console.log('Inside timeout');
-  //       element.selectize();
-  //       // }, 100);
-  //       // element.trigger('liszt:updated');        
-  //       // element.selectize().destroy();
-  //       // element.selectize();
-  //       // $element.trigger('chosen:updated')
-  //     })
-  //     element.selectize();
-  //   };
-
-  //   return {
-  //     restrict: 'A',
-  //     link: linker
-  //   }
-  // })
-
-  // app.directive('selectize', function($timeout) {
-  //         return {
-  //             // Restrict it to be an attribute in this case
-  //             restrict: 'A',
-  //             require: '?ngModel',
-  //             // responsible for registering DOM listeners as well as updating the DOM
-  //             link: function(scope, element, attrs, ngModel) {
-  //                 var $element;
-  //                 $timeout(function() {
-  //                     $element = $(element).selectize(scope.$eval(attrs.selectize));
-  //                     if(!ngModel){
-  //                         console.log('no ngModel')
-  //                         return;
-  //                     }
-
-  //                     $(element).selectize().on('change',function(){
-  //                         scope.$apply(function(){
-  //                             var newValue = $(element).selectize().val();
-  //                             console.log('change:',newValue);                    
-  //                             ngModel.$setViewValue(newValue);
-  //                         });
-  //                     });
-  //                 });
-  //             }
-  //         };
-  //     });
-
-
-  
-
-  // angular.module('selectize', [])
-
-  //   .directive('selectize', ['$parse', '$timeout', function ($parse, $timeout) {
-  //     var NG_OPTIONS_REGEXP = /^\s*([\s\S]+?)(?:\s+as\s+([\s\S]+?))?(?:\s+group\s+by\s+([\s\S]+?))?\s+for\s+(?:([\$\w][\$\w]*)|(?:\(\s*([\$\w][\$\w]*)\s*,\s*([\$\w][\$\w]*)\s*\)))\s+in\s+([\s\S]+?)(?:\s+track\s+by\s+([\s\S]+?))?$/;
-
-  //     return {
-  //       scope: {
-  //         multiple: '@',
-  //         opts: '@selectize'
-  //       },
-  //       require: '?ngModel',
-  //       link: function (scope, element, attrs, ngModelCtrl) {
-  //         var opts = scope.$parent.$eval(scope.opts) || {};
-  //         var initializing = false;
-  //         var modelUpdate = false;
-  //         var optionsUpdate = false;
-  //         var selectize, newModelValue, newOptions, updateTimer;
-
-  //         watchModel();
-
-  //         if (attrs.ngDisabled) {
-  //           watchParentNgDisabled();
-  //         }
-
-  //         if (!attrs.ngOptions) {
-  //           return;
-  //         }
-
-  //         var match = attrs.ngOptions.match(NG_OPTIONS_REGEXP);
-  //         var valueName = match[4] || match[6];
-  //         var optionsExpression = match[7];
-  //         var optionsFn = $parse(optionsExpression);
-  //         var displayFn = $parse(match[2] || match[1]);
-  //         var valueFn = $parse(match[2] ? match[1] : valueName);
-
-  //         watchParentOptions();
-
-  //         function watchModel() {
-  //           scope.$watchCollection(function () {
-  //             // console.log('Watch collection');
-  //             //TO TEST
-  //             // console.log(newModelValue);
-  //             // console.log(ngModelCtrl.$modelValue);
-  //             return ngModelCtrl.$modelValue;
-  //           }, function (modelValue) {
-  //             // console.log('MODEL EFFIN VALUE');
-  //             // console.log(newModelValue);
-  //             // console.log(modelValue);
-  //             //experimental code
-  //             if (modelValue != undefined) {
-  //               // console.log('Outer if statement');
-  //               if (newModelValue == undefined || modelValue.length < newModelValue.length) {
-  //                 // console.log('That if Statement');
-  //                 newModelValue = modelValue;
-  //                 modelUpdate = true;
-  //                 if (!updateTimer) {
-  //                   scheduleUpdate();
-  //                 }
-
-  //               }
-  //             }
-
-
-  //           });
-  //         }
-
-  //         function watchParentOptions() {
-  //           scope.$parent.$watchCollection(optionsExpression, function (options) {
-  //             // console.log('OPTIONS?!?!')
-  //             // console.log(options);
-  //             newOptions = options || [];
-  //             optionsUpdate = true;
-  //             if (!updateTimer) {
-  //               scheduleUpdate();
-  //             }
-  //           });
-  //         }
-
-  //         function watchParentNgDisabled() {
-  //           scope.$parent.$watch(attrs.ngDisabled, function (isDisabled) {
-  //             if (selectize) {
-  //               isDisabled ? selectize.disable() : selectize.enable();
-  //             }
-  //           });
-  //         }
-
-  //         function scheduleUpdate() {
-  //           // console.log('ScheduleUpdate?');
-  //           if (!selectize) {
-  //             if (!initializing) {
-  //               initSelectize();
-  //             }
-  //             return;
-  //           }
-
-  //           updateTimer = $timeout(function () {
-  //             var model = newModelValue;
-  //             var options = newOptions;
-  //             var selectizeOptions = Object.keys(selectize.options);
-  //             var optionsIsEmpty = selectizeOptions.length === 0 || selectize.options['?'] && selectizeOptions.length === 1;
-  //             if (optionsUpdate) {
-  //               if (!optionsIsEmpty) {
-  //                 selectize.clearOptions();
-  //               }
-  //               selectize.load(function (cb) {
-  //                 cb(options.map(function (option, index) {
-  //                   return {
-  //                     text: getOptionLabel(option),
-  //                     value: index
-  //                   };
-  //                 }));
-  //               });
-  //             }
-
-  //             if (modelUpdate || optionsUpdate) {
-  //               // console.log('MODEL PLS');
-  //               // console.log(model);
-  //               var selectedItems = getSelectedItems(model);
-  //               // console.log('SELECTED ITEMS?!!?!?!');
-  //               // console.log(selectedItems); 
-  //               if (scope.multiple || selectedItems.length === 0) {
-  //                 selectize.clear();
-  //                 //clear can set the model to null
-  //                 ngModelCtrl.$setViewValue(model);
-  //               }
-  //               selectedItems.forEach(function (item) {
-  //                 selectize.addItem(item);
-  //               });
-  //               //wait to remove ? to avoid a single select from briefly setting the model to null
-  //               selectize.removeOption('?');
-
-  //               var $option = selectize.getOption(0);
-  //               if ($option) selectize.setActiveOption($option);
-  //             }
-
-  //             modelUpdate = optionsUpdate = false;
-  //             updateTimer = null;
-  //           });
-  //         }
-
-  //         function initSelectize() {
-  //           initializing = true;
-  //           scope.$evalAsync(function () {
-  //             initializing = false;
-  //             element.selectize(opts);
-  //             selectize = element[0].selectize;
-  //             if (attrs.ngOptions) {
-  //               if (scope.multiple) {
-  //                 // console.log('Initializing');
-  //                 selectize.on('item_add', onItemAddMultiSelect);
-  //                 selectize.on('item_remove', onItemRemoveMultiSelect);
-  //               } else if (opts.create) {
-  //                 selectize.on('item_add', onItemAddSingleSelect);
-  //               }
-  //             }
-  //           });
-  //         }
-
-  //         function onItemAddMultiSelect(value, $item) {
-  //           var model = ngModelCtrl.$viewValue || [];
-  //           console.log(model);
-  //           var options = optionsFn(scope.$parent);
-  //           var option = options[value];
-  //           value = option ? getOptionValue(option) : value;
-  //           // console.log('Does it get reset here?');
-  //           console.log(model);
-  //           if (model.indexOf(value) === -1) {
-  //             model.push(value);
-  //             // console.log('What about here?');
-  //             console.log(model);
-  //             if (!option && opts.create && options.indexOf(value) === -1) {
-  //               options.push(value);
-  //             }
-  //             scope.$evalAsync(function () {
-  //               ngModelCtrl.$setViewValue(model);
-  //             });
-  //           }
-  //         }
-
-  //         function onItemAddSingleSelect(value, $item) {
-  //           var model = ngModelCtrl.$viewValue;
-  //           var options = optionsFn(scope.$parent);
-  //           var option = options[value];
-  //           // console.log('Single happens?');
-  //           value = option ? getOptionValue(option) : value;
-
-  //           if (model !== value) {
-  //             model = value;
-
-  //             if (!option && options.indexOf(value) === -1) {
-  //               options.push(value);
-  //             }
-  //             scope.$evalAsync(function () {
-  //               ngModelCtrl.$setViewValue(model);
-  //             });
-  //           }
-  //         }
-
-  //         function onItemRemoveMultiSelect(value) {
-  //           // console.log('What about onItemRemoveMultiSelect');
-  //           var model = ngModelCtrl.$viewValue;
-  //           var options = optionsFn(scope.$parent);
-  //           var option = options[value];
-  //           // console.log('First model check');
-  //           // console.log(model);
-  //           value = option ? getOptionValue(option) : value;
-
-  //           var index = model.indexOf(value);
-  //           if (index >= 0) {
-  //             model.splice(index, 1);
-  //             // console.log('After splicing');
-  //             // console.log(model);
-  //             scope.$evalAsync(function () {
-  //               ngModelCtrl.$setViewValue(model);
-  //               // console.log('After set view value');
-  //               // console.log(model);
-  //             });
-  //           }
-  //         }
-
-  //         function getSelectedItems(model) {
-  //           model = angular.isArray(model) ? model : [model] || [];
-  //           // console.log('What about getSelectedItems');
-  //           // console.log(model);
-  //           if (!attrs.ngOptions) {
-  //             return model.map(function (i) { return selectize.options[i] ? selectize.options[i].value : '' });
-  //           }
-
-  //           var options = optionsFn(scope.$parent);
-
-  //           if (!options) {
-  //             return [];
-  //           }
-
-  //           var selections = options.reduce(function (selected, option, index) {
-  //             var optionValue = getOptionValue(option);
-  //             if (model.indexOf(optionValue) >= 0) {
-  //               selected[optionValue] = index;
-  //             }
-  //             // console.log('selected');
-  //             // console.log(selected);
-  //             return selected;
-  //           }, {});
-  //           // console.log('Selections');
-  //           // console.log(selections);
-  //           return Object
-  //             .keys(selections)
-  //             .map(function (key) {
-  //               return selections[key];
-  //             });
-  //         }
-
-  //         function getOptionValue(option) {
-  //           var optionContext = {};
-  //           optionContext[valueName] = option;
-  //           // console.log('What about getOptionValue');
-  //           return valueFn(optionContext);
-  //         }
-
-  //         function getOptionLabel(option) {
-  //           var optionContext = {};
-  //           optionContext[valueName] = option;
-  //           // console.log('What about getOptionLabel');
-  //           return displayFn(optionContext);
-  //         }
-
-  //         scope.$on('$destroy', function () {
-  //           if (updateTimer) {
-  //             // console.log('What about destroy?');
-  //             $timeout.cancel(updateTimer);
-  //           }
-  //         });
-  //       }
-  //     };
-  //   }]);
 
 })(window, document, angular, jQuery);
