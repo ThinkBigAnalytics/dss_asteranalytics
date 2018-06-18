@@ -23,19 +23,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SO
 
 FUNCTION_CATEGORY="Data Transformation"
 
-def getCurrentConnectionName(inputDataset):
-    #input Dataset is the output of dataiku.Dataset("dataset name"
-    return inputDataset.get_location_info().get('info', {}).get('connectionName',
-                                                                '')
-
-def getConnectionParams(name):
-    client = dataiku.api_client()
-    mydssconnection = client.get_connection(name)
-    return mydssconnection.get_definition().get('params', {})
-
 def getConnectionParamsFromDataset(inputDataset):
-    name = getCurrentConnectionName(inputDataset)
-    return getConnectionParams(name)
+    return inputDataset.get_location_info(sensitive_info=True)['info']
 
 # paylaod is sent from the javascript's callPythonDo()
 # config and plugin_config are the recipe/dataset and plugin configured values
@@ -141,8 +130,9 @@ def do(payload, config, plugin_config, inputs):
         
 
     # AAF schema from connection details
-    connection = getConnectionParamsFromDataset(inputdataset)
-    aafschema = ([property.get('value', '') for property in connection.get('properties', {})
+    connection = getConnectionParamsFromDataset(input_dataset)
+    aafschema = ([property.get('value', '') for property in connection.\
+                  get('connectionParams', {}).get('properties', {})
           if 'aafschema_700' == property.get('name', '')] or ['']).pop()
 
     return {'choices' : choices,
